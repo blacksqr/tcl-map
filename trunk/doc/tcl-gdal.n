@@ -1,0 +1,287 @@
+.\" .HS inotify tcl
+.\" .BS
+.TH "tcl-inotify" "n" "1.0" "Tcl-Extensions" ""
+.SH "NAME"
+tcl\-inotify \- File\-system notification service for Tcl
+.SH "SYNOPSIS"
+package require inotify
+.PP 
+\fBinotify create\fI watch handler\fR
+.PP 
+\fBinotify info\fI\fR
+.PP 
+\fIwatch\fR \fBadd\fI pathname flags\fR
+.PP 
+\fIwatch\fR \fBdel\fI pathname\fR
+.PP 
+\fIwatch\fR \fBqueue\fI\fR
+.PP 
+\fIwatch\fR \fBread\fI\fR
+.PP 
+\fIwatch\fR \fBinfo\fI\fR
+.PP 
+\fBrename \fIwatch\fR {}
+.SH "DESCRIPTION"
+This is a Tcl extension that provides an interface to the inotify file system notification service of the Linux kernel.
+.PP 
+Inotify is a Linux kernel subsystem that provides file system event notifications. It was written by John McCutchan with help from Robert Love and later Amy Griffis to replace dnotify. It was included in the mainline kernel from release 2.6.13, and could be compiled into 2.6.12 and possibly earlier releases by use of a patch. Its function is essentially an extension to filesystems to notice changes to the filesystem, and report those changes to applications.
+.PP 
+\fBinotify create\fI watch handler\fR
+.PP 
+Creates an inotify instance in the form of a new Tcl command, named \fIwatch\fR. Whenever there are events for this instance, \fIhandler\fR procedure is executed with a single argument, the \fIinstanceId\fR. On success the command returns \fIinstanceId\fR, otherwise an error is generated that needs to be caught.
+.PP 
+\fBinotify info\fI\fR
+.PP 
+It returns a list of length n * 3, where n is the number of active instances. Every triplet is comprised by: \fIinstanceId handler watch\fR. The command can generate errors that need to be caught.
+.PP 
+\fIwatch\fR \fBadd\fI pathname flags\fR
+.PP 
+Adds a watch to the inotify instance that corresponds to \fIwatch\fR command. The new watch monitors the \fIpathname\fR object (which can be a file or a directory) for the events specified by \fIflags\fR. On success the command returns \fIwatchId\fR, otherwise an error is generated that needs to be caught.
+.PP 
+\fIwatch\fR \fBdel\fI pathname\fR
+.PP 
+Removes the watch associated with \fIpathname\fR.The command can generate errors that need to be caught.
+.PP 
+\fIwatch\fR \fBqueue\fI\fR
+.PP 
+Returns the bytes in the kernel buffer that are occupied by inotify events which haven't been processed yet (pending).
+.PP 
+\fIwatch\fR \fBread\fI\fR
+.PP 
+Returns a list of dictionaries, one for each pending event for the inotify instance that corresponds to the \fIwatch\fR command. The format of the dictionary is:
+.br 
+    watchid \fIidVal\fR flags \fIflagsVal\fR cookie \fIcookieVal\fR filename \fInameVal\fR
+.br 
+Up to 32 pending events can be returned with a single invocation of 'read' subcommand. Always use the 'queue' subcommand to find out if there are more events to be retrieved.
+.PP 
+\fIwatch\fR \fBinfo\fI\fR
+.PP 
+It returns a list of length n * 3, where n is the number of active instances. Every triplet is comprised by: \fIpathname watchId flags\fR. The command can generate errors that need to be caught.
+.PP 
+\fBrename \fIwatch\fR {}
+.PP 
+Removes all the instance that corresponds to the \fIwatch\fR command, and all associated watches.
+.PP 
+.PP 
+PARAMETERS
+.PP 
+\fIinstanceId\fR is a number that uniquely identifies a set of watches
+that are handled by the same handler procedure.
+.PP 
+\fIwatchId\fR is a number that uniquely identifies a watch.
+.PP 
+\fIhandler\fR is a procedure (with optional namespace), that is executed
+every time there are events in the kernel event queue for the corresponding
+\fIinstanceId\fR. The events can be read in batch by the handler procedure
+by invoking \fBwatch read\fR. The \fIinstanceId\fR is provided
+as an argument to the handler.
+.PP 
+\fIcookie\fR is used to associate two different events, one IN_MOVED_FROM and one IN_MOVED_TO that involve the same file/directory.
+.PP 
+\fIflags\fR is a string composed of single character event identifiers.
+The following events are supported:
+.PP 
+.nf 
+    Id Name              Description
+     n IN_CREATE         File was created.
+     r IN_ACCESS         File was read from.
+     w IN_MODIFY         File was written to.
+     a IN_ATTRIB         File's metadata (inode or xattr) was changed.
+     C IN_CLOSE_WRITE    File was closed (and was open for writing).
+     c IN_CLOSE_NOWRITE  File was closed (and was not open for writing).
+     o IN_OPEN           File was opened.
+     S IN_MOVE_SELF      Watched file/directory was itself moved.
+     m IN_MOVED_FROM     File was moved away from watch.
+     M IN_MOVED_TO       File was moved to watch.
+     d IN_DELETE         File was deleted.
+     s IN_DELETE_SELF    The watch itself was deleted.
+.fo
+.PP 
+In addition to the above, for event registration only, the following are also supported: (only for the \fBwatch add\fR command)
+.PP 
+.nf 
+    Id Name              Description
+     1 IN_ONESHOT        The watch will be automatically removed during 
+                         generation of the first event.
+     _ IN_CLOSE          IN_CLOSE_WRITE | IN_CLOSE_NOWRITE
+     > IN_MOVE           IN_MOVED_FROM | IN_MOVED_TO
+     * IN_ALL_EVENTS     Bitwise OR of all events.
+.fo
+.PP 
+In a similar manner, the following are specific for event reporting: (only for the \fBwatch read\fR command)
+.PP 
+.nf 
+    Id Name              Description
+     u IN_UNMOUNT        The backing filesystem was unmounted.
+     f IN_Q_OVERFLOW     The inotify queue overflowed.
+     i IN_IGNORED        The watch was automatically removed, because the 
+                         file was deleted or its filesystem was unmounted.
+     D IN_ISDIR          The event occurred against a directory.
+.fo
+.SH "EXAMPLE"
+.nf 
+#!/usr/bin/tclsh
+# This tests almost everything that the extension implements.
+package require inotify
+
+puts Loaded
+
+set num 0
+proc handler { fd } {
+    global num term
+    puts [watch read]
+    incr num
+    if {$num >= 5} {
+        set term 1
+    }
+    return
+}
+
+set fd [inotify create "watch" "::handler"]
+puts Created
+
+set wd [watch add [pwd] {*}]
+puts Added
+
+watch remove [pwd]
+puts Removed
+
+set wd [watch add [pwd] {*}]
+puts Added
+
+puts "fd: $fd wd: $wd pwd:[pwd]"
+puts "watch info:[watch info]"
+puts "inotify info:[inotify info]"
+
+after 1000 [list exec echo a > test.txt]
+after 2000 [list exec mv test.txt delme.txt]
+after 3000 [list exec rm delme.txt]
+after 4000 [list exec ls]
+
+set term 0
+puts "waiting.."
+vwait term
+
+puts "\nexiting.."
+rename watch {}
+rename inotify {}
+puts done
+.SH "OUTPUT"
+.nf 
+Loaded
+Created
+Added
+Removed
+Added
+fd: 3 wd: 2 pwd:/home/alex/Desktop/My_Projects/tcl\-inotify\-1.3
+watch info:/home/alex/Desktop/My_Projects/tcl\-inotify\-1.3 2 *
+inotify info:3 ::handler watch
+waiting..
+{watchid 1 flags i cookie 0 filename {}}
+{watchid 2 flags n cookie 0 filename test.txt} {watchid 2 flags o cookie 0 filename test.txt} {watchid 2 flags w cookie 0 filename test.txt} {watchid 2 flags C cookie 0 filename test.txt}
+{watchid 2 flags m cookie 5267 filename test.txt} {watchid 2 flags M cookie 5267 filename delme.txt}
+{watchid 2 flags d cookie 0 filename delme.txt}
+{watchid 2 flags oD cookie 0 filename {}} {watchid 2 flags cD cookie 0 filename {}}
+
+exiting..
+done
+.SH "EXAMPLE"
+.nf 
+#!/usr/bin/tclsh
+package require inotify
+package provide tailf
+
+namespace eval tailf {
+namespace export fadd frem
+
+array set File {}
+
+inotify create ::tailf::watch ::tailf::handler
+
+proc getpos {filepath} {
+    set fd [open $filepath r]
+    seek $fd 0 end
+    set pos [tell $fd]
+    close $fd
+    return $pos
+}
+
+proc handler {fd} {
+    variable File
+    set events [watch read]
+    puts $events
+    foreach {watchId flags cookie filepath} $events {
+        puts "|$watchId| |$flags| |$cookie| |$filepath|"
+        #if {"w" in $flags} { continue }
+        set diff {}
+        set old [lindex $File($filepath) 0]
+        puts "old: $old"
+        set new [getpos $filepath]
+        puts "new: $new"
+
+        if {$old != $new} {
+            set fd [open $filepath r]
+            seek $fd 0 $old
+            fconfigure $fd \-blocking no \-buffering line
+            puts B
+            while {[gets $fd line] > 0} {
+                puts A
+                lappend diff $line
+            }
+            close $fd
+        }
+
+        set File($filepath) [list $new $callback]
+        eval [list $callback $filepath $diff]
+        puts OK
+    }
+    puts EXIT
+    return
+}
+
+proc fadd {filepath callback} {
+    set pos [getpos $filepath]
+    set File($filepath) [list $pos $callback]
+    watch add $filepath {w}
+}
+
+proc frem {filepath} {
+    unset File($filepath)
+    watch del $filepath
+}
+
+} ;# namespace
+
+proc proc132 {filepath diff} {
+    puts $diff
+}
+
+::tailf::fadd {132.txt} proc132
+
+set a {}
+vwait a
+.SH "AUTHOR"
+Alexandros Stergiakis <sterg@kth.se>
+.SH "COPYRIGHT"
+.PP 
+Copyright (C) 2008  Alexandros Stergiakis
+.PP 
+This program is free software: you can redistribute it and/or 
+.br 
+modify it under the terms of the GNU General Public License as 
+.br 
+published by the Free Software Foundation, either version 3 of 
+.br 
+the License, or (at your option) any later version.
+.PP 
+This program is distributed in the hope that it will be useful,
+.br 
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+.br 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.br 
+GNU General Public License for more details.
+.PP 
+You should have received a copy of the GNU General Public License
+.br 
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
