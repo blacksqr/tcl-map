@@ -1,0 +1,219 @@
+    Command: ::osgeo::AllRegister
+    Command: ::osgeo::EscapeString
+    Command: ::osgeo::FindFile
+    Command: ::osgeo::ReadDir
+    Command: ::osgeo::Open
+    Command: ::osgeo::OpenShared
+    Command: ::osgeo::DontUseExceptions
+    Command: ::osgeo::UseExceptions
+    Command: ::osgeo::VersionInfo
+Command: ::osgeo::AutoCreateWarpedVRT
+Command: ::osgeo::CPLBinaryToHex
+Command: ::osgeo::CPLHexToBinary
+Command: ::osgeo::ComputeMedianCutPCT
+Command: ::osgeo::ComputeProximity
+Command: ::osgeo::DecToDMS
+Command: ::osgeo::DecToPackedDMS
+Command: ::osgeo::DitherRGB2PCT
+Command: ::osgeo::FinderClean
+Command: ::osgeo::GCPsToGeoTransform
+Command: ::osgeo::GeneralCmdLineProcessor
+Command: ::osgeo::PackedDMSToDec
+Command: ::osgeo::ParseXMLString
+Command: ::osgeo::Polygonize
+Command: ::osgeo::PopFinderLocation
+Command: ::osgeo::PushFinderLocation
+Command: ::osgeo::RasterizeLayer
+Command: ::osgeo::RegenerateOverview
+Command: ::osgeo::RegenerateOverviews
+Command: ::osgeo::ReprojectImage
+Command: ::osgeo::SerializeXMLTree
+Command: ::osgeo::SieveFilter
+Command: ::osgeo::SetCacheMax
+Command: ::osgeo::GetCacheMax
+Command: ::osgeo::GetCacheUsed
+Command: ::osgeo::TermProgress_nocb
+Command: ::osgeo::SetConfigOption
+Command: ::osgeo::GetConfigOption
+
+    Command: ::osgeo::Debug
+    Command: ::osgeo::Error
+    Command: ::osgeo::ErrorReset
+    Command: ::osgeo::GetLastErrorMsg
+    Command: ::osgeo::GetLastErrorNo
+    Command: ::osgeo::GetLastErrorType
+Command: ::osgeo::PopErrorHandler
+Command: ::osgeo::PushErrorHandler
+
+    Command: ::osgeo::DataTypeIsComplex
+    Command: ::osgeo::DataTypeUnion
+    Command: ::osgeo::GetDataTypeByName
+    Command: ::osgeo::GetDataTypeName
+    Command: ::osgeo::GetDataTypeSize
+
+Command: ::osgeo::MajorObject
+    Command: ::osgeo::MajorObject_GetDescription
+    Command: ::osgeo::MajorObject_GetMetadata_Dict
+    Command: ::osgeo::MajorObject_GetMetadata_List
+    Command: ::osgeo::MajorObject_SetDescription
+    Command: ::osgeo::MajorObject_GetMetadataItem
+    Command: ::osgeo::MajorObject_SetMetadata
+    Command: ::osgeo::MajorObject_SetMetadataItem
+
+Command: ::osgeo::Driver
+    Command: ::osgeo::Driver_Create
+    Command: ::osgeo::Driver_CreateCopy
+    Command: ::osgeo::Driver_Delete
+    Command: ::osgeo::Driver_Deregister
+    Command: ::osgeo::Driver_HelpTopic_get
+    Command: ::osgeo::Driver_LongName_get
+    Command: ::osgeo::Driver_Register
+    Command: ::osgeo::Driver_Rename
+    Command: ::osgeo::Driver_ShortName_get
+    Command: ::osgeo::GetDriver
+    Command: ::osgeo::GetDriverByName
+    Command: ::osgeo::GetDriverCount
+    Command: ::osgeo::IdentifyDriver
+    Command: ::osgeo::GDALDestroyDriverManager
+
+Command: ::osgeo::Dataset
+Command: ::osgeo::Dataset_AddBand
+Command: ::osgeo::Dataset_BuildOverviews
+Command: ::osgeo::Dataset_CreateMaskBand
+Command: ::osgeo::Dataset_FlushCache
+Command: ::osgeo::Dataset_WriteRaster
+    Command: ::osgeo::Dataset_GetDriver
+    Command: ::osgeo::Dataset_GetFileList
+    Command: ::osgeo::Dataset_GetGCPCount
+    Command: ::osgeo::Dataset_GetGCPProjection
+    Command: ::osgeo::Dataset_GetGCPs
+    Command: ::osgeo::Dataset_GetGeoTransform
+    Command: ::osgeo::Dataset_SetGeoTransform
+    Command: ::osgeo::Dataset_SetProjection
+    Command: ::osgeo::Dataset_GetProjection
+    Command: ::osgeo::Dataset_GetProjectionRef
+    Command: ::osgeo::Dataset_GetRasterBand
+    Command: ::osgeo::Dataset_RasterCount_get
+    Command: ::osgeo::Dataset_RasterXSize_get
+    Command: ::osgeo::Dataset_RasterYSize_get
+    Command: ::osgeo::Dataset_ReadRaster
+    Command: ::osgeo::Dataset_SetGCPs
+    Command: ::osgeo::delete_Dataset
+
+    GDALColorTableH table = GDALGetRasterColorTable(band);
+    GDALGetPaletteInterpretationName(GDALGetPaletteInterpretation(table))
+GDALGetColorEntryCount(table)
+
+    GDALColorEntry *entry = GDALGetColorEntry(table, i);
+
+    if (GDALRasterIO(band, GF_Read, 0, 0, nXSize, nYSize, buffer, nBufXSize, nBufYSize,
+                GDALGetRasterDataType(band), 0, 0) == CE_None) {
+        result = Tcl_NewByteArrayObj(buffer, nBufXSize * nBufYSize);
+
+Command: ::osgeo::Band
+    Command: ::osgeo::Band_Checksum
+    Command: ::osgeo::Band_ComputeBandStats
+    Command: ::osgeo::Band_ComputeRasterMinMax
+    Command: ::osgeo::Band_DataType_get
+    Command: ::osgeo::Band_GetBlockSize
+    Command: ::osgeo::Band_GetMaximum
+    Command: ::osgeo::Band_GetMinimum
+    Command: ::osgeo::Band_GetNoDataValue
+    Command: ::osgeo::Band_GetOverviewCount
+    Command: ::osgeo::Band_GetRasterColorInterpretation
+    Command: ::osgeo::GetColorInterpretationName
+    Command: ::osgeo::Band_XSize_get
+    Command: ::osgeo::Band_YSize_get
+    Command: ::osgeo::Band_GetScale
+    Command: ::osgeo::Band_GetStatistics
+    Command: ::osgeo::Band_GetRasterCategoryNames
+    Command: ::osgeo::Band_GetOffset
+    Command: ::osgeo::Band_ReadRaster
+    Command: ::osgeo::Band_GetRasterColorTable
+    Command: ::osgeo::Band_GetColorTable
+Command: ::osgeo::Band_GetOverview
+Command: ::osgeo::Band_CreateMaskBand
+Command: ::osgeo::Band_Fill
+Command: ::osgeo::Band_FlushCache
+Command: ::osgeo::Band_GetDefaultHistogram
+Command: ::osgeo::Band_GetDefaultRAT
+Command: ::osgeo::Band_GetHistogram
+Command: ::osgeo::Band_GetMaskBand
+Command: ::osgeo::Band_GetMaskFlags
+Command: ::osgeo::Band_SetStatistics
+Command: ::osgeo::Band_SetNoDataValue
+Command: ::osgeo::Band_SetRasterCategoryNames
+Command: ::osgeo::Band_SetRasterColorInterpretation
+Command: ::osgeo::Band_SetColorTable
+Command: ::osgeo::Band_SetDefaultHistogram
+Command: ::osgeo::Band_SetDefaultRAT
+Command: ::osgeo::Band_SetRasterColorTable
+Command: ::osgeo::Band_WriteRaster
+
+Command: ::osgeo::ColorTable
+Command: ::osgeo::ColorTable_Clone
+Command: ::osgeo::ColorTable_CreateColorRamp
+Command: ::osgeo::ColorTable_GetColorEntry
+Command: ::osgeo::ColorTable_GetColorEntryAsRGB
+Command: ::osgeo::ColorTable_GetCount
+Command: ::osgeo::ColorTable_GetPaletteInterpretation
+Command: ::osgeo::ColorTable_SetColorEntry
+Command: ::osgeo::GetPaletteInterpretationName
+Command: ::osgeo::new_ColorTable
+Command: ::osgeo::delete_ColorTable
+
+Command: ::osgeo::ColorEntry
+Command: ::osgeo::ColorEntry_c1_get
+Command: ::osgeo::ColorEntry_c1_set
+Command: ::osgeo::ColorEntry_c2_get
+Command: ::osgeo::ColorEntry_c2_set
+Command: ::osgeo::ColorEntry_c3_get
+Command: ::osgeo::ColorEntry_c3_set
+Command: ::osgeo::ColorEntry_c4_get
+Command: ::osgeo::ColorEntry_c4_set
+Command: ::osgeo::new_ColorEntry
+Command: ::osgeo::delete_ColorEntry
+
+Command: ::osgeo::GCP
+Command: ::osgeo::GCP_GCPLine_get
+Command: ::osgeo::GCP_GCPLine_set
+Command: ::osgeo::GCP_GCPPixel_get
+Command: ::osgeo::GCP_GCPPixel_set
+Command: ::osgeo::GCP_GCPX_get
+Command: ::osgeo::GCP_GCPX_set
+Command: ::osgeo::GCP_GCPY_get
+Command: ::osgeo::GCP_GCPY_set
+Command: ::osgeo::GCP_GCPZ_get
+Command: ::osgeo::GCP_GCPZ_set
+Command: ::osgeo::GCP_Id_get
+Command: ::osgeo::GCP_Id_set
+Command: ::osgeo::GCP_Info_get
+Command: ::osgeo::GCP_Info_set
+Command: ::osgeo::new_GCP
+Command: ::osgeo::delete_GCP
+
+Command: ::osgeo::RasterAttributeTable
+Command: ::osgeo::RasterAttributeTable_Clone
+Command: ::osgeo::RasterAttributeTable_CreateColumn
+Command: ::osgeo::RasterAttributeTable_GetColOfUsage
+Command: ::osgeo::RasterAttributeTable_GetColumnCount
+Command: ::osgeo::RasterAttributeTable_GetNameOfCol
+Command: ::osgeo::RasterAttributeTable_GetRowCount
+Command: ::osgeo::RasterAttributeTable_GetRowOfValue
+Command: ::osgeo::RasterAttributeTable_GetTypeOfCol
+Command: ::osgeo::RasterAttributeTable_GetUsageOfCol
+Command: ::osgeo::RasterAttributeTable_GetValueAsDouble
+Command: ::osgeo::RasterAttributeTable_GetValueAsInt
+Command: ::osgeo::RasterAttributeTable_GetValueAsString
+Command: ::osgeo::RasterAttributeTable_SetRowCount
+Command: ::osgeo::RasterAttributeTable_SetValueAsDouble
+Command: ::osgeo::RasterAttributeTable_SetValueAsInt
+Command: ::osgeo::RasterAttributeTable_SetValueAsString
+Command: ::osgeo::new_RasterAttributeTable
+Command: ::osgeo::delete_RasterAttributeTable
+
+Command: ::osgeo::Transformer
+Command: ::osgeo::Transformer_TransformPoint
+Command: ::osgeo::Transformer_TransformPoints
+Command: ::osgeo::new_Transformer
+Command: ::osgeo::delete_Transformer
