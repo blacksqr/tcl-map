@@ -166,6 +166,8 @@ typedef int OGRErr;
 %include typemaps_php.i
 #elif defined(SWIGCSHARP)
 %include osr_csharp.i
+#elif defined(SWIGTCL)
+%include osr_tcl.i
 #elif defined(SWIGJAVA)
 %include osr_java.i
 #elif defined(SWIGPERL)
@@ -212,15 +214,15 @@ OGRErr GetUserInputAsWKT( const char *name, char **argout ) {
 /*                        GetProjectionMethods()                        */
 /************************************************************************/
 /*
- * Python has it's own custom interface to GetProjectionMethods().which returns
- * fairly complex structure.
+ * Python and Tcl have their own custom interface to GetProjectionMethods() 
+ * which returns fairly complex structure.
  *
  * All other languages will have a more simplistic interface which is
  * exactly the same as the C api.
  * 
  */
 
-#if !defined(SWIGPYTHON)
+#if !defined(SWIGPYTHON) && !defined(SWIGTCL)
 %rename (GetProjectionMethods) OPTGetProjectionMethods;
 %apply (char **CSL) {(char **)};
 char **OPTGetProjectionMethods();

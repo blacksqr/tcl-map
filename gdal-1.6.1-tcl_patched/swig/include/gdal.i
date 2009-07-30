@@ -168,6 +168,8 @@ typedef enum {
 %include "gdal_php.i"
 #elif defined(SWIGCSHARP)
 %include "gdal_csharp.i"
+#elif defined(SWIGTCL)
+%include "gdal_tcl.i"
 #elif defined(SWIGPERL)
 %include "gdal_perl.i"
 #elif defined(SWIGJAVA)
