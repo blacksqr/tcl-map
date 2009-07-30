@@ -245,6 +245,8 @@ typedef int OGRErr;
 %include ogr_php.i
 #elif defined(SWIGCSHARP)
 %include ogr_csharp.i
+#elif defined(SWIGTCL)
+%include ogr_tcl.i
 #elif defined(SWIGPERL)
 %include ogr_perl.i
 #elif defined(SWIGJAVA)

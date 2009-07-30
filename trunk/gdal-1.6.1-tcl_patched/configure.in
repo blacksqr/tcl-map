@@ -2218,6 +2218,20 @@ else
 fi
 
 dnl ---------------------------------------------------------------------------
+dnl Tcl bindings.
+dnl ---------------------------------------------------------------------------
+
+AC_ARG_WITH(tcl,[  --with-tcl            Enable Tcl bindings],,)
+
+AC_MSG_CHECKING([for tcl bindings])
+if test "$with_tcl" = "yes" ; then
+  BINDINGS="tcl $BINDINGS"
+  AC_MSG_RESULT([enabled])
+else
+  AC_MSG_RESULT([disabled])
+fi
+
+dnl ---------------------------------------------------------------------------
 dnl NG Python bindings.
 dnl ---------------------------------------------------------------------------
 

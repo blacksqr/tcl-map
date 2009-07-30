@@ -1,7 +1,7 @@
 
 
 include ../../GDALmake.opt
-include java.opt
+#include java.opt
 
 all: build
 
