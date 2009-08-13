@@ -1,15 +1,13 @@
-#!/usr/local/bin/tclsh8.5
+#!/usr/bin/tclsh8.5
+
 package require tcltest
 namespace import tcltest::*
 #configure -verbose {body error pass skip}
 
-load ../gdal.so
-load ../gdalconst.so
+load [file join .. gdal swig tcl gdal.so]
+load [file join .. gdal swig tcl gdalconst.so]
 
-set PNG [file join data gdalicon.png]
-set GIF [file join data DTU_logo.gif]
-set BMP [file join data warning.bmp]
-set TIFF [file join data map.tiff] ;# XXX Segfaults on Open
+set TIF [file join maps chicago UTM2GTIF.TIF]
 
 proc intersect3 {lista listb} {
     lassign {} L C R
@@ -57,20 +55,20 @@ test Variables {Test the existance of all available GDAL Tcl variables/constants
 
 test ::osgeo::VersionInfo {} -body {
     ::osgeo::VersionInfo
-} -result 1604
+} -match glob -result 16*
 
 test ::osgeo::ReadDir {} -body {
-    ::osgeo::ReadDir data
-} -result [list .. . gdalicon.png warning.bmp mysymbol.svg DTU_logo.gif map.tiff]
+    lsort [::osgeo::ReadDir maps]
+} -result [list . .. WrldTZA cea  chicago  world]
 
+# Note: First argument is not used anywhere, but it is supposed to be a class id for the file.
 test ::osgeo::FindFile {} -body {
-    ::osgeo::FindFile XXX data/map.tiff ;# pszClass: first arg
-} -result {./data/map.tiff}
+    ::osgeo::FindFile class $TIF
+} -result [file join . $TIF]
 
 test ::osgeo::EscapeString {} -body {
     ::osgeo::EscapeString ask\0dj
 } -result ask\0dj
-
 
 ### Error/Debug Procedures ###
 
@@ -109,6 +107,7 @@ test ::osgeo::GetLastErrorType {} -body {
     ::osgeo::GetLastErrorType
 } -result 0
 
+# XXX Test it 
 test ::osgeo::ErrorReset {} -body {
     ::osgeo::ErrorReset
 }
@@ -140,6 +139,12 @@ test ::osgeo::DataTypeUnion {} -body {
     ::osgeo::DataTypeUnion $::osgeo::GDT_CFloat32 $::osgeo::GDT_Int32
 } -result $::osgeo::GDT_CFloat32
 
+puts "Data Types:"
+foreach dtype [info vars ::osgeo::GDT_*] {
+    set dtype [set $dtype]
+    puts "Name: [::osgeo::GetDataTypeName $dtype] ($dtype) \tSize: [::osgeo::GetDataTypeSize $dtype] \tComplex: [::osgeo::DataTypeIsComplex $dtype]"
+}
+
 ### GDALDriverManager ###
 
 # GDALDestroyDriverManager
@@ -157,16 +162,19 @@ test ::osgeo::AllRegister {Loads all supported} -body {
 # GDALDriverManager::GetDriverCount
 test ::osgeo::GetDriverCount {} -body {
     set count [::osgeo::GetDriverCount]
-} -result 80
+    puts "\nDriver Count: $count"
+    string is integer $count
+} -result 1
 
 # GDALGetDriver
 # GDALDriverManager::GetDriver
 test ::osgeo::GetDriver {} -body {
     for {set i 0} {$i < $count} {incr i} {
-        lappend all_drivers [::osgeo::GetDriver $i]
+        lappend all_drivers [[::osgeo::GetDriver $i] cget -ShortName]
     }
-    llength $all_drivers
-} -result 80
+    puts "\nSupported Drivers: $all_drivers"
+    expr [llength $all_drivers] > 0
+} -result 1
 
 # GDALGetDriverByName
 # GDALDriverManager::GetDriverByName
@@ -189,7 +197,7 @@ test ::osgeo::Driver_Register {} -body {
     # If driver already registered then it returns the existing index
     # is returned.
     $driver Register
-} -result 79
+} -result [expr $count - 1]
 
 ### GDALMajorObject ###
 
@@ -211,10 +219,11 @@ test ::osgeo::MajorObject_GetMetadata_List {} -body {
 </CreationOptionList>
 } DCAP_VIRTUALIO=YES DCAP_CREATECOPY=YES]
 
-#ZZZ
-#::osgeo::MajorObject_GetMetadataItem
-#::osgeo::MajorObject_SetMetadata
-#::osgeo::MajorObject_SetMetadataItem
+# GDALGetMetadataItem
+# GDALMajorObject::GetMetadataItem
+test ::osgeo::MajorObject_GetMetadata_List {} -body {
+    $driver GetMetadataItem DMD_LONGNAME
+} -result {Portable Network Graphics}
 
 # GDALGetDescription
 # GDALMajorObject::GetDescription
@@ -233,70 +242,63 @@ test ::osgeo::MajorObject_SetDescription {} -body {
 
 # GDALIdentifyDriver
 test ::osgeo::IdentifyDriver {} -body {
-    set driver [::osgeo::IdentifyDriver $PNG]
+    set driver [::osgeo::IdentifyDriver $TIF]
     llength $driver
 } -result 1
 
 # GDALGetDriverShortName
 test ::osgeo::Driver_ShortName_get {} -body {
     $driver cget -ShortName
-} -result {PNG2}
+} -result {GTiff}
 
 # GDALGetDriverLongName
 test ::osgeo::Driver_LongName_get {} -body {
     $driver cget -LongName
-} -result {Portable Network Graphics}
+} -result {GeoTIFF}
 
 # GDALGetDriverHelpTopic
 test ::osgeo::Driver_HelpTopic_get {} -body {
     $driver cget -HelpTopic
-} -result {frmt_various.html#PNG}
-
-set driver [::osgeo::IdentifyDriver $TIFF]
+} -result {frmt_gtiff.html}
 
 # GDALCreate
 # GDALDriver::Create
 test ::osgeo::Driver_Create {} -body {
-    set dataset [$driver Create data/test.tiff 32 32 3]
+    set dataset [$driver Create test.tiff 32 32 3]
     llength $dataset
 } -result 1
 
-
 # GDALCreateCopy
 # GDALDriver::CreateCopy
-if 0 { ;# XXX Segfaults
 test ::osgeo::Driver_CreateCopy {} -body {
-    set dataset2 [$driver CreateCopy data/test2.tiff $dataset 0]
+    set dataset2 [$driver CreateCopy test2.tiff $dataset] ;# strict=0 options callback callback_data
+    $dataset2 -delete
+    file delete test2.tiff
     llength $dataset2
-} -result 1
-}
+} -result 1 -constraints SegFaults
 
-file delete data/test.tiff
+file delete test.tiff
 $dataset -delete
-#file delete data/test2.tiff
-#$dataset2 -delete
 
-if 0 { ;#XXX
 # GDALCopyDatasetFiles
 # GDALDriver::CopyFiles
 test ::osgeo::Driver_CopyFiles {} -body {
-    # Not implemented
-}
-}
+    $driver CopyFiles test.tiff test2.tiff
+    file delete test2.tiff
+} -constraints NotImplemented
 
-file copy -force $PNG ${PNG}_new
+file copy -force $TIF ${TIF}_new
 
 # GDALRenameDataset
 # GDALDriver::Rename
 test ::osgeo::Driver_Rename {} -body {
-    $driver Rename ${PNG}_renamed ${PNG}_new
+    $driver Rename ${TIF}_renamed ${TIF}_new
 } -result $::osgeo::CE_None
-
 
 # GDALDeleteDataset
 # GDALDriver::Delete
 test ::osgeo::Driver_Delete {} -body {
-    $driver Delete ${PNG}_renamed
+    $driver Delete ${TIF}_renamed
 } -result $::osgeo::CE_None
 
 test DestroyDriver {} -body {
@@ -308,7 +310,7 @@ test DestroyDriver {} -body {
 
 # GDALOpen
 test ::osgeo::Open {} -body {
-    set dataset [::osgeo::Open $PNG $::osgeo::GA_ReadOnly]
+    set dataset [::osgeo::Open $TIF $::osgeo::GA_ReadOnly]
     llength $dataset
 } -result 1
 
@@ -323,19 +325,19 @@ test ::osgeo::Dataset_GetDriver {} -body {
 # GDALDataset::GetRasterXSize
 test ::osgeo::Dataset_RasterXSize_get {} -body {
     $dataset cget -RasterXSize
-} -result {32}
+} -result 699
 
 # GDALGetRasterYSize 
 # GDALDataset::GetRasterYSize
 test ::osgeo::Dataset_RasterYSize_get {} -body {
     $dataset cget -RasterYSize
-} -result {32}
+} -result 929
 
 # GDALGetRasterCount 
 # GDALDataset::GetRasterCount
 test ::osgeo::Dataset_RasterCount_get {} -body {
     $dataset cget -RasterCount
-} -result {4}
+} -result 1
 
 test ::osgeo::delete_Dataset {} -body {
     $dataset -delete
@@ -344,7 +346,7 @@ test ::osgeo::delete_Dataset {} -body {
 
 # GDALOpenShared
 test ::osgeo::OpenShared {} -body {
-    set dataset [::osgeo::OpenShared $PNG $::osgeo::GA_ReadOnly]
+    set dataset [::osgeo::OpenShared $TIF $::osgeo::GA_ReadOnly]
     llength $dataset
 } -result 1
 
@@ -353,26 +355,14 @@ test ::osgeo::OpenShared {} -body {
 # GDALDataset::GetFileList
 test ::osgeo::Dataset_GetFileList {} -body {
     $dataset GetFileList
-} -result {data/gdalicon.png}
+} -result $TIF
 
-# GDALSetProjection
-# GDALDataset::SetProjection
-test ::osgeo::Dataset_SetProjection {} -body {
-    $dataset SetProjection UTM ;# OGC WKT or PROJ.4
-} -result $::osgeo::CE_None ;# Indicates non-failure
-
-# GDALGetProjectionRef 
-# GDALDataset::GetProjectionRef
-test ::osgeo::Dataset_GetProjectionRef {} -body {
-    $dataset GetProjectionRef
-} -result UTM
-
-# Note: Same as GDALGetProjectionRef
 # GDALGetProjection
 # GDALDataset::GetProjection
+# Note: GDALGetProjectionRef is the same.
 test ::osgeo::Dataset_GetProjection {} -body {
     $dataset GetProjection
-} -result UTM
+} -result {PROJCS["NAD27 / UTM zone 16N",GEOGCS["NAD27",DATUM["North_American_Datum_1927",SPHEROID["Clarke 1866",6378206.4,294.9786982139006,AUTHORITY["EPSG","7008"]],AUTHORITY["EPSG","6267"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],AUTHORITY["EPSG","4267"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-87],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AUTHORITY["EPSG","26716"]]}
 
 #   1: top left x
 #   2: w-e pixel resolution
@@ -384,7 +374,14 @@ test ::osgeo::Dataset_GetProjection {} -body {
 # GDALDataset::GetGeoTransform
 test ::osgeo::Dataset_GetGeoTransform {} -body {
     $dataset GetGeoTransform
-} -result [list [list 0.0 1.0 0.0 0.0 0.0 1.0]]
+} -result {{444650.0 10.0 0.0 4640510.0 0.0 -10.0}}
+
+# GDALGetGCPCount
+# GDALDataset::GetGCPCount
+# XXX Test it
+test ::osgeo::Dataset_GetGCPCount {} -body {
+    $dataset GetGCPCount
+} -result 0
 
 #     id: Unique identifier, often numeric. 
 #     info: Informational message or "". 
@@ -394,38 +391,33 @@ test ::osgeo::Dataset_GetGeoTransform {} -body {
 #     y: Y position of GCP in georeferenced space. 
 #     z: Elevation of GCP, or zero if not known. 
 # ?x? ?y? ?z? ?pixel? ?line? ?info? ?id?
-test ::osgeo::GCP {} -body {
-    set GCP [::osgeo::GCP XXX 100.0 200.0 10.0 0.0 0.0 "info" "id0"]
+# XXX Bug: How to use ::osgeo::GCP ?
+test ::osgeo::new_GCP {} -body {
+    set GCP [::osgeo::new_GCP 100.0 200.0 10.0 0.0 0.0 "info" "id0"]
     llength $GCP
 } -result 1
 
 # GDALSetGCPs
 # GDALDataset::SetGCPs
-if 0 { ;# XXX wrong ## args, without KKK it segfaults
+# Parameters:
+#        nGCPCount   number of GCPs being assigned.
+#        pasGCPList  array of GCP structures being assign (nGCPCount in array).
+#        pszGCPProjection    the new OGC WKT coordinate system to assign for the GCP output coordinates. This parameter should be "" if no output coordinate system is known.
 test ::osgeo::Dataset_SetGCPs {} -body {
-    $dataset SetGCPs 1 $GCP ;# OGC WKT
-} -result $::osgeo::CE_None ;# Indicates non-failure
-}
-
-# GDALGetGCPCount
-# GDALDataset::GetGCPCount
-test ::osgeo::Dataset_GetGCPCount {} -body {
-    $dataset GetGCPCount
-} -result 0
+    $dataset SetGCPs 1 $GCP ""
+} -constraints SegFaults -result $::osgeo::CE_None ;# Indicates non-failure
 
 # GDALGetGCPs
 # GDALDataset::GetGCPs
 test ::osgeo::Dataset_GetGCPs {} -body {
     $dataset GetGCPs
-}
+} -result [list]
 
-if 0 { ;# XXX Segfaults
 # GDALSetGeoTransform
 # GDALDataset::SetGeoTransform
 test ::osgeo::Dataset_SetGeoTransform {} -body {
     $dataset SetGeoTransform [list 0.0 1.0 0.0 0.0 0.0 1.0]
-}
-}
+} -constraints SegFaults
 
 # GDALGetGCPProjection
 # GDALDataset::GetGCPProjection
@@ -433,14 +425,13 @@ test ::osgeo::Dataset_GetGCPProjection {} -body {
     $dataset GetGCPProjection
 }
 
-if 0 { ;# XXX
-# xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list?
 # GDALDatasetRasterIO
 # GDALDataset::RasterIO
+# Args: xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list?
+# XXX Bug: cannot provide optional arguments
 test ::osgeo::Dataset_ReadRaster {} -body {
     $dataset ReadRaster 5 5 10 10
-}
-}
+} -constraints Bug
 
 # GDALGetRasterBand
 # GDALDataset::GetRasterBand
@@ -451,29 +442,35 @@ test ::osgeo::Dataset_GetRasterBand {} -body {
 
 ### Band ###
 
+# GDALGetRasterDataType
+# GDALRasterBand::GetRasterDataType
+test ::osgeo::Band_DataType_get {} -body {
+    $band cget -DataType
+} -result $::osgeo::GDT_Byte
+
 # xoff, yoff, nxsize, nysize
 # GDALChecksumImage
 test ::osgeo::Band_Checksum {} -body {
     $band Checksum
-} -result 7617
+} -result 4857
 
 # GDALRasterBand::GetStatistics
 # GDALComputeBandStats
 test ::osgeo::Band_ComputeBandStats {} -body {
     $band ComputeBandStats
-} -result [list [list 64.4072265625 63.11639163552757]]
+} -result [list [list 115.04442760763878 50.70849521224453]]
 
 # GDALComputeRasterMinMax
 # GDALRasterBand::ComputeRasterMinMax
 test ::osgeo::Band_ComputeRasterMinMax {} -body {
     $band ComputeRasterMinMax
-} -result [list [list 0.0 237.0]]
+} -result [list [list 6.0 255.0]]
 
 # GDALGetBlockSize
 # GDALRasterBand::GetBlockSize
 test ::osgeo::Band_GetBlockSize {} -body {
     $band GetBlockSize
-} -result [list 32 1]
+} -result [list 699 11]
 
 # GDALGetRasterDataType
 # GDALRasterBand::GetRasterDataType
@@ -502,30 +499,33 @@ test ::osgeo::Band_DataType_get {} -body {
 # GDALRasterBand::GetColorInterpretation
 test ::osgeo::Band_GetRasterColorInterpretation {} -body {
     set cinterp [$band GetRasterColorInterpretation]
-} -result 3
+} -result $::osgeo::GCI_GrayIndex
 
 # GDALGetColorInterpretationName
 test ::osgeo::GetColorInterpretationName {} -body {
     ::osgeo::GetColorInterpretationName $cinterp
-} -result Red
+} -result Gray
 
 # GDALGetRasterMinimum
 # GDALRasterBand::GetMinimum
+# XXX Test it
 test ::osgeo::Band_GetMinimum {} -body {
     $band GetMinimum
-} -result [list [list]] ;# XXX
+} -result [list [list]]
 
 # GDALGetRasterMaximum
 # GDALRasterBand::GetMaximum
+# XXX Test it
 test ::osgeo::Band_GetMaximum {} -body {
     $band GetMaximum
-} -result [list [list]] ;# XXX
+} -result [list [list]]
 
 # GDALGetRasterNoDataValue
 # GDALRasterBand::GetNoDataValue
+# XXX Test it
 test ::osgeo::Band_GetNoDataValue {} -body {
     $band GetNoDataValue
-} -result [list [list]] ;# XXX
+} -result [list [list]]
 
 # GDALGetOverviewCount
 # GDALRasterBand::GetOverviewCount
@@ -537,46 +537,48 @@ test ::osgeo::Band_GetOverviewCount {} -body {
 # GDALRasterBand::GetXSize
 test ::osgeo::Band_XSize_get {} -body {
     $band cget -XSize
-} -result 32
+} -result 699
 
 # GDALGetRasterBandYSize
 # GDALRasterBand::GetYSize
 test ::osgeo::Band_YSize_get {} -body {
     $band cget -YSize
-} -result 32
+} -result 929
 
-# Note: Units value (e.g. elevation) = (raw pixel value * GetScale) + GetOffset
 # GDALGetRasterOffset
 # GDALRasterBand::GetOffset
+# Note: Units value (e.g. elevation) = (raw pixel value * GetScale) + GetOffset
+# XXX Test it
 test ::osgeo::Band_GetOffset {} -body {
     $band GetOffset
-} -result 0.0
+} -result [list [list]]
 
 # GDALGetRasterScale
 # GDALRasterBand::GetScale
+# XXX Test it
 test ::osgeo::Band_GetScale {} -body {
     $band GetScale
-} -result 1.0
+} -result [list [list]]
 
-#   pdfMin
-#   pdfMax
-#   pdfMean
-#   pdfStdDev
 # GDALGetRasterStatistics
 # GDALRasterBand::GetStatistics
+# Args: 
+#   bApproxOK   If TRUE statistics may be computed based on overviews or a subset of all tiles.
+#   bForce   If FALSE statistics will only be returned if it can be done without rescanning the image
+# Return: pdfMin pdfMax pdfMean pdfStdDev
 test ::osgeo::Band_GetStatistics {} -body {
-# arg1: bApproxOK   If TRUE statistics may be computed based on overviews or a subset of all tiles.
-# arg2: bForce   If FALSE statistics will only be returned if it can be done without rescanning the image
     $band GetStatistics 0 1
-} -result [list 0.0 237.0 64.4072265625 63.11639163552757]
+} -result [list 6.0 255.0 115.04442760763878 50.70849521224453]
 
 # GDALGetRasterCategoryNames
 # GDALRasterBand::GetCategoryNames
+# XXX Test it
 test ::osgeo::Band_GetRasterCategoryNames {} -body {
     $band GetRasterCategoryNames
 }
 
 # xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type?
+# XXX Bug: cannot provide optional arguments
 test ::osgeo::Band_ReadRaster {} -body {
     set data [$band ReadRaster 0 0 32 32]
     string length $data
@@ -587,10 +589,44 @@ test ::osgeo::Band_GetRasterColorTable {} -body {
     $band GetRasterColorTable
 } -result NULL
 
-#test ::osgeo::ColorTable {} -body {
-#    ::osgeo::ColorTable ;# ?palette?
-#}
+# GDALColorTable (GDALPaletteInterp=GPI_RGB)
+test ::osgeo::ColorTable {} -body {
+#   GPI_Gray    Grayscale (in GDALColorEntry.c1)
+#   GPI_RGB     Red, Green, Blue and Alpha in (in c1, c2, c3 and c4)
+#   GPI_CMYK    Cyan, Magenta, Yellow and Black (in c1, c2, c3 and c4)
+#   GPI_HLS     Hue, Lightness and Saturation (in c1, c2, and c3) 
+    set ctable [::osgeo::ColorTable $::osgeo::GPI_Gray]
+    llength $ctable
+} -result 1
+
+test ::osgeo::ColorEntry {} -body {
+    set centry [::osgeo::new_ColorEntry]
+} -result [list 0 0 0 0]
+
+test ::osgeo::ColorTable_SetColorEntry {} -body {
+#    $ctable SetColorEntry 0 $centry
+}
+
+test ::osgeo::ColorTable_GetCount {} -body {
+    $ctable GetCount
+} -result 0
+
+if 0 {
+    Command: ::osgeo::Band_GetDefaultHistogram
+    Command: ::osgeo::Band_GetDefaultRAT
+    Command: ::osgeo::Band_GetHistogram
+    Command: ::osgeo::Band_GetMaskBand
+    Command: ::osgeo::Band_GetMaskFlags
+::osgeo::Band_CreateMaskBand
+
+    GDALColorTableH table = GDALGetRasterColorTable(band);
+    GDALGetPaletteInterpretationName(GDALGetPaletteInterpretation(table))
+GDALGetColorEntryCount(table)
+
+    GDALColorEntry *entry = GDALGetColorEntry(table, i);
+}
 
 $dataset -delete
 
-cleanupTests
+puts "\n"
+cleanupTests; exit
