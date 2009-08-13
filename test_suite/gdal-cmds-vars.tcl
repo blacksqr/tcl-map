@@ -1,5 +1,6 @@
-#!/usr/local/bin/tclsh8.5
-load ../gdal.so
+#!/usr/bin/tclsh8.5
+load [file join .. gdal swig tcl gdal.so]
+load [file join .. gdal swig tcl gdalconst.so]
 
 foreach a [lsort [info commands osgeo::*]] {
     puts "Command: $a"

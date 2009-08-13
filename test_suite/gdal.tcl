@@ -59,7 +59,7 @@ test ::osgeo::VersionInfo {} -body {
 
 test ::osgeo::ReadDir {} -body {
     lsort [::osgeo::ReadDir maps]
-} -result [list . .. WrldTZA cea  chicago  world]
+} -result [list . .. .svn WrldTZA cea  chicago  world]
 
 # Note: First argument is not used anywhere, but it is supposed to be a class id for the file.
 test ::osgeo::FindFile {} -body {
