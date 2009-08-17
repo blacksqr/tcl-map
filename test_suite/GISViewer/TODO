@@ -1,0 +1,20 @@
+#XXX zoom open info loadworldfile toolbar
+#XXX alpha rgb hsl palette
+# zoom-limits centered-zoom grab Progressbar_callback
+# starpack min max enhanced-zoom Tiled-background
+# Units value (e.g. elevation as described in GetDescription in units of GetUnitType and resolution of GetDatatype) = (raw pixel value * GetScale) + GetOffset
+
+NAP 10.5.11 hsv2rgb(hsv)
+
+NAP 5.5.11 and 10.4.5. GIS
+
+GDALLoadWorldFile
+GDALGetProjectionRef 
+GDALSetProjectionRef
+GDALSetGeoTransform
+GDALGCPsToGeoTransform
+set GCPs manually
+GDALGetGCPProjection (GDALDatasetH)
+GDALGetRasterCategoryNames
+RAT
+MaskBand
