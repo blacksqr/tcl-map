@@ -15,13 +15,15 @@ TCL_BINDING_VERSION = 1.0
 TCL_MODULES = gdal.so ogr.so gdalconst.so osr.so
 TCL_INCLUDE_DIR := /usr/include
 TCL_LIB_DIR := /usr/lib
-TCL_SO_NAME := tclstub8.5
-INSTALL_DIR := /usr/local/lib
+INSTALL_DIR := /lib
 SWIGARGS += -namespace -prefix "osgeo" -pkgversion $(TCL_BINDING_VERSION)
 
 TCL_INCLUDE = -I$(TCL_INCLUDE_DIR)
 LDFLAGS += -shared -L$(TCL_LIB_DIR)
-TCL_LIB := -l$(TCL_SO_NAME)
+TCL_LIB := -ltclstub8.5
+
+#ZZZ Make nap optional
+TCL_LIB += -lnap6.4
 
 build: $(TCL_MODULES)
 
