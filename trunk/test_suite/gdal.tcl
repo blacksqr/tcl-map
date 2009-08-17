@@ -428,7 +428,7 @@ test ::osgeo::Dataset_GetGCPProjection {} -body {
 # GDALDatasetRasterIO
 # GDALDataset::RasterIO
 # Args: xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list?
-# XXX Bug: cannot provide optional arguments
+# XXX Test it with optional arguments
 test ::osgeo::Dataset_ReadRaster {} -body {
     $dataset ReadRaster 5 5 10 10
 } -constraints Bug
@@ -577,8 +577,7 @@ test ::osgeo::Band_GetRasterCategoryNames {} -body {
     $band GetRasterCategoryNames
 }
 
-# xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type?
-# XXX Bug: cannot provide optional arguments
+# xoff yoff xsize ysize ?buf_xsize? ?buf_ysize? ?buf_type?
 test ::osgeo::Band_ReadRaster {} -body {
     set data [$band ReadRaster 0 0 32 32]
     string length $data
