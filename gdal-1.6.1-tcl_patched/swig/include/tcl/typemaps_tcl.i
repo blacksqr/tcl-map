@@ -255,6 +255,36 @@ CreateListFromDoubleArray(Tcl_Interp *interp, double *first, unsigned int size )
 }
 
 /*
+ * Typemap for buffers which correspond to NAP objects.
+ * Used in Band::ReadRasterNAP()
+ */
+%typemap(in,numinputs=0) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) ( int nLen = 0, char *pBuf = 0 )
+{
+    /* %typemap(in,numinputs=0) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) */
+    $1 = &nLen;
+    $2 = &pBuf;
+  
+    $3 = Nap_CreateClientData(interp);
+    Nap_CreateStandardMissingValues($3);
+    $3->errorCode = 0;
+    Nap_InitTclResult($3);
+}
+%typemap(argout) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr )
+{
+    /* %typemap(argout) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) */
+    memcpy($4->data.c, *$2, *$1);
+    Nap_AppendStr($3, $4->id);
+    Nap_SetTclResult($3);
+}
+%typemap(freearg) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr )
+{
+  /* %typemap(freearg) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) */
+  if( *$1 ) {
+    CPLFree( *$2 );
+  }
+}
+
+/*
  * Typemap for buffers with length <-> string
  * Used in Band::ReadRaster() and Band::WriteRaster()
  *
@@ -697,7 +727,7 @@ CreateListFromDoubleArray(Tcl_Interp *interp, double *first, unsigned int size )
     CPLFree( *$1 );
 }
 
-%apply int* {int* optional_int};
+%apply int *INPUT {int* optional_int};
 
 /*
  * Typedef const char * <- Any object.
