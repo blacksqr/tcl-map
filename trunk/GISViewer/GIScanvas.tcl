@@ -1,3 +1,9 @@
+#
+# TODO: Consider GetMaximum/GetMinimum for each band.
+#       Consider GetNoValue for each band.
+#       Understand and render band types: "Cyan" - "Magenta" - "Yellow" - "Black" - "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr"
+#       
+#
 package require Tcl 8.5
 package require Tk 8.5
 package require Tkzinc 3.3
@@ -43,10 +49,9 @@ toe::class GIScanvas {
         set $Export(lat) [expr {$y_start + $x * $y_rot + $y * $y_resol}]
     }
     
-    public:
 #    method xview {args} { $Container xview {*}$args }
 #    method yview {args} { puts $args; $Container yview {*}$args }
-    method xview {cmd args} {
+    public method xview {cmd args} {
         switch -exact -- $cmd {
             "moveto" {
                 set val $args
@@ -68,7 +73,7 @@ toe::class GIScanvas {
         }
     }
     
-    method yview {cmd args} {
+    public method yview {cmd args} {
         switch -exact -- $cmd {
             "moveto" {
                 set val $args
@@ -91,7 +96,7 @@ toe::class GIScanvas {
         }
     }
     
-    method configure {args} {
+    public method configure {args} {
         foreach {var val} $args {
             switch -exact -- $var {
                 "-xscrollcommand" -
@@ -102,18 +107,23 @@ toe::class GIScanvas {
         }
     }
 
-    method cget {args} {
+    public method cget {args} {
         foreach {var val} $args {
             switch -exact -- $var {
                 "-filetypes" {
                     set formats [list]
+                    set vector_exts [list]
                     for {set i 0} {$i < [::gdal::GetDriverCount]} {incr i} {
                         set driver [::gdal::GetDriver $i]
                         set ext [list]
                         foreach a [$driver GetMetadataItem DMD_EXTENSION] {
                             lappend ext "*.$a"
                         }
-                        lappend formats [list "All files" "*"] [list [$driver GetMetadataItem DMD_LONGNAME] $ext]
+                        lappend vector_exts {*}$ext
+                        if {$ext eq ""} {
+                            puts stderr "No specific file extension specified by GDAL for [$driver cget -LongName]"
+                            set ext "*"}
+                        lappend formats [list "All files" "*"] [list "All vector files" $vector_exts] [list [$driver GetMetadataItem DMD_LONGNAME] $ext]
                     }
                     return $formats
                 }
@@ -121,7 +131,7 @@ toe::class GIScanvas {
         }
     }
     
-    method monitor {args} {
+    public method monitor {args} {
         foreach {var val} $args {
             switch -exact -- $var {
                 "-x" { set Export(x) $val }
@@ -134,7 +144,7 @@ toe::class GIScanvas {
         }
     }
 
-    method zoom {factor x y} {
+    public method zoom {factor x y} {
         $Container configure -xscrollcommand "catch {unset [self namespace]::x}; lappend [self namespace]::x" -yscrollcommand "catch {unset [self namespace]::y}; lappend [self namespace]::y"
         
         $Container scale 1 $factor $factor
@@ -157,10 +167,16 @@ toe::class GIScanvas {
         .c.map.hbar set {*}[set [self namespace]::x]
         $Container configure -yscrollcommand ".c.map.vbar set" -xscrollcommand ".c.map.hbar set"
     }
+
+    public method closeMap {} {
+        set Map(filepath) ""
+        $Dataset Delete
+        set Dataset ""
+        grid remove $Container
+        $Container remove map ;# XXX map should not be hardcoded
+    }
     
-    method openGIS {filepath} {
-        set Map(filepath) $filepath
-        
+    public method openMap {filepath} {       
         if {! [file exists $filepath]} {
             tk_messageBox -icon error -message "File does not exist"
             return
@@ -175,12 +191,18 @@ toe::class GIScanvas {
             tk_messageBox -icon error -message "Could not recognize file format"
             return
         }
+
+        if {$Map(filepath) ne ""} { ;# An image is already open, close first
+            closeMap
+        }
         
         set Dataset [::gdal::Open $filepath $::gdal::GA_ReadOnly]
         if {$Dataset eq ""} {
             tk_messageBox -icon error -message "Could not open file"
             return
         }
+        
+        set Map(filepath) $filepath
         
         set w [$Dataset cget -RasterXSize]
         set h [$Dataset cget -RasterYSize]
@@ -192,97 +214,148 @@ toe::class GIScanvas {
         
         $Container add group 1 -tags map
         
+        set layer 0
+        set images [list]
         set bands [$Dataset cget -RasterCount]
-        for {set b 1} {$b <= $bands} {incr b} {
-            set band [$Dataset GetRasterBand $b]
-            set width [$band cget -XSize]
-            set height [$band cget -YSize]
-            set size [expr {$width*$height}]
-            set datatype [$band cget -DataType]
-            set block [$band GetBlockSize]
-            set colorinterp [$band GetRasterColorInterpretation]
-            set noval [$band GetNoDataValue]
+        for {set bandNo 1} {$bandNo <= $bands} {incr bandNo} {
+            set band [$Dataset GetRasterBand $bandNo]
+            set colorinterp [::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]]
     
-            if {$colorinterp == $::gdal::GCI_GrayIndex} { ;# Grayscale
-                
-            } elseif {$colorinterp == $::gdal::GCI_AlphaBand} {
-                foreach xy [lsearch -exact -all [concat [$u value]] $noval] {
-                    set y [expr {int($xy / $new_width)}]
-                    set x [expr {int($xy % $new_width)}]
-                    $img transparency set $x $y 0
+            switch -exact -- $colorinterp {
+                "Gray" {
+                    # Note: If the next band type is "Alpha", then alpha channel is used.
+                    set img [renderGray]
+                    incr layer
                 }
-    
-                $Container itemconfigure map -alpha ZZZ
-            } elseif {$colorinterp == $::gdal::GCI_RedBand} { ;#RGB
-                
-            } elseif {$colorinterp == $::gdal::GCI_GreenBand} { ;#RGB
-                
-            } elseif {$colorinterp == $::gdal::GCI_BlueBand} { ;#RGB
-            
-            } elseif {$colorinterp == $::gdal::GCI_HueBand} { ;# HSL
-                
-            } elseif {$colorinterp == $::gdal::GCI_SaturationBand} { ;# HSL
-                
-            } elseif {$colorinterp == $::gdal::GCI_LightnessBand} { ;# HSL
-                
-            } elseif {$colorinterp == $::gdal::GCI_PaletteIndex} {
-                
-            } elseif {$colorinterp == $::gdal::GCI_CyanBand ||
-                      $colorinterp == $::gdal::GCI_MagentaBand ||
-                      $colorinterp == $::gdal::GCI_YellowBand ||
-                      $colorinterp == $::gdal::GCI_BlackBand} { ;# CMYK
-                tk_messageBox -icon error -message "Could not recognize file format. CMYK band type not supported."
-                return
-            } elseif {$colorinterp == $::gdal::GCI_YCbCr_YBand} { ;# Y Luminance
-                tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Y band type not supported."
-                return
-            } elseif {$colorinterp == $::gdal::GCI_YCbCr_CbBand} { ;# Cb Chroma
-                tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Cb band type not supported."
-                return
-            } elseif {$colorinterp == $::gdal::GCI_YCbCr_CrBand} { ;# Cr Chroma
-                tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Cr band type not supported."
-                return
-            } elseif {$colorinterp == $::gdal::GCI_Max} { ;# Max current value
-                tk_messageBox -icon error -message "Could not recognize file format. Max band type not supported."
-                return
-            } else {
-                tk_messageBox -icon error -message "Could not recognize file format. Unrecognized image band type."
-                return
+                "Red" {
+                    # Note: We assume that the next band types are "Green" and "Blue" and optionally "Alpha"
+                    set img [renderRGB]
+                    incr layer
+                }
+                "Alpha" {
+                    puts stderr "Unexpected alpha channel."
+                }
+                "Hue" {
+                    # Note: We assume that the next band types are "Saturation" and "Lightness" and optionally "Alpha"
+                    set img [renderHSV]
+                    incr layer
+                }
+                "Palette" {
+                    #XXX
+                }
+                "Cyan" - "Magenta" - "Yellow" - "Black" -
+                "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr" {
+                    tk_messageBox -icon error -message "Could not recognize file format. \"$colorinterp\" band type not supported."
+                    closeMap
+                    break
+                }
+                default {
+                    puts stderr "Could not recognize file format. Unrecognized image band type \"$colorinterp\"."
+                }
             }
+
+            $Container add icon 1 -image $img -tags band${layer}
+            $Container chggroup band${layer} map
+        } ;# for
+    } ;# method
     
-            if {$datatype != $::gdal::GDT_Byte} {
-                puts stderr "Warning: Reducing color depth"
-            }
-            
-            set data [$band ReadRaster 0 0 $width $height $width $height $::gdal::GDT_Byte]
-            binary scan $data cu* data
+    public method renderGray {} {
+        upvar bandNo bandno
+        set band [$Dataset GetRasterBand $bandno]
+        set gray [readColorBand $band]
+        incr bandno
         
-            set step $width
-            ::NAP::nap "u = u8({})"
-            for {set from 0; set to $step} {$from < $size} {incr from $step; incr to $step} {
-                set chunk [lrange $data $from $to-1]
-                ::NAP::nap "u = u // u8({$chunk})"
-            }
-            unset data
-                
-            #::NAP::nap "u = magnify_interp(reshape(u, {$height $width}), $zoom)" ;# XXX zoom
-            ::NAP::nap "u = reshape(u, {$height $width})"
-            set img [image create photo -format NAO -data $u]
-            
-            lassign [[::NAP::nap "shape(u)"]] new_height new_width
-            set size [[::NAP::nap "nels(u)"]]
-            
-            if {[string is integer $noval]} {
-                foreach xy [lsearch -exact -all [concat [$u value]] $noval] {
-                    set y [expr {int($xy / $new_width)}]
-                    set x [expr {int($xy % $new_width)}]
-                    $img transparency set $x $y 0
-                }
-            }
-            unset u ;# cleans-up memory
-            
-            $Container add icon 1 -image $img -tags band${b}
-            $Container chggroup band${b} map
+        set band [$Dataset GetRasterBand $bandno]
+        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+            set alpha [readColorBand $band]
+            ::NAP::nap "data = gray /// alpha"
+            $alpha set count -1
+            incr bandno
         }
+        $gray set count -1
+        
+        set img [image create photo -format NAO -data $data]
+        $u set count -1
+
+        return $img
     }
-}
+    
+    public method renderRGB {} {
+        upvar bandNo bandno
+        set red [readColorBand [$Dataset GetRasterBand $bandno]]
+        set green [readColorBand [$Dataset GetRasterBand [incr bandno]]]
+        set blue [readColorBand [$Dataset GetRasterBand [incr bandno]]]
+        incr bandno
+
+        set band [$Dataset GetRasterBand $bandno]
+        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+            set alpha [readColorBand $band]
+            ::NAP::nap "data = red /// green // blue // alpha"
+            $alpha set count -1
+            incr bandno
+        } else {
+            ::NAP::nap "data = red /// green // blue"
+        }
+        $red set count -1
+        $green set count -1
+        $blue set count -1
+
+        set img [image create photo -format NAO -data $data]
+        
+        return $img
+    }
+
+    public method renderHSV {} {
+        upvar bandNo bandno
+        set hue [readColorBand [$Dataset GetRasterBand $bandno]]
+        set saturation [readColorBand [$Dataset GetRasterBand [incr bandno]]]
+        set value [readColorBand [$Dataset GetRasterBand [incr bandno]]]
+        incr bandno
+
+        ::NAP::nap "data = hsv2rgb(hue /// saturation // value)"
+        
+        set band [$Dataset GetRasterBand $bandno]
+        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+            set alpha [readColorBand $band]
+            ::NAP::nap "data = data // alpha"
+            $alpha set count -1
+            incr bandno
+        }
+        
+        $hue set count -1
+        $saturation set count -1
+        $value set count -1
+
+        set img [image create photo -format NAO -data $data]
+        
+        return $img
+    }
+    
+    public method readColorBand {band} {
+        set datatype [$band cget -DataType]
+        set width [$band cget -XSize]
+        set height [$band cget -YSize]
+        set size [expr {$width*$height}]
+            
+        if {$datatype != $::gdal::GDT_Byte} {
+            puts stderr "Warning: Reducing color depth"
+        }
+        
+        set data [$band ReadRaster 0 0 $width $height $width $height $::gdal::GDT_Byte]
+        binary scan $data cu* data
+    
+        # XXX use ReadRasterNAP
+        set step $width
+        ::NAP::nap "u = u8({})"
+        for {set from 0; set to $step} {$from < $size} {incr from $step; incr to $step} {
+            set chunk [lrange $data $from $to-1]
+            ::NAP::nap "u = u // u8({$chunk})"
+        }
+            
+        #::NAP::nap "u = magnify_interp(reshape(u, {$height $width}), $zoom)" ;# XXX zoom
+        ::NAP::nap "u = reshape(u, {$height $width})"
+        
+        $u set count +1
+        return $u
+    }
+} ;# class

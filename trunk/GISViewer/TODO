@@ -1,7 +1,10 @@
-#XXX zoom open info loadworldfile toolbar
-#XXX alpha rgb hsl palette
-# zoom-limits centered-zoom grab Progressbar_callback
-# starpack min max enhanced-zoom Tiled-background
+#XXX palette email:nap-alpha-patch&segfault&ReadRasterNAP&HDF/netcdf optional
+#XXX toolbar zoom info lat/long
+#XXX OGR tcltest, OGR GISViewer
+
+# loadworldfile zoom-limits centered-zoom grab progressbar_when_opening
+# XXX starpack enhanced-zoom tiled/centered-background
+# wrap setprojects etc..
 # Units value (e.g. elevation as described in GetDescription in units of GetUnitType and resolution of GetDatatype) = (raw pixel value * GetScale) + GetOffset
 
 NAP 10.5.11 hsv2rgb(hsv)
