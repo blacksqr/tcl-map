@@ -9053,11 +9053,11 @@ _wrap_Dataset_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int ecode4 = 0 ;
   int val5 ;
   int ecode5 = 0 ;
-  void *argp8 = 0 ;
+  int temp8 ;
   int res8 = 0 ;
-  void *argp9 = 0 ;
+  int temp9 ;
   int res9 = 0 ;
-  void *argp10 = 0 ;
+  GDALDataType temp10 ;
   int res10 = 0 ;
   CPLErr result;
   
@@ -9093,25 +9093,40 @@ _wrap_Dataset_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
     arg7 = Tcl_GetStringFromObj(objv[6], &arg6);
   }
   if (objc > 7) {
-    res8 = SWIG_ConvertPtr(objv[7], &argp8,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res8)) {
-      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Dataset_WriteRaster" "', argument " "8"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(objv[7],SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_WriteRaster" "', argument " "8"" of type '" "int""'");
+      }
+      temp8 = static_cast< int >(val);
+      arg8 = &temp8;
+      res8 = SWIG_AddTmpMask(ecode);
     }
-    arg8 = reinterpret_cast< int * >(argp8);
   }
   if (objc > 8) {
-    res9 = SWIG_ConvertPtr(objv[8], &argp9,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res9)) {
-      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "Dataset_WriteRaster" "', argument " "9"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res9 = SWIG_ConvertPtr(objv[8],SWIG_as_voidptrptr(&arg9),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[8], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_WriteRaster" "', argument " "9"" of type '" "int""'");
+      }
+      temp9 = static_cast< int >(val);
+      arg9 = &temp9;
+      res9 = SWIG_AddTmpMask(ecode);
     }
-    arg9 = reinterpret_cast< int * >(argp9);
   }
   if (objc > 9) {
-    res10 = SWIG_ConvertPtr(objv[9], &argp10,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res10)) {
-      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "Dataset_WriteRaster" "', argument " "10"" of type '" "GDALDataType *""'"); 
+    if (!(SWIG_IsOK((res10 = SWIG_ConvertPtr(objv[9],SWIG_as_voidptrptr(&arg10),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[9], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_WriteRaster" "', argument " "10"" of type '" "GDALDataType""'");
+      }
+      temp10 = static_cast< GDALDataType >(val);
+      arg10 = &temp10;
+      res10 = SWIG_AddTmpMask(ecode);
     }
-    arg10 = reinterpret_cast< GDALDataType * >(argp10);
   }
   if (objc > 10) {
     {
@@ -9166,6 +9181,9 @@ _wrap_Dataset_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
     
   }
   Tcl_SetObjResult(interp,SWIG_From_int(static_cast< int >(result)));
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   {
     /* %typemap(freearg) (int nList, int* pList) */
     if (arg12) {
@@ -9174,6 +9192,9 @@ _wrap_Dataset_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   }
   return TCL_OK;
 fail:
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   {
     /* %typemap(freearg) (int nList, int* pList) */
     if (arg12) {
@@ -9210,11 +9231,11 @@ _wrap_Dataset_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int ecode5 = 0 ;
   int nLen6 = 0 ;
   char *pBuf6 = 0 ;
-  void *argp8 = 0 ;
+  int temp8 ;
   int res8 = 0 ;
-  void *argp9 = 0 ;
+  int temp9 ;
   int res9 = 0 ;
-  void *argp10 = 0 ;
+  GDALDataType temp10 ;
   int res10 = 0 ;
   CPLErr result;
   
@@ -9250,25 +9271,40 @@ _wrap_Dataset_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   } 
   arg5 = static_cast< int >(val5);
   if (objc > 6) {
-    res8 = SWIG_ConvertPtr(objv[6], &argp8,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res8)) {
-      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Dataset_ReadRaster" "', argument " "8"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(objv[6],SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[6], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_ReadRaster" "', argument " "8"" of type '" "int""'");
+      }
+      temp8 = static_cast< int >(val);
+      arg8 = &temp8;
+      res8 = SWIG_AddTmpMask(ecode);
     }
-    arg8 = reinterpret_cast< int * >(argp8);
   }
   if (objc > 7) {
-    res9 = SWIG_ConvertPtr(objv[7], &argp9,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res9)) {
-      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "Dataset_ReadRaster" "', argument " "9"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res9 = SWIG_ConvertPtr(objv[7],SWIG_as_voidptrptr(&arg9),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_ReadRaster" "', argument " "9"" of type '" "int""'");
+      }
+      temp9 = static_cast< int >(val);
+      arg9 = &temp9;
+      res9 = SWIG_AddTmpMask(ecode);
     }
-    arg9 = reinterpret_cast< int * >(argp9);
   }
   if (objc > 8) {
-    res10 = SWIG_ConvertPtr(objv[8], &argp10,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res10)) {
-      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "Dataset_ReadRaster" "', argument " "10"" of type '" "GDALDataType *""'"); 
+    if (!(SWIG_IsOK((res10 = SWIG_ConvertPtr(objv[8],SWIG_as_voidptrptr(&arg10),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[8], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Dataset_ReadRaster" "', argument " "10"" of type '" "GDALDataType""'");
+      }
+      temp10 = static_cast< GDALDataType >(val);
+      arg10 = &temp10;
+      res10 = SWIG_AddTmpMask(ecode);
     }
-    arg10 = reinterpret_cast< GDALDataType * >(argp10);
   }
   if (objc > 9) {
     {
@@ -9327,6 +9363,9 @@ _wrap_Dataset_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
     /* %typemap(argout) (int *nLen, char **pBuf ) */
     Tcl_SetObjResult(interp, Tcl_NewByteArrayObj( (unsigned char*) *arg7, *arg6 ));
   }
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   {
     /* %typemap(freearg) (int nList, int* pList) */
     if (arg12) {
@@ -9335,6 +9374,9 @@ _wrap_Dataset_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   }
   return TCL_OK;
 fail:
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   {
     /* %typemap(freearg) (int nList, int* pList) */
     if (arg12) {
@@ -10387,9 +10429,9 @@ _wrap_Band_Checksum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  int temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  int temp5 ;
   int res5 = 0 ;
   int result;
   
@@ -10414,18 +10456,28 @@ _wrap_Band_Checksum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
     arg3 = static_cast< int >(val3);
   }
   if (objc > 4) {
-    res4 = SWIG_ConvertPtr(objv[4], &argp4,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Band_Checksum" "', argument " "4"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(objv[4],SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[4], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_Checksum" "', argument " "4"" of type '" "int""'");
+      }
+      temp4 = static_cast< int >(val);
+      arg4 = &temp4;
+      res4 = SWIG_AddTmpMask(ecode);
     }
-    arg4 = reinterpret_cast< int * >(argp4);
   }
   if (objc > 5) {
-    res5 = SWIG_ConvertPtr(objv[5], &argp5,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Band_Checksum" "', argument " "5"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(objv[5],SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[5], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_Checksum" "', argument " "5"" of type '" "int""'");
+      }
+      temp5 = static_cast< int >(val);
+      arg5 = &temp5;
+      res5 = SWIG_AddTmpMask(ecode);
     }
-    arg5 = reinterpret_cast< int * >(argp5);
   }
   {
     CPLErrorReset();
@@ -10448,8 +10500,12 @@ _wrap_Band_Checksum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
     
   }
   Tcl_SetObjResult(interp,SWIG_From_int(static_cast< int >(result)));
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return TCL_OK;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return TCL_ERROR;
 }
 
@@ -10658,11 +10714,11 @@ _wrap_Band_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode5 = 0 ;
   int nLen6 = 0 ;
   char *pBuf6 = 0 ;
-  void *argp8 = 0 ;
+  int temp8 ;
   int res8 = 0 ;
-  void *argp9 = 0 ;
+  int temp9 ;
   int res9 = 0 ;
-  void *argp10 = 0 ;
+  int temp10 ;
   int res10 = 0 ;
   CPLErr result;
   
@@ -10698,25 +10754,40 @@ _wrap_Band_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   } 
   arg5 = static_cast< int >(val5);
   if (objc > 6) {
-    res8 = SWIG_ConvertPtr(objv[6], &argp8,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res8)) {
-      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Band_ReadRaster" "', argument " "8"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(objv[6],SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[6], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRaster" "', argument " "8"" of type '" "int""'");
+      }
+      temp8 = static_cast< int >(val);
+      arg8 = &temp8;
+      res8 = SWIG_AddTmpMask(ecode);
     }
-    arg8 = reinterpret_cast< int * >(argp8);
   }
   if (objc > 7) {
-    res9 = SWIG_ConvertPtr(objv[7], &argp9,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res9)) {
-      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "Band_ReadRaster" "', argument " "9"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res9 = SWIG_ConvertPtr(objv[7],SWIG_as_voidptrptr(&arg9),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRaster" "', argument " "9"" of type '" "int""'");
+      }
+      temp9 = static_cast< int >(val);
+      arg9 = &temp9;
+      res9 = SWIG_AddTmpMask(ecode);
     }
-    arg9 = reinterpret_cast< int * >(argp9);
   }
   if (objc > 8) {
-    res10 = SWIG_ConvertPtr(objv[8], &argp10,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res10)) {
-      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "Band_ReadRaster" "', argument " "10"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res10 = SWIG_ConvertPtr(objv[8],SWIG_as_voidptrptr(&arg10),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[8], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRaster" "', argument " "10"" of type '" "int""'");
+      }
+      temp10 = static_cast< int >(val);
+      arg10 = &temp10;
+      res10 = SWIG_AddTmpMask(ecode);
     }
-    arg10 = reinterpret_cast< int * >(argp10);
   }
   {
     CPLErrorReset();
@@ -10743,8 +10814,14 @@ _wrap_Band_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     /* %typemap(argout) (int *nLen, char **pBuf ) */
     Tcl_SetObjResult(interp, Tcl_NewByteArrayObj( (unsigned char*) *arg7, *arg6 ));
   }
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   return TCL_OK;
 fail:
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   return TCL_ERROR;
 }
 
@@ -10771,11 +10848,11 @@ _wrap_Band_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int ecode4 = 0 ;
   int val5 ;
   int ecode5 = 0 ;
-  void *argp8 = 0 ;
+  int temp8 ;
   int res8 = 0 ;
-  void *argp9 = 0 ;
+  int temp9 ;
   int res9 = 0 ;
-  void *argp10 = 0 ;
+  int temp10 ;
   int res10 = 0 ;
   CPLErr result;
   
@@ -10811,25 +10888,40 @@ _wrap_Band_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
     arg7 = Tcl_GetStringFromObj(objv[6], &arg6);
   }
   if (objc > 7) {
-    res8 = SWIG_ConvertPtr(objv[7], &argp8,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res8)) {
-      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Band_WriteRaster" "', argument " "8"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(objv[7],SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_WriteRaster" "', argument " "8"" of type '" "int""'");
+      }
+      temp8 = static_cast< int >(val);
+      arg8 = &temp8;
+      res8 = SWIG_AddTmpMask(ecode);
     }
-    arg8 = reinterpret_cast< int * >(argp8);
   }
   if (objc > 8) {
-    res9 = SWIG_ConvertPtr(objv[8], &argp9,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res9)) {
-      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "Band_WriteRaster" "', argument " "9"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res9 = SWIG_ConvertPtr(objv[8],SWIG_as_voidptrptr(&arg9),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[8], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_WriteRaster" "', argument " "9"" of type '" "int""'");
+      }
+      temp9 = static_cast< int >(val);
+      arg9 = &temp9;
+      res9 = SWIG_AddTmpMask(ecode);
     }
-    arg9 = reinterpret_cast< int * >(argp9);
   }
   if (objc > 9) {
-    res10 = SWIG_ConvertPtr(objv[9], &argp10,SWIGTYPE_p_int, 0 |  0 );
-    if (!SWIG_IsOK(res10)) {
-      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "Band_WriteRaster" "', argument " "10"" of type '" "int *""'"); 
+    if (!(SWIG_IsOK((res10 = SWIG_ConvertPtr(objv[9],SWIG_as_voidptrptr(&arg10),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[9], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_WriteRaster" "', argument " "10"" of type '" "int""'");
+      }
+      temp10 = static_cast< int >(val);
+      arg10 = &temp10;
+      res10 = SWIG_AddTmpMask(ecode);
     }
-    arg10 = reinterpret_cast< int * >(argp10);
   }
   {
     CPLErrorReset();
@@ -10852,8 +10944,14 @@ _wrap_Band_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
     
   }
   Tcl_SetObjResult(interp,SWIG_From_int(static_cast< int >(result)));
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   return TCL_OK;
 fail:
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
+  if (SWIG_IsNewObj(res10)) delete arg10;
   return TCL_ERROR;
 }
 
