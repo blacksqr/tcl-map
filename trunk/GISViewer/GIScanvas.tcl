@@ -265,17 +265,20 @@ toe::class GIScanvas {
         set gray [readColorBand $band]
         incr bandno
         
-        set band [$Dataset GetRasterBand $bandno]
-        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
-            set alpha [readColorBand $band]
-            ::NAP::nap "data = gray /// alpha"
-            $alpha set count -1
-            incr bandno
+        ::NAP::nap "data = gray"
+        
+        if {[$Dataset cget -RasterCount] > $bandno} {
+            set band [$Dataset GetRasterBand $bandno]
+            if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+                set alpha [readColorBand $band]
+                ::NAP::nap "data = gray /// alpha"
+                $alpha set count -1
+                incr bandno
+            }
         }
         $gray set count -1
         
         set img [image create photo -format NAO -data $data]
-        $u set count -1
 
         return $img
     }
@@ -287,14 +290,16 @@ toe::class GIScanvas {
         set blue [readColorBand [$Dataset GetRasterBand [incr bandno]]]
         incr bandno
 
-        set band [$Dataset GetRasterBand $bandno]
-        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
-            set alpha [readColorBand $band]
-            ::NAP::nap "data = red /// green // blue // alpha"
-            $alpha set count -1
-            incr bandno
-        } else {
-            ::NAP::nap "data = red /// green // blue"
+        ::NAP::nap "data = red /// green // blue"
+        
+        if {[$Dataset cget -RasterCount] > $bandno} {
+            set band [$Dataset GetRasterBand $bandno]
+            if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+                set alpha [readColorBand $band]
+                ::NAP::nap "data = data // alpha"
+                $alpha set count -1
+                incr bandno
+            }
         }
         $red set count -1
         $green set count -1
@@ -314,14 +319,15 @@ toe::class GIScanvas {
 
         ::NAP::nap "data = hsv2rgb(hue /// saturation // value)"
         
-        set band [$Dataset GetRasterBand $bandno]
-        if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
-            set alpha [readColorBand $band]
-            ::NAP::nap "data = data // alpha"
-            $alpha set count -1
-            incr bandno
+        if {[$Dataset cget -RasterCount] > $bandno} {
+            set band [$Dataset GetRasterBand $bandno]
+            if {[::gdal::GetColorInterpretationName [$band GetRasterColorInterpretation]] eq "Alpha"} {
+                set alpha [readColorBand $band]
+                ::NAP::nap "data = data // alpha"
+                $alpha set count -1
+                incr bandno
+            }
         }
-        
         $hue set count -1
         $saturation set count -1
         $value set count -1
