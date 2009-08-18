@@ -64,7 +64,7 @@ menu $menubar.file
 menu $menubar.help
 $menubar add cascade -menu $menubar.file -label File
 $menubar add cascade -menu $menubar.help -label Help
-$menubar.file add command -label Open -command {open_file [tk_getOpenFile -filetypes [$map cget -filetypes]]}
+$menubar.file add command -label Open -command file_open
 $menubar.file add command -label Info -command XXX
 $menubar.file add separator
 $menubar.file add command -label Exit -command exit
@@ -79,13 +79,14 @@ if {$::argv ne ""} {
         puts stderr "Syntax: $argv0 <filepath>"
         exit 1
     }
-    $map openGIS $::argv
+    $map openMap $::argv
 }
 
-proc open_file {filepath} {
+proc file_open {} {
     global map
+    set filepath [tk_getOpenFile -filetypes [$map cget -filetypes]]
     if {$filepath ne ""} {
-        $map openGIS $::argv
+        $map openMap $filepath
     }
 }
 
