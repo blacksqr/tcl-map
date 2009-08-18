@@ -54,7 +54,7 @@ trace add variable ::info1 write update_status
 
 proc update_status {args} {
     global Status info1
-    set Status "X: $::info1(x)   Y: $::info1(y)    Latitude: $::info1(lat)°   Longitude: $::info1(long)°"
+    set Status "X: $::info1(x)px   Y: $::info1(y)px    Northing: $::info1(lat)m   Easting: $::info1(long)m    Latitude: $::info1(lat)°   Longitude: $::info1(long)°"
 }
 
 set menubar [menu .menubar -relief flat]
