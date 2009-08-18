@@ -1,0 +1,233 @@
+Command: ::ogr::BuildPolygonFromEdges
+Command: ::ogr::CreateGeometryFromGML
+Command: ::ogr::CreateGeometryFromJson
+Command: ::ogr::CreateGeometryFromWkb
+Command: ::ogr::CreateGeometryFromWkt
+Command: ::ogr::DataSource
+Command: ::ogr::DataSource_CopyLayer
+Command: ::ogr::DataSource_CreateLayer
+Command: ::ogr::DataSource_DeleteLayer
+Command: ::ogr::DataSource_ExecuteSQL
+Command: ::ogr::DataSource_GetDriver
+Command: ::ogr::DataSource_GetLayerByIndex
+Command: ::ogr::DataSource_GetLayerByName
+Command: ::ogr::DataSource_GetLayerCount
+Command: ::ogr::DataSource_GetName
+Command: ::ogr::DataSource_GetRefCount
+Command: ::ogr::DataSource_GetSummaryRefCount
+Command: ::ogr::DataSource_ReleaseResultSet
+Command: ::ogr::DataSource_TestCapability
+Command: ::ogr::DataSource_name_get
+Command: ::ogr::DontUseExceptions
+Command: ::ogr::Driver
+Command: ::ogr::Driver_CopyDataSource
+Command: ::ogr::Driver_CreateDataSource
+Command: ::ogr::Driver_DeleteDataSource
+Command: ::ogr::Driver_GetName
+Command: ::ogr::Driver_Open
+Command: ::ogr::Driver_TestCapability
+Command: ::ogr::Driver_name_get
+Command: ::ogr::Feature
+Command: ::ogr::FeatureDefn
+Command: ::ogr::FeatureDefn_AddFieldDefn
+Command: ::ogr::FeatureDefn_GetFieldCount
+Command: ::ogr::FeatureDefn_GetFieldDefn
+Command: ::ogr::FeatureDefn_GetFieldIndex
+Command: ::ogr::FeatureDefn_GetGeomType
+Command: ::ogr::FeatureDefn_GetName
+Command: ::ogr::FeatureDefn_GetReferenceCount
+Command: ::ogr::FeatureDefn_SetGeomType
+Command: ::ogr::Feature_Clone
+Command: ::ogr::Feature_DumpReadable
+Command: ::ogr::Feature_Equal
+Command: ::ogr::Feature_GetDefnRef
+Command: ::ogr::Feature_GetFID
+Command: ::ogr::Feature_GetFieldAsDateTime
+Command: ::ogr::Feature_GetFieldAsDouble
+Command: ::ogr::Feature_GetFieldAsDoubleList
+Command: ::ogr::Feature_GetFieldAsInteger
+Command: ::ogr::Feature_GetFieldAsIntegerList
+Command: ::ogr::Feature_GetFieldAsString
+Command: ::ogr::Feature_GetFieldAsStringList
+Command: ::ogr::Feature_GetFieldCount
+Command: ::ogr::Feature_GetFieldDefnRef
+Command: ::ogr::Feature_GetFieldIndex
+Command: ::ogr::Feature_GetFieldType
+Command: ::ogr::Feature_GetGeometryRef
+Command: ::ogr::Feature_GetStyleString
+Command: ::ogr::Feature_IsFieldSet
+Command: ::ogr::Feature_SetFID
+Command: ::ogr::Feature_SetField
+Command: ::ogr::Feature_SetFieldDoubleList
+Command: ::ogr::Feature_SetFieldIntegerList
+Command: ::ogr::Feature_SetFieldStringList
+Command: ::ogr::Feature_SetFrom
+Command: ::ogr::Feature_SetGeometry
+Command: ::ogr::Feature_SetGeometryDirectly
+Command: ::ogr::Feature_SetStyleString
+Command: ::ogr::Feature_UnsetField
+Command: ::ogr::FieldDefn
+Command: ::ogr::FieldDefn_GetFieldTypeName
+Command: ::ogr::FieldDefn_GetJustify
+Command: ::ogr::FieldDefn_GetName
+Command: ::ogr::FieldDefn_GetNameRef
+Command: ::ogr::FieldDefn_GetPrecision
+Command: ::ogr::FieldDefn_GetType
+Command: ::ogr::FieldDefn_GetWidth
+Command: ::ogr::FieldDefn_SetJustify
+Command: ::ogr::FieldDefn_SetName
+Command: ::ogr::FieldDefn_SetPrecision
+Command: ::ogr::FieldDefn_SetType
+Command: ::ogr::FieldDefn_SetWidth
+Command: ::ogr::Geometry
+Command: ::ogr::Geometry_AddGeometry
+Command: ::ogr::Geometry_AddGeometryDirectly
+Command: ::ogr::Geometry_AddPoint
+Command: ::ogr::Geometry_AddPoint_2D
+Command: ::ogr::Geometry_AssignSpatialReference
+Command: ::ogr::Geometry_Buffer
+Command: ::ogr::Geometry_Centroid
+Command: ::ogr::Geometry_Clone
+Command: ::ogr::Geometry_CloseRings
+Command: ::ogr::Geometry_Contains
+Command: ::ogr::Geometry_ConvexHull
+Command: ::ogr::Geometry_Crosses
+Command: ::ogr::Geometry_Difference
+Command: ::ogr::Geometry_Disjoint
+Command: ::ogr::Geometry_Distance
+Command: ::ogr::Geometry_Empty
+Command: ::ogr::Geometry_Equal
+Command: ::ogr::Geometry_ExportToGML
+Command: ::ogr::Geometry_ExportToJson
+Command: ::ogr::Geometry_ExportToKML
+Command: ::ogr::Geometry_ExportToWkb
+Command: ::ogr::Geometry_ExportToWkt
+Command: ::ogr::Geometry_FlattenTo2D
+Command: ::ogr::Geometry_GetArea
+Command: ::ogr::Geometry_GetBoundary
+Command: ::ogr::Geometry_GetCoordinateDimension
+Command: ::ogr::Geometry_GetDimension
+Command: ::ogr::Geometry_GetEnvelope
+Command: ::ogr::Geometry_GetGeometryCount
+Command: ::ogr::Geometry_GetGeometryName
+Command: ::ogr::Geometry_GetGeometryRef
+Command: ::ogr::Geometry_GetGeometryType
+Command: ::ogr::Geometry_GetPoint
+Command: ::ogr::Geometry_GetPointCount
+Command: ::ogr::Geometry_GetPoint_2D
+Command: ::ogr::Geometry_GetSpatialReference
+Command: ::ogr::Geometry_GetX
+Command: ::ogr::Geometry_GetY
+Command: ::ogr::Geometry_GetZ
+Command: ::ogr::Geometry_Intersect
+Command: ::ogr::Geometry_Intersection
+Command: ::ogr::Geometry_IsEmpty
+Command: ::ogr::Geometry_IsRing
+Command: ::ogr::Geometry_IsSimple
+Command: ::ogr::Geometry_IsValid
+Command: ::ogr::Geometry_Overlaps
+Command: ::ogr::Geometry_SetCoordinateDimension
+Command: ::ogr::Geometry_SetPoint
+Command: ::ogr::Geometry_SetPoint_2D
+Command: ::ogr::Geometry_SymmetricDifference
+Command: ::ogr::Geometry_Touches
+Command: ::ogr::Geometry_Transform
+Command: ::ogr::Geometry_TransformTo
+Command: ::ogr::Geometry_Union
+Command: ::ogr::Geometry_Within
+Command: ::ogr::Geometry_WkbSize
+Command: ::ogr::GetDriver
+Command: ::ogr::GetDriverByName
+Command: ::ogr::GetDriverCount
+Command: ::ogr::GetOpenDS
+Command: ::ogr::GetOpenDSCount
+Command: ::ogr::Layer
+Command: ::ogr::Layer_CommitTransaction
+Command: ::ogr::Layer_CreateFeature
+Command: ::ogr::Layer_CreateField
+Command: ::ogr::Layer_DeleteFeature
+Command: ::ogr::Layer_GetExtent
+Command: ::ogr::Layer_GetFIDColumn
+Command: ::ogr::Layer_GetFeature
+Command: ::ogr::Layer_GetFeatureCount
+Command: ::ogr::Layer_GetFeaturesRead
+Command: ::ogr::Layer_GetGeometryColumn
+Command: ::ogr::Layer_GetLayerDefn
+Command: ::ogr::Layer_GetName
+Command: ::ogr::Layer_GetNextFeature
+Command: ::ogr::Layer_GetRefCount
+Command: ::ogr::Layer_GetSpatialFilter
+Command: ::ogr::Layer_GetSpatialRef
+Command: ::ogr::Layer_ResetReading
+Command: ::ogr::Layer_RollbackTransaction
+Command: ::ogr::Layer_SetAttributeFilter
+Command: ::ogr::Layer_SetFeature
+Command: ::ogr::Layer_SetNextByIndex
+Command: ::ogr::Layer_SetSpatialFilter
+Command: ::ogr::Layer_SetSpatialFilterRect
+Command: ::ogr::Layer_StartTransaction
+Command: ::ogr::Layer_SyncToDisk
+Command: ::ogr::Layer_TestCapability
+Command: ::ogr::Open
+Command: ::ogr::OpenShared
+Command: ::ogr::RegisterAll
+Command: ::ogr::SetGenerate_DB2_V72_BYTE_ORDER
+Command: ::ogr::UseExceptions
+Command: ::ogr::delete_DataSource
+Command: ::ogr::delete_Feature
+Command: ::ogr::delete_FeatureDefn
+Command: ::ogr::delete_FieldDefn
+Command: ::ogr::delete_Geometry
+Command: ::ogr::new_Feature
+Command: ::ogr::new_FeatureDefn
+Command: ::ogr::new_FieldDefn
+Command: ::ogr::new_Geometry
+Var: ::ogr::ODrCCreateDataSource = CreateDataSource
+Var: ::ogr::ODrCDeleteDataSource = DeleteDataSource
+Var: ::ogr::ODsCCreateLayer = CreateLayer
+Var: ::ogr::ODsCDeleteLayer = DeleteLayer
+Var: ::ogr::OFTBinary = 8
+Var: ::ogr::OFTDate = 9
+Var: ::ogr::OFTDateTime = 11
+Var: ::ogr::OFTInteger = 0
+Var: ::ogr::OFTIntegerList = 1
+Var: ::ogr::OFTReal = 2
+Var: ::ogr::OFTRealList = 3
+Var: ::ogr::OFTString = 4
+Var: ::ogr::OFTStringList = 5
+Var: ::ogr::OFTTime = 10
+Var: ::ogr::OFTWideString = 6
+Var: ::ogr::OFTWideStringList = 7
+Var: ::ogr::OJLeft = 1
+Var: ::ogr::OJRight = 2
+Var: ::ogr::OJUndefined = 0
+Var: ::ogr::OLCCreateField = CreateField
+Var: ::ogr::OLCDeleteFeature = DeleteFeature
+Var: ::ogr::OLCFastFeatureCount = FastFeatureCount
+Var: ::ogr::OLCFastGetExtent = FastGetExtent
+Var: ::ogr::OLCFastSetNextByIndex = FastSetNextByIndex
+Var: ::ogr::OLCFastSpatialFilter = FastSpatialFilter
+Var: ::ogr::OLCRandomRead = RandomRead
+Var: ::ogr::OLCRandomWrite = RandomWrite
+Var: ::ogr::OLCSequentialWrite = SequentialWrite
+Var: ::ogr::OLCTransactions = Transactions
+Var: ::ogr::wkb25Bit = -2147483648
+Var: ::ogr::wkbGeometryCollection = 7
+Var: ::ogr::wkbGeometryCollection25D = -2147483641
+Var: ::ogr::wkbLineString = 2
+Var: ::ogr::wkbLineString25D = -2147483646
+Var: ::ogr::wkbLinearRing = 101
+Var: ::ogr::wkbMultiLineString = 5
+Var: ::ogr::wkbMultiLineString25D = -2147483643
+Var: ::ogr::wkbMultiPoint = 4
+Var: ::ogr::wkbMultiPoint25D = -2147483644
+Var: ::ogr::wkbMultiPolygon = 6
+Var: ::ogr::wkbMultiPolygon25D = -2147483642
+Var: ::ogr::wkbNDR = 1
+Var: ::ogr::wkbNone = 100
+Var: ::ogr::wkbPoint = 1
+Var: ::ogr::wkbPoint25D = -2147483647
+Var: ::ogr::wkbPolygon = 3
+Var: ::ogr::wkbPolygon25D = -2147483645
+Var: ::ogr::wkbUnknown = 0
+Var: ::ogr::wkbXDR = 0

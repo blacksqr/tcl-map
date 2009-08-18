@@ -1,12 +1,13 @@
 #!/usr/bin/tclsh8.5
-load [file join .. gdal swig tcl ogr.so]
+lappend auto_path /usr/local/lib
+package require ogr
 
-foreach a [lsort [info commands osgeo::*]] {
+foreach a [lsort [info commands ::ogr::*]] {
     puts "Command: $a"
 }
-foreach a [lsort [info procs osgeo::*]] {
+foreach a [lsort [info procs ::ogr::*]] {
     puts "Proc: $a {[info args $a]}"
 }
-foreach a [lsort [info vars osgeo::*]] {
+foreach a [lsort [info vars ::ogr::*]] {
     puts "Var: $a = [set $a]"
 }

@@ -1644,8 +1644,8 @@ static swig_module_info swig_module = {swig_types, 8, 0, 0, 0, 0};
 
 #define SWIG_init    Osr_Init
 #define SWIG_name    "osr"
-#define SWIG_prefix  "osgeo::"
-#define SWIG_namespace "osgeo"
+#define SWIG_prefix  "osr::"
+#define SWIG_namespace "osr"
 
 #define SWIG_version "1.0"
 
@@ -2345,7 +2345,7 @@ extern "C" {
 #endif
 SWIGINTERN int
 _wrap_UseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::UseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":osr::UseExceptions ") == TCL_ERROR) SWIG_fail;
   UseExceptions();
   
   return TCL_OK;
@@ -2356,7 +2356,7 @@ fail:
 
 SWIGINTERN int
 _wrap_DontUseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":osr::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
   DontUseExceptions();
   
   return TCL_OK;
@@ -2379,7 +2379,7 @@ _wrap_GetWellKnownGeogCSAsWKT(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetWellKnownGeogCSAsWKT name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::GetWellKnownGeogCSAsWKT name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetWellKnownGeogCSAsWKT" "', argument " "1"" of type '" "char const *""'");
@@ -2450,7 +2450,7 @@ _wrap_GetUserInputAsWKT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetUserInputAsWKT name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::GetUserInputAsWKT name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetUserInputAsWKT" "', argument " "1"" of type '" "char const *""'");
@@ -2515,7 +2515,7 @@ _wrap_new_SpatialReference(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int alloc1 = 0 ;
   OSRSpatialReferenceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::new_SpatialReference ?wkt? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:osr::new_SpatialReference ?wkt? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
     if (!SWIG_IsOK(res1)) {
@@ -2558,7 +2558,7 @@ _wrap_delete_SpatialReference(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_SpatialReference self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::delete_SpatialReference self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SpatialReference" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2598,7 +2598,7 @@ _wrap_SpatialReference___str__(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference___str__ self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference___str__ self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference___str__" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2642,7 +2642,7 @@ _wrap_SpatialReference_IsSame(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_IsSame self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_IsSame self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_IsSame" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2690,7 +2690,7 @@ _wrap_SpatialReference_IsSameGeogCS(ClientData clientData SWIGUNUSED, Tcl_Interp
   int res2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_IsSameGeogCS self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_IsSameGeogCS self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_IsSameGeogCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2735,7 +2735,7 @@ _wrap_SpatialReference_IsGeographic(ClientData clientData SWIGUNUSED, Tcl_Interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_IsGeographic self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_IsGeographic self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_IsGeographic" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2775,7 +2775,7 @@ _wrap_SpatialReference_IsProjected(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_IsProjected self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_IsProjected self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_IsProjected" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2815,7 +2815,7 @@ _wrap_SpatialReference_IsLocal(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_IsLocal self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_IsLocal self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_IsLocal" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2866,7 +2866,7 @@ _wrap_SpatialReference_SetAuthority(ClientData clientData SWIGUNUSED, Tcl_Interp
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetAuthority self pszTargetKey pszAuthority nCode ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetAuthority self pszTargetKey pszAuthority nCode ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetAuthority" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -2944,7 +2944,7 @@ _wrap_SpatialReference_GetAttrValue(ClientData clientData SWIGUNUSED, Tcl_Interp
   int ecode3 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::SpatialReference_GetAttrValue self name ?child? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osr::SpatialReference_GetAttrValue self name ?child? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetAttrValue" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3006,7 +3006,7 @@ _wrap_SpatialReference_SetAttrValue(ClientData clientData SWIGUNUSED, Tcl_Interp
   int alloc3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetAttrValue self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetAttrValue self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetAttrValue" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3079,7 +3079,7 @@ _wrap_SpatialReference_SetAngularUnits(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetAngularUnits self name to_radians ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetAngularUnits self name to_radians ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetAngularUnits" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3143,7 +3143,7 @@ _wrap_SpatialReference_GetAngularUnits(ClientData clientData SWIGUNUSED, Tcl_Int
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_GetAngularUnits self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_GetAngularUnits self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetAngularUnits" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3190,7 +3190,7 @@ _wrap_SpatialReference_SetLinearUnits(ClientData clientData SWIGUNUSED, Tcl_Inte
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetLinearUnits self name to_meters ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetLinearUnits self name to_meters ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLinearUnits" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3261,7 +3261,7 @@ _wrap_SpatialReference_SetLinearUnitsAndUpdateParameters(ClientData clientData S
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetLinearUnitsAndUpdateParameters self name to_meters ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetLinearUnitsAndUpdateParameters self name to_meters ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLinearUnitsAndUpdateParameters" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3325,7 +3325,7 @@ _wrap_SpatialReference_GetLinearUnits(ClientData clientData SWIGUNUSED, Tcl_Inte
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_GetLinearUnits self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_GetLinearUnits self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetLinearUnits" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3365,7 +3365,7 @@ _wrap_SpatialReference_GetLinearUnitsName(ClientData clientData SWIGUNUSED, Tcl_
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_GetLinearUnitsName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_GetLinearUnitsName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetLinearUnitsName" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3409,7 +3409,7 @@ _wrap_SpatialReference_GetAuthorityCode(ClientData clientData SWIGUNUSED, Tcl_In
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_GetAuthorityCode self target_key ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_GetAuthorityCode self target_key ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetAuthorityCode" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3460,7 +3460,7 @@ _wrap_SpatialReference_GetAuthorityName(ClientData clientData SWIGUNUSED, Tcl_In
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_GetAuthorityName self target_key ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_GetAuthorityName self target_key ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetAuthorityName" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3513,7 +3513,7 @@ _wrap_SpatialReference_SetUTM(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::SpatialReference_SetUTM self zone ?north? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osr::SpatialReference_SetUTM self zone ?north? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetUTM" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3590,7 +3590,7 @@ _wrap_SpatialReference_SetStatePlane(ClientData clientData SWIGUNUSED, Tcl_Inter
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osgeo::SpatialReference_SetStatePlane self zone ?is_nad83? ?unitsname? ?units? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osr::SpatialReference_SetStatePlane self zone ?is_nad83? ?unitsname? ?units? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetStatePlane" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3670,7 +3670,7 @@ _wrap_SpatialReference_AutoIdentifyEPSG(ClientData clientData SWIGUNUSED, Tcl_In
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_AutoIdentifyEPSG self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_AutoIdentifyEPSG self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_AutoIdentifyEPSG" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3726,7 +3726,7 @@ _wrap_SpatialReference_SetProjection(ClientData clientData SWIGUNUSED, Tcl_Inter
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_SetProjection self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_SetProjection self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetProjection" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3792,7 +3792,7 @@ _wrap_SpatialReference_SetProjParm(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetProjParm self name val ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetProjParm self name val ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetProjParm" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3863,7 +3863,7 @@ _wrap_SpatialReference_GetProjParm(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode3 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::SpatialReference_GetProjParm self name ?default_val? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osr::SpatialReference_GetProjParm self name ?default_val? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetProjParm" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3924,7 +3924,7 @@ _wrap_SpatialReference_SetNormProjParm(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::SpatialReference_SetNormProjParm self name val ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:osr::SpatialReference_SetNormProjParm self name val ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetNormProjParm" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -3995,7 +3995,7 @@ _wrap_SpatialReference_GetNormProjParm(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode3 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::SpatialReference_GetNormProjParm self name ?default_val? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osr::SpatialReference_GetNormProjParm self name ?default_val? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetNormProjParm" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4067,7 +4067,7 @@ _wrap_SpatialReference_SetACEA(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode7 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osgeo::SpatialReference_SetACEA self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osr::SpatialReference_SetACEA self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetACEA" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4161,7 +4161,7 @@ _wrap_SpatialReference_SetAE(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetAE self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetAE self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetAE" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4245,7 +4245,7 @@ _wrap_SpatialReference_SetBonne(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetBonne self stdp cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetBonne self stdp cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetBonne" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4329,7 +4329,7 @@ _wrap_SpatialReference_SetCEA(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetCEA self stdp1 cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetCEA self stdp1 cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetCEA" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4413,7 +4413,7 @@ _wrap_SpatialReference_SetCS(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetCS self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetCS self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4503,7 +4503,7 @@ _wrap_SpatialReference_SetEC(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode7 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osgeo::SpatialReference_SetEC self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osr::SpatialReference_SetEC self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetEC" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4594,7 +4594,7 @@ _wrap_SpatialReference_SetEckertIV(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetEckertIV self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetEckertIV self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetEckertIV" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4670,7 +4670,7 @@ _wrap_SpatialReference_SetEckertVI(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetEckertVI self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetEckertVI self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetEckertVI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4749,7 +4749,7 @@ _wrap_SpatialReference_SetEquirectangular(ClientData clientData SWIGUNUSED, Tcl_
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetEquirectangular self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetEquirectangular self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetEquirectangular" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4836,7 +4836,7 @@ _wrap_SpatialReference_SetEquirectangular2(ClientData clientData SWIGUNUSED, Tcl
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetEquirectangular2 self clat clong pseudostdparallellat fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetEquirectangular2 self clat clong pseudostdparallellat fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetEquirectangular2" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -4928,7 +4928,7 @@ _wrap_SpatialReference_SetGaussSchreiberTMercator(ClientData clientData SWIGUNUS
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetGaussSchreiberTMercator self clat clong sc fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetGaussSchreiberTMercator self clat clong sc fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGaussSchreiberTMercator" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5014,7 +5014,7 @@ _wrap_SpatialReference_SetGS(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetGS self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetGS self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5090,7 +5090,7 @@ _wrap_SpatialReference_SetGH(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetGH self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetGH self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGH" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5169,7 +5169,7 @@ _wrap_SpatialReference_SetGEOS(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetGEOS self cm satelliteheight fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetGEOS self cm satelliteheight fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGEOS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5253,7 +5253,7 @@ _wrap_SpatialReference_SetGnomonic(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetGnomonic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetGnomonic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGnomonic" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5346,7 +5346,7 @@ _wrap_SpatialReference_SetHOM(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode8 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:osgeo::SpatialReference_SetHOM self clat clong azimuth recttoskew scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:osr::SpatialReference_SetHOM self clat clong azimuth recttoskew scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetHOM" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5457,7 +5457,7 @@ _wrap_SpatialReference_SetHOM2PNO(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int ecode9 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:osgeo::SpatialReference_SetHOM2PNO self clat dfLat1 dfLong1 dfLat2 dfLong2 scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:osr::SpatialReference_SetHOM2PNO self clat dfLat1 dfLong1 dfLat2 dfLong2 scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetHOM2PNO" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5570,7 +5570,7 @@ _wrap_SpatialReference_SetKrovak(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode8 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:osgeo::SpatialReference_SetKrovak self clat clong azimuth pseudostdparallellat scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooooo:osr::SpatialReference_SetKrovak self clat clong azimuth pseudostdparallellat scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetKrovak" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5669,7 +5669,7 @@ _wrap_SpatialReference_SetLAEA(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetLAEA self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetLAEA self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLAEA" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5759,7 +5759,7 @@ _wrap_SpatialReference_SetLCC(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode7 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osgeo::SpatialReference_SetLCC self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osr::SpatialReference_SetLCC self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLCC" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5856,7 +5856,7 @@ _wrap_SpatialReference_SetLCC1SP(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetLCC1SP self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetLCC1SP self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLCC1SP" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -5951,7 +5951,7 @@ _wrap_SpatialReference_SetLCCB(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode7 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osgeo::SpatialReference_SetLCCB self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osr::SpatialReference_SetLCCB self stdp1 stdp2 clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLCCB" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6045,7 +6045,7 @@ _wrap_SpatialReference_SetMC(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetMC self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetMC self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetMC" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6132,7 +6132,7 @@ _wrap_SpatialReference_SetMercator(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetMercator self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetMercator self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetMercator" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6218,7 +6218,7 @@ _wrap_SpatialReference_SetMollweide(ClientData clientData SWIGUNUSED, Tcl_Interp
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetMollweide self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetMollweide self cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetMollweide" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6297,7 +6297,7 @@ _wrap_SpatialReference_SetNZMG(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetNZMG self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetNZMG self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetNZMG" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6384,7 +6384,7 @@ _wrap_SpatialReference_SetOS(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetOS self dfOriginLat dfCMeridian scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetOS self dfOriginLat dfCMeridian scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetOS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6473,7 +6473,7 @@ _wrap_SpatialReference_SetOrthographic(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetOrthographic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetOrthographic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetOrthographic" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6557,7 +6557,7 @@ _wrap_SpatialReference_SetPolyconic(ClientData clientData SWIGUNUSED, Tcl_Interp
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetPolyconic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetPolyconic self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetPolyconic" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6644,7 +6644,7 @@ _wrap_SpatialReference_SetPS(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetPS self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetPS self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetPS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6730,7 +6730,7 @@ _wrap_SpatialReference_SetRobinson(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetRobinson self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetRobinson self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetRobinson" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6806,7 +6806,7 @@ _wrap_SpatialReference_SetSinusoidal(ClientData clientData SWIGUNUSED, Tcl_Inter
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetSinusoidal self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetSinusoidal self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetSinusoidal" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6888,7 +6888,7 @@ _wrap_SpatialReference_SetStereographic(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetStereographic self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetStereographic self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetStereographic" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -6977,7 +6977,7 @@ _wrap_SpatialReference_SetSOC(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetSOC self latitudeoforigin cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetSOC self latitudeoforigin cm fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetSOC" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7064,7 +7064,7 @@ _wrap_SpatialReference_SetTM(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetTM self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetTM self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetTM" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7160,7 +7160,7 @@ _wrap_SpatialReference_SetTMVariant(ClientData clientData SWIGUNUSED, Tcl_Interp
   int ecode7 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osgeo::SpatialReference_SetTMVariant self pszVariantName clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooo:osr::SpatialReference_SetTMVariant self pszVariantName clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetTMVariant" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7256,7 +7256,7 @@ _wrap_SpatialReference_SetTMG(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::SpatialReference_SetTMG self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osr::SpatialReference_SetTMG self clat clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetTMG" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7343,7 +7343,7 @@ _wrap_SpatialReference_SetTMSO(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode6 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osgeo::SpatialReference_SetTMSO self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo:osr::SpatialReference_SetTMSO self clat clong scale fe fn ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetTMSO" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7429,7 +7429,7 @@ _wrap_SpatialReference_SetVDG(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode4 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::SpatialReference_SetVDG self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:osr::SpatialReference_SetVDG self clong fe fn ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetVDG" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7500,7 +7500,7 @@ _wrap_SpatialReference_SetWellKnownGeogCS(ClientData clientData SWIGUNUSED, Tcl_
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_SetWellKnownGeogCS self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_SetWellKnownGeogCS self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetWellKnownGeogCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7563,7 +7563,7 @@ _wrap_SpatialReference_SetFromUserInput(ClientData clientData SWIGUNUSED, Tcl_In
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_SetFromUserInput self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_SetFromUserInput self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetFromUserInput" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7625,7 +7625,7 @@ _wrap_SpatialReference_CopyGeogCSFrom(ClientData clientData SWIGUNUSED, Tcl_Inte
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_CopyGeogCSFrom self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_CopyGeogCSFrom self rhs ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_CopyGeogCSFrom" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7703,7 +7703,7 @@ _wrap_SpatialReference_SetTOWGS84(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int ecode8 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|oooo:osgeo::SpatialReference_SetTOWGS84 self p1 p2 p3 ?p4? ?p5? ?p6? ?p7? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|oooo:osr::SpatialReference_SetTOWGS84 self p1 p2 p3 ?p4? ?p5? ?p6? ?p7? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetTOWGS84" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7804,7 +7804,7 @@ _wrap_SpatialReference_GetTOWGS84(ClientData clientData SWIGUNUSED, Tcl_Interp *
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_GetTOWGS84 self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_GetTOWGS84 self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_GetTOWGS84" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7866,7 +7866,7 @@ _wrap_SpatialReference_SetLocalCS(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_SetLocalCS self pszName ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_SetLocalCS self pszName ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetLocalCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -7957,7 +7957,7 @@ _wrap_SpatialReference_SetGeogCS(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode10 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo|oooo:osgeo::SpatialReference_SetGeogCS self pszGeogName pszDatumName pszEllipsoidName dfSemiMajor dfInvFlattening ?pszPMName? ?dfPMOffset? ?pszUnits? ?dfConvertToRadians? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo|oooo:osr::SpatialReference_SetGeogCS self pszGeogName pszDatumName pszEllipsoidName dfSemiMajor dfInvFlattening ?pszPMName? ?dfPMOffset? ?pszUnits? ?dfConvertToRadians? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetGeogCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8076,7 +8076,7 @@ _wrap_SpatialReference_SetProjCS(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::SpatialReference_SetProjCS self ?name? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:osr::SpatialReference_SetProjCS self ?name? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_SetProjCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8139,7 +8139,7 @@ _wrap_SpatialReference_ImportFromWkt(ClientData clientData SWIGUNUSED, Tcl_Inter
   char *val2 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromWkt self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromWkt self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromWkt" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8200,7 +8200,7 @@ _wrap_SpatialReference_ImportFromProj4(ClientData clientData SWIGUNUSED, Tcl_Int
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromProj4 self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromProj4 self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromProj4" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8263,7 +8263,7 @@ _wrap_SpatialReference_ImportFromUrl(ClientData clientData SWIGUNUSED, Tcl_Inter
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromUrl self url ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromUrl self url ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromUrl" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8323,7 +8323,7 @@ _wrap_SpatialReference_ImportFromESRI(ClientData clientData SWIGUNUSED, Tcl_Inte
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromESRI self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromESRI self ppszInput ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromESRI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8409,7 +8409,7 @@ _wrap_SpatialReference_ImportFromEPSG(ClientData clientData SWIGUNUSED, Tcl_Inte
   int ecode2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromEPSG self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromEPSG self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromEPSG" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8476,7 +8476,7 @@ _wrap_SpatialReference_ImportFromPCI(ClientData clientData SWIGUNUSED, Tcl_Inter
   double argin4[17] ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|oo:osgeo::SpatialReference_ImportFromPCI self proj ?units? ?argin? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|oo:osr::SpatialReference_ImportFromPCI self proj ?units? ?argin? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromPCI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8586,7 +8586,7 @@ _wrap_SpatialReference_ImportFromUSGS(ClientData clientData SWIGUNUSED, Tcl_Inte
   int ecode5 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osgeo::SpatialReference_ImportFromUSGS self proj_code ?zone? ?argin? ?datum_code? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osr::SpatialReference_ImportFromUSGS self proj_code ?zone? ?argin? ?datum_code? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromUSGS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8692,7 +8692,7 @@ _wrap_SpatialReference_ImportFromXML(ClientData clientData SWIGUNUSED, Tcl_Inter
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromXML self xmlString ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromXML self xmlString ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromXML" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8755,7 +8755,7 @@ _wrap_SpatialReference_ImportFromMICoordSys(ClientData clientData SWIGUNUSED, Tc
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SpatialReference_ImportFromMICoordSys self pszCoordSys ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::SpatialReference_ImportFromMICoordSys self pszCoordSys ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ImportFromMICoordSys" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8820,7 +8820,7 @@ _wrap_SpatialReference_ExportToWkt(ClientData clientData SWIGUNUSED, Tcl_Interp 
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_ExportToWkt self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_ExportToWkt self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToWkt" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8891,7 +8891,7 @@ _wrap_SpatialReference_ExportToPrettyWkt(ClientData clientData SWIGUNUSED, Tcl_I
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::SpatialReference_ExportToPrettyWkt self ?simplify? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:osr::SpatialReference_ExportToPrettyWkt self ?simplify? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToPrettyWkt" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -8966,7 +8966,7 @@ _wrap_SpatialReference_ExportToProj4(ClientData clientData SWIGUNUSED, Tcl_Inter
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_ExportToProj4 self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_ExportToProj4 self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToProj4" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9046,7 +9046,7 @@ _wrap_SpatialReference_ExportToPCI(ClientData clientData SWIGUNUSED, Tcl_Interp 
     /* %typemap(in,numinputs=0) (double *argout4[ANY]) */
     arg4 = &argout4;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_ExportToPCI self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_ExportToPCI self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToPCI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9142,7 +9142,7 @@ _wrap_SpatialReference_ExportToUSGS(ClientData clientData SWIGUNUSED, Tcl_Interp
     arg4 = &argout4;
   }
   arg5 = &temp5;
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_ExportToUSGS self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_ExportToUSGS self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToUSGS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9228,7 +9228,7 @@ _wrap_SpatialReference_ExportToXML(ClientData clientData SWIGUNUSED, Tcl_Interp 
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::SpatialReference_ExportToXML self ?dialect? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:osr::SpatialReference_ExportToXML self ?dialect? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToXML" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9305,7 +9305,7 @@ _wrap_SpatialReference_ExportToMICoordSys(ClientData clientData SWIGUNUSED, Tcl_
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_ExportToMICoordSys self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_ExportToMICoordSys self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_ExportToMICoordSys" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9367,7 +9367,7 @@ _wrap_SpatialReference_CloneGeogCS(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res1 = 0 ;
   OSRSpatialReferenceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_CloneGeogCS self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_CloneGeogCS self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_CloneGeogCS" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9407,7 +9407,7 @@ _wrap_SpatialReference_Validate(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_Validate self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_Validate self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_Validate" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9459,7 +9459,7 @@ _wrap_SpatialReference_StripCTParms(ClientData clientData SWIGUNUSED, Tcl_Interp
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_StripCTParms self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_StripCTParms self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_StripCTParms" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9511,7 +9511,7 @@ _wrap_SpatialReference_FixupOrdering(ClientData clientData SWIGUNUSED, Tcl_Inter
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_FixupOrdering self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_FixupOrdering self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_FixupOrdering" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9563,7 +9563,7 @@ _wrap_SpatialReference_Fixup(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_Fixup self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_Fixup self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_Fixup" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9615,7 +9615,7 @@ _wrap_SpatialReference_MorphToESRI(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_MorphToESRI self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_MorphToESRI self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_MorphToESRI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9667,7 +9667,7 @@ _wrap_SpatialReference_MorphFromESRI(ClientData clientData SWIGUNUSED, Tcl_Inter
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SpatialReference_MorphFromESRI self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::SpatialReference_MorphFromESRI self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SpatialReference_MorphFromESRI" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9830,7 +9830,7 @@ _wrap_new_CoordinateTransformation(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res2 = 0 ;
   OSRCoordinateTransformationShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::new_CoordinateTransformation src dst ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::new_CoordinateTransformation src dst ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRSpatialReferenceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_CoordinateTransformation" "', argument " "1"" of type '" "OSRSpatialReferenceShadow *""'"); 
@@ -9874,7 +9874,7 @@ _wrap_delete_CoordinateTransformation(ClientData clientData SWIGUNUSED, Tcl_Inte
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_CoordinateTransformation self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:osr::delete_CoordinateTransformation self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRCoordinateTransformationShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CoordinateTransformation" "', argument " "1"" of type '" "OSRCoordinateTransformationShadow *""'"); 
@@ -9915,7 +9915,7 @@ _wrap_CoordinateTransformation_TransformPoint__SWIG_0(ClientData clientData SWIG
   int res1 = 0 ;
   double argin2[3] ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::CoordinateTransformation_TransformPoint self inout ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::CoordinateTransformation_TransformPoint self inout ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRCoordinateTransformationShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CoordinateTransformation_TransformPoint" "', argument " "1"" of type '" "OSRCoordinateTransformationShadow *""'"); 
@@ -10004,7 +10004,7 @@ _wrap_CoordinateTransformation_TransformPoint__SWIG_1(ClientData clientData SWIG
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osgeo::CoordinateTransformation_TransformPoint self x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osr::CoordinateTransformation_TransformPoint self x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRCoordinateTransformationShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CoordinateTransformation_TransformPoint" "', argument " "1"" of type '" "OSRCoordinateTransformationShadow *""'"); 
@@ -10124,7 +10124,7 @@ _wrap_CoordinateTransformation_TransformPoints(ClientData clientData SWIGUNUSED,
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::CoordinateTransformation_TransformPoints self nCount ?x? ?y? ?z? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:osr::CoordinateTransformation_TransformPoints self nCount ?x? ?y? ?z? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OSRCoordinateTransformationShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CoordinateTransformation_TransformPoints" "', argument " "1"" of type '" "OSRCoordinateTransformationShadow *""'"); 
@@ -10776,90 +10776,90 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *interp) {
   SWIG_Tcl_InstallConstants(interp, swig_constants);
   
   
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_ALBERS_CONIC_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_ALBERS_CONIC_EQUAL_AREA));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_AZIMUTHAL_EQUIDISTANT", SWIG_FromCharPtr(SRS_PT_AZIMUTHAL_EQUIDISTANT));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_CASSINI_SOLDNER", SWIG_FromCharPtr(SRS_PT_CASSINI_SOLDNER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_CYLINDRICAL_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_CYLINDRICAL_EQUAL_AREA));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_ECKERT_IV", SWIG_FromCharPtr(SRS_PT_ECKERT_IV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_ECKERT_VI", SWIG_FromCharPtr(SRS_PT_ECKERT_VI));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_EQUIDISTANT_CONIC", SWIG_FromCharPtr(SRS_PT_EQUIDISTANT_CONIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_EQUIRECTANGULAR", SWIG_FromCharPtr(SRS_PT_EQUIRECTANGULAR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_GALL_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_GALL_STEREOGRAPHIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_GAUSSSCHREIBERTMERCATOR", SWIG_FromCharPtr(SRS_PT_GAUSSSCHREIBERTMERCATOR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_GNOMONIC", SWIG_FromCharPtr(SRS_PT_GNOMONIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_GOODE_HOMOLOSINE", SWIG_FromCharPtr(SRS_PT_GOODE_HOMOLOSINE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_HOTINE_OBLIQUE_MERCATOR", SWIG_FromCharPtr(SRS_PT_HOTINE_OBLIQUE_MERCATOR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_HOTINE_OBLIQUE_MERCATOR_TWO_POINT_NATURAL_ORIGIN", SWIG_FromCharPtr(SRS_PT_HOTINE_OBLIQUE_MERCATOR_TWO_POINT_NATURAL_ORIGIN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_LABORDE_OBLIQUE_MERCATOR", SWIG_FromCharPtr(SRS_PT_LABORDE_OBLIQUE_MERCATOR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_LAMBERT_CONFORMAL_CONIC_1SP", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_1SP));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP_BELGIUM", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP_BELGIUM));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_LAMBERT_AZIMUTHAL_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_LAMBERT_AZIMUTHAL_EQUAL_AREA));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_MERCATOR_1SP", SWIG_FromCharPtr(SRS_PT_MERCATOR_1SP));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_MERCATOR_2SP", SWIG_FromCharPtr(SRS_PT_MERCATOR_2SP));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_MILLER_CYLINDRICAL", SWIG_FromCharPtr(SRS_PT_MILLER_CYLINDRICAL));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_MOLLWEIDE", SWIG_FromCharPtr(SRS_PT_MOLLWEIDE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_NEW_ZEALAND_MAP_GRID", SWIG_FromCharPtr(SRS_PT_NEW_ZEALAND_MAP_GRID));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_OBLIQUE_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_OBLIQUE_STEREOGRAPHIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_ORTHOGRAPHIC", SWIG_FromCharPtr(SRS_PT_ORTHOGRAPHIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_POLAR_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_POLAR_STEREOGRAPHIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_POLYCONIC", SWIG_FromCharPtr(SRS_PT_POLYCONIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_ROBINSON", SWIG_FromCharPtr(SRS_PT_ROBINSON));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_SINUSOIDAL", SWIG_FromCharPtr(SRS_PT_SINUSOIDAL));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_STEREOGRAPHIC));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_SWISS_OBLIQUE_CYLINDRICAL", SWIG_FromCharPtr(SRS_PT_SWISS_OBLIQUE_CYLINDRICAL));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR_SOUTH_ORIENTED", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_SOUTH_ORIENTED));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR_MI_22", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_22));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR_MI_23", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_23));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR_MI_24", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_24));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TRANSVERSE_MERCATOR_MI_25", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_25));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_TUNISIA_MINING_GRID", SWIG_FromCharPtr(SRS_PT_TUNISIA_MINING_GRID));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_VANDERGRINTEN", SWIG_FromCharPtr(SRS_PT_VANDERGRINTEN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PT_KROVAK", SWIG_FromCharPtr(SRS_PT_KROVAK));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_CENTRAL_MERIDIAN", SWIG_FromCharPtr(SRS_PP_CENTRAL_MERIDIAN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_SCALE_FACTOR", SWIG_FromCharPtr(SRS_PP_SCALE_FACTOR));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_STANDARD_PARALLEL_1", SWIG_FromCharPtr(SRS_PP_STANDARD_PARALLEL_1));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_STANDARD_PARALLEL_2", SWIG_FromCharPtr(SRS_PP_STANDARD_PARALLEL_2));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_PSEUDO_STD_PARALLEL_1", SWIG_FromCharPtr(SRS_PP_PSEUDO_STD_PARALLEL_1));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LONGITUDE_OF_CENTER", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_CENTER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LATITUDE_OF_CENTER", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_CENTER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LONGITUDE_OF_ORIGIN", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_ORIGIN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LATITUDE_OF_ORIGIN", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_ORIGIN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_FALSE_EASTING", SWIG_FromCharPtr(SRS_PP_FALSE_EASTING));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_FALSE_NORTHING", SWIG_FromCharPtr(SRS_PP_FALSE_NORTHING));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_AZIMUTH", SWIG_FromCharPtr(SRS_PP_AZIMUTH));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LONGITUDE_OF_POINT_1", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_1));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LATITUDE_OF_POINT_1", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_1));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LONGITUDE_OF_POINT_2", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_2));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LATITUDE_OF_POINT_2", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_2));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LONGITUDE_OF_POINT_3", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_3));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LATITUDE_OF_POINT_3", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_3));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_RECTIFIED_GRID_ANGLE", SWIG_FromCharPtr(SRS_PP_RECTIFIED_GRID_ANGLE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_LANDSAT_NUMBER", SWIG_FromCharPtr(SRS_PP_LANDSAT_NUMBER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_PATH_NUMBER", SWIG_FromCharPtr(SRS_PP_PATH_NUMBER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_PERSPECTIVE_POINT_HEIGHT", SWIG_FromCharPtr(SRS_PP_PERSPECTIVE_POINT_HEIGHT));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_FIPSZONE", SWIG_FromCharPtr(SRS_PP_FIPSZONE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_PP_ZONE", SWIG_FromCharPtr(SRS_PP_ZONE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_METER", SWIG_FromCharPtr(SRS_UL_METER));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_FOOT", SWIG_FromCharPtr(SRS_UL_FOOT));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_FOOT_CONV", SWIG_FromCharPtr(SRS_UL_FOOT_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_US_FOOT", SWIG_FromCharPtr(SRS_UL_US_FOOT));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_US_FOOT_CONV", SWIG_FromCharPtr(SRS_UL_US_FOOT_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_NAUTICAL_MILE", SWIG_FromCharPtr(SRS_UL_NAUTICAL_MILE));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_NAUTICAL_MILE_CONV", SWIG_FromCharPtr(SRS_UL_NAUTICAL_MILE_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_LINK", SWIG_FromCharPtr(SRS_UL_LINK));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_LINK_CONV", SWIG_FromCharPtr(SRS_UL_LINK_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_CHAIN", SWIG_FromCharPtr(SRS_UL_CHAIN));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_CHAIN_CONV", SWIG_FromCharPtr(SRS_UL_CHAIN_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_ROD", SWIG_FromCharPtr(SRS_UL_ROD));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_UL_ROD_CONV", SWIG_FromCharPtr(SRS_UL_ROD_CONV));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_DN_NAD27", SWIG_FromCharPtr(SRS_DN_NAD27));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_DN_NAD83", SWIG_FromCharPtr(SRS_DN_NAD83));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_DN_WGS72", SWIG_FromCharPtr(SRS_DN_WGS72));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_DN_WGS84", SWIG_FromCharPtr(SRS_DN_WGS84));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_WGS84_SEMIMAJOR", SWIG_From_double(static_cast< double >(SRS_WGS84_SEMIMAJOR)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::SRS_WGS84_INVFLATTENING", SWIG_From_double(static_cast< double >(SRS_WGS84_INVFLATTENING)));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_ALBERS_CONIC_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_ALBERS_CONIC_EQUAL_AREA));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_AZIMUTHAL_EQUIDISTANT", SWIG_FromCharPtr(SRS_PT_AZIMUTHAL_EQUIDISTANT));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_CASSINI_SOLDNER", SWIG_FromCharPtr(SRS_PT_CASSINI_SOLDNER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_CYLINDRICAL_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_CYLINDRICAL_EQUAL_AREA));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_ECKERT_IV", SWIG_FromCharPtr(SRS_PT_ECKERT_IV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_ECKERT_VI", SWIG_FromCharPtr(SRS_PT_ECKERT_VI));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_EQUIDISTANT_CONIC", SWIG_FromCharPtr(SRS_PT_EQUIDISTANT_CONIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_EQUIRECTANGULAR", SWIG_FromCharPtr(SRS_PT_EQUIRECTANGULAR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_GALL_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_GALL_STEREOGRAPHIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_GAUSSSCHREIBERTMERCATOR", SWIG_FromCharPtr(SRS_PT_GAUSSSCHREIBERTMERCATOR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_GNOMONIC", SWIG_FromCharPtr(SRS_PT_GNOMONIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_GOODE_HOMOLOSINE", SWIG_FromCharPtr(SRS_PT_GOODE_HOMOLOSINE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_HOTINE_OBLIQUE_MERCATOR", SWIG_FromCharPtr(SRS_PT_HOTINE_OBLIQUE_MERCATOR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_HOTINE_OBLIQUE_MERCATOR_TWO_POINT_NATURAL_ORIGIN", SWIG_FromCharPtr(SRS_PT_HOTINE_OBLIQUE_MERCATOR_TWO_POINT_NATURAL_ORIGIN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_LABORDE_OBLIQUE_MERCATOR", SWIG_FromCharPtr(SRS_PT_LABORDE_OBLIQUE_MERCATOR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_LAMBERT_CONFORMAL_CONIC_1SP", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_1SP));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP_BELGIUM", SWIG_FromCharPtr(SRS_PT_LAMBERT_CONFORMAL_CONIC_2SP_BELGIUM));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_LAMBERT_AZIMUTHAL_EQUAL_AREA", SWIG_FromCharPtr(SRS_PT_LAMBERT_AZIMUTHAL_EQUAL_AREA));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_MERCATOR_1SP", SWIG_FromCharPtr(SRS_PT_MERCATOR_1SP));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_MERCATOR_2SP", SWIG_FromCharPtr(SRS_PT_MERCATOR_2SP));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_MILLER_CYLINDRICAL", SWIG_FromCharPtr(SRS_PT_MILLER_CYLINDRICAL));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_MOLLWEIDE", SWIG_FromCharPtr(SRS_PT_MOLLWEIDE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_NEW_ZEALAND_MAP_GRID", SWIG_FromCharPtr(SRS_PT_NEW_ZEALAND_MAP_GRID));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_OBLIQUE_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_OBLIQUE_STEREOGRAPHIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_ORTHOGRAPHIC", SWIG_FromCharPtr(SRS_PT_ORTHOGRAPHIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_POLAR_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_POLAR_STEREOGRAPHIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_POLYCONIC", SWIG_FromCharPtr(SRS_PT_POLYCONIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_ROBINSON", SWIG_FromCharPtr(SRS_PT_ROBINSON));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_SINUSOIDAL", SWIG_FromCharPtr(SRS_PT_SINUSOIDAL));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_STEREOGRAPHIC", SWIG_FromCharPtr(SRS_PT_STEREOGRAPHIC));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_SWISS_OBLIQUE_CYLINDRICAL", SWIG_FromCharPtr(SRS_PT_SWISS_OBLIQUE_CYLINDRICAL));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR_SOUTH_ORIENTED", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_SOUTH_ORIENTED));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR_MI_22", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_22));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR_MI_23", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_23));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR_MI_24", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_24));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TRANSVERSE_MERCATOR_MI_25", SWIG_FromCharPtr(SRS_PT_TRANSVERSE_MERCATOR_MI_25));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_TUNISIA_MINING_GRID", SWIG_FromCharPtr(SRS_PT_TUNISIA_MINING_GRID));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_VANDERGRINTEN", SWIG_FromCharPtr(SRS_PT_VANDERGRINTEN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PT_KROVAK", SWIG_FromCharPtr(SRS_PT_KROVAK));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_CENTRAL_MERIDIAN", SWIG_FromCharPtr(SRS_PP_CENTRAL_MERIDIAN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_SCALE_FACTOR", SWIG_FromCharPtr(SRS_PP_SCALE_FACTOR));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_STANDARD_PARALLEL_1", SWIG_FromCharPtr(SRS_PP_STANDARD_PARALLEL_1));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_STANDARD_PARALLEL_2", SWIG_FromCharPtr(SRS_PP_STANDARD_PARALLEL_2));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_PSEUDO_STD_PARALLEL_1", SWIG_FromCharPtr(SRS_PP_PSEUDO_STD_PARALLEL_1));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LONGITUDE_OF_CENTER", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_CENTER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LATITUDE_OF_CENTER", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_CENTER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LONGITUDE_OF_ORIGIN", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_ORIGIN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LATITUDE_OF_ORIGIN", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_ORIGIN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_FALSE_EASTING", SWIG_FromCharPtr(SRS_PP_FALSE_EASTING));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_FALSE_NORTHING", SWIG_FromCharPtr(SRS_PP_FALSE_NORTHING));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_AZIMUTH", SWIG_FromCharPtr(SRS_PP_AZIMUTH));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LONGITUDE_OF_POINT_1", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_1));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LATITUDE_OF_POINT_1", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_1));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LONGITUDE_OF_POINT_2", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_2));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LATITUDE_OF_POINT_2", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_2));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LONGITUDE_OF_POINT_3", SWIG_FromCharPtr(SRS_PP_LONGITUDE_OF_POINT_3));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LATITUDE_OF_POINT_3", SWIG_FromCharPtr(SRS_PP_LATITUDE_OF_POINT_3));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_RECTIFIED_GRID_ANGLE", SWIG_FromCharPtr(SRS_PP_RECTIFIED_GRID_ANGLE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_LANDSAT_NUMBER", SWIG_FromCharPtr(SRS_PP_LANDSAT_NUMBER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_PATH_NUMBER", SWIG_FromCharPtr(SRS_PP_PATH_NUMBER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_PERSPECTIVE_POINT_HEIGHT", SWIG_FromCharPtr(SRS_PP_PERSPECTIVE_POINT_HEIGHT));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_FIPSZONE", SWIG_FromCharPtr(SRS_PP_FIPSZONE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_PP_ZONE", SWIG_FromCharPtr(SRS_PP_ZONE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_METER", SWIG_FromCharPtr(SRS_UL_METER));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_FOOT", SWIG_FromCharPtr(SRS_UL_FOOT));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_FOOT_CONV", SWIG_FromCharPtr(SRS_UL_FOOT_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_US_FOOT", SWIG_FromCharPtr(SRS_UL_US_FOOT));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_US_FOOT_CONV", SWIG_FromCharPtr(SRS_UL_US_FOOT_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_NAUTICAL_MILE", SWIG_FromCharPtr(SRS_UL_NAUTICAL_MILE));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_NAUTICAL_MILE_CONV", SWIG_FromCharPtr(SRS_UL_NAUTICAL_MILE_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_LINK", SWIG_FromCharPtr(SRS_UL_LINK));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_LINK_CONV", SWIG_FromCharPtr(SRS_UL_LINK_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_CHAIN", SWIG_FromCharPtr(SRS_UL_CHAIN));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_CHAIN_CONV", SWIG_FromCharPtr(SRS_UL_CHAIN_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_ROD", SWIG_FromCharPtr(SRS_UL_ROD));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_UL_ROD_CONV", SWIG_FromCharPtr(SRS_UL_ROD_CONV));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_DN_NAD27", SWIG_FromCharPtr(SRS_DN_NAD27));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_DN_NAD83", SWIG_FromCharPtr(SRS_DN_NAD83));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_DN_WGS72", SWIG_FromCharPtr(SRS_DN_WGS72));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_DN_WGS84", SWIG_FromCharPtr(SRS_DN_WGS84));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_WGS84_SEMIMAJOR", SWIG_From_double(static_cast< double >(SRS_WGS84_SEMIMAJOR)));
+  SWIG_Tcl_SetConstantObj(interp, "osr::SRS_WGS84_INVFLATTENING", SWIG_From_double(static_cast< double >(SRS_WGS84_INVFLATTENING)));
   Tcl_CreateObjCommand(interp, SWIG_prefix "GetProjectionMethods", (swig_wrapper_func) tcl_OPTGetProjectionMethods, (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);
   return TCL_OK;
 }
