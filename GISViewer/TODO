@@ -1,13 +1,18 @@
-#XXX palette email:nap-alpha-patch&segfault&ReadRasterNAP&HDF/netcdf optional
+#XXX palette
 #XXX toolbar zoom info lat/long
 #XXX OGR tcltest, OGR GISViewer
 
-# loadworldfile zoom-limits centered-zoom grab progressbar_when_opening
-# XXX starpack enhanced-zoom tiled/centered-background
+MAX_NC_NAME
+Segfault
+8.5
+alpha channel
+ReadRasterNAP compilation
+HDF/netcdf optional
+
+# loadworldfile zoom_limits fit_to_window centered_zoom grab progressbar_when_opening
+# starpack enhanced-zoom tiled/centered-background
 # wrap setprojects etc..
 # Units value (e.g. elevation as described in GetDescription in units of GetUnitType and resolution of GetDatatype) = (raw pixel value * GetScale) + GetOffset
-
-NAP 10.5.11 hsv2rgb(hsv)
 
 NAP 5.5.11 and 10.4.5. GIS
 
