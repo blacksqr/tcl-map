@@ -10,6 +10,7 @@ package require toe 1.0
 
 # Initialize GDAL/OGR
 ::gdal::AllRegister
+::ogr::RegisterAll
 
 toe::class GIScanvas {
     private variable Container
@@ -253,7 +254,7 @@ toe::class GIScanvas {
                 puts stderr "Warning: Reducing color depth"
             }
             
-            set data [$band ReadRasterNAP 0 0 $width $height $width $height $::gdal::GDT_Byte]
+            set data [$band ReadRaster 0 0 $width $height $width $height $::gdal::GDT_Byte]
             binary scan $data cu* data
         
             set step $width
