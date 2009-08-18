@@ -1658,8 +1658,8 @@ static swig_module_info swig_module = {swig_types, 22, 0, 0, 0, 0};
 
 #define SWIG_init    Gdal_Init
 #define SWIG_name    "gdal"
-#define SWIG_prefix  "osgeo::"
-#define SWIG_namespace "osgeo"
+#define SWIG_prefix  "gdal::"
+#define SWIG_namespace "gdal"
 
 #define SWIG_version "1.0"
 
@@ -3014,7 +3014,7 @@ _wrap_DataTypeUnion(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   GDALDataType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::DataTypeUnion GDALDataType GDALDataType ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::DataTypeUnion GDALDataType GDALDataType ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DataTypeUnion" "', argument " "1"" of type '" "GDALDataType""'");
@@ -3035,7 +3035,7 @@ fail:
 
 SWIGINTERN int
 _wrap_UseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::UseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::UseExceptions ") == TCL_ERROR) SWIG_fail;
   UseExceptions();
   
   return TCL_OK;
@@ -3046,7 +3046,7 @@ fail:
 
 SWIGINTERN int
 _wrap_DontUseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
   DontUseExceptions();
   
   return TCL_OK;
@@ -3066,7 +3066,7 @@ _wrap_Debug(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Debug msg_class message ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Debug msg_class message ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Debug" "', argument " "1"" of type '" "char const *""'");
@@ -3121,7 +3121,7 @@ _wrap_Error(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_
   char *buf3 = 0 ;
   int alloc3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|ooo:osgeo::Error ?msg_class? ?err_code? ?msg? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|ooo:gdal::Error ?msg_class? ?err_code? ?msg? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -3180,7 +3180,7 @@ _wrap_PushErrorHandler__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int alloc1 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::PushErrorHandler ?pszCallbackName? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:gdal::PushErrorHandler ?pszCallbackName? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
     if (!SWIG_IsOK(res1)) {
@@ -3223,7 +3223,7 @@ _wrap_PushErrorHandler__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   void *argp1 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::PushErrorHandler CPLErrorHandler ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::PushErrorHandler CPLErrorHandler ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(objv[1], &argp1, SWIGTYPE_p_CPLErrorHandler,  0 );
     if (!SWIG_IsOK(res1)) {
@@ -3294,7 +3294,7 @@ _wrap_PushErrorHandler(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
 
 SWIGINTERN int
 _wrap_PopErrorHandler(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::PopErrorHandler ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::PopErrorHandler ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     CPLPopErrorHandler();
@@ -3324,7 +3324,7 @@ fail:
 
 SWIGINTERN int
 _wrap_ErrorReset(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::ErrorReset ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::ErrorReset ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     CPLErrorReset();
@@ -3361,7 +3361,7 @@ _wrap_EscapeString(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int ecode3 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::EscapeString len ?bin_string? ?scheme? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::EscapeString len ?bin_string? ?scheme? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in,numinputs=1) (int nLen, char *pBuf ) */
     /* Storage is handled by the respective Tcl_Obj. It should considered read-only. */
@@ -3405,7 +3405,7 @@ SWIGINTERN int
 _wrap_GetLastErrorNo(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetLastErrorNo ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetLastErrorNo ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)CPLGetLastErrorNo();
@@ -3437,7 +3437,7 @@ SWIGINTERN int
 _wrap_GetLastErrorType(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetLastErrorType ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetLastErrorType ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (CPLErr)CPLGetLastErrorType();
@@ -3469,7 +3469,7 @@ SWIGINTERN int
 _wrap_GetLastErrorMsg(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetLastErrorMsg ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetLastErrorMsg ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (char *)CPLGetLastErrorMsg();
@@ -3504,7 +3504,7 @@ _wrap_PushFinderLocation(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   char *buf1 = 0 ;
   int alloc1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::PushFinderLocation char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::PushFinderLocation char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PushFinderLocation" "', argument " "1"" of type '" "char const *""'");
@@ -3541,7 +3541,7 @@ fail:
 
 SWIGINTERN int
 _wrap_PopFinderLocation(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::PopFinderLocation ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::PopFinderLocation ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     CPLPopFinderLocation();
@@ -3571,7 +3571,7 @@ fail:
 
 SWIGINTERN int
 _wrap_FinderClean(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::FinderClean ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::FinderClean ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     CPLFinderClean();
@@ -3611,7 +3611,7 @@ _wrap_FindFile(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FindFile char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::FindFile char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindFile" "', argument " "1"" of type '" "char const *""'");
@@ -3661,7 +3661,7 @@ _wrap_ReadDir(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tc
   int alloc1 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ReadDir char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ReadDir char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ReadDir" "', argument " "1"" of type '" "char const *""'");
@@ -3726,7 +3726,7 @@ _wrap_SetConfigOption(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::SetConfigOption char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::SetConfigOption char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetConfigOption" "', argument " "1"" of type '" "char const *""'");
@@ -3780,7 +3780,7 @@ _wrap_GetConfigOption(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GetConfigOption char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GetConfigOption char const * char const * ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetConfigOption" "', argument " "1"" of type '" "char const *""'");
@@ -3832,7 +3832,7 @@ _wrap_CPLBinaryToHex(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::CPLBinaryToHex nBytes pabyData ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::CPLBinaryToHex nBytes pabyData ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "CPLBinaryToHex" "', argument " "1"" of type '" "int""'");
@@ -3881,7 +3881,7 @@ _wrap_CPLHexToBinary(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res2 = 0 ;
   GByte *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::CPLHexToBinary pszHex pnBytes ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::CPLHexToBinary pszHex pnBytes ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CPLHexToBinary" "', argument " "1"" of type '" "char const *""'");
@@ -3928,7 +3928,7 @@ _wrap_MajorObject_GetDescription(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::MajorObject_GetDescription self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::MajorObject_GetDescription self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_GetDescription" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -3971,7 +3971,7 @@ _wrap_MajorObject_SetDescription(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::MajorObject_SetDescription self pszNewDesc ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::MajorObject_SetDescription self pszNewDesc ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_SetDescription" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4029,7 +4029,7 @@ _wrap_MajorObject_GetMetadata_Dict(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int alloc2 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::MajorObject_GetMetadata_Dict self ?pszDomain? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::MajorObject_GetMetadata_Dict self ?pszDomain? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_GetMetadata_Dict" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4107,7 +4107,7 @@ _wrap_MajorObject_GetMetadata_List(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int alloc2 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::MajorObject_GetMetadata_List self ?pszDomain? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::MajorObject_GetMetadata_List self ?pszDomain? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_GetMetadata_List" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4180,7 +4180,7 @@ _wrap_MajorObject_SetMetadata__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inte
   int alloc3 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::MajorObject_SetMetadata self papszMetadata ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:gdal::MajorObject_SetMetadata self papszMetadata ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_SetMetadata" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4271,7 +4271,7 @@ _wrap_MajorObject_SetMetadata__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Inte
   int alloc3 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::MajorObject_SetMetadata self pszMetadataString ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:gdal::MajorObject_SetMetadata self pszMetadataString ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_SetMetadata" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4388,7 +4388,7 @@ _wrap_MajorObject_GetMetadataItem(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int alloc3 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::MajorObject_GetMetadataItem self pszName ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:gdal::MajorObject_GetMetadataItem self pszName ?pszDomain? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_GetMetadataItem" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4456,7 +4456,7 @@ _wrap_MajorObject_SetMetadataItem(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int alloc4 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osgeo::MajorObject_SetMetadataItem self pszName pszValue ?pszDomain? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:gdal::MajorObject_SetMetadataItem self pszName pszValue ?pszDomain? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALMajorObjectShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MajorObject_SetMetadataItem" "', argument " "1"" of type '" "GDALMajorObjectShadow *""'"); 
@@ -4535,7 +4535,7 @@ _wrap_Driver_ShortName_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_ShortName_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Driver_ShortName_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_ShortName_get" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4575,7 +4575,7 @@ _wrap_Driver_LongName_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_LongName_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Driver_LongName_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_LongName_get" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4615,7 +4615,7 @@ _wrap_Driver_HelpTopic_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_HelpTopic_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Driver_HelpTopic_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_HelpTopic_get" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4672,7 +4672,7 @@ _wrap_Driver_Create(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode6 = 0 ;
   GDALDatasetShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|ooo:osgeo::Driver_Create self name xsize ysize ?bands? ?eType? ?options? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|ooo:gdal::Driver_Create self name xsize ysize ?bands? ?eType? ?options? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Create" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4796,7 +4796,7 @@ _wrap_Driver_CreateCopy(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|oooo:osgeo::Driver_CreateCopy self name src ?strict? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|oooo:gdal::Driver_CreateCopy self name src ?strict? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_CreateCopy" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4938,7 +4938,7 @@ _wrap_Driver_Delete(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int alloc2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Driver_Delete self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Driver_Delete self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Delete" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -4993,7 +4993,7 @@ _wrap_Driver_Rename(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int alloc3 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Driver_Rename self newName oldName ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::Driver_Rename self newName oldName ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Rename" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -5047,7 +5047,7 @@ _wrap_Driver_Register(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_Register self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Driver_Register self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Register" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -5086,7 +5086,7 @@ _wrap_Driver_Deregister(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_Deregister self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Driver_Deregister self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Deregister" "', argument " "1"" of type '" "GDALDriverShadow *""'"); 
@@ -5145,7 +5145,7 @@ _wrap_ColorEntry_c1_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   short val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::ColorEntry_c1_set self c1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::ColorEntry_c1_set self c1 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5207,7 +5207,7 @@ _wrap_ColorEntry_c1_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   GDALColorEntry ce1 ;
   short result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorEntry_c1_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorEntry_c1_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5266,7 +5266,7 @@ _wrap_ColorEntry_c2_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   short val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::ColorEntry_c2_set self c2 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::ColorEntry_c2_set self c2 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5328,7 +5328,7 @@ _wrap_ColorEntry_c2_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   GDALColorEntry ce1 ;
   short result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorEntry_c2_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorEntry_c2_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5387,7 +5387,7 @@ _wrap_ColorEntry_c3_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   short val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::ColorEntry_c3_set self c3 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::ColorEntry_c3_set self c3 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5449,7 +5449,7 @@ _wrap_ColorEntry_c3_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   GDALColorEntry ce1 ;
   short result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorEntry_c3_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorEntry_c3_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5508,7 +5508,7 @@ _wrap_ColorEntry_c4_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   short val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::ColorEntry_c4_set self c4 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::ColorEntry_c4_set self c4 ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5570,7 +5570,7 @@ _wrap_ColorEntry_c4_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   GDALColorEntry ce1 ;
   short result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorEntry_c4_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorEntry_c4_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5625,7 +5625,7 @@ SWIGINTERN int
 _wrap_new_ColorEntry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   GDALColorEntry *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::new_ColorEntry ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::new_ColorEntry ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (GDALColorEntry *)new GDALColorEntry();
@@ -5691,7 +5691,7 @@ _wrap_delete_ColorEntry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   GDALColorEntry *arg1 = (GDALColorEntry *) 0 ;
   GDALColorEntry ce1 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_ColorEntry self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_ColorEntry self ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) GDALColorEntry* */
     ce1.c1 = 0;
@@ -5787,7 +5787,7 @@ _wrap_GCP_GCPX_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_GCPX_set self GCPX ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_GCPX_set self GCPX ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPX_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -5832,7 +5832,7 @@ _wrap_GCP_GCPX_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_GCPX_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_GCPX_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPX_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -5874,7 +5874,7 @@ _wrap_GCP_GCPY_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_GCPY_set self GCPY ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_GCPY_set self GCPY ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPY_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -5919,7 +5919,7 @@ _wrap_GCP_GCPY_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_GCPY_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_GCPY_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPY_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -5961,7 +5961,7 @@ _wrap_GCP_GCPZ_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_GCPZ_set self GCPZ ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_GCPZ_set self GCPZ ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPZ_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6006,7 +6006,7 @@ _wrap_GCP_GCPZ_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_GCPZ_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_GCPZ_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPZ_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6048,7 +6048,7 @@ _wrap_GCP_GCPPixel_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_GCPPixel_set self GCPPixel ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_GCPPixel_set self GCPPixel ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPPixel_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6093,7 +6093,7 @@ _wrap_GCP_GCPPixel_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_GCPPixel_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_GCPPixel_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPPixel_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6135,7 +6135,7 @@ _wrap_GCP_GCPLine_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_GCPLine_set self GCPLine ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_GCPLine_set self GCPLine ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPLine_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6180,7 +6180,7 @@ _wrap_GCP_GCPLine_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_GCPLine_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_GCPLine_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_GCPLine_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6223,7 +6223,7 @@ _wrap_GCP_Info_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_Info_set self Info ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_Info_set self Info ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_Info_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6270,7 +6270,7 @@ _wrap_GCP_Info_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_Info_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_Info_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_Info_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6313,7 +6313,7 @@ _wrap_GCP_Id_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GCP_Id_set self Id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GCP_Id_set self Id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_Id_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6360,7 +6360,7 @@ _wrap_GCP_Id_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GCP_Id_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GCP_Id_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GCP_Id_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6420,7 +6420,7 @@ _wrap_new_GCP(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tc
   int alloc7 = 0 ;
   GDAL_GCP *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|ooooooo:osgeo::new_GCP ?x? ?y? ?z? ?pixel? ?line? ?info? ?id? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|ooooooo:gdal::new_GCP ?x? ?y? ?z? ?pixel? ?line? ?info? ?id? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -6507,7 +6507,7 @@ _wrap_delete_GCP(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_GCP self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_GCP self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_GCP" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6567,7 +6567,7 @@ _wrap_GDAL_GCP_GCPX_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_GCPX_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_GCPX_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPX_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6609,7 +6609,7 @@ _wrap_GDAL_GCP_GCPX_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_GCPX_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_GCPX_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPX_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6654,7 +6654,7 @@ _wrap_GDAL_GCP_GCPY_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_GCPY_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_GCPY_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPY_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6696,7 +6696,7 @@ _wrap_GDAL_GCP_GCPY_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_GCPY_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_GCPY_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPY_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6741,7 +6741,7 @@ _wrap_GDAL_GCP_GCPZ_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_GCPZ_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_GCPZ_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPZ_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6783,7 +6783,7 @@ _wrap_GDAL_GCP_GCPZ_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_GCPZ_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_GCPZ_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPZ_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6828,7 +6828,7 @@ _wrap_GDAL_GCP_GCPPixel_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_GCPPixel_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_GCPPixel_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPPixel_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6870,7 +6870,7 @@ _wrap_GDAL_GCP_GCPPixel_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_GCPPixel_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_GCPPixel_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPPixel_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6915,7 +6915,7 @@ _wrap_GDAL_GCP_GCPLine_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_GCPLine_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_GCPLine_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPLine_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -6957,7 +6957,7 @@ _wrap_GDAL_GCP_GCPLine_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_GCPLine_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_GCPLine_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_GCPLine_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7002,7 +7002,7 @@ _wrap_GDAL_GCP_Info_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_Info_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_Info_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_Info_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7045,7 +7045,7 @@ _wrap_GDAL_GCP_Info_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_Info_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_Info_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_Info_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7092,7 +7092,7 @@ _wrap_GDAL_GCP_Id_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_Id_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_Id_get h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_Id_get" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7135,7 +7135,7 @@ _wrap_GDAL_GCP_Id_set(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_Id_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_Id_set h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_Id_set" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7182,7 +7182,7 @@ _wrap_GDAL_GCP_get_GCPX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_GCPX h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_GCPX h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_GCPX" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7224,7 +7224,7 @@ _wrap_GDAL_GCP_set_GCPX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_GCPX h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_GCPX h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_GCPX" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7269,7 +7269,7 @@ _wrap_GDAL_GCP_get_GCPY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_GCPY h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_GCPY h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_GCPY" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7311,7 +7311,7 @@ _wrap_GDAL_GCP_set_GCPY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_GCPY h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_GCPY h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_GCPY" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7356,7 +7356,7 @@ _wrap_GDAL_GCP_get_GCPZ(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_GCPZ h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_GCPZ h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_GCPZ" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7398,7 +7398,7 @@ _wrap_GDAL_GCP_set_GCPZ(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_GCPZ h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_GCPZ h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_GCPZ" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7443,7 +7443,7 @@ _wrap_GDAL_GCP_get_GCPPixel(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_GCPPixel h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_GCPPixel h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_GCPPixel" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7485,7 +7485,7 @@ _wrap_GDAL_GCP_set_GCPPixel(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_GCPPixel h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_GCPPixel h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_GCPPixel" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7530,7 +7530,7 @@ _wrap_GDAL_GCP_get_GCPLine(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_GCPLine h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_GCPLine h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_GCPLine" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7572,7 +7572,7 @@ _wrap_GDAL_GCP_set_GCPLine(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   double val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_GCPLine h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_GCPLine h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_GCPLine" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7617,7 +7617,7 @@ _wrap_GDAL_GCP_get_Info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_Info h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_Info h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_Info" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7660,7 +7660,7 @@ _wrap_GDAL_GCP_set_Info(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_Info h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_Info h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_Info" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7707,7 +7707,7 @@ _wrap_GDAL_GCP_get_Id(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GDAL_GCP_get_Id h ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GDAL_GCP_get_Id h ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_get_Id" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7750,7 +7750,7 @@ _wrap_GDAL_GCP_set_Id(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::GDAL_GCP_set_Id h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::GDAL_GCP_set_Id h val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDAL_GCP, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GDAL_GCP_set_Id" "', argument " "1"" of type '" "GDAL_GCP *""'"); 
@@ -7806,7 +7806,7 @@ _wrap_GCPsToGeoTransform(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
     /* %typemap(in,numinputs=0) (double argout3[ANY]) */
     arg3 = argout3;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::GCPsToGeoTransform nGCPs ?pGCPs? ?bApproxOK? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::GCPsToGeoTransform nGCPs ?pGCPs? ?bApproxOK? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in,numinputs=1) (int nGCPs, GDAL_GCP const *pGCPs ) */
     /* The following also checks if input is a list */
@@ -7904,7 +7904,7 @@ _wrap_Dataset_RasterXSize_get(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_RasterXSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_RasterXSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_RasterXSize_get" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -7944,7 +7944,7 @@ _wrap_Dataset_RasterYSize_get(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_RasterYSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_RasterYSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_RasterYSize_get" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -7984,7 +7984,7 @@ _wrap_Dataset_RasterCount_get(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_RasterCount_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_RasterCount_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_RasterCount_get" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8023,7 +8023,7 @@ _wrap_delete_Dataset(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_Dataset self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_Dataset self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Dataset" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8063,7 +8063,7 @@ _wrap_Dataset_GetDriver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   GDALDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetDriver self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetDriver self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetDriver" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8106,7 +8106,7 @@ _wrap_Dataset_GetRasterBand(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int ecode2 = 0 ;
   GDALRasterBandShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Dataset_GetRasterBand self nBand ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Dataset_GetRasterBand self nBand ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetRasterBand" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8151,7 +8151,7 @@ _wrap_Dataset_GetProjection(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetProjection self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetProjection self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetProjection" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8191,7 +8191,7 @@ _wrap_Dataset_GetProjectionRef(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetProjectionRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetProjectionRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetProjectionRef" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8235,7 +8235,7 @@ _wrap_Dataset_SetProjection(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Dataset_SetProjection self prj ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Dataset_SetProjection self prj ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_SetProjection" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8287,7 +8287,7 @@ _wrap_Dataset_GetGeoTransform(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetGeoTransform self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetGeoTransform self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetGeoTransform" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8335,7 +8335,7 @@ _wrap_Dataset_SetGeoTransform(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   double argin2[6] ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Dataset_SetGeoTransform self argin ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Dataset_SetGeoTransform self argin ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_SetGeoTransform" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8419,7 +8419,7 @@ _wrap_Dataset_BuildOverviews(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:osgeo::Dataset_BuildOverviews self ?resampling? ?overviewlist? ?pOverviews? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:gdal::Dataset_BuildOverviews self ?resampling? ?overviewlist? ?pOverviews? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_BuildOverviews" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8558,7 +8558,7 @@ _wrap_Dataset_GetGCPCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetGCPCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetGCPCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetGCPCount" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8598,7 +8598,7 @@ _wrap_Dataset_GetGCPProjection(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetGCPProjection self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetGCPProjection self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetGCPProjection" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8646,7 +8646,7 @@ _wrap_Dataset_GetGCPs(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     arg2 = &nGCPs2;
     arg3 = &pGCPs2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetGCPs self ?pGCPs? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetGCPs self ?pGCPs? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetGCPs" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8715,7 +8715,7 @@ _wrap_Dataset_SetGCPs(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int alloc4 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Dataset_SetGCPs self nGCPs pGCPs ?pszGCPProjection? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::Dataset_SetGCPs self nGCPs pGCPs ?pszGCPProjection? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_SetGCPs" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8805,7 +8805,7 @@ _wrap_Dataset_FlushCache(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_FlushCache self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_FlushCache self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_FlushCache" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8849,7 +8849,7 @@ _wrap_Dataset_AddBand(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|oo:osgeo::Dataset_AddBand self ?datatype? ?options? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|oo:gdal::Dataset_AddBand self ?datatype? ?options? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_AddBand" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8932,7 +8932,7 @@ _wrap_Dataset_CreateMaskBand(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Dataset_CreateMaskBand self nFlags ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Dataset_CreateMaskBand self nFlags ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_CreateMaskBand" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -8977,7 +8977,7 @@ _wrap_Dataset_GetFileList(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Dataset_GetFileList self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Dataset_GetFileList self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_GetFileList" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -9061,7 +9061,7 @@ _wrap_Dataset_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res10 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo|oooo:osgeo::Dataset_WriteRaster self xoff yoff xsize ysize buf_len ?buf_string? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo|oooo:gdal::Dataset_WriteRaster self xoff yoff xsize ysize buf_len ?buf_string? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_WriteRaster" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -9244,7 +9244,7 @@ _wrap_Dataset_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
     arg6 = &nLen6;
     arg7 = &pBuf6;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oooo:osgeo::Dataset_ReadRaster self xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oooo:gdal::Dataset_ReadRaster self xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ?band_list? ?pband_list? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Dataset_ReadRaster" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -9428,7 +9428,7 @@ _wrap_Band_XSize_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_XSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_XSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_XSize_get" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9468,7 +9468,7 @@ _wrap_Band_YSize_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_YSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_YSize_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_YSize_get" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9508,7 +9508,7 @@ _wrap_Band_DataType_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   GDALDataType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_DataType_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_DataType_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_DataType_get" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9555,7 +9555,7 @@ _wrap_Band_GetBlockSize(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   
   arg2 = &temp2;
   arg3 = &temp3;
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetBlockSize self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetBlockSize self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetBlockSize" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9607,7 +9607,7 @@ _wrap_Band_GetRasterColorInterpretation(ClientData clientData SWIGUNUSED, Tcl_In
   int res1 = 0 ;
   GDALColorInterp result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetRasterColorInterpretation self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetRasterColorInterpretation self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetRasterColorInterpretation" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9650,7 +9650,7 @@ _wrap_Band_SetRasterColorInterpretation(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetRasterColorInterpretation self val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetRasterColorInterpretation self val ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetRasterColorInterpretation" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9703,7 +9703,7 @@ _wrap_Band_GetNoDataValue(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
     arg2 = &tmpval2;
     arg3 = &tmphasval2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetNoDataValue self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetNoDataValue self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetNoDataValue" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9756,7 +9756,7 @@ _wrap_Band_SetNoDataValue(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int ecode2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetNoDataValue self d ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetNoDataValue self d ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetNoDataValue" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9801,7 +9801,7 @@ _wrap_Band_GetRasterCategoryNames(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int res1 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetRasterCategoryNames self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetRasterCategoryNames self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetRasterCategoryNames" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9861,7 +9861,7 @@ _wrap_Band_SetRasterCategoryNames(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int res1 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetRasterCategoryNames self names ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetRasterCategoryNames self names ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetRasterCategoryNames" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9940,7 +9940,7 @@ _wrap_Band_GetMinimum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     arg2 = &tmpval2;
     arg3 = &tmphasval2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetMinimum self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetMinimum self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetMinimum" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -9998,7 +9998,7 @@ _wrap_Band_GetMaximum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     arg2 = &tmpval2;
     arg3 = &tmphasval2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetMaximum self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetMaximum self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetMaximum" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10056,7 +10056,7 @@ _wrap_Band_GetOffset(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
     arg2 = &tmpval2;
     arg3 = &tmphasval2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetOffset self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetOffset self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetOffset" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10114,7 +10114,7 @@ _wrap_Band_GetScale(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
     arg2 = &tmpval2;
     arg3 = &tmphasval2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetScale self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetScale self ?hasval? ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetScale" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10186,7 +10186,7 @@ _wrap_Band_GetStatistics(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   arg5 = &temp5;
   arg6 = &temp6;
   arg7 = &temp7;
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Band_GetStatistics self approx_ok force ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::Band_GetStatistics self approx_ok force ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetStatistics" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10275,7 +10275,7 @@ _wrap_Band_SetStatistics(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int ecode5 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::Band_SetStatistics self min max mean stddev ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:gdal::Band_SetStatistics self min max mean stddev ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetStatistics" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10335,7 +10335,7 @@ _wrap_Band_GetOverviewCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetOverviewCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetOverviewCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetOverviewCount" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10378,7 +10378,7 @@ _wrap_Band_GetOverview(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int ecode2 = 0 ;
   GDALRasterBandShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_GetOverview self i ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_GetOverview self i ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetOverview" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10435,7 +10435,7 @@ _wrap_Band_Checksum(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int res5 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:osgeo::Band_Checksum self ?xoff? ?yoff? ?xsize? ?ysize? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:gdal::Band_Checksum self ?xoff? ?yoff? ?xsize? ?ysize? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_Checksum" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10525,7 +10525,7 @@ _wrap_Band_ComputeRasterMinMax(ClientData clientData SWIGUNUSED, Tcl_Interp *int
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Band_ComputeRasterMinMax self ?approx_ok? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::Band_ComputeRasterMinMax self ?approx_ok? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_ComputeRasterMinMax" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10586,7 +10586,7 @@ _wrap_Band_ComputeBandStats(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Band_ComputeBandStats self ?samplestep? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::Band_ComputeBandStats self ?samplestep? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_ComputeBandStats" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10645,7 +10645,7 @@ _wrap_Band_Fill(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   int ecode3 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Band_Fill self real_fill ?imag_fill? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:gdal::Band_Fill self real_fill ?imag_fill? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_Fill" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10727,7 +10727,7 @@ _wrap_Band_ReadRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     arg6 = &nLen6;
     arg7 = &pBuf6;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo|ooo:osgeo::Band_ReadRaster self xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo|ooo:gdal::Band_ReadRaster self xoff yoff xsize ysize ?buf? ?buf_xsize? ?buf_ysize? ?buf_type? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_ReadRaster" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10856,7 +10856,7 @@ _wrap_Band_WriteRaster(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res10 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooooo|ooo:osgeo::Band_WriteRaster self xoff yoff xsize ysize buf_len ?buf_string? ?buf_xsize? ?buf_ysize? ?buf_type? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooooo|ooo:gdal::Band_WriteRaster self xoff yoff xsize ysize buf_len ?buf_string? ?buf_xsize? ?buf_ysize? ?buf_type? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_WriteRaster" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -10962,7 +10962,7 @@ _wrap_Band_FlushCache(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_FlushCache self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_FlushCache self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_FlushCache" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11002,7 +11002,7 @@ _wrap_Band_GetRasterColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   GDALColorTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetRasterColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetRasterColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetRasterColorTable" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11042,7 +11042,7 @@ _wrap_Band_GetColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   GDALColorTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetColorTable" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11085,7 +11085,7 @@ _wrap_Band_SetRasterColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetRasterColorTable self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetRasterColorTable self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetRasterColorTable" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11133,7 +11133,7 @@ _wrap_Band_SetColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetColorTable self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetColorTable self arg ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetColorTable" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11178,7 +11178,7 @@ _wrap_Band_GetDefaultRAT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   GDALRasterAttributeTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetDefaultRAT self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetDefaultRAT self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetDefaultRAT" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11221,7 +11221,7 @@ _wrap_Band_SetDefaultRAT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_SetDefaultRAT self table ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_SetDefaultRAT self table ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetDefaultRAT" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11266,7 +11266,7 @@ _wrap_Band_GetMaskBand(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   GDALRasterBandShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetMaskBand self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetMaskBand self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetMaskBand" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11306,7 +11306,7 @@ _wrap_Band_GetMaskFlags(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Band_GetMaskFlags self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::Band_GetMaskFlags self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetMaskFlags" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11349,7 +11349,7 @@ _wrap_Band_CreateMaskBand(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int ecode2 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Band_CreateMaskBand self nFlags ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::Band_CreateMaskBand self nFlags ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_CreateMaskBand" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11421,7 +11421,7 @@ _wrap_Band_GetHistogram(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"o|ooooooo:osgeo::Band_GetHistogram self ?min? ?max? ?buckets? ?panHistogram? ?include_out_of_range? ?approx_ok? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|ooooooo:gdal::Band_GetHistogram self ?min? ?max? ?buckets? ?panHistogram? ?include_out_of_range? ?approx_ok? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetHistogram" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11612,7 +11612,7 @@ _wrap_Band_GetDefaultHistogram(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"o|ooooooo:osgeo::Band_GetDefaultHistogram self ?min_ret? ?max_ret? ?buckets_ret? ?ppanHistogram? ?force? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|ooooooo:gdal::Band_GetDefaultHistogram self ?min_ret? ?max_ret? ?buckets_ret? ?ppanHistogram? ?force? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_GetDefaultHistogram" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11788,7 +11788,7 @@ _wrap_Band_SetDefaultHistogram(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res5 = 0 ;
   CPLErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::Band_SetDefaultHistogram self min max buckets_in panHistogram_in ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:gdal::Band_SetDefaultHistogram self min max buckets_in panHistogram_in ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_SetDefaultHistogram" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -11894,7 +11894,7 @@ _wrap_new_ColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int ecode1 = 0 ;
   GDALColorTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::new_ColorTable ?palette? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:gdal::new_ColorTable ?palette? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -11935,7 +11935,7 @@ _wrap_delete_ColorTable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_ColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_ColorTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ColorTable" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -11975,7 +11975,7 @@ _wrap_ColorTable_Clone(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   GDALColorTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorTable_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorTable_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_Clone" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12015,7 +12015,7 @@ _wrap_ColorTable_GetPaletteInterpretation(ClientData clientData SWIGUNUSED, Tcl_
   int res1 = 0 ;
   GDALPaletteInterp result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorTable_GetPaletteInterpretation self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorTable_GetPaletteInterpretation self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_GetPaletteInterpretation" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12055,7 +12055,7 @@ _wrap_ColorTable_GetCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ColorTable_GetCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ColorTable_GetCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_GetCount" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12098,7 +12098,7 @@ _wrap_ColorTable_GetColorEntry(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode2 = 0 ;
   GDALColorEntry *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::ColorTable_GetColorEntry self entry ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::ColorTable_GetColorEntry self entry ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_GetColorEntry" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12181,7 +12181,7 @@ _wrap_ColorTable_GetColorEntryAsRGB(ClientData clientData SWIGUNUSED, Tcl_Interp
   GDALColorEntry ce3 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::ColorTable_GetColorEntryAsRGB self entry centry ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::ColorTable_GetColorEntryAsRGB self entry centry ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_GetColorEntryAsRGB" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12272,7 +12272,7 @@ _wrap_ColorTable_SetColorEntry(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode2 = 0 ;
   GDALColorEntry ce3 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::ColorTable_SetColorEntry self entry centry ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::ColorTable_SetColorEntry self entry centry ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_SetColorEntry" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12368,7 +12368,7 @@ _wrap_ColorTable_CreateColorRamp(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode4 = 0 ;
   GDALColorEntry ce5 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::ColorTable_CreateColorRamp self nStartIndex startcolor nEndIndex endcolor ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:gdal::ColorTable_CreateColorRamp self nStartIndex startcolor nEndIndex endcolor ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALColorTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ColorTable_CreateColorRamp" "', argument " "1"" of type '" "GDALColorTableShadow *""'"); 
@@ -12519,7 +12519,7 @@ SWIGINTERN int
 _wrap_new_RasterAttributeTable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   GDALRasterAttributeTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::new_RasterAttributeTable ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::new_RasterAttributeTable ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (GDALRasterAttributeTableShadow *)new_GDALRasterAttributeTableShadow();
@@ -12553,7 +12553,7 @@ _wrap_delete_RasterAttributeTable(ClientData clientData SWIGUNUSED, Tcl_Interp *
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_RasterAttributeTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_RasterAttributeTable self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RasterAttributeTable" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12593,7 +12593,7 @@ _wrap_RasterAttributeTable_Clone(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int res1 = 0 ;
   GDALRasterAttributeTableShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::RasterAttributeTable_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::RasterAttributeTable_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_Clone" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12633,7 +12633,7 @@ _wrap_RasterAttributeTable_GetColumnCount(ClientData clientData SWIGUNUSED, Tcl_
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::RasterAttributeTable_GetColumnCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::RasterAttributeTable_GetColumnCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetColumnCount" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12676,7 +12676,7 @@ _wrap_RasterAttributeTable_GetNameOfCol(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_GetNameOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_GetNameOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetNameOfCol" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12724,7 +12724,7 @@ _wrap_RasterAttributeTable_GetUsageOfCol(ClientData clientData SWIGUNUSED, Tcl_I
   int ecode2 = 0 ;
   GDALRATFieldUsage result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_GetUsageOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_GetUsageOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetUsageOfCol" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12772,7 +12772,7 @@ _wrap_RasterAttributeTable_GetTypeOfCol(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode2 = 0 ;
   GDALRATFieldType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_GetTypeOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_GetTypeOfCol self iCol ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetTypeOfCol" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12820,7 +12820,7 @@ _wrap_RasterAttributeTable_GetColOfUsage(ClientData clientData SWIGUNUSED, Tcl_I
   int ecode2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_GetColOfUsage self eUsage ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_GetColOfUsage self eUsage ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetColOfUsage" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12865,7 +12865,7 @@ _wrap_RasterAttributeTable_GetRowCount(ClientData clientData SWIGUNUSED, Tcl_Int
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::RasterAttributeTable_GetRowCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::RasterAttributeTable_GetRowCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetRowCount" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12911,7 +12911,7 @@ _wrap_RasterAttributeTable_GetValueAsString(ClientData clientData SWIGUNUSED, Tc
   int ecode3 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::RasterAttributeTable_GetValueAsString self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::RasterAttributeTable_GetValueAsString self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetValueAsString" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -12967,7 +12967,7 @@ _wrap_RasterAttributeTable_GetValueAsInt(ClientData clientData SWIGUNUSED, Tcl_I
   int ecode3 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::RasterAttributeTable_GetValueAsInt self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::RasterAttributeTable_GetValueAsInt self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetValueAsInt" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13023,7 +13023,7 @@ _wrap_RasterAttributeTable_GetValueAsDouble(ClientData clientData SWIGUNUSED, Tc
   int ecode3 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::RasterAttributeTable_GetValueAsDouble self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::RasterAttributeTable_GetValueAsDouble self iRow iCol ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetValueAsDouble" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13079,7 +13079,7 @@ _wrap_RasterAttributeTable_SetValueAsString(ClientData clientData SWIGUNUSED, Tc
   int val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::RasterAttributeTable_SetValueAsString self iRow iCol pszValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:gdal::RasterAttributeTable_SetValueAsString self iRow iCol pszValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_SetValueAsString" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13141,7 +13141,7 @@ _wrap_RasterAttributeTable_SetValueAsInt(ClientData clientData SWIGUNUSED, Tcl_I
   int val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::RasterAttributeTable_SetValueAsInt self iRow iCol nValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:gdal::RasterAttributeTable_SetValueAsInt self iRow iCol nValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_SetValueAsInt" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13204,7 +13204,7 @@ _wrap_RasterAttributeTable_SetValueAsDouble(ClientData clientData SWIGUNUSED, Tc
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::RasterAttributeTable_SetValueAsDouble self iRow iCol dfValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:gdal::RasterAttributeTable_SetValueAsDouble self iRow iCol dfValue ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_SetValueAsDouble" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13261,7 +13261,7 @@ _wrap_RasterAttributeTable_SetRowCount(ClientData clientData SWIGUNUSED, Tcl_Int
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_SetRowCount self nCount ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_SetRowCount self nCount ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_SetRowCount" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13316,7 +13316,7 @@ _wrap_RasterAttributeTable_CreateColumn(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode4 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::RasterAttributeTable_CreateColumn self pszName eType eUsage ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:gdal::RasterAttributeTable_CreateColumn self pszName eType eUsage ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_CreateColumn" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13376,7 +13376,7 @@ _wrap_RasterAttributeTable_GetRowOfValue(ClientData clientData SWIGUNUSED, Tcl_I
   int ecode2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::RasterAttributeTable_GetRowOfValue self dfValue ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:gdal::RasterAttributeTable_GetRowOfValue self dfValue ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterAttributeTableShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterAttributeTable_GetRowOfValue" "', argument " "1"" of type '" "GDALRasterAttributeTableShadow *""'"); 
@@ -13456,7 +13456,7 @@ _wrap_TermProgress_nocb(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res3 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|oo:osgeo::TermProgress_nocb dfProgress ?pszMessage? ?pData? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|oo:gdal::TermProgress_nocb dfProgress ?pszMessage? ?pData? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "TermProgress_nocb" "', argument " "1"" of type '" "double""'");
@@ -13532,7 +13532,7 @@ _wrap_ComputeMedianCutPCT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oo:osgeo::ComputeMedianCutPCT red green blue num_colors colors ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oo:gdal::ComputeMedianCutPCT red green blue num_colors colors ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ComputeMedianCutPCT" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -13659,7 +13659,7 @@ _wrap_DitherRGB2PCT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oo:osgeo::DitherRGB2PCT red green blue target colors ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo|oo:gdal::DitherRGB2PCT red green blue target colors ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DitherRGB2PCT" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -13794,7 +13794,7 @@ _wrap_ReprojectImage(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooooooo:osgeo::ReprojectImage src_ds dst_ds ?src_wkt? ?dst_wkt? ?eResampleAlg? ?WarpMemoryLimit? ?maxerror? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooooooo:gdal::ReprojectImage src_ds dst_ds ?src_wkt? ?dst_wkt? ?eResampleAlg? ?WarpMemoryLimit? ?maxerror? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ReprojectImage" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -13937,7 +13937,7 @@ _wrap_ComputeProximity(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osgeo::ComputeProximity srcBand proximityBand ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:gdal::ComputeProximity srcBand proximityBand ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ComputeProximity" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -14082,7 +14082,7 @@ _wrap_RasterizeLayer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|oooooo:osgeo::RasterizeLayer dataset bands band_list ?layer? ?pfnTransformer? ?pTransformArg? ?burn_values? ?burn_values_list? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|oooooo:gdal::RasterizeLayer dataset bands band_list ?layer? ?pfnTransformer? ?pTransformArg? ?burn_values? ?burn_values_list? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RasterizeLayer" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -14323,7 +14323,7 @@ _wrap_Polygonize(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|ooo:osgeo::Polygonize srcBand maskBand outLayer iPixValField ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|ooo:gdal::Polygonize srcBand maskBand outLayer iPixValField ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Polygonize" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -14479,7 +14479,7 @@ _wrap_SieveFilter(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|oooo:osgeo::SieveFilter srcBand maskBand dstBand threshold ?connectedness? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|oooo:gdal::SieveFilter srcBand maskBand dstBand threshold ?connectedness? ?options? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SieveFilter" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -14635,7 +14635,7 @@ _wrap_RegenerateOverviews(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osgeo::RegenerateOverviews srcBand overviewBandCount ?overviewBands? ?resampling? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:gdal::RegenerateOverviews srcBand overviewBandCount ?overviewBands? ?resampling? ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RegenerateOverviews" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -14784,7 +14784,7 @@ _wrap_RegenerateOverview(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   psProgressInfo->interp = interp;
   psProgressInfo->psTclCallback = NULL;
   psProgressInfo->psTclCallbackData = NULL;
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|oo:osgeo::RegenerateOverview srcBand overviewBand resampling ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|oo:gdal::RegenerateOverview srcBand overviewBand resampling ?callback? ?callback_data? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RegenerateOverview" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
@@ -14896,7 +14896,7 @@ _wrap_AutoCreateWarpedVRT(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int ecode5 = 0 ;
   GDALDatasetShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:osgeo::AutoCreateWarpedVRT src_ds ?src_wkt? ?dst_wkt? ?eResampleAlg? ?maxerror? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|oooo:gdal::AutoCreateWarpedVRT src_ds ?src_wkt? ?dst_wkt? ?eResampleAlg? ?maxerror? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AutoCreateWarpedVRT" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -14972,7 +14972,7 @@ _wrap_new_Transformer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res2 = 0 ;
   GDALTransformerInfoShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::new_Transformer src dst options ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::new_Transformer src dst options ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALDatasetShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_Transformer" "', argument " "1"" of type '" "GDALDatasetShadow *""'"); 
@@ -15047,7 +15047,7 @@ _wrap_delete_Transformer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_Transformer self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::delete_Transformer self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALTransformerInfoShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Transformer" "', argument " "1"" of type '" "GDALTransformerInfoShadow *""'"); 
@@ -15092,7 +15092,7 @@ _wrap_Transformer_TransformPoint__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_I
   double argin3[3] ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Transformer_TransformPoint self bDstToSrc inout ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::Transformer_TransformPoint self bDstToSrc inout ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALTransformerInfoShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Transformer_TransformPoint" "', argument " "1"" of type '" "GDALTransformerInfoShadow *""'"); 
@@ -15190,7 +15190,7 @@ _wrap_Transformer_TransformPoint__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_I
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|o:osgeo::Transformer_TransformPoint self bDstToSrc x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|o:gdal::Transformer_TransformPoint self bDstToSrc x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALTransformerInfoShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Transformer_TransformPoint" "', argument " "1"" of type '" "GDALTransformerInfoShadow *""'"); 
@@ -15332,7 +15332,7 @@ _wrap_Transformer_TransformPoints(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int ecode2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Transformer_TransformPoints self bDstToSrc nCount ?x? ?y? ?z? ?panSuccess? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:gdal::Transformer_TransformPoints self bDstToSrc nCount ?x? ?y? ?z? ?panSuccess? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALTransformerInfoShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Transformer_TransformPoints" "', argument " "1"" of type '" "GDALTransformerInfoShadow *""'"); 
@@ -15548,7 +15548,7 @@ _wrap_VersionInfo(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
   int alloc1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::VersionInfo ?request? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:gdal::VersionInfo ?request? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
     if (!SWIG_IsOK(res1)) {
@@ -15587,7 +15587,7 @@ fail:
 
 SWIGINTERN int
 _wrap_AllRegister(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::AllRegister ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::AllRegister ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     GDALAllRegister();
@@ -15617,7 +15617,7 @@ fail:
 
 SWIGINTERN int
 _wrap_GDALDestroyDriverManager(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GDALDestroyDriverManager ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GDALDestroyDriverManager ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     GDALDestroyDriverManager();
@@ -15649,7 +15649,7 @@ SWIGINTERN int
 _wrap_GetCacheMax(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetCacheMax ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetCacheMax ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)GDALGetCacheMax();
@@ -15683,7 +15683,7 @@ _wrap_SetCacheMax(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
   int val1 ;
   int ecode1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SetCacheMax nBytes ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::SetCacheMax nBytes ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetCacheMax" "', argument " "1"" of type '" "int""'");
@@ -15720,7 +15720,7 @@ SWIGINTERN int
 _wrap_GetCacheUsed(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetCacheUsed ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetCacheUsed ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)GDALGetCacheUsed();
@@ -15755,7 +15755,7 @@ _wrap_GetDataTypeSize(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDataTypeSize GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetDataTypeSize GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetDataTypeSize" "', argument " "1"" of type '" "GDALDataType""'");
@@ -15795,7 +15795,7 @@ _wrap_DataTypeIsComplex(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int ecode1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataTypeIsComplex GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::DataTypeIsComplex GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DataTypeIsComplex" "', argument " "1"" of type '" "GDALDataType""'");
@@ -15835,7 +15835,7 @@ _wrap_GetDataTypeName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDataTypeName GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetDataTypeName GDALDataType ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetDataTypeName" "', argument " "1"" of type '" "GDALDataType""'");
@@ -15876,7 +15876,7 @@ _wrap_GetDataTypeByName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int alloc1 = 0 ;
   GDALDataType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDataTypeByName char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetDataTypeByName char const * ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetDataTypeByName" "', argument " "1"" of type '" "char const *""'");
@@ -15918,7 +15918,7 @@ _wrap_GetColorInterpretationName(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetColorInterpretationName GDALColorInterp ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetColorInterpretationName GDALColorInterp ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetColorInterpretationName" "', argument " "1"" of type '" "GDALColorInterp""'");
@@ -15958,7 +15958,7 @@ _wrap_GetPaletteInterpretationName(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetPaletteInterpretationName GDALPaletteInterp ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetPaletteInterpretationName GDALPaletteInterp ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetPaletteInterpretationName" "', argument " "1"" of type '" "GDALPaletteInterp""'");
@@ -16005,7 +16005,7 @@ _wrap_DecToDMS(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, T
   int ecode3 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::DecToDMS double char const * ?int? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:gdal::DecToDMS double char const * ?int? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DecToDMS" "', argument " "1"" of type '" "double""'");
@@ -16059,7 +16059,7 @@ _wrap_PackedDMSToDec(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int ecode1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::PackedDMSToDec double ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::PackedDMSToDec double ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "PackedDMSToDec" "', argument " "1"" of type '" "double""'");
@@ -16099,7 +16099,7 @@ _wrap_DecToPackedDMS(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int ecode1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DecToPackedDMS double ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::DecToPackedDMS double ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_double SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DecToPackedDMS" "', argument " "1"" of type '" "double""'");
@@ -16140,7 +16140,7 @@ _wrap_ParseXMLString(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int alloc1 = 0 ;
   CPLXMLNode *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::ParseXMLString char * ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::ParseXMLString char * ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ParseXMLString" "', argument " "1"" of type '" "char *""'");
@@ -16211,7 +16211,7 @@ _wrap_SerializeXMLTree(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   CPLXMLNode *arg1 = (CPLXMLNode *) 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SerializeXMLTree xmlnode ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::SerializeXMLTree xmlnode ",(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(tcl,in) (CPLXMLNode* xmlnode ) */
     arg1 = TclListToXMLTree( interp, objv[1] );
@@ -16256,7 +16256,7 @@ SWIGINTERN int
 _wrap_GetDriverCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetDriverCount ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":gdal::GetDriverCount ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)GetDriverCount();
@@ -16292,7 +16292,7 @@ _wrap_GetDriverByName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int alloc1 = 0 ;
   GDALDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDriverByName name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetDriverByName name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetDriverByName" "', argument " "1"" of type '" "char const *""'");
@@ -16334,7 +16334,7 @@ _wrap_GetDriver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   int ecode1 = 0 ;
   GDALDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDriver i ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:gdal::GetDriver i ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetDriver" "', argument " "1"" of type '" "int""'");
@@ -16378,7 +16378,7 @@ _wrap_Open(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_O
   int ecode2 = 0 ;
   GDALDatasetShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Open name ?eAccess? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::Open name ?eAccess? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Open" "', argument " "1"" of type '" "char const *""'");
@@ -16431,7 +16431,7 @@ _wrap_OpenShared(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   int ecode2 = 0 ;
   GDALDatasetShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::OpenShared name ?eAccess? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::OpenShared name ?eAccess? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenShared" "', argument " "1"" of type '" "char const *""'");
@@ -16482,7 +16482,7 @@ _wrap_IdentifyDriver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int alloc1 = 0 ;
   GDALDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::IdentifyDriver pszDatasource ?papszSiblings? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::IdentifyDriver pszDatasource ?papszSiblings? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IdentifyDriver" "', argument " "1"" of type '" "char const *""'");
@@ -16558,7 +16558,7 @@ _wrap_GeneralCmdLineProcessor(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode2 = 0 ;
   char **result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::GeneralCmdLineProcessor papszArgv ?nOptions? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:gdal::GeneralCmdLineProcessor papszArgv ?nOptions? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) char **options */
     int size;
@@ -17319,7 +17319,7 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *interp) {
   /* Setup exception handling */
   UseExceptions();
   
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::TermProgress", SWIG_NewFunctionPtrObj((void *)(int (*)(double,char const *,void *))(GDALTermProgress), SWIGTYPE_p_f_double_p_q_const__char_p_void__int));
+  SWIG_Tcl_SetConstantObj(interp, "gdal::TermProgress", SWIG_NewFunctionPtrObj((void *)(int (*)(double,char const *,void *))(GDALTermProgress), SWIGTYPE_p_f_double_p_q_const__char_p_void__int));
   return TCL_OK;
 }
 SWIGEXPORT int Gdal_SafeInit(Tcl_Interp *interp) {

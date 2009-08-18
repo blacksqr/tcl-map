@@ -1,6 +1,7 @@
 #!/usr/bin/tclsh8.5
-load [file join .. gdal swig tcl gdal.so]
-load [file join .. gdal swig tcl gdalconst.so]
+lappend auto_path /usr/local/lib
+package require gdal
+package require gdalconst
 
 foreach a [lsort [info commands osgeo::*]] {
     puts "Command: $a"

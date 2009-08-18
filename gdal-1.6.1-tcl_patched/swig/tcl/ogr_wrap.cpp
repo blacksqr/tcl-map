@@ -1653,8 +1653,8 @@ static swig_module_info swig_module = {swig_types, 17, 0, 0, 0, 0};
 
 #define SWIG_init    Ogr_Init
 #define SWIG_name    "ogr"
-#define SWIG_prefix  "osgeo::"
-#define SWIG_namespace "osgeo"
+#define SWIG_prefix  "ogr::"
+#define SWIG_namespace "ogr"
 
 #define SWIG_version "1.0"
 
@@ -2643,7 +2643,7 @@ extern "C" {
 #endif
 SWIGINTERN int
 _wrap_UseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::UseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":ogr::UseExceptions ") == TCL_ERROR) SWIG_fail;
   UseExceptions();
   
   return TCL_OK;
@@ -2654,7 +2654,7 @@ fail:
 
 SWIGINTERN int
 _wrap_DontUseExceptions(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":ogr::DontUseExceptions ") == TCL_ERROR) SWIG_fail;
   DontUseExceptions();
   
   return TCL_OK;
@@ -2670,7 +2670,7 @@ _wrap_Driver_name_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_name_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Driver_name_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_name_get" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -2715,7 +2715,7 @@ _wrap_Driver_CreateDataSource(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int alloc2 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Driver_CreateDataSource self name ?options? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:ogr::Driver_CreateDataSource self name ?options? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_CreateDataSource" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -2803,7 +2803,7 @@ _wrap_Driver_CopyDataSource(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc3 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osgeo::Driver_CopyDataSource self copy_ds name ?options? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:ogr::Driver_CopyDataSource self copy_ds name ?options? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_CopyDataSource" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -2895,7 +2895,7 @@ _wrap_Driver_Open(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
   int ecode3 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Driver_Open self name ?update? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:ogr::Driver_Open self name ?update? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_Open" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -2953,7 +2953,7 @@ _wrap_Driver_DeleteDataSource(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int alloc2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Driver_DeleteDataSource self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Driver_DeleteDataSource self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_DeleteDataSource" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -3004,7 +3004,7 @@ _wrap_Driver_TestCapability(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Driver_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Driver_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_TestCapability" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -3051,7 +3051,7 @@ _wrap_Driver_GetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Driver_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Driver_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDriverShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Driver_GetName" "', argument " "1"" of type '" "OGRDriverShadow *""'"); 
@@ -3107,7 +3107,7 @@ _wrap_DataSource_name_get(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_name_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_name_get self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_name_get" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3146,7 +3146,7 @@ _wrap_delete_DataSource(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_DataSource self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::delete_DataSource self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DataSource" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3186,7 +3186,7 @@ _wrap_DataSource_GetRefCount(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_GetRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_GetRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetRefCount" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3226,7 +3226,7 @@ _wrap_DataSource_GetSummaryRefCount(ClientData clientData SWIGUNUSED, Tcl_Interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_GetSummaryRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_GetSummaryRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetSummaryRefCount" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3266,7 +3266,7 @@ _wrap_DataSource_GetLayerCount(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_GetLayerCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_GetLayerCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetLayerCount" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3306,7 +3306,7 @@ _wrap_DataSource_GetDriver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   OGRDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_GetDriver self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_GetDriver self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetDriver" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3346,7 +3346,7 @@ _wrap_DataSource_GetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::DataSource_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::DataSource_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetName" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3389,7 +3389,7 @@ _wrap_DataSource_DeleteLayer(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::DataSource_DeleteLayer self index ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::DataSource_DeleteLayer self index ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_DeleteLayer" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3457,7 +3457,7 @@ _wrap_DataSource_CreateLayer(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int ecode4 = 0 ;
   OGRLayerShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:osgeo::DataSource_CreateLayer self name ?srs? ?geom_type? ?options? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|ooo:ogr::DataSource_CreateLayer self name ?srs? ?geom_type? ?options? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_CreateLayer" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3559,7 +3559,7 @@ _wrap_DataSource_CopyLayer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int alloc3 = 0 ;
   OGRLayerShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osgeo::DataSource_CopyLayer self src_layer new_name ?options? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:ogr::DataSource_CopyLayer self src_layer new_name ?options? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_CopyLayer" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3647,7 +3647,7 @@ _wrap_DataSource_GetLayerByIndex(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode2 = 0 ;
   OGRLayerShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::DataSource_GetLayerByIndex self ?index? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::DataSource_GetLayerByIndex self ?index? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetLayerByIndex" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3698,7 +3698,7 @@ _wrap_DataSource_GetLayerByName(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int alloc2 = 0 ;
   OGRLayerShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::DataSource_GetLayerByName self layer_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::DataSource_GetLayerByName self layer_name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_GetLayerByName" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3749,7 +3749,7 @@ _wrap_DataSource_TestCapability(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int alloc2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::DataSource_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::DataSource_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_TestCapability" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3807,7 +3807,7 @@ _wrap_DataSource_ExecuteSQL(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc4 = 0 ;
   OGRLayerShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|oo:osgeo::DataSource_ExecuteSQL self statement ?spatialFilter? ?dialect? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|oo:ogr::DataSource_ExecuteSQL self statement ?spatialFilter? ?dialect? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_ExecuteSQL" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3871,7 +3871,7 @@ _wrap_DataSource_ReleaseResultSet(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int res1 = 0 ;
   int res2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::DataSource_ReleaseResultSet self layer ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::DataSource_ReleaseResultSet self layer ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRDataSourceShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DataSource_ReleaseResultSet" "', argument " "1"" of type '" "OGRDataSourceShadow *""'"); 
@@ -3942,7 +3942,7 @@ _wrap_Layer_GetRefCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetRefCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetRefCount" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -3984,7 +3984,7 @@ _wrap_Layer_SetSpatialFilter(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   void *argp2 = 0 ;
   int res2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_SetSpatialFilter self filter ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_SetSpatialFilter self filter ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SetSpatialFilter" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4040,7 +4040,7 @@ _wrap_Layer_SetSpatialFilterRect(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooo:osgeo::Layer_SetSpatialFilterRect self minx miny maxx maxy ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo:ogr::Layer_SetSpatialFilterRect self minx miny maxx maxy ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SetSpatialFilterRect" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4100,7 +4100,7 @@ _wrap_Layer_GetSpatialFilter(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetSpatialFilter self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetSpatialFilter self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetSpatialFilter" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4144,7 +4144,7 @@ _wrap_Layer_SetAttributeFilter(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int alloc2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_SetAttributeFilter self filter_string ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_SetAttributeFilter self filter_string ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SetAttributeFilter" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4202,7 +4202,7 @@ _wrap_Layer_ResetReading(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_ResetReading self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_ResetReading self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_ResetReading" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4242,7 +4242,7 @@ _wrap_Layer_GetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetName" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4282,7 +4282,7 @@ _wrap_Layer_GetGeometryColumn(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetGeometryColumn self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetGeometryColumn self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetGeometryColumn" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4322,7 +4322,7 @@ _wrap_Layer_GetFIDColumn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetFIDColumn self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetFIDColumn self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetFIDColumn" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4365,7 +4365,7 @@ _wrap_Layer_GetFeature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int ecode2 = 0 ;
   OGRFeatureShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_GetFeature self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_GetFeature self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetFeature" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4410,7 +4410,7 @@ _wrap_Layer_GetNextFeature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   OGRFeatureShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetNextFeature self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetNextFeature self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetNextFeature" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4453,7 +4453,7 @@ _wrap_Layer_SetNextByIndex(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int ecode2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_SetNextByIndex self new_index ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_SetNextByIndex self new_index ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SetNextByIndex" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4513,7 +4513,7 @@ _wrap_Layer_SetFeature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_SetFeature self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_SetFeature self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SetFeature" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4573,7 +4573,7 @@ _wrap_Layer_CreateFeature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_CreateFeature self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_CreateFeature self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_CreateFeature" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4633,7 +4633,7 @@ _wrap_Layer_DeleteFeature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int ecode2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_DeleteFeature self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_DeleteFeature self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_DeleteFeature" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4690,7 +4690,7 @@ _wrap_Layer_SyncToDisk(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_SyncToDisk self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_SyncToDisk self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_SyncToDisk" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4742,7 +4742,7 @@ _wrap_Layer_GetLayerDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   OGRFeatureDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetLayerDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetLayerDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetLayerDefn" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4785,7 +4785,7 @@ _wrap_Layer_GetFeatureCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int ecode2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Layer_GetFeatureCount self ?force? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Layer_GetFeatureCount self ?force? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetFeatureCount" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4841,7 +4841,7 @@ _wrap_Layer_GetExtent(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Layer_GetExtent self ?force? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Layer_GetExtent self ?force? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetExtent" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4910,7 +4910,7 @@ _wrap_Layer_TestCapability(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int alloc2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Layer_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Layer_TestCapability self cap ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_TestCapability" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -4963,7 +4963,7 @@ _wrap_Layer_CreateField(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Layer_CreateField self field_def ?approx_ok? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:ogr::Layer_CreateField self field_def ?approx_ok? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_CreateField" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5027,7 +5027,7 @@ _wrap_Layer_StartTransaction(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_StartTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_StartTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_StartTransaction" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5079,7 +5079,7 @@ _wrap_Layer_CommitTransaction(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_CommitTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_CommitTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_CommitTransaction" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5131,7 +5131,7 @@ _wrap_Layer_RollbackTransaction(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int res1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_RollbackTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_RollbackTransaction self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_RollbackTransaction" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5183,7 +5183,7 @@ _wrap_Layer_GetSpatialRef(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   OSRSpatialReferenceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetSpatialRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetSpatialRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetSpatialRef" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5223,7 +5223,7 @@ _wrap_Layer_GetFeaturesRead(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   GIntBig result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Layer_GetFeaturesRead self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Layer_GetFeaturesRead self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRLayerShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Layer_GetFeaturesRead" "', argument " "1"" of type '" "OGRLayerShadow *""'"); 
@@ -5297,7 +5297,7 @@ _wrap_delete_Feature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_Feature self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::delete_Feature self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Feature" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5337,7 +5337,7 @@ _wrap_new_Feature(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc
   int res1 = 0 ;
   OGRFeatureShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::new_Feature ?feature_def? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:ogr::new_Feature ?feature_def? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -5379,7 +5379,7 @@ _wrap_Feature_GetDefnRef(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   OGRFeatureDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_GetDefnRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_GetDefnRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetDefnRef" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5422,7 +5422,7 @@ _wrap_Feature_SetGeometry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_SetGeometry self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_SetGeometry self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetGeometry" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5481,7 +5481,7 @@ _wrap_Feature_SetGeometryDirectly(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_SetGeometryDirectly self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_SetGeometryDirectly self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetGeometryDirectly" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5537,7 +5537,7 @@ _wrap_Feature_GetGeometryRef(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_GetGeometryRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_GetGeometryRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetGeometryRef" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5577,7 +5577,7 @@ _wrap_Feature_Clone(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int res1 = 0 ;
   OGRFeatureShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_Clone" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5620,7 +5620,7 @@ _wrap_Feature_Equal(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_Equal self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_Equal self feature ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_Equal" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5665,7 +5665,7 @@ _wrap_Feature_GetFieldCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_GetFieldCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_GetFieldCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldCount" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5708,7 +5708,7 @@ _wrap_Feature_GetFieldDefnRef__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Inte
   int ecode2 = 0 ;
   OGRFieldDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldDefnRef self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldDefnRef self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldDefnRef" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5757,7 +5757,7 @@ _wrap_Feature_GetFieldDefnRef__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Inte
   int alloc2 = 0 ;
   OGRFieldDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldDefnRef self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldDefnRef self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldDefnRef" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5845,7 +5845,7 @@ _wrap_Feature_GetFieldAsString__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsString self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsString self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsString" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5894,7 +5894,7 @@ _wrap_Feature_GetFieldAsString__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Int
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsString self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsString self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsString" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -5982,7 +5982,7 @@ _wrap_Feature_GetFieldAsInteger__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_In
   int ecode2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsInteger self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsInteger self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsInteger" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6031,7 +6031,7 @@ _wrap_Feature_GetFieldAsInteger__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_In
   int alloc2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsInteger self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsInteger self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsInteger" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6119,7 +6119,7 @@ _wrap_Feature_GetFieldAsDouble__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Int
   int ecode2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsDouble self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsDouble self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsDouble" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6168,7 +6168,7 @@ _wrap_Feature_GetFieldAsDouble__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Int
   int alloc2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsDouble self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsDouble self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsDouble" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6283,7 +6283,7 @@ _wrap_Feature_GetFieldAsDateTime(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   arg7 = &temp7;
   arg8 = &temp8;
   arg9 = &temp9;
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsDateTime self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsDateTime self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsDateTime" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6381,7 +6381,7 @@ _wrap_Feature_GetFieldAsIntegerList(ClientData clientData SWIGUNUSED, Tcl_Interp
     arg3 = &nLen3;
     arg4 = &pList3;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsIntegerList self id ?pList? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsIntegerList self id ?pList? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsIntegerList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6451,7 +6451,7 @@ _wrap_Feature_GetFieldAsDoubleList(ClientData clientData SWIGUNUSED, Tcl_Interp 
     arg3 = &nLen3;
     arg4 = &pList3;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldAsDoubleList self id ?pList? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldAsDoubleList self id ?pList? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsDoubleList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6515,7 +6515,7 @@ _wrap_Feature_GetFieldAsStringList(ClientData clientData SWIGUNUSED, Tcl_Interp 
   void *argp3 = 0 ;
   int res3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_GetFieldAsStringList self id pList ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_GetFieldAsStringList self id pList ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldAsStringList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6568,7 +6568,7 @@ _wrap_Feature_IsFieldSet__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_IsFieldSet self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_IsFieldSet self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_IsFieldSet" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6617,7 +6617,7 @@ _wrap_Feature_IsFieldSet__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int alloc2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_IsFieldSet self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_IsFieldSet self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_IsFieldSet" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6706,7 +6706,7 @@ _wrap_Feature_GetFieldIndex(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldIndex self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldIndex self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldIndex" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6753,7 +6753,7 @@ _wrap_Feature_GetFID(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_GetFID self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_GetFID self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFID" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6796,7 +6796,7 @@ _wrap_Feature_SetFID(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int ecode2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_SetFID self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_SetFID self fid ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetFID" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6852,7 +6852,7 @@ _wrap_Feature_DumpReadable(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_DumpReadable self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_DumpReadable self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_DumpReadable" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6894,7 +6894,7 @@ _wrap_Feature_UnsetField__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_UnsetField self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_UnsetField self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_UnsetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -6942,7 +6942,7 @@ _wrap_Feature_UnsetField__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_UnsetField self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_UnsetField self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_UnsetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7030,7 +7030,7 @@ _wrap_Feature_SetField__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7083,7 +7083,7 @@ _wrap_Feature_SetField__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7139,7 +7139,7 @@ _wrap_Feature_SetField__SWIG_2(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7195,7 +7195,7 @@ _wrap_Feature_SetField__SWIG_3(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7252,7 +7252,7 @@ _wrap_Feature_SetField__SWIG_4(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self id value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7308,7 +7308,7 @@ _wrap_Feature_SetField__SWIG_5(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetField self name value ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7383,7 +7383,7 @@ _wrap_Feature_SetField__SWIG_6(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int val9 ;
   int ecode9 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:osgeo::Feature_SetField self id year month day hour minute second tzflag ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:ogr::Feature_SetField self id year month day hour minute second tzflag ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7487,7 +7487,7 @@ _wrap_Feature_SetField__SWIG_7(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int val9 ;
   int ecode9 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:osgeo::Feature_SetField self name year month day hour minute second tzflag ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooooooooo:ogr::Feature_SetField self name year month day hour minute second tzflag ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetField" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7815,7 +7815,7 @@ _wrap_Feature_SetFieldIntegerList(ClientData clientData SWIGUNUSED, Tcl_Interp *
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetFieldIntegerList self id nList ?pList? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetFieldIntegerList self id nList ?pList? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetFieldIntegerList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7906,7 +7906,7 @@ _wrap_Feature_SetFieldDoubleList(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetFieldDoubleList self id nList ?pList? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetFieldDoubleList self id nList ?pList? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetFieldDoubleList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -7996,7 +7996,7 @@ _wrap_Feature_SetFieldStringList(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Feature_SetFieldStringList self id pList ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Feature_SetFieldStringList self id pList ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetFieldStringList" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8078,7 +8078,7 @@ _wrap_Feature_SetFrom(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode3 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Feature_SetFrom self other ?forgiving? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:ogr::Feature_SetFrom self other ?forgiving? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetFrom" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8142,7 +8142,7 @@ _wrap_Feature_GetStyleString(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Feature_GetStyleString self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Feature_GetStyleString self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetStyleString" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8185,7 +8185,7 @@ _wrap_Feature_SetStyleString(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_SetStyleString self the_string ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_SetStyleString self the_string ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_SetStyleString" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8235,7 +8235,7 @@ _wrap_Feature_GetFieldType__SWIG_0(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int ecode2 = 0 ;
   OGRFieldType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldType self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldType self id ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldType" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8284,7 +8284,7 @@ _wrap_Feature_GetFieldType__SWIG_1(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int alloc2 = 0 ;
   OGRFieldType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Feature_GetFieldType self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Feature_GetFieldType self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Feature_GetFieldType" "', argument " "1"" of type '" "OGRFeatureShadow *""'"); 
@@ -8410,7 +8410,7 @@ _wrap_delete_FeatureDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_FeatureDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::delete_FeatureDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_FeatureDefn" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8451,7 +8451,7 @@ _wrap_new_FeatureDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int alloc1 = 0 ;
   OGRFeatureDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|o:osgeo::new_FeatureDefn ?name_null_ok? ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|o:ogr::new_FeatureDefn ?name_null_ok? ",(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
     if (!SWIG_IsOK(res1)) {
@@ -8495,7 +8495,7 @@ _wrap_FeatureDefn_GetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FeatureDefn_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FeatureDefn_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetName" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8535,7 +8535,7 @@ _wrap_FeatureDefn_GetFieldCount(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FeatureDefn_GetFieldCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FeatureDefn_GetFieldCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetFieldCount" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8578,7 +8578,7 @@ _wrap_FeatureDefn_GetFieldDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int ecode2 = 0 ;
   OGRFieldDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FeatureDefn_GetFieldDefn self i ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FeatureDefn_GetFieldDefn self i ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetFieldDefn" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8627,7 +8627,7 @@ _wrap_FeatureDefn_GetFieldIndex(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int alloc2 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FeatureDefn_GetFieldIndex self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FeatureDefn_GetFieldIndex self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetFieldIndex" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8676,7 +8676,7 @@ _wrap_FeatureDefn_AddFieldDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   void *argp2 = 0 ;
   int res2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FeatureDefn_AddFieldDefn self defn ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FeatureDefn_AddFieldDefn self defn ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_AddFieldDefn" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8721,7 +8721,7 @@ _wrap_FeatureDefn_GetGeomType(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int res1 = 0 ;
   OGRwkbGeometryType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FeatureDefn_GetGeomType self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FeatureDefn_GetGeomType self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetGeomType" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8763,7 +8763,7 @@ _wrap_FeatureDefn_SetGeomType(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FeatureDefn_SetGeomType self geom_type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FeatureDefn_SetGeomType self geom_type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_SetGeomType" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8808,7 +8808,7 @@ _wrap_FeatureDefn_GetReferenceCount(ClientData clientData SWIGUNUSED, Tcl_Interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FeatureDefn_GetReferenceCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FeatureDefn_GetReferenceCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFeatureDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FeatureDefn_GetReferenceCount" "', argument " "1"" of type '" "OGRFeatureDefnShadow *""'"); 
@@ -8868,7 +8868,7 @@ _wrap_delete_FieldDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_FieldDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::delete_FieldDefn self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_FieldDefn" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -8912,7 +8912,7 @@ _wrap_new_FieldDefn(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   OGRFieldDefnShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|oo:osgeo::new_FieldDefn ?name_null_ok? ?field_type? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|oo:ogr::new_FieldDefn ?name_null_ok? ?field_type? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
     if (!SWIG_IsOK(res1)) {
@@ -8963,7 +8963,7 @@ _wrap_FieldDefn_GetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetName" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9003,7 +9003,7 @@ _wrap_FieldDefn_GetNameRef(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetNameRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetNameRef self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetNameRef" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9046,7 +9046,7 @@ _wrap_FieldDefn_SetName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   char *buf2 = 0 ;
   int alloc2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_SetName self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_SetName self name ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_SetName" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9093,7 +9093,7 @@ _wrap_FieldDefn_GetType(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   OGRFieldType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetType self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetType self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetType" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9135,7 +9135,7 @@ _wrap_FieldDefn_SetType(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_SetType self type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_SetType self type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_SetType" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9180,7 +9180,7 @@ _wrap_FieldDefn_GetJustify(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   OGRJustification result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetJustify self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetJustify self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetJustify" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9222,7 +9222,7 @@ _wrap_FieldDefn_SetJustify(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_SetJustify self justify ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_SetJustify self justify ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_SetJustify" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9267,7 +9267,7 @@ _wrap_FieldDefn_GetWidth(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetWidth self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetWidth self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetWidth" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9309,7 +9309,7 @@ _wrap_FieldDefn_SetWidth(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_SetWidth self width ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_SetWidth self width ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_SetWidth" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9354,7 +9354,7 @@ _wrap_FieldDefn_GetPrecision(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::FieldDefn_GetPrecision self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::FieldDefn_GetPrecision self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetPrecision" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9396,7 +9396,7 @@ _wrap_FieldDefn_SetPrecision(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_SetPrecision self precision ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_SetPrecision self precision ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_SetPrecision" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9444,7 +9444,7 @@ _wrap_FieldDefn_GetFieldTypeName(ClientData clientData SWIGUNUSED, Tcl_Interp *i
   int ecode2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::FieldDefn_GetFieldTypeName self type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::FieldDefn_GetFieldTypeName self type ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRFieldDefnShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDefn_GetFieldTypeName" "', argument " "1"" of type '" "OGRFieldDefnShadow *""'"); 
@@ -9516,7 +9516,7 @@ _wrap_CreateGeometryFromWkb(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res3 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::CreateGeometryFromWkb len ?bin_string? ?reference? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::CreateGeometryFromWkb len ?bin_string? ?reference? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in,numinputs=1) (int nLen, char *pBuf ) */
     /* Storage is handled by the respective Tcl_Obj. It should considered read-only. */
@@ -9565,7 +9565,7 @@ _wrap_CreateGeometryFromWkt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::CreateGeometryFromWkt val ?reference? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::CreateGeometryFromWkt val ?reference? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   {
     /* %typemap(in) (char **ignorechange) */
     val1 = Tcl_GetString(objv[1]);
@@ -9613,7 +9613,7 @@ _wrap_CreateGeometryFromGML(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int alloc1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::CreateGeometryFromGML input_string ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::CreateGeometryFromGML input_string ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CreateGeometryFromGML" "', argument " "1"" of type '" "char const *""'");
@@ -9656,7 +9656,7 @@ _wrap_CreateGeometryFromJson(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int alloc1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::CreateGeometryFromJson input_string ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::CreateGeometryFromJson input_string ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CreateGeometryFromJson" "', argument " "1"" of type '" "char const *""'");
@@ -9707,7 +9707,7 @@ _wrap_BuildPolygonFromEdges(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int ecode4 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|ooo:osgeo::BuildPolygonFromEdges hLineCollection ?bBestEffort? ?bAutoClose? ?dfTolerance? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|ooo:ogr::BuildPolygonFromEdges hLineCollection ?bBestEffort? ?bAutoClose? ?dfTolerance? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BuildPolygonFromEdges" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -9767,7 +9767,7 @@ _wrap_delete_Geometry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::delete_Geometry self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::delete_Geometry self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Geometry" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -9817,7 +9817,7 @@ _wrap_new_Geometry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int obj
   int alloc5 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"|oooo:osgeo::new_Geometry ?type? ?wkt? ?wkb? ?wkb_buf? ?gml? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"|oooo:ogr::new_Geometry ?type? ?wkt? ?wkb? ?wkb_buf? ?gml? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   if (objc > 1) {
     ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
     if (!SWIG_IsOK(ecode1)) {
@@ -9890,7 +9890,7 @@ _wrap_Geometry_ExportToWkt(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     /* %typemap(in,numinputs=0) (char **argout2) */
     arg2 = &argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_ExportToWkt self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_ExportToWkt self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ExportToWkt" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -9964,7 +9964,7 @@ _wrap_Geometry_ExportToWkb(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     arg2 = &nLen2;
     arg3 = &pBuf2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_ExportToWkb self ?pBuf? ?byte_order? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_ExportToWkb self ?pBuf? ?byte_order? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ExportToWkb" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10027,7 +10027,7 @@ _wrap_Geometry_ExportToGML(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_ExportToGML self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_ExportToGML self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ExportToGML" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10071,7 +10071,7 @@ _wrap_Geometry_ExportToKML(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int alloc2 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_ExportToKML self ?altitude_mode? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_ExportToKML self ?altitude_mode? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ExportToKML" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10120,7 +10120,7 @@ _wrap_Geometry_ExportToJson(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_ExportToJson self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_ExportToJson self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ExportToJson" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10168,7 +10168,7 @@ _wrap_Geometry_AddPoint(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:osgeo::Geometry_AddPoint self x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo|o:ogr::Geometry_AddPoint self x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_AddPoint" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10230,7 +10230,7 @@ _wrap_Geometry_AddPoint_2D(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   double val3 ;
   int ecode3 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"ooo:osgeo::Geometry_AddPoint_2D self x y ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"ooo:ogr::Geometry_AddPoint_2D self x y ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_AddPoint_2D" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10282,7 +10282,7 @@ _wrap_Geometry_AddGeometryDirectly(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_AddGeometryDirectly self other_disown ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_AddGeometryDirectly self other_disown ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_AddGeometryDirectly" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10341,7 +10341,7 @@ _wrap_Geometry_AddGeometry(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_AddGeometry self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_AddGeometry self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_AddGeometry" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10398,7 +10398,7 @@ _wrap_Geometry_Clone(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_Clone self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Clone" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10438,7 +10438,7 @@ _wrap_Geometry_GetGeometryType(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   OGRwkbGeometryType result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetGeometryType self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetGeometryType self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetGeometryType" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10478,7 +10478,7 @@ _wrap_Geometry_GetGeometryName(ClientData clientData SWIGUNUSED, Tcl_Interp *int
   int res1 = 0 ;
   char *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetGeometryName self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetGeometryName self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetGeometryName" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10518,7 +10518,7 @@ _wrap_Geometry_GetArea(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetArea self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetArea self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetArea" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10558,7 +10558,7 @@ _wrap_Geometry_GetPointCount(ClientData clientData SWIGUNUSED, Tcl_Interp *inter
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetPointCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetPointCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetPointCount" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10601,7 +10601,7 @@ _wrap_Geometry_GetX(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_GetX self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_GetX self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetX" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10651,7 +10651,7 @@ _wrap_Geometry_GetY(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_GetY self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_GetY self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetY" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10701,7 +10701,7 @@ _wrap_Geometry_GetZ(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int ob
   int ecode2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_GetZ self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_GetZ self ?point? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetZ" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10756,7 +10756,7 @@ _wrap_Geometry_GetPoint(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
     /* %typemap(in,numinputs=0) (double argout3[ANY]) */
     arg3 = argout3;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_GetPoint self ?iPoint? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_GetPoint self ?iPoint? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetPoint" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10817,7 +10817,7 @@ _wrap_Geometry_GetPoint_2D(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     /* %typemap(in,numinputs=0) (double argout3[ANY]) */
     arg3 = argout3;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Geometry_GetPoint_2D self ?iPoint? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Geometry_GetPoint_2D self ?iPoint? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetPoint_2D" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10870,7 +10870,7 @@ _wrap_Geometry_GetGeometryCount(ClientData clientData SWIGUNUSED, Tcl_Interp *in
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetGeometryCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetGeometryCount self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetGeometryCount" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10921,7 +10921,7 @@ _wrap_Geometry_SetPoint(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   double val5 ;
   int ecode5 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo|o:osgeo::Geometry_SetPoint self point x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo|o:ogr::Geometry_SetPoint self point x y ?z? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_SetPoint" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -10991,7 +10991,7 @@ _wrap_Geometry_SetPoint_2D(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   double val4 ;
   int ecode4 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oooo:osgeo::Geometry_SetPoint_2D self point x y ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oooo:ogr::Geometry_SetPoint_2D self point x y ",(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_SetPoint_2D" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11049,7 +11049,7 @@ _wrap_Geometry_GetGeometryRef(ClientData clientData SWIGUNUSED, Tcl_Interp *inte
   int ecode2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_GetGeometryRef self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_GetGeometryRef self geom ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetGeometryRef" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11094,7 +11094,7 @@ _wrap_Geometry_GetBoundary(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetBoundary self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetBoundary self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetBoundary" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11134,7 +11134,7 @@ _wrap_Geometry_ConvexHull(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_ConvexHull self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_ConvexHull self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_ConvexHull" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11180,7 +11180,7 @@ _wrap_Geometry_Buffer(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int ecode3 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo|o:osgeo::Geometry_Buffer self distance ?quadsecs? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo|o:ogr::Geometry_Buffer self distance ?quadsecs? ",(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Buffer" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11235,7 +11235,7 @@ _wrap_Geometry_Intersection(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Intersection self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Intersection self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Intersection" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11283,7 +11283,7 @@ _wrap_Geometry_Union(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Union self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Union self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Union" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11331,7 +11331,7 @@ _wrap_Geometry_Difference(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   int res2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Difference self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Difference self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Difference" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11379,7 +11379,7 @@ _wrap_Geometry_SymmetricDifference(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res2 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_SymmetricDifference self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_SymmetricDifference self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_SymmetricDifference" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11427,7 +11427,7 @@ _wrap_Geometry_Distance(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res2 = 0 ;
   double result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Distance self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Distance self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Distance" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11471,7 +11471,7 @@ _wrap_Geometry_Empty(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_Empty self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_Empty self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Empty" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11511,7 +11511,7 @@ _wrap_Geometry_IsEmpty(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_IsEmpty self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_IsEmpty self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_IsEmpty" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11551,7 +11551,7 @@ _wrap_Geometry_IsValid(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_IsValid self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_IsValid self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_IsValid" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11591,7 +11591,7 @@ _wrap_Geometry_IsSimple(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_IsSimple self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_IsSimple self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_IsSimple" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11631,7 +11631,7 @@ _wrap_Geometry_IsRing(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res1 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_IsRing self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_IsRing self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_IsRing" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11674,7 +11674,7 @@ _wrap_Geometry_Intersect(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Intersect self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Intersect self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Intersect" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11722,7 +11722,7 @@ _wrap_Geometry_Equal(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int o
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Equal self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Equal self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Equal" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11770,7 +11770,7 @@ _wrap_Geometry_Disjoint(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Disjoint self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Disjoint self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Disjoint" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11818,7 +11818,7 @@ _wrap_Geometry_Touches(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Touches self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Touches self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Touches" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11866,7 +11866,7 @@ _wrap_Geometry_Crosses(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Crosses self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Crosses self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Crosses" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11914,7 +11914,7 @@ _wrap_Geometry_Within(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Within self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Within self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Within" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -11962,7 +11962,7 @@ _wrap_Geometry_Contains(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Contains self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Contains self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Contains" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12010,7 +12010,7 @@ _wrap_Geometry_Overlaps(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res2 = 0 ;
   bool result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Overlaps self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Overlaps self other ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Overlaps" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12058,7 +12058,7 @@ _wrap_Geometry_TransformTo(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_TransformTo self reference ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_TransformTo self reference ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_TransformTo" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12118,7 +12118,7 @@ _wrap_Geometry_Transform(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, i
   int res2 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_Transform self trans ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_Transform self trans ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Transform" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12175,7 +12175,7 @@ _wrap_Geometry_GetSpatialReference(ClientData clientData SWIGUNUSED, Tcl_Interp 
   int res1 = 0 ;
   OSRSpatialReferenceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetSpatialReference self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetSpatialReference self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetSpatialReference" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12217,7 +12217,7 @@ _wrap_Geometry_AssignSpatialReference(ClientData clientData SWIGUNUSED, Tcl_Inte
   void *argp2 = 0 ;
   int res2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_AssignSpatialReference self reference ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_AssignSpatialReference self reference ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_AssignSpatialReference" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12261,7 +12261,7 @@ _wrap_Geometry_CloseRings(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, 
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_CloseRings self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_CloseRings self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_CloseRings" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12300,7 +12300,7 @@ _wrap_Geometry_FlattenTo2D(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_FlattenTo2D self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_FlattenTo2D self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_FlattenTo2D" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12345,7 +12345,7 @@ _wrap_Geometry_GetEnvelope(ClientData clientData SWIGUNUSED, Tcl_Interp *interp,
     /* %typemap(in,numinputs=0) (double argout2[ANY]) */
     arg2 = argout2;
   }
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetEnvelope self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetEnvelope self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetEnvelope" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12391,7 +12391,7 @@ _wrap_Geometry_Centroid(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, in
   int res1 = 0 ;
   OGRGeometryShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_Centroid self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_Centroid self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_Centroid" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12431,7 +12431,7 @@ _wrap_Geometry_WkbSize(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_WkbSize self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_WkbSize self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_WkbSize" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12471,7 +12471,7 @@ _wrap_Geometry_GetCoordinateDimension(ClientData clientData SWIGUNUSED, Tcl_Inte
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetCoordinateDimension self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetCoordinateDimension self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetCoordinateDimension" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12513,7 +12513,7 @@ _wrap_Geometry_SetCoordinateDimension(ClientData clientData SWIGUNUSED, Tcl_Inte
   int val2 ;
   int ecode2 = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"oo:osgeo::Geometry_SetCoordinateDimension self dimension ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"oo:ogr::Geometry_SetCoordinateDimension self dimension ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_SetCoordinateDimension" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12558,7 +12558,7 @@ _wrap_Geometry_GetDimension(ClientData clientData SWIGUNUSED, Tcl_Interp *interp
   int res1 = 0 ;
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::Geometry_GetDimension self ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::Geometry_GetDimension self ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_OGRGeometryShadow, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Geometry_GetDimension" "', argument " "1"" of type '" "OGRGeometryShadow *""'"); 
@@ -12664,7 +12664,7 @@ SWIGINTERN int
 _wrap_GetDriverCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetDriverCount ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":ogr::GetDriverCount ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)OGRGetDriverCount();
@@ -12696,7 +12696,7 @@ SWIGINTERN int
 _wrap_GetOpenDSCount(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
   int result;
   
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::GetOpenDSCount ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":ogr::GetOpenDSCount ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     result = (int)OGRGetOpenDSCount();
@@ -12731,7 +12731,7 @@ _wrap_SetGenerate_DB2_V72_BYTE_ORDER(ClientData clientData SWIGUNUSED, Tcl_Inter
   int ecode1 = 0 ;
   OGRErr result;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::SetGenerate_DB2_V72_BYTE_ORDER bGenerate_DB2_V72_BYTE_ORDER ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::SetGenerate_DB2_V72_BYTE_ORDER bGenerate_DB2_V72_BYTE_ORDER ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetGenerate_DB2_V72_BYTE_ORDER" "', argument " "1"" of type '" "int""'");
@@ -12778,7 +12778,7 @@ fail:
 
 SWIGINTERN int
 _wrap_RegisterAll(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
-  if (SWIG_GetArgs(interp, objc, objv,":osgeo::RegisterAll ") == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,":ogr::RegisterAll ") == TCL_ERROR) SWIG_fail;
   {
     CPLErrorReset();
     OGRRegisterAll();
@@ -12813,7 +12813,7 @@ _wrap_GetOpenDS(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   int ecode1 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetOpenDS ds_number ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::GetOpenDS ds_number ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetOpenDS" "', argument " "1"" of type '" "int""'");
@@ -12857,7 +12857,7 @@ _wrap_Open(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_O
   int ecode2 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::Open filename ?update? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::Open filename ?update? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Open" "', argument " "1"" of type '" "char const *""'");
@@ -12910,7 +12910,7 @@ _wrap_OpenShared(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc,
   int ecode2 = 0 ;
   OGRDataSourceShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o|o:osgeo::OpenShared filename ?update? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o|o:ogr::OpenShared filename ?update? ",(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "OpenShared" "', argument " "1"" of type '" "char const *""'");
@@ -12960,7 +12960,7 @@ _wrap_GetDriverByName(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int 
   int alloc1 = 0 ;
   OGRDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDriverByName name ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::GetDriverByName name ",(void *)0) == TCL_ERROR) SWIG_fail;
   res1 = SWIG_AsCharPtrAndSize(objv[1], &buf1, NULL, &alloc1);
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GetDriverByName" "', argument " "1"" of type '" "char const *""'");
@@ -13002,7 +13002,7 @@ _wrap_GetDriver(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, 
   int ecode1 = 0 ;
   OGRDriverShadow *result = 0 ;
   
-  if (SWIG_GetArgs(interp, objc, objv,"o:osgeo::GetDriver driver_number ",(void *)0) == TCL_ERROR) SWIG_fail;
+  if (SWIG_GetArgs(interp, objc, objv,"o:ogr::GetDriver driver_number ",(void *)0) == TCL_ERROR) SWIG_fail;
   ecode1 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[1], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetDriver" "', argument " "1"" of type '" "int""'");
@@ -13631,55 +13631,55 @@ SWIGEXPORT int SWIG_init(Tcl_Interp *interp) {
   SWIG_Tcl_InstallConstants(interp, swig_constants);
   
   
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkb25Bit", SWIG_From_int(static_cast< int >(wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbUnknown", SWIG_From_int(static_cast< int >(0)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbPoint", SWIG_From_int(static_cast< int >(1)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbLineString", SWIG_From_int(static_cast< int >(2)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbPolygon", SWIG_From_int(static_cast< int >(3)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiPoint", SWIG_From_int(static_cast< int >(4)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiLineString", SWIG_From_int(static_cast< int >(5)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiPolygon", SWIG_From_int(static_cast< int >(6)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbGeometryCollection", SWIG_From_int(static_cast< int >(7)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbNone", SWIG_From_int(static_cast< int >(100)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbLinearRing", SWIG_From_int(static_cast< int >(101)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbPoint25D", SWIG_From_int(static_cast< int >(wkbPoint+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbLineString25D", SWIG_From_int(static_cast< int >(wkbLineString+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbPolygon25D", SWIG_From_int(static_cast< int >(wkbPolygon+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiPoint25D", SWIG_From_int(static_cast< int >(wkbMultiPoint+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiLineString25D", SWIG_From_int(static_cast< int >(wkbMultiLineString+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbMultiPolygon25D", SWIG_From_int(static_cast< int >(wkbMultiPolygon+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbGeometryCollection25D", SWIG_From_int(static_cast< int >(wkbGeometryCollection+wkb25DBit)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTInteger", SWIG_From_int(static_cast< int >(0)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTIntegerList", SWIG_From_int(static_cast< int >(1)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTReal", SWIG_From_int(static_cast< int >(2)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTRealList", SWIG_From_int(static_cast< int >(3)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTString", SWIG_From_int(static_cast< int >(4)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTStringList", SWIG_From_int(static_cast< int >(5)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTWideString", SWIG_From_int(static_cast< int >(6)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTWideStringList", SWIG_From_int(static_cast< int >(7)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTBinary", SWIG_From_int(static_cast< int >(8)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTDate", SWIG_From_int(static_cast< int >(9)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTTime", SWIG_From_int(static_cast< int >(10)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OFTDateTime", SWIG_From_int(static_cast< int >(11)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OJUndefined", SWIG_From_int(static_cast< int >(0)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OJLeft", SWIG_From_int(static_cast< int >(1)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OJRight", SWIG_From_int(static_cast< int >(2)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbXDR", SWIG_From_int(static_cast< int >(0)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::wkbNDR", SWIG_From_int(static_cast< int >(1)));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCRandomRead", SWIG_FromCharPtr("RandomRead"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCSequentialWrite", SWIG_FromCharPtr("SequentialWrite"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCRandomWrite", SWIG_FromCharPtr("RandomWrite"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCFastSpatialFilter", SWIG_FromCharPtr("FastSpatialFilter"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCFastFeatureCount", SWIG_FromCharPtr("FastFeatureCount"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCFastGetExtent", SWIG_FromCharPtr("FastGetExtent"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCCreateField", SWIG_FromCharPtr("CreateField"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCTransactions", SWIG_FromCharPtr("Transactions"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCDeleteFeature", SWIG_FromCharPtr("DeleteFeature"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::OLCFastSetNextByIndex", SWIG_FromCharPtr("FastSetNextByIndex"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::ODsCCreateLayer", SWIG_FromCharPtr("CreateLayer"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::ODsCDeleteLayer", SWIG_FromCharPtr("DeleteLayer"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::ODrCCreateDataSource", SWIG_FromCharPtr("CreateDataSource"));
-  SWIG_Tcl_SetConstantObj(interp, "osgeo::ODrCDeleteDataSource", SWIG_FromCharPtr("DeleteDataSource"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkb25Bit", SWIG_From_int(static_cast< int >(wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbUnknown", SWIG_From_int(static_cast< int >(0)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbPoint", SWIG_From_int(static_cast< int >(1)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbLineString", SWIG_From_int(static_cast< int >(2)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbPolygon", SWIG_From_int(static_cast< int >(3)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiPoint", SWIG_From_int(static_cast< int >(4)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiLineString", SWIG_From_int(static_cast< int >(5)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiPolygon", SWIG_From_int(static_cast< int >(6)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbGeometryCollection", SWIG_From_int(static_cast< int >(7)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbNone", SWIG_From_int(static_cast< int >(100)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbLinearRing", SWIG_From_int(static_cast< int >(101)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbPoint25D", SWIG_From_int(static_cast< int >(wkbPoint+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbLineString25D", SWIG_From_int(static_cast< int >(wkbLineString+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbPolygon25D", SWIG_From_int(static_cast< int >(wkbPolygon+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiPoint25D", SWIG_From_int(static_cast< int >(wkbMultiPoint+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiLineString25D", SWIG_From_int(static_cast< int >(wkbMultiLineString+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbMultiPolygon25D", SWIG_From_int(static_cast< int >(wkbMultiPolygon+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbGeometryCollection25D", SWIG_From_int(static_cast< int >(wkbGeometryCollection+wkb25DBit)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTInteger", SWIG_From_int(static_cast< int >(0)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTIntegerList", SWIG_From_int(static_cast< int >(1)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTReal", SWIG_From_int(static_cast< int >(2)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTRealList", SWIG_From_int(static_cast< int >(3)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTString", SWIG_From_int(static_cast< int >(4)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTStringList", SWIG_From_int(static_cast< int >(5)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTWideString", SWIG_From_int(static_cast< int >(6)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTWideStringList", SWIG_From_int(static_cast< int >(7)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTBinary", SWIG_From_int(static_cast< int >(8)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTDate", SWIG_From_int(static_cast< int >(9)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTTime", SWIG_From_int(static_cast< int >(10)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OFTDateTime", SWIG_From_int(static_cast< int >(11)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OJUndefined", SWIG_From_int(static_cast< int >(0)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OJLeft", SWIG_From_int(static_cast< int >(1)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OJRight", SWIG_From_int(static_cast< int >(2)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbXDR", SWIG_From_int(static_cast< int >(0)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::wkbNDR", SWIG_From_int(static_cast< int >(1)));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCRandomRead", SWIG_FromCharPtr("RandomRead"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCSequentialWrite", SWIG_FromCharPtr("SequentialWrite"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCRandomWrite", SWIG_FromCharPtr("RandomWrite"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCFastSpatialFilter", SWIG_FromCharPtr("FastSpatialFilter"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCFastFeatureCount", SWIG_FromCharPtr("FastFeatureCount"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCFastGetExtent", SWIG_FromCharPtr("FastGetExtent"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCCreateField", SWIG_FromCharPtr("CreateField"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCTransactions", SWIG_FromCharPtr("Transactions"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCDeleteFeature", SWIG_FromCharPtr("DeleteFeature"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::OLCFastSetNextByIndex", SWIG_FromCharPtr("FastSetNextByIndex"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::ODsCCreateLayer", SWIG_FromCharPtr("CreateLayer"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::ODsCDeleteLayer", SWIG_FromCharPtr("DeleteLayer"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::ODrCCreateDataSource", SWIG_FromCharPtr("CreateDataSource"));
+  SWIG_Tcl_SetConstantObj(interp, "ogr::ODrCDeleteDataSource", SWIG_FromCharPtr("DeleteDataSource"));
   
   /* ogr_tcl.i %init code */
   if ( OGRGetDriverCount() == 0 ) {

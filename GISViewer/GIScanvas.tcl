@@ -3,11 +3,13 @@ package require Tk 8.5
 package require Tkzinc 3.3
 package require gdal 1.0
 package require gdalconst 1.0
+package require ogr 1.0
+package require osr 1.0
 package require nap 6.4
 package require toe 1.0
 
 # Initialize GDAL/OGR
-::osgeo::AllRegister
+::gdal::AllRegister
 
 toe::class GIScanvas {
     private variable Container
@@ -104,8 +106,8 @@ toe::class GIScanvas {
             switch -exact -- $var {
                 "-filetypes" {
                     set formats [list]
-                    for {set i 0} {$i < [::osgeo::GetDriverCount]} {incr i} {
-                        set driver [::osgeo::GetDriver $i]
+                    for {set i 0} {$i < [::gdal::GetDriverCount]} {incr i} {
+                        set driver [::gdal::GetDriver $i]
                         set ext [list]
                         foreach a [$driver GetMetadataItem DMD_EXTENSION] {
                             lappend ext "*.$a"
@@ -168,12 +170,12 @@ toe::class GIScanvas {
             return
         }
         
-        if {[::osgeo::IdentifyDriver $filepath] eq ""} {
+        if {[::gdal::IdentifyDriver $filepath] eq ""} {
             tk_messageBox -icon error -message "Could not recognize file format"
             return
         }
         
-        set Dataset [::osgeo::Open $filepath $::osgeo::GA_ReadOnly]
+        set Dataset [::gdal::Open $filepath $::gdal::GA_ReadOnly]
         if {$Dataset eq ""} {
             tk_messageBox -icon error -message "Could not open file"
             return
@@ -200,9 +202,9 @@ toe::class GIScanvas {
             set colorinterp [$band GetRasterColorInterpretation]
             set noval [$band GetNoDataValue]
     
-            if {$colorinterp == $::osgeo::GCI_GrayIndex} { ;# Grayscale
+            if {$colorinterp == $::gdal::GCI_GrayIndex} { ;# Grayscale
                 
-            } elseif {$colorinterp == $::osgeo::GCI_AlphaBand} {
+            } elseif {$colorinterp == $::gdal::GCI_AlphaBand} {
                 foreach xy [lsearch -exact -all [concat [$u value]] $noval] {
                     set y [expr {int($xy / $new_width)}]
                     set x [expr {int($xy % $new_width)}]
@@ -210,36 +212,36 @@ toe::class GIScanvas {
                 }
     
                 $Container itemconfigure map -alpha ZZZ
-            } elseif {$colorinterp == $::osgeo::GCI_RedBand} { ;#RGB
+            } elseif {$colorinterp == $::gdal::GCI_RedBand} { ;#RGB
                 
-            } elseif {$colorinterp == $::osgeo::GCI_GreenBand} { ;#RGB
+            } elseif {$colorinterp == $::gdal::GCI_GreenBand} { ;#RGB
                 
-            } elseif {$colorinterp == $::osgeo::GCI_BlueBand} { ;#RGB
+            } elseif {$colorinterp == $::gdal::GCI_BlueBand} { ;#RGB
             
-            } elseif {$colorinterp == $::osgeo::GCI_HueBand} { ;# HSL
+            } elseif {$colorinterp == $::gdal::GCI_HueBand} { ;# HSL
                 
-            } elseif {$colorinterp == $::osgeo::GCI_SaturationBand} { ;# HSL
+            } elseif {$colorinterp == $::gdal::GCI_SaturationBand} { ;# HSL
                 
-            } elseif {$colorinterp == $::osgeo::GCI_LightnessBand} { ;# HSL
+            } elseif {$colorinterp == $::gdal::GCI_LightnessBand} { ;# HSL
                 
-            } elseif {$colorinterp == $::osgeo::GCI_PaletteIndex} {
+            } elseif {$colorinterp == $::gdal::GCI_PaletteIndex} {
                 
-            } elseif {$colorinterp == $::osgeo::GCI_CyanBand ||
-                      $colorinterp == $::osgeo::GCI_MagentaBand ||
-                      $colorinterp == $::osgeo::GCI_YellowBand ||
-                      $colorinterp == $::osgeo::GCI_BlackBand} { ;# CMYK
+            } elseif {$colorinterp == $::gdal::GCI_CyanBand ||
+                      $colorinterp == $::gdal::GCI_MagentaBand ||
+                      $colorinterp == $::gdal::GCI_YellowBand ||
+                      $colorinterp == $::gdal::GCI_BlackBand} { ;# CMYK
                 tk_messageBox -icon error -message "Could not recognize file format. CMYK band type not supported."
                 return
-            } elseif {$colorinterp == $::osgeo::GCI_YCbCr_YBand} { ;# Y Luminance
+            } elseif {$colorinterp == $::gdal::GCI_YCbCr_YBand} { ;# Y Luminance
                 tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Y band type not supported."
                 return
-            } elseif {$colorinterp == $::osgeo::GCI_YCbCr_CbBand} { ;# Cb Chroma
+            } elseif {$colorinterp == $::gdal::GCI_YCbCr_CbBand} { ;# Cb Chroma
                 tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Cb band type not supported."
                 return
-            } elseif {$colorinterp == $::osgeo::GCI_YCbCr_CrBand} { ;# Cr Chroma
+            } elseif {$colorinterp == $::gdal::GCI_YCbCr_CrBand} { ;# Cr Chroma
                 tk_messageBox -icon error -message "Could not recognize file format. YCbCr_Cr band type not supported."
                 return
-            } elseif {$colorinterp == $::osgeo::GCI_Max} { ;# Max current value
+            } elseif {$colorinterp == $::gdal::GCI_Max} { ;# Max current value
                 tk_messageBox -icon error -message "Could not recognize file format. Max band type not supported."
                 return
             } else {
@@ -247,11 +249,11 @@ toe::class GIScanvas {
                 return
             }
     
-            if {$datatype != $::osgeo::GDT_Byte} {
+            if {$datatype != $::gdal::GDT_Byte} {
                 puts stderr "Warning: Reducing color depth"
             }
             
-            set data [$band ReadRasterNAP 0 0 $width $height $width $height $::osgeo::GDT_Byte]
+            set data [$band ReadRasterNAP 0 0 $width $height $width $height $::gdal::GDT_Byte]
             binary scan $data cu* data
         
             set step $width
