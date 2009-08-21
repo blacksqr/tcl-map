@@ -3,12 +3,6 @@
  * tcl specific code for gdal bindings.
  */
 
-%{
-#include<napInt.h>
-#include<nap.h>
-#include<nap_check.h>
-%}
-
 %init %{
   /* gdal_tcl.i %init code */
   if ( GDALGetDriverCount() == 0 ) {
@@ -28,47 +22,6 @@ GDALDataType GDALDataTypeUnion( GDALDataType, GDALDataType );
 }
 
 %extend GDALRasterBandShadow {
-%apply ( int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) { (int *buf_len, char **buf, NapClientData *napCD, Nap_NAO *nao ) };
-%apply ( int *optional_int ) {(int*)};
-%feature( "kwargs" ) ReadRasterNAP;
-  CPLErr ReadRasterNAP( int xoff, int yoff, int xsize, int ysize,
-                     int *buf_len, char **buf, NapClientData *napCD, Nap_NAO *nao,
-                     int *buf_xsize = 0,
-                     int *buf_ysize = 0,
-                     int *buf_type = 0 ) {
-    int nxsize = (buf_xsize==0) ? xsize : *buf_xsize;
-    int nysize = (buf_ysize==0) ? ysize : *buf_ysize;
-    GDALDataType ntype  = (buf_type==0) ? GDALGetRasterDataType(self)
-                                        : (GDALDataType)*buf_type;
-    Nap_dataType dataType;
-    switch(ntype) {
-        case GDT_Byte: dataType = NAP_U8; break;
-        case GDT_Int16: dataType = NAP_I16; break;
-        case GDT_UInt16: dataType = NAP_U16; break;
-        case GDT_Int32: dataType = NAP_I32; break;
-        case GDT_UInt32: dataType = NAP_U32; break;
-        case GDT_Float32: dataType = NAP_F32; break;
-        case GDT_Float64: dataType = NAP_F64; break;
-        default:
-            // ZZZ Not supported. Raise error.
-            break;
-    }
-
-    int rank = 2;
-    size_t shape[NAP_MAX_RANK];
-    shape[0] = nxsize;
-    shape[1] = nysize;
-
-    nao = Nap_NewNAO(napCD, dataType, rank, shape);
-    if (! nao) {
-        /* ZZZ */
-    }
-
-    return ReadRaster_internal( self, xoff, yoff, xsize, ysize,
-                                nxsize, nysize, ntype, buf_len, buf );
-  }
-%clear (int *buf_len, char **buf, NapClientData *napCD, Nap_NAO *nao );
-%clear (int*);
 }
 
 %extend GDALDatasetShadow {
