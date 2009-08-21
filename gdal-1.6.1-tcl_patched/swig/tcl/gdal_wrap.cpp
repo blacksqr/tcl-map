@@ -1640,17 +1640,19 @@ SWIG_Tcl_GetArgs(Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[], const char
 #define SWIGTYPE_p_GDALRasterBandShadow swig_types[10]
 #define SWIGTYPE_p_GDALTransformerInfoShadow swig_types[11]
 #define SWIGTYPE_p_GDAL_GCP swig_types[12]
-#define SWIGTYPE_p_OGRLayerShadow swig_types[13]
-#define SWIGTYPE_p_char swig_types[14]
-#define SWIGTYPE_p_double swig_types[15]
-#define SWIGTYPE_p_f_double_p_q_const__char_p_void__int swig_types[16]
-#define SWIGTYPE_p_int swig_types[17]
-#define SWIGTYPE_p_p_GDALRasterBandShadow swig_types[18]
-#define SWIGTYPE_p_p_GDAL_GCP swig_types[19]
-#define SWIGTYPE_p_p_char swig_types[20]
-#define SWIGTYPE_p_p_int swig_types[21]
-static swig_type_info *swig_types[23];
-static swig_module_info swig_module = {swig_types, 22, 0, 0, 0, 0};
+#define SWIGTYPE_p_NapClientData swig_types[13]
+#define SWIGTYPE_p_Nap_NAO swig_types[14]
+#define SWIGTYPE_p_OGRLayerShadow swig_types[15]
+#define SWIGTYPE_p_char swig_types[16]
+#define SWIGTYPE_p_double swig_types[17]
+#define SWIGTYPE_p_f_double_p_q_const__char_p_void__int swig_types[18]
+#define SWIGTYPE_p_int swig_types[19]
+#define SWIGTYPE_p_p_GDALRasterBandShadow swig_types[20]
+#define SWIGTYPE_p_p_GDAL_GCP swig_types[21]
+#define SWIGTYPE_p_p_char swig_types[22]
+#define SWIGTYPE_p_p_int swig_types[23]
+static swig_type_info *swig_types[25];
+static swig_module_info swig_module = {swig_types, 24, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1712,6 +1714,11 @@ typedef void GDALTransformerInfoShadow;
 
 typedef int FALSE_IS_ERR;
 
+
+
+#include<napInt.h>
+#include<nap.h>
+#include<nap_check.h>
 
 
 #include <limits.h>
@@ -2502,6 +2509,38 @@ SWIGINTERN CPLErr GDALRasterBandShadow_SetDefaultHistogram(GDALRasterBandShadow 
     return GDALSetDefaultHistogram( self, min, max, 
     	   			    buckets_in, panHistogram_in );
 }
+SWIGINTERN CPLErr GDALRasterBandShadow_ReadRasterNAP(GDALRasterBandShadow *self,int xoff,int yoff,int xsize,int ysize,int *buf_len,char **buf,NapClientData *napCD,Nap_NAO *nao,int *buf_xsize=0,int *buf_ysize=0,int *buf_type=0){
+    int nxsize = (buf_xsize==0) ? xsize : *buf_xsize;
+    int nysize = (buf_ysize==0) ? ysize : *buf_ysize;
+    GDALDataType ntype  = (buf_type==0) ? GDALGetRasterDataType(self)
+                                        : (GDALDataType)*buf_type;
+    Nap_dataType dataType;
+    switch(ntype) {
+        case GDT_Byte: dataType = NAP_U8; break;
+        case GDT_Int16: dataType = NAP_I16; break;
+        case GDT_UInt16: dataType = NAP_U16; break;
+        case GDT_Int32: dataType = NAP_I32; break;
+        case GDT_UInt32: dataType = NAP_U32; break;
+        case GDT_Float32: dataType = NAP_F32; break;
+        case GDT_Float64: dataType = NAP_F64; break;
+        default:
+            // ZZZ Not supported. Raise error.
+            break;
+    }
+
+    int rank = 2;
+    size_t shape[NAP_MAX_RANK];
+    shape[0] = nxsize;
+    shape[1] = nysize;
+
+    nao = Nap_NewNAO(napCD, dataType, rank, shape);
+    if (! nao) {
+        /* ZZZ */
+    }
+
+    return ReadRaster_internal( self, xoff, yoff, xsize, ysize,
+                                nxsize, nysize, ntype, buf_len, buf );
+  }
 
 GDALDataType GDALRasterBandShadow_DataType_get( GDALRasterBandShadow *h ) {
   return GDALGetRasterDataType( h );
@@ -11841,6 +11880,151 @@ fail:
 }
 
 
+SWIGINTERN int
+_wrap_Band_ReadRasterNAP(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+  GDALRasterBandShadow *arg1 = (GDALRasterBandShadow *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int arg5 ;
+  int *arg6 = (int *) 0 ;
+  char **arg7 = (char **) 0 ;
+  NapClientData *arg8 = (NapClientData *) 0 ;
+  Nap_NAO *arg9 = (Nap_NAO *) 0 ;
+  int *arg10 = (int *) 0 ;
+  int *arg11 = (int *) 0 ;
+  int *arg12 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  int nLen6 = 0 ;
+  char *pBuf6 = 0 ;
+  int temp10 ;
+  int res10 = 0 ;
+  int temp11 ;
+  int res11 = 0 ;
+  int temp12 ;
+  int res12 = 0 ;
+  CPLErr result;
+  
+  {
+    /* %typemap(in,numinputs=0) (int *nLen6, char **pBuf6, NapClientData *nap_cd, Nap_NAO *naoPtr ) */
+    arg6 = &nLen6;
+    arg7 = &pBuf6;
+    
+    arg8 = Nap_CreateClientData(interp);
+    Nap_CreateStandardMissingValues(arg8);
+    arg8->errorCode = 0;
+    Nap_InitTclResult(arg8);
+  }
+  if (SWIG_GetArgs(interp, objc, objv,"ooooo|ooo:gdal::Band_ReadRasterNAP self xoff yoff xsize ysize ?buf? ?napCD? ?nao? ?buf_xsize? ?buf_ysize? ?buf_type? ",(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0,(void *)0) == TCL_ERROR) SWIG_fail;
+  res1 = SWIG_ConvertPtr(objv[1], &argp1,SWIGTYPE_p_GDALRasterBandShadow, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Band_ReadRasterNAP" "', argument " "1"" of type '" "GDALRasterBandShadow *""'"); 
+  }
+  arg1 = reinterpret_cast< GDALRasterBandShadow * >(argp1);
+  ecode2 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[2], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Band_ReadRasterNAP" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[3], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Band_ReadRasterNAP" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[4], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Band_ReadRasterNAP" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  ecode5 = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[5], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Band_ReadRasterNAP" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  if (objc > 6) {
+    if (!(SWIG_IsOK((res10 = SWIG_ConvertPtr(objv[6],SWIG_as_voidptrptr(&arg10),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[6], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRasterNAP" "', argument " "10"" of type '" "int""'");
+      }
+      temp10 = static_cast< int >(val);
+      arg10 = &temp10;
+      res10 = SWIG_AddTmpMask(ecode);
+    }
+  }
+  if (objc > 7) {
+    if (!(SWIG_IsOK((res11 = SWIG_ConvertPtr(objv[7],SWIG_as_voidptrptr(&arg11),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[7], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRasterNAP" "', argument " "11"" of type '" "int""'");
+      }
+      temp11 = static_cast< int >(val);
+      arg11 = &temp11;
+      res11 = SWIG_AddTmpMask(ecode);
+    }
+  }
+  if (objc > 8) {
+    if (!(SWIG_IsOK((res12 = SWIG_ConvertPtr(objv[8],SWIG_as_voidptrptr(&arg12),SWIGTYPE_p_int,0))))) {
+      int val; 
+      int ecode = SWIG_AsVal_int SWIG_TCL_CALL_ARGS_2(objv[8], &val);
+      if (!SWIG_IsOK(ecode)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Band_ReadRasterNAP" "', argument " "12"" of type '" "int""'");
+      }
+      temp12 = static_cast< int >(val);
+      arg12 = &temp12;
+      res12 = SWIG_AddTmpMask(ecode);
+    }
+  }
+  {
+    CPLErrorReset();
+    result = (CPLErr)GDALRasterBandShadow_ReadRasterNAP(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12);
+    CPLErr eclass = CPLGetLastErrorType();
+    if ( eclass == CE_Failure || eclass == CE_Fatal ) {
+      SWIG_exception( SWIG_RuntimeError, CPLGetLastErrorMsg() );
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  }
+  Tcl_SetObjResult(interp,SWIG_From_int(static_cast< int >(result)));
+  {
+    /* %typemap(argout) (int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) */
+    memcpy(arg9->data.c, *arg7, *arg6);
+    Nap_AppendStr(arg8, arg9->id);
+    Nap_SetTclResult(arg8);
+  }
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  return TCL_OK;
+fail:
+  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
+  return TCL_ERROR;
+}
+
+
 static swig_method swig_GDALRasterBandShadow_methods[] = {
     {"GetBlockSize", _wrap_Band_GetBlockSize}, 
     {"GetRasterColorInterpretation", _wrap_Band_GetRasterColorInterpretation}, 
@@ -11876,6 +12060,7 @@ static swig_method swig_GDALRasterBandShadow_methods[] = {
     {"GetHistogram", _wrap_Band_GetHistogram}, 
     {"GetDefaultHistogram", _wrap_Band_GetDefaultHistogram}, 
     {"SetDefaultHistogram", _wrap_Band_SetDefaultHistogram}, 
+    {"ReadRasterNAP", _wrap_Band_ReadRasterNAP}, 
     {0,0}
 };
 static swig_attribute swig_GDALRasterBandShadow_attributes[] = {
@@ -16801,6 +16986,7 @@ static swig_command_info swig_commands[] = {
     { SWIG_prefix "Band_GetHistogram", (swig_wrapper_func) _wrap_Band_GetHistogram, NULL},
     { SWIG_prefix "Band_GetDefaultHistogram", (swig_wrapper_func) _wrap_Band_GetDefaultHistogram, NULL},
     { SWIG_prefix "Band_SetDefaultHistogram", (swig_wrapper_func) _wrap_Band_SetDefaultHistogram, NULL},
+    { SWIG_prefix "Band_ReadRasterNAP", (swig_wrapper_func) _wrap_Band_ReadRasterNAP, NULL},
     { SWIG_prefix "Band", (swig_wrapper_func) SWIG_ObjectConstructor, (ClientData)&_wrap_class_GDALRasterBandShadow},
     { SWIG_prefix "new_ColorTable", (swig_wrapper_func) _wrap_new_ColorTable, NULL},
     { SWIG_prefix "delete_ColorTable", (swig_wrapper_func) _wrap_delete_ColorTable, NULL},
@@ -16906,6 +17092,8 @@ static swig_type_info _swigt__p_GDALRasterAttributeTableShadow = {"_p_GDALRaster
 static swig_type_info _swigt__p_GDALRasterBandShadow = {"_p_GDALRasterBandShadow", "GDALRasterBandShadow *", 0, 0, (void*)&_wrap_class_GDALRasterBandShadow, 0};
 static swig_type_info _swigt__p_GDALTransformerInfoShadow = {"_p_GDALTransformerInfoShadow", "GDALTransformerInfoShadow *", 0, 0, (void*)&_wrap_class_GDALTransformerInfoShadow, 0};
 static swig_type_info _swigt__p_GDAL_GCP = {"_p_GDAL_GCP", "GDAL_GCP *", 0, 0, (void*)&_wrap_class_GDAL_GCP, 0};
+static swig_type_info _swigt__p_NapClientData = {"_p_NapClientData", "NapClientData *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Nap_NAO = {"_p_Nap_NAO", "Nap_NAO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_OGRLayerShadow = {"_p_OGRLayerShadow", "OGRLayerShadow *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
@@ -16930,6 +17118,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_GDALRasterBandShadow,
   &_swigt__p_GDALTransformerInfoShadow,
   &_swigt__p_GDAL_GCP,
+  &_swigt__p_NapClientData,
+  &_swigt__p_Nap_NAO,
   &_swigt__p_OGRLayerShadow,
   &_swigt__p_char,
   &_swigt__p_double,
@@ -16954,6 +17144,8 @@ static swig_cast_info _swigc__p_GDALRasterAttributeTableShadow[] = {  {&_swigt__
 static swig_cast_info _swigc__p_GDALRasterBandShadow[] = {  {&_swigt__p_GDALRasterBandShadow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GDALTransformerInfoShadow[] = {  {&_swigt__p_GDALTransformerInfoShadow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GDAL_GCP[] = {  {&_swigt__p_GDAL_GCP, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_NapClientData[] = {  {&_swigt__p_NapClientData, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Nap_NAO[] = {  {&_swigt__p_Nap_NAO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_OGRLayerShadow[] = {  {&_swigt__p_OGRLayerShadow, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
@@ -16978,6 +17170,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_GDALRasterBandShadow,
   _swigc__p_GDALTransformerInfoShadow,
   _swigc__p_GDAL_GCP,
+  _swigc__p_NapClientData,
+  _swigc__p_Nap_NAO,
   _swigc__p_OGRLayerShadow,
   _swigc__p_char,
   _swigc__p_double,
