@@ -4,11 +4,9 @@
  */
 
 %{
-/*
 #include<napInt.h>
 #include<nap.h>
 #include<nap_check.h>
-*/
 %}
 
 %init %{
@@ -30,7 +28,6 @@ GDALDataType GDALDataTypeUnion( GDALDataType, GDALDataType );
 }
 
 %extend GDALRasterBandShadow {
-/*
 %apply ( int *nLen, char **pBuf, NapClientData *nap_cd, Nap_NAO *naoPtr ) { (int *buf_len, char **buf, NapClientData *napCD, Nap_NAO *nao ) };
 %apply ( int *optional_int ) {(int*)};
 %feature( "kwargs" ) ReadRasterNAP;
@@ -72,7 +69,6 @@ GDALDataType GDALDataTypeUnion( GDALDataType, GDALDataType );
   }
 %clear (int *buf_len, char **buf, NapClientData *napCD, Nap_NAO *nao );
 %clear (int*);
-*/
 }
 
 %extend GDALDatasetShadow {
