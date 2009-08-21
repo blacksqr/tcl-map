@@ -46,15 +46,16 @@ grid $statusbar -sticky nswe
 set Status ""
 grid [ttk::label $statusbar.text -anchor w -wraplength 0 -textvariable Status -padding "5 0 0 0"] -sticky nswe
 
-array set info1 {x 0 y 0 lat 0 long 0}
+array set info1 {x 0 y 0 projx 0 projy 0 lat 0 long 0 altitude 0}
 array set info2 {zoom 1.0 scale 1}
-$map monitor -x ::info1(x) -y ::info1(y) -lat ::info1(lat) -long ::info1(long)
+$map monitor -x ::info1(x) -y ::info1(y) -lat ::info1(lat) -long ::info1(long) -altitude ::info1(altitude) -projx ::info1(projx) -projy ::info1(projy)
 $map monitor -zoom ::info2(zoom) -scale ::info2(scale)
 trace add variable ::info1 write update_status
+# trace add variable ::info1 write update_toolbar ;#XXX
 
 proc update_status {args} {
     global Status info1
-    set Status "X: $::info1(x)px   Y: $::info1(y)px    Northing: $::info1(lat)m   Easting: $::info1(long)m    Latitude: $::info1(lat)°   Longitude: $::info1(long)°"
+    set Status "X: $::info1(x)px   Y: $::info1(y)px    Northing: $::info1(projy)   Easting: $::info1(projx)    Latitude: $::info1(lat)°   Longitude: $::info1(long)°    Altitude: $::info1(altitude)"
 }
 
 set menubar [menu .menubar -relief flat]
@@ -65,11 +66,12 @@ menu $menubar.help
 $menubar add cascade -menu $menubar.file -label File
 $menubar add cascade -menu $menubar.help -label Help
 $menubar.file add command -label Open -command file_open
-$menubar.file add command -label Info -command XXX
+#$menubar.file add command -label Info -command XXX
 $menubar.file add separator
 $menubar.file add command -label Exit -command exit
-$menubar.help add command -label "About GIS Viewer" -command \
-        [list tk_messageBox -message "Copyright © 2009 Alexandros Stergiakis. All rights reserved. Terms of Use: GNU General Public License Version 3"]
+$menubar.help add command -label About -command \
+        [list tk_messageBox -title "About GISVierer" -message \
+        "GISVierwer GIS Software\n\nCopyright © 2009 Alexandros Stergiakis. All rights reserved. Terms of Use: GNU General Public License Version 3"]
 
 ### Command-line Processing
 
@@ -84,7 +86,7 @@ if {$::argv ne ""} {
 
 proc file_open {} {
     global map
-    set filepath [tk_getOpenFile -filetypes [$map cget -filetypes]]
+    set filepath [tk_getOpenFile -filetypes [list [list "All files" "*"] {*}[concat [$map cget -rasterfiletypes] [$map cget -vectorfiletypes]]]]
     if {$filepath ne ""} {
         $map openMap $filepath
     }
