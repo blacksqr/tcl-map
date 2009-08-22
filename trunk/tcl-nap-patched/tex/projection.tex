@@ -1,0 +1,51 @@
+%  $Id: projection.tex,v 1.8 2007/11/09 07:09:48 dav480 Exp $ 
+    % Nap Library: projection.tcl
+
+\section{Map Projection Procedures}
+    \label{projection}
+
+\subsection{Introduction}
+    \label{projection-Introduction}
+
+The following procedures are defined in the file 
+  \texttt{projection.tcl}.
+Note that these procedures are now deprecated in favour of the PROJ.4 functions described in
+sections \ref{function-Cart-Proj} and \ref{geog-Cartographic}.
+
+\subsection{\texttt{projection} $\mathit{code}$ $p_0$ $p_1$ $p_2$ $\ldots$}
+
+Define functions 
+  \texttt{projection\_x} and 
+  \texttt{projection\_y} for specified map projection.
+  
+
+
+  $\mathit{code}$ is map projection code (default: 
+  \texttt{CylindricalEquidistant}) as follows:
+\begin{bullets}
+    \item 
+    \texttt{CylindricalEquidistant}: 
+    $p_0$ = x-origin (default: 
+    \texttt{""})
+    \item 
+    \texttt{Mercator}: 
+    $p_0$ = x-origin (default: 
+    \texttt{""})
+    \item 
+    \texttt{NorthPolarEquidistant}: North Polar azimuthal
+    equidistant
+    \item 
+    \texttt{SouthPolarEquidistant}: South Polar azimuthal
+    equidistant
+    \item 
+    \texttt{SouthPolarStereographic}: As used by IASOS
+\end{bullets}
+
+  $p_0$ 
+  $p_1$ 
+  $p_2$ $\ldots$ define parameters of the projection. Some
+  projections use 
+  $p_0$ to specify an `x-origin'. This is the minimum
+  result to be returned by projection\_x. If x-origin is 
+  \texttt{""} then there is no defined minimum
+  result.

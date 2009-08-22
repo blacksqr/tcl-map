@@ -1,0 +1,45 @@
+%  $Id: demo_define_function.tex,v 1.5 2006/09/28 14:23:52 dav480 Exp $ 
+    % Defining Nap functions
+
+\section{Defining Nap functions}
+
+  The final command in the procedure should be a Nap command
+  defining the result.
+  
+
+The following procedure defines a Nap function 
+\texttt{sind(}$x$\texttt{)} 
+to be 
+$\sin (\mathit{angleInDegrees})$:
+  \begin{verbatim}
+% proc sind x {nap "sin(x / 180p-1)"}
+% [nap "sind {0 30 90}"]; # Try it
+0 0.5 1
+\end{verbatim}
+
+  
+
+The following procedure defines a Nap function giving zonal means
+  from a matrix with latitude/longitude coordinate variables:
+  \begin{verbatim}
+% proc zonal_mean matrix {
+      nap "latitude  = coordinate_variable(matrix, 0)"
+      nap "longitude = coordinate_variable(matrix, 1)"
+      nap "a = area_on_globe(latitude, longitude)"
+      nap "sum(a * matrix, 1) / sum (a, 1)"
+}
+% pwd
+/sol/home/dav480/tcl_nap/data
+% nap "z = [nap_get net zht_r21.nc zht]"
+::NAP::35-35
+% nap "zm = zonal_mean(z)"
+::NAP::201-201
+% $zm a
+::NAP::201-201  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 56     Name: latitude  Coordinate-variable: ::NAP::47-47
+Value:
+2320.95 2270.02 2165.5 1940.87 1534.45 1004.65 ..
+% plot_nao zm
+.win0
+\end{verbatim}
+

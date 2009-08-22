@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: plot_nao.html,v 1.24 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP plot_nao</title>
+  </head>
+  <body>
+  <center>
+    <h2>Visualisation using procedure 
+    <code>plot_nao</code></h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Usage">Usage</a>
+    </li>
+    <li>
+      <a href="#Examples">Examples</a>
+      <ol>
+        <li>
+          <a href="#xy">x-y graphs and bar-charts</a>
+        </li>
+        <li>
+          <a href="#scattergram">Scattergram</a>
+        </li>
+        <li>
+          <a href="#z2">Color-coded z-images</a>
+        </li>
+        <li>
+          <a href="#z3">RGB z-images, tiles and animation</a>
+        </li>
+        <li>
+          <a href="#print">Printing and writing files</a>
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>A NAO can be visualised using procedure 
+  <code>plot_nao</code>, which can represent it by:
+  <ul>
+    <li>xy graphs (1D and 2D NAOs)</li>
+    <li>bar-charts and histograms (1D and 2D NAOs)</li>
+    <li>color-coded z-images and maps (2D NAOs)</li>
+    <li>RGB z-images and maps (3D NAOs with three layers for red, green
+    and blue)</li>
+    <li>tiled images (multiple color-coded z-images on a page) (3D
+    NAOs)</li>
+  </ul>If there are additional dimensions then it is possible to
+  generate multiple frames which can be animated. See examples.
+  <p>The right mouse button displays a menu. The left mouse button
+  saves (x,y,z) values (z-images only) which can be written to a
+  file.</p>
+  <p>The Tcl code is in the files 
+  <code>plot_nao.tcl</code> and 
+  <code>plot_nao_procs.tcl</code>.</p>
+  <h3>
+    <a name="Usage">Usage</a>
+  </h3>
+  <code>plot_nao</code> 
+  <i>expression ?options?</i>
+  <h4>
+    <a name="Options">Options</a>
+  </h4>Most options can be set using either the above 
+  <i>command-line</i> or the 
+  <i>options menu</i>.
+  <p>
+  <code>-barwidth</code> 
+  <i>float</i>: (bar chart only) width of bars in x-coordinate units
+  (Default: 1.0)
+  <br />
+  <code>-buttonCommand</code> 
+  <i>script</i>: executed when button pressed with z-plots (Default: 
+  <code>&quot;lappend&#160;Plot_nao::${window_id}::save&#160;[set&#160;Plot_nao::${window_id}::xyz]&quot;</code>
+  )
+  <br />
+  <code>-colors</code> 
+  <i>list</i>: Colors of xy graphs or bars. (Default: 
+  <code>black red green blue yellow orange purple grey aquamarine
+  beige</code>)
+  <br />
+  <code>-columns</code> 
+  <i>int</i>: (tiled-plot only) number of columns of tiles on page
+  <br />
+  <code>-dash</code> 
+  <i>list</i>: Dash patterns of xy-graph lines. (Default: 
+  <code>&quot;&quot;</code> i.e. all full lines) Each element is 
+  <code>&quot;&quot;</code> for full line, 
+  <code>&quot; &quot;</code> for no line, or standard Tk dash pattern
+  (See entry for 
+  <i>canvas</i> in Tk manual).
+  <br />
+  <code>-discrete</code> 0 or 1: 1 = Discrete colors between major z
+  tick marks. (Default: 0)
+  <br />
+  <code>-filename</code> 
+  <i>name with extension</i> 
+  <code>.ps, .gif, .jpeg,</code> 
+  <i>etc.:</i> File produced by 
+  <code>-print</code> (Default: Print rather than writing a file)
+  <br />
+  <code>-fill</code> 0 or 1: 1 = Scale PostScript to fill page.
+  (Default: 0)
+  <br />
+  <code>-font_standard</code> 
+  <i>font</i>: Main font. (Default: 
+  <code>&quot;courier 10&quot;</code>)
+  <br />
+  <code>-font_title</code> 
+  <i>font</i>: Font for title. (Default: 
+  <code>&quot;courier 16&quot;</code>)
+  <br />
+  <code>-gap_height</code> 
+  <i>int</i>: height (pixels) of horizontal white gaps (Default: 20)
+  <br />
+  <code>-gap_width</code> 
+  <i>int</i>: width (pixels) of vertical white gaps (Default: 20)
+  <br />
+  <code>-geometry</code> 
+  <i>string</i>: If specified then use to create new toplevel window.
+  (E.g. &quot;<code>-geometry&#160;+0+0</code>&quot; for top left corner)
+  <br />
+  <code>-height</code> 
+  <i>int</i>: Desired height (screen units). Not used for tiled-plot.
+  <br />&#160; &#160; &#160; Type xy/bar: Height of whole window
+  (Default: automatic)
+  <br />&#160; &#160; &#160; Type z: Image height (can be &quot;min
+  max&quot;) (Default: NAO dim if within limits)
+  <br />
+  <code>-key</code> 
+  <i>int</i>: width (pixels) of key. No key if 0 or blank. (Default:
+  30)
+  <br />
+  <code>-labels</code> 
+  <i>list</i>: Labels of tiles or xy-graphs
+  <br />
+  <code>-menu</code> 0 or 1: 0 = Start with menu bar at top hidden.
+  (Default: 1)
+  <br />
+  <code>-orientation P, L</code> 
+  <i>or</i> 
+  <code>A:</code> P = portrait, L = landscape, A = automatic (Default:
+  A)
+  <br />
+  <code>-overlay C, L, S, N</code> 
+  <i>or</i> &quot;<code>E</code> 
+  <i>expression</i>&quot;: Define overlay. C = coast, L = land, S =
+  sea, N = none, E = 
+  <i>expr</i> (Default: N)
+  <br />
+  <code>-oversize_prompt</code> 0 or 1: 1 = prompt if image is larger
+  than screen. (Default: 1)
+  <br />
+  <code>-ovpal</code> 
+  <i>expression</i>: Overlay palette in same form as main palette
+  (Default: black white red green blue)
+  <br />
+  <code>-palette</code> 
+  <i>expression</i>: Main palette defining color map for 2D image. This
+  is matrix with 3 or 4 columns &amp; up to 256 rows. If there are 4
+  columns then the first gives color indices in range 0 to 255. Values
+  can be whole numbers in range 0 to 255 or fractional values from 0.0
+  to 1.0. 
+  <code>&quot;&quot;</code> = black-to-white. (Default: blue-to-red)
+  <br />
+  <code>-paperheight</code> 
+  <i>distance</i>: E.g. 
+  <code>11i</code> = 11 inch (Default: 
+  <code>297m</code> = 297 mm (A4))
+  <br />
+  <code>-paperwidth</code> 
+  <i>distance</i>: E.g. 
+  <code>8.5i</code> = 8.5 inch (Default: 
+  <code>210m</code> = 210 mm (A4))
+  <br />
+  <code>-parent</code> 
+  <i>string</i>: parent window (Default: 
+  <code>&quot;&quot;</code> i.e. create toplevel window)
+  <br />
+  <code>-print</code> 0 or 1: 1 = automatic print/write (for batch
+  processing) (Default: 0)
+  <br />
+  <code>-printer</code> 
+  <i>string</i>: name (Default: 
+  <code>env(PRINTER)</code> if defined, else any printer)
+  <br />
+  <code>-range</code> 
+  <i>expression</i>: defines scaling (Default: auto scaling)
+  <br />
+  <code>-rank</code> 1, 2 or 3: rank of sub-arrays to be displayed
+  (Default: 
+  <code>3 &lt;&lt;&lt; rank(data)</code> )
+  <br />
+  <code>-scaling</code> 0 or 1: 0 = Start with scaling widget hidden.
+  (Default: 1)
+  <br />
+  <code>-symbols</code> 
+  <i>list</i>: Symbol drawn at each point of xy-graph. Can be 
+  <code>plus, square, circle, cross, splus, scross, triangle</code> or
+  single character (e.g. 
+  <code>&quot;*&quot;</code> ) (Default: 
+  <code>&quot;&quot;</code> i.e. none)
+  <br />
+  <code>-title</code> 
+  <i>string</i>: title (Default: NAO label (if any) else 
+  <i>expression</i>)
+  <br />
+  <code>-type</code> 
+  <i>string</i> plot-type ( 
+  <code>&quot;bar&quot;, &quot;tile&quot;, &quot;xy&quot; or
+  &quot;z&quot;</code> )
+  <br />&#160; &#160; &#160; If rank is 1 then default type is 
+  <code>&quot;xy&quot;</code>
+  <br />&#160; &#160; &#160; If rank is 2 and n_rows &lt;= 8 then
+  default type is 
+  <code>&quot;xy&quot;</code>
+  <br />&#160; &#160; &#160; If rank is 2 and n_rows &gt; 8 then
+  default type is 
+  <code>&quot;z&quot;</code>
+  <br />&#160; &#160; &#160; If rank is 3 then default type is 
+  <code>&quot;z&quot;</code>
+  <br />
+  <code>-width</code> 
+  <i>int</i>: Desired width (screen units). Not used for tiled-plot.
+  <br />&#160; &#160; &#160; Type xy/bar: Width of whole window
+  (Default: automatic)
+  <br />&#160; &#160; &#160; Type z: Image width (can be &quot;min
+  max&quot;) (Default: NAO dim if within limits)
+  <br />
+  <code>-xaxis</code> 0 or 1: Draw x-axis? 0 = no, 1 = yes. (Default:
+  1)
+  <br />
+  <code>-xflip</code> 0 or 1: Flip left-right? 0 = no, 1 = yes.
+  (Default: 0)
+  <br />
+  <code>-xlabel</code> 
+  <i>string</i>: x-axis label (Default: name of last dimension)
+  <br />
+  <code>-xproc</code> 
+  <i>string</i>: name of procedure to format x-axis tick values
+  (Default: none)
+  <br />
+  <code>-xticks</code> 
+  <i>expression</i>: Major tick marks of x-axis (Default: automatic)
+  <br />
+  <code>-yaxis</code> 0 or 1: Draw y-axis? 0 = no, 1 = yes. (Default:
+  1)
+  <br />
+  <code>-yflip 0, 1, ascending or geog</code>: Flip upside down? 0 =
+  no, 1 = yes, 
+  <code>ascending</code> = &quot;if y ascending&quot;, 
+  <code>geog</code> = &quot;if ascending and (y_dim_name = 
+  <code>latitude</code> or y_unit = 
+  <code>degrees_north</code> (or equivalent))&quot; (Default: 
+  <code>geog</code> )
+  <br />
+  <code>-ylabel</code> 
+  <i>string</i>: y-axis label (Default: name of 2nd-last dimension)
+  <br />
+  <code>-yproc</code> 
+  <i>string</i>: name of procedure to format y-axis tick values
+  (Default: none)
+  <br />
+  <code>-yticks</code> 
+  <i>expression</i>: Major tick marks of y-axis (Default: automatic)
+  <br />
+  <code>-zlabels</code> 
+  <i>list</i>: z-axis labels of values 0, 1, 2, &#8230; (Default: none)
+  <br />
+  <code>-zticks</code> 
+  <i>expression</i>: Major tick marks of z-axis (Default:
+  automatic)</p>
+  <h3>
+    <a name="Examples">Examples</a>
+  </h3>You can cut and paste the following examples into tkcon or wish.
+  <h4>
+    <a name="xy">x-y graphs and bar-charts</a>
+  </h4>
+  <pre>
+nap &quot;sales = {
+    {2 5 1 3 5 7 9 1 2 9 1 0}
+    {9 2 5 5 3 9 2 0 8 8 3 8}
+}&quot;
+nap &quot;month = 1 .. 12&quot;
+$sales set coord &quot;&quot; month
+$sales set label &quot;Car sales&quot;
+plot_nao sales -labels &quot;Joe Mary&quot; -xtick &quot;1..12&quot; -dash {{} .} -symbols &quot;plus cross&quot;
+proc format_x x {lindex {{} Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov
+Dec} $x}
+plot_nao sales -labels &quot;Joe Mary&quot; -xtick &quot;1..12&quot; -type bar -xproc format_x
+</pre>
+  <h4>
+    <a name="scattergram">Scattergram</a>
+  </h4>
+  <pre>
+nap &quot;x = {1.1 3.2 2.0 5.9 7.7 4.5 6.3}&quot;
+nap &quot;y = {5.0 4.1 9.9 3.7 1.2 2.1 4.5}&quot;
+$y set coo x
+plot_nao y -symbols plus -dash &quot; &quot;
+</pre>
+  <h4>
+    <a name="z2">Color-coded z-images</a>
+  </h4>These examples define and use the 2D NAO 
+  <code>z</code>.
+  <pre>
+nap &quot;n = 200&quot;
+nap &quot;x = n ... 0.0 .. 10.0&quot;
+nap &quot;y = x(-)&quot;
+nap &quot;z = sin(x) * sin(reshape(n#y, 2#n))&quot;
+$z set coo y x
+plot_nao z
+plot_nao z -zticks &quot;-1 .. 1 ... 0.2&quot; -discrete 1; # discrete
+colors
+plot_nao &quot;nint(z+1)&quot; -zlabels {{zero (0)} {one (1)} {two}}; #
+labelled values 0, 1, 2
+</pre>
+  <h4>
+    <a name="z3">RGB z-images, tiles and animation</a>
+  </h4>These examples define and use the 3D NAO 
+  <code>z3d</code>. This is defined using 
+  <code>z</code> defined above.
+  <pre>
+nap &quot;z3d = z /// z*z // z**3 // z**4&quot;
+plot_nao z3d; # layer 0 = red, layer 1 = green, layer 2 = blue, layer 3
+is ignored
+plot_nao z3d -type tile -labels {z {z * z} z**3 z**4} -title &quot;powers of z&quot;
+set frames [plot_nao z3d -rank 2]; # create four 2D frames
+animate $frames; # animate these frames
+</pre>
+  <h4>
+    <a name="print">Printing and writing files</a>
+  </h4>Note that the 
+  <code>-print&#160;1</code> option can be used to print and write
+  automatically in batch mode operation. It may be necessary to specify
+  &quot;<code>-geometry&#160;+0+0</code>&quot; to ensure the window is
+  entirely visible.
+  <pre>
+nap &quot;x = 200 ... 0 .. 4p&quot;
+nap &quot;y = sin x&quot;
+$y set coo x
+plot_nao y -print 1; # Print on default printer
+plot_nao y -print 1 -geometry +0+0 -filename sin.ps; # write postscript
+file sin.ps
+plot_nao y -print 1 -geometry +0+0 -filename sin.jpeg; # write JPEG
+image file sin.jpeg
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: plot_nao.html,v 1.20
+          2005/11/21 22:27:09 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

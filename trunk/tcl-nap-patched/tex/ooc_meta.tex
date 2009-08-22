@@ -1,0 +1,314 @@
+%  $Id: ooc_meta.tex,v 1.8 2006/10/27 08:05:37 dav480 Exp $ 
+    % OOC Methods: Metadata
+
+\section{OOC Methods which return Metadata}
+    \label{ooc-meta}
+
+\subsection{Introduction}
+    \label{ooc-meta-intro}
+
+The following code defines vectors `\texttt{x}' and `\texttt{y}' for use in the examples below:
+  \begin{verbatim}
+% nap "x = 0 .. 2 ... 0.5"
+::NAP::58-58
+% nap "y = x ** 2"
+::NAP::61-61
+% $y val -format %0.3f
+0.000 0.250 1.000 2.250 4.000
+\end{verbatim}
+
+\subsection{Method \texttt{coordinate}}
+    \label{ooc-meta-coordinate}
+
+$ooc\_name$ \texttt{coordinate}
+[$dim\_name$\texttt{|}$dim\_number$]
+[$dim\_name$\texttt{|}$dim\_number$]
+$\ldots$
+
+This returns the OOC-names of the coordinate variables of selected
+  dimensions. If no dimensions are specified then the effect is the
+  same as `$ooc\_name$ \texttt{coo} 0 1 2 $\ldots$ $rank-1$'.
+
+Example (continued from above):
+  \begin{verbatim}
+% $y set coo x
+% $y coo
+::NAP::58-58
+% [$y coo]
+0 0.5 1 1.5 2
+\end{verbatim}
+
+\subsection{Method \texttt{count}}
+    \label{ooc-meta-count}
+
+$ooc\_name$ \texttt{count} [\texttt{-keep}]
+
+This returns the reference count.
+  
+
+Example (continued from above):
+  \begin{verbatim}
+% $x count
+2
+\end{verbatim}
+
+Note that the reference count is 2 because this NAO is referenced
+by both
+\begin{bullets}
+    \item Tcl variable 
+    \texttt{x}
+    \item coordinate variable pointer of NAO 
+    \texttt{::NAP::61-61}
+\end{bullets}
+
+\subsection{Method \texttt{datatype}}
+    \label{ooc-meta-datatype}
+
+  $ooc\_name$ \texttt{datatype}
+
+This returns the data-type.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $x dat
+f64
+\end{verbatim}
+
+\subsection{Method \texttt{dimension}}
+    \label{ooc-meta-dimension}
+
+$ooc\_name$ \texttt{dimension} [$dim\_number$] [$dim\_number$] $\ldots$
+
+This returns the dimension names.
+
+  `$ooc\_name$ \texttt{di}'
+  is equivalent to:
+  `$ooc\_name$ \texttt{di} 0 1 2 $\ldots$ $rank-1$'
+
+Example (continued from above):
+  \begin{verbatim}
+% $y dim
+x
+\end{verbatim}
+
+\subsection{Method \texttt{format}}
+    \label{ooc-meta-format}
+
+  $ooc\_name$ \texttt{format}
+
+This returns the C format for printing the NAO.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y set format %.4f
+% $y format
+%.4f
+% $y value
+0.0000 0.2500 1.0000 2.2500 4.0000
+\end{verbatim}
+
+\subsection{Method \texttt{header}}
+    \label{ooc-meta-header}
+
+$ooc\_name$ \texttt{header} [\texttt{-keep}]
+
+This returns similar information to the following (but using a
+  different format):
+  \\
+  $ooc\_name$ 
+  \texttt{ooc}
+  \\
+  $ooc\_name$ 
+  \texttt{datatype}
+  \\
+  $ooc\_name$ 
+  \texttt{missing}
+  \\
+  $ooc\_name$ 
+  \texttt{count}
+  \\
+  $ooc\_name$ 
+  \texttt{unit}
+  \\
+  $ooc\_name$ 
+  \texttt{shape}
+  \\
+  $ooc\_name$ 
+  \texttt{dimension}
+  \\
+  $ooc\_name$ 
+  \texttt{coordinate}
+
+Example (continued from above):
+  \begin{verbatim}
+% $y header
+::NAP::61-61  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: x         Coordinate-variable: ::NAP::58-58
+\end{verbatim}
+
+\subsection{Method \texttt{label}}
+    \label{ooc-meta-label}
+
+$ooc\_name$ \texttt{label}
+
+This returns the label (title, etc.) of the NAO.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y set label "areas of squares"
+% $y label
+areas of squares
+\end{verbatim}
+
+\subsection{Method \texttt{link}}
+    \label{ooc-meta-link}
+
+  $ooc\_name$ 
+  \texttt{link}
+
+This returns the OOC-name of the link NAO.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y set link [nap 42]
+% [$y link]
+42
+\end{verbatim}
+
+\subsection{Method \texttt{missing}}
+    \label{ooc-meta-missing}
+
+  $ooc\_name$ 
+  \texttt{missing}
+
+This returns the missing value. This is the value used to indicate
+  null or undefined data.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y miss
+NaN
+\end{verbatim}
+
+\subsection{Method \texttt{ooc}}
+    \label{ooc-meta-ooc}
+
+$ooc\_name$ \texttt{ooc} [\texttt{-keep}]
+
+This returns the OOC-name of the NAO.
+
+Example (continued from above):
+  \begin{verbatim}
+$y ooc
+::NAP::61-61
+\end{verbatim}
+
+\subsection{Method \texttt{rank}}
+    \label{ooc-meta-rank}
+
+  $ooc\_name$ 
+  \texttt{rank}
+  \\
+  
+
+This returns the rank (number of dimensions).
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y rank
+1
+\end{verbatim}
+
+\subsection{Method \texttt{sequence}}
+    \label{ooc-meta-sequence}
+
+$ooc\_name$ \texttt{sequence} [\texttt{-keep}]
+
+This returns the sequence number of the NAO. E.g. 42 for 
+  \texttt{::NAP::42-9}
+
+Example (continued from above):
+  \begin{verbatim}
+% $y seq
+61
+\end{verbatim}
+
+\subsection{Method \texttt{shape}}
+    \label{ooc-meta-shape}
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{shape}
+  \\
+  
+
+This returns the shape, which is a vector of dimension sizes.
+  
+Example (continued from above):
+  \begin{verbatim}
+% $y shape
+5
+\end{verbatim}
+
+\subsection{Method \texttt{slot}}
+    \label{ooc-meta-slot}
+
+$ooc\_name$ \texttt{slot} [\texttt{-keep}]
+
+This returns the slot number of the NAO. E.g. 9 for 
+  \texttt{::NAP::42-9}
+
+Example (continued from above):
+  \begin{verbatim}
+% $y sl
+61
+\end{verbatim}
+
+\subsection{Method \texttt{step}}
+    \label{ooc-meta-step}
+
+$ooc\_name$ \texttt{step}
+
+This returns a code which indicates whether step sizes of a vector
+  are equal, and if not, their sign. Nap uses this information for
+  efficiency. It indicates whether a vector (not relevant for other
+  ranks) is monotonically ascending/descending, and if so whether it is
+  an arithmetic progression (AP). The result code is one of following
+  strings:
+\begin{bullets}
+    \item `\texttt{+-}': at least one positive step and one negative step
+    \item `\texttt{$>$= 0}': all steps $>$= 0
+    \item `\texttt{$<$= 0}': all steps $<$= 0
+    \item `\texttt{AP}': equal steps (except final one which may be shorter)
+	i.e. {\em Arithmetic Progression}
+\end{bullets}
+  
+Example (continued from above):
+  \begin{verbatim}
+% $x step
+AP
+% $y step
+>= 0
+\end{verbatim}
+
+\subsection{Method \texttt{unit}}
+    \label{ooc-meta-unit}
+
+  $ooc\_name$ 
+  \texttt{unit}
+
+This returns the unit of measure.
+This may be used in the future to support arithmetic with automatic unit conversion.
+At the moment Nap makes only limited use of the unit attribute.
+For example coordinate variables with the unit
+\texttt{degrees\_east} are recognised at longitudes and treated differently.
+
+Example (continued from above):
+  \begin{verbatim}
+% $y set unit seconds
+% $y unit
+seconds
+\end{verbatim}
+

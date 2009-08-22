@@ -1,0 +1,85 @@
+%  $Id: ack.tex,v 1.8 2007/01/01 23:31:25 dav480 Exp $ 
+    % Acknowledgments
+
+\section{Acknowledgments}
+
+  Ken Iverson (who died in 2004) is the father of array
+  processing. Nap does not use the radical mathematical conventions of
+  his languages 
+  \href{http://www.acm.org/sigapl/}{APL}, and 
+  \href{http://www.jsoftware.com/}{J}, but he must be
+  acknowledged as the source of the fundamental concepts upon which NAP
+  is based. Nap has also adopted various J conventions such as that for
+  floating-point constants (e.g. allowing 0.5 to be written in rational
+  form as 
+  \texttt{1r2} and allowing powers of $\pi$ as in 
+  \texttt{1p1}).
+  \par Nap would never have happened if the author (Harvey Davies) had
+  not worked with Rhys Francis and Ian Mathieson on development of the
+  data-parallel modelling language 
+  \textit{DPML} and learned from them things like 
+  \textit{yacc}. This project met a premature death but we did learn a
+  lot. It is hoped to implement unit calculus (automatic unit
+  conversion and definition) in Nap as was done in DPML.
+
+The other strong influence on Nap was 
+  \href{http://www.unidata.ucar.edu/packages/netcdf/index.html}{netCDF}.
+  It is amazing that a portable array file format did not exist until
+  Russ Rew and the late Glenn Davis developed netCDF in the early
+  1990s. This work was based on 
+  \href{http://nssdc.gsfc.nasa.gov/cdf/cdf-home.html}{CDF}, which
+  was developed by Michael Gough and Lloyd Treinish. 
+Further details of the history of CDF and netCDF are available at
+\\
+\href{http://www.unidata.ucar.edu/software/netcdf/credits.html}
+{http://www.unidata.ucar.edu/software/netcdf/credits.html}.
+Nap is designed to
+  read and write netCDF (and the similar 
+  \href{http://www.hdfgroup.org/}{HDF}) files and stores data in
+  memory in stuctures called 
+  \textit{NAOs}, which have similar properties to netCDF variables.
+  \par
+    My CSIRO colleague Peter Turner made significant
+  contributions to the Nap code. He wrote the C code for:
+\begin{bullets}
+    \item NAO photo-image handler
+    \item 
+    \textit{draw} and 
+    \textit{fill} OOC methods
+    \item morphological functions (moving\_range, dilate, erode)
+\end{bullets}
+He also made significant contributions to the following Tcl
+  library files:
+\begin{bullets}
+    \item 
+      \texttt{browse\_var.tcl}
+    \item 
+      \texttt{caps\_nap\_menu.html}
+    \item 
+      \texttt{colour.tcl}
+    \item 
+      \texttt{hdf.tcl}
+    \item 
+      \texttt{pal.tcl}
+    \item 
+      \texttt{plot\_nao.tcl}
+    \item 
+      \texttt{proc\_lib.tcl}
+\end{bullets}
+
+The \texttt{nap\_land\_flag} command 
+(see section \ref{land-flag-nap-land-flag})
+is based on code which was originally written by Dr.
+  Chris. Mutlow at the Rutherford Appleton Laboratory in England. This
+  code has been adapted for Nap by Peter Turner and Harvey Davies.
+  \par Past and present members of The Caps development group (Ian Grant,
+  Edward King, Jenny Lovell, Paul Tildesley, Peter Turner and Chris
+  Rathbone) have provided ideas, support and feedback over the years.
+  Mark Collier and Janice Bathols were early users of Nap for
+  processing results from atmospheric modelling. Their success and
+  enthusiasm has has done a great deal to convert others to 
+  \textit{napism}. 
+  \par Dr Takeshi Enomoto, Earth Simulator Center, maintains the 
+  \href{http://fink.sourceforge.net/pdb/package.php/nap}{Nap Fink site}, which provides distributions for the 
+  \textit{Mac OS X} and 
+  \textit{Darwin} platforms.

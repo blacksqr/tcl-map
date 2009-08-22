@@ -1,0 +1,226 @@
+%  $Id: sample.tex,v 1.9 2006/09/20 08:48:49 dav480 Exp $ 
+    % Nap Sample Session
+
+\section{Sample Session}
+
+The following sample session illustrates some basic features of
+    Nap. The input command lines begin with the standard Tcl prompt
+    `\texttt{\%}'.
+    \begin{verbatim}
+% nap "x = {2 2.5 5}"
+::NAP::13-13
+% nap "y = x * x"
+::NAP::14-14
+% $y
+4 6.25 25
+\end{verbatim}
+
+The first command assigns to 
+    \texttt{x} a vector containing the three elements 2, 2.5 and 5.
+    The second command assigns to 
+    \texttt{y} a vector containing the three elements which are the
+    squares of the corresponding elements of 
+    \texttt{x}. The command `\texttt{\$y}' displays the value of 
+    \texttt{y}.
+
+Nap stores each variable in memory using a data-structure called
+    an 
+    \emph{n-dimensional array object} (\emph{NAO}).
+    Each NAO has an associated Tcl command called its 
+    \emph{object-oriented command} (\emph{OOC}) which is used to
+\begin{bullets}
+      \item obtain data and other information from the NAO
+      \item write data from the NAO to files
+      \item modify the NAO.
+\end{bullets}
+An \emph{OOC-name} (command-name of an OOC) is used
+\begin{bullets}
+      \item to execute the OOC (like any other Tcl command)
+      \item as a unique identifier for the NAO associated with the OOC.
+\end{bullets}
+An OOC-name has the form 
+      `\texttt{::NAP::}\emph{seq}\texttt{-}\emph{slot}', where
+\begin{simpleitems}
+      \item 
+      \texttt{::NAP::} is the Tcl namespace used by NAP
+      \item 
+      \emph{seq} is the \emph{sequence number} assigned in order of creation
+      \item 
+      \emph{slot} is the index of an internal table used to provide fast access.
+\end{simpleitems}
+In the above example, both OOC-names (\texttt{::NAP::13-13} and 
+      \texttt{::NAP::14-14}) have slots equal to their sequence
+      number, but this is not the case in general since the slots of
+      deleted NAOs may be reused.
+
+An assignment (`\texttt{=}') operator has on its left a standard Tcl
+    variable name which is assigned the (string) value of the OOC-name.
+    Continuing the above example, these string values can be displayed
+    using the standard Tcl command 
+    \texttt{set}.
+\begin{verbatim}
+% set x
+::NAP::13-13
+% set y
+::NAP::14-14
+\end{verbatim}
+
+    
+
+Thus the command `\texttt{\$y}' is equivalent to the command `\texttt{::NAP::14-14}'. \  Confirming this:
+\begin{verbatim}
+% ::NAP::14-14
+4 6.25 25
+\end{verbatim}
+
+If an OOC has no arguments (as above) then it returns the value
+    of the NAO (abbreviated if the NAO is large). Arguments can be
+    specified as in:
+\begin{verbatim}
+% $x all
+::NAP::13-13  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 2.5 5
+\end{verbatim}
+
+This illustrates the `\texttt{all}' 
+    \emph{method} (sub-command), which provides a more detailed
+    description of the NAO than the default method. The\  following
+    example uses the `\texttt{set value}' method to change the value of element
+    1 of 
+    \texttt{x} from 2.5 to 7. Note that element 1 is the second
+    element because the subscript origin is 0 (as in other aspects of
+    Tcl) rather than 1 (as in languages such as Fortran).
+\begin{verbatim}
+% $x set value 7 1
+% $x all
+::NAP::13-13  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 7 5
+\end{verbatim}
+
+    
+
+The similarity between the `\texttt{expr}' and `\texttt{nap}' commands for simple arithmetic 
+is shown by:
+\begin{verbatim}
+% expr "2 * (1 - 0.25)"
+1.5
+% nap "2 * (1 - 0.25)"
+::NAP::25-25
+% ::NAP::25-25
+1.5
+% ::NAP::25-25
+invalid command name "::NAP::25-25"
+\end{verbatim}
+
+Note that the command `\texttt{::NAP::25-25}' worked the first time but failed
+    when it was repeated. The NAOs reference count was zero, as it was
+    not referenced by anything (e.g. a Tcl variable). So the NAO and
+    its associated OOC were automatically deleted after the first
+    execution of the OOC.
+    
+
+The need to type the additional command `\texttt{::NAP::25-25}' can be obviated using the Tcl
+    bracket (`\texttt{[]}') notation. Tcl executes the bracketed
+    command, substitutes its result and then executes the generated
+    command. So the above can be replaced by:
+    \begin{verbatim}
+% [nap "2 * (1 - 0.25)"]
+1.5
+\end{verbatim}
+
+    
+
+The following example illustrates 
+    \emph{array indexing}. The six commands do the following:
+    \begin{enumerate}
+      \item Assign to the variable 
+      \texttt{score} a 32-bit floating-point vector containing the
+      five values 56, 75, 47, 99 and 49.
+      \item Display 
+      \texttt{score}.
+      \item Index a vector by a scalar `\texttt{2}' to give a scalar.
+      \item Index a vector by a vector `\texttt{\{2 0 4\}}' to give a vector.
+      \item Illustrate the operator `\texttt{..}' which defines an 
+      \emph{arithmetic progression}.
+      \item Use such an arithmetic progression as an index.
+    \end{enumerate}
+    \begin{verbatim}
+% nap "score = f32{56 75 47 99 49}"
+::NAP::16-16
+% $score all
+::NAP::16-16  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+56 75 47 99 49
+% [nap "score(2)"] all
+::NAP::20-20  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+47
+% [nap "score({2 0 4})"] all
+::NAP::25-25  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+47 56 49
+% [nap "0 .. 3"]
+0 1 2 3
+% [nap "score(0 .. 3)"]
+56 75 47 99
+\end{verbatim}
+
+The following three commands respectively illustrate:
+    \begin{enumerate}
+      \item function \texttt{sum}, which has the functionality of mathematical `$\sum$'
+      \item function \texttt{count}, which gives the \emph{number of non-missing elements}
+      \item the use of these functions to calculate an \emph{arithmetic-mean}
+    \end{enumerate}
+    \begin{verbatim}
+% [nap "sum(score)"]
+326
+% [nap "count(score)"]
+5
+% [nap "sum(score) / count(score)"]
+65.2
+\end{verbatim}
+
+    
+
+The following two commands respectively illustrate:
+    \begin{enumerate}
+      \item the definition of a tcl procedure to calculate an
+      arithmetic-mean using NAP
+      \item the calling of this procedure as a Nap function
+    \end{enumerate}
+    \begin{verbatim}
+% proc mean x {nap "sum(x)/count(x)"}
+% [nap "mean(score)"]
+65.2
+\end{verbatim}
+
+    
+
+Procedures defining Nap functions have arguments and results
+    which are OOC-names. All the facilities of Tcl and Nap can be used.
+    So recursion is allowed, as shown by the following 
+    \emph{factorial} example:
+    \begin{verbatim}
+% proc factorial n {
+    if {[[nap "n > 1"]]} {
+        nap "n * factorial(n-1)"
+    } else {
+        nap "1"
+    }
+}
+% [nap "factorial(4)"]
+24
+\end{verbatim}
+
+    
+
+Note the double brackets (inside braces) in the first line of
+    the body of the above procedure. The inner brackets produce an
+    OOC-name. The outer brackets execute this OOC to produce the string
+`\texttt{0}' (meaning \emph{false}) or `\texttt{1}' (meaning \emph{true}).

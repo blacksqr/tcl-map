@@ -1,0 +1,49 @@
+# nap_interp.test --
+# 
+# Test running nap under multiple interpreters
+#
+# Copyright (c) 2002, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: nap_interp.test,v 1.10 2005/11/30 06:25:15 dav480 Exp $
+
+Test nap_interp-1.1 {run nap under slave interp} {
+    nap "a = 1"
+    interp create i
+    load $shared_lib nap i
+    interp eval i {NAP::nap "a = 3"}
+    interp eval i {$a}
+} {3} 1
+
+Test nap_interp-1.2 {delete slave interp} {
+    interp delete i
+    $a
+} {1} 1
+
+Test nap_interp-1.3 {unset a} {
+    unset a
+} {} 1
+
+for {set i 1} {$i < 9} {incr i} {
+    Test nap_interp-2.$i {run nap under slave interp} "
+	interp create i$i
+	[list load $shared_lib nap i$i]
+	interp eval i$i {::NAP::nap i2 = $i**2}
+	interp eval i$i {\$i2}
+    " [expr {$i * $i}] 1
+}
+
+foreach i {1 7 3 5} {
+    Test nap_interp-3.$i {delete slave interp} "interp delete i$i" {} 1
+}
+
+foreach i {6 2 8 4} {
+    Test nap_interp-4.$i {get nap value} "interp eval i$i {\$i2}" [expr {$i * $i}] 1
+}
+
+foreach i {6 2 8 4} {
+    Test nap_interp-3.$i {delete slave interp} {
+	interp delete i$i
+    } {} 1
+}
+
+unset i 

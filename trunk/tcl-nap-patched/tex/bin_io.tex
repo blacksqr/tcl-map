@@ -1,0 +1,383 @@
+%  $Id: bin_io.tex,v 1.11 2007/12/01 05:43:36 dav480 Exp $ 
+    % Nap Library: bin\_io.tcl
+
+\section{Binary Input/Output Procedures}
+    \label{bin-io}
+
+\subsection{Introduction}
+    \label{bin-io-Introduction}
+
+    The following procedures are defined in the file 
+  \texttt{bin\_io.tcl}.
+
+\subsection{Reading and Writing Simple Binary Files}
+    \label{bin-io-Simple-Binary-Files}
+
+    A simple binary file is a file containing nothing except data of
+  a single data type.
+
+\subsubsection{Procedure
+\texttt{get\_nao} [$\mathit{fileName}$ [$\mathit{dataType}$ [$\mathit{shape}$]]]}
+    \label{bin-io-get-nao}
+
+  Read NAO from binary file.
+  \\
+  $\mathit{filename}$: file name (default: 
+  \texttt{""} which is treated as 
+  \texttt{stdin})
+  \\
+  $\mathit{dataType}$: 
+  \texttt{c8}, 
+  \texttt{u8}, 
+  \texttt{u16}, 
+  \texttt{u32}, 
+  \texttt{i8}, 
+  \texttt{i16}, 
+  \texttt{i32}, 
+  \texttt{f32} or 
+  \texttt{f64}
+  \\
+  $\mathit{shape}$: shape of result (Default: number of elements until
+  end)
+
+\subsubsection{Procedure \texttt{put\_nao} [$napExpr$ [$\mathit{fileName}$]]}
+    \label{bin-io-put-nao}
+
+  Write NAO to binary file.
+  \\
+  $napExpr$: Nap expression to be evaluated in caller
+  namespace
+  \\
+  $\mathit{fileName}$: file name (default: 
+  \texttt{stdout})
+
+\subsection{Reading and Writing Fortran Unformatted Files}
+    \label{bin-io-Fortran-Unformatted-Files}
+
+  Fortran unformatted files are files consisting of binary records
+  preceded and followed by 32-bit byte-counts.
+
+\subsubsection{Procedure
+\texttt{get\_bin} $\mathit{dataType}$ [$\mathit{fileId}$ [$\mathit{mode}$]]}
+    \label{bin-io-get-bin}
+
+  Read next Fortran binary (unformatted) record.
+  \\
+  $\mathit{dataType}$: 
+  \texttt{c8}, 
+  \texttt{u8}, 
+  \texttt{u16}, 
+  \texttt{u32}, 
+  \texttt{i8}, 
+  \texttt{i16}, 
+  \texttt{i32}, 
+  \texttt{f32} or 
+  \texttt{f64}
+  \\
+  $\mathit{fileId}$: Tcl file handle (default: 
+  \texttt{stdin})
+  \\
+  $\mathit{mode}$: 
+  \texttt{binary} (default) or 
+  \texttt{swap}
+
+\subsubsection{Procedure \texttt{put\_bin} $napExpr$ [$\mathit{fileId}$ [$\mathit{mode}$]]}
+    \label{bin-io-put-bin}
+
+  Write Fortran binary (unformatted) record.
+  \\
+  $napExpr$: Nap expression to be evaluated in caller
+  namespace
+  \\
+  $\mathit{fileId}$: Tcl file handle (default: 
+  \texttt{stdout})
+  \\
+  $\mathit{mode}$: 
+  \texttt{binary} (default) or 
+  \texttt{swap}
+
+\subsubsection{Example}
+    \label{bin-io-Example}
+
+  The following example creates a NAO called 
+  \texttt{squares}, writes it to a file, then reads the data from
+  this file into a NAO called 
+  \texttt{in}.
+  \begin{verbatim}
+% nap "squares = (0 .. 4)**2"
+::NAP::66-66
+% $squares all
+::NAP::66-66  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 1 4 9 16
+% set file [open tmp.bin w]; # open file "tmp.bin" for
+writing
+file5
+% put_bin squares $file; # write data from squares
+% close $file
+% set file [open tmp.bin]; # open file "tmp.bin" for reading
+file5
+% nap "in = [get_bin f32 $file]"; # read data into in
+::NAP::78-78
+% close $file
+% $in all
+::NAP::78-78  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 1 4 9 16
+\end{verbatim}
+
+\subsection{Reading and Writing \texttt{cif} Files}
+    \label{bin-io-cif}
+
+The 
+  \texttt{cif} (\texttt{conmap} input file) format is one which originated in the
+  Melbourne University Department of Meteorology in the days before
+  netCDF and HDF. It is now rather obsolete but is still used within
+  CSIRO and other Australian organisations. A cif is a Fortran
+  unformatted file consisting of one or more frames, each of which
+  consists of six records as follows:
+\begin{bullets}
+    \item number of rows
+    \item vertical coordinate variable (often latitude)
+    \item number of columns
+    \item horizontal coordinate variable (often longitude)
+    \item title
+    \item main data (matrix)
+\end{bullets}
+
+The main input procedure is 
+  \texttt{get\_cif}, which reads one or more matrices from each of
+  one or more cif files. The main output procedure is 
+  \texttt{put\_cif}, which writes a NAO as an entire cif. These
+  procedures call the low-level procedures 
+  \texttt{get\_cif1} or 
+  \texttt{put\_cif1} for each frame. The default 
+  $\mathit{mode}$ for 
+  \texttt{put\_cif} and 
+  \texttt{put\_cif1} is 
+  \texttt{auto} which produces a big-endian file regardless of the
+  platform.
+
+\subsubsection{Procedure
+\texttt{get\_cif} [$\mathit{options}$] $\mathit{pattern}$ [$\mathit{pattern}$ ...]}
+    \label{bin-io-get-cif}
+
+  Read one or more matrices from each of one or more cif files
+  (whose names are specified by one or more glob patterns). The result
+  is 2D if only one frame is read, otherwise it is 3D. Check whether
+  byte swapping is needed by examining 1st word in file.
+  \\Options:
+  \\
+  \texttt{-g 0|1}: 
+  \texttt{1} (default) for geographic mode, 
+  \texttt{0} for non-geographic mode
+  \\
+  \texttt{-m} 
+  \textbf{real}: Input missing value (default: 
+  \texttt{-7777777.0})
+  \\
+  \texttt{-um} 
+  \textbf{text}: Units for matrix (default: none)
+  \\
+  \texttt{-ux} 
+  \textbf{text}: Units for x (default: if geographic mode then 
+  \texttt{degrees\_east}, else none)
+  \\
+  \texttt{-uy} 
+  \textbf{text}: Units for y (default: if geographic mode then 
+  \texttt{degrees\_north}, else none)
+  \\
+  \texttt{-x} 
+  \textbf{text}: Name of dimension x (default: if geographic mode then 
+  \texttt{longitude} else x)
+  \\
+  \texttt{-y} 
+  \textbf{text}: Name of dimension y (default: if geographic mode then 
+  \texttt{latitude} else x)
+  
+
+The following example reads a single-frame cif named 
+  \texttt{7.cif} into a NAO called 
+  \texttt{in}, then displays it (including the coordinate
+  variables).
+  \begin{verbatim}
+% nap "in = [get_cif 7.cif]"
+::NAP::357-357
+% $in all
+::NAP::357-357  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+This data originated from ascii conmap input file 'acif.7'
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable: ::NAP::236-236
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable: ::NAP::308-308
+Value:
+ 1  1  2 -3
+ 1  _  3 -4
+ 2  0  4  5
+% [nap "coordinate_variable(in,0)"]
+-60 30 60
+% [nap "coordinate_variable(in,1)"]
+-90 30 90 180
+\end{verbatim}
+
+\subsubsection{Procedure \texttt{put\_cif} $napExpr$ [$\mathit{fileName}$ [$\mathit{mode}$]]}
+    \label{bin-io-put-cif}
+
+  Write NAO as entire cif.
+  \\
+  $napExpr$: Nap expression to be evaluated in caller
+  namespace
+  \\
+  $\mathit{fileName}$: file name (default: 
+  \texttt{stdout})
+  \\
+  $\mathit{mode}$: 
+  \texttt{auto} (default), 
+  \texttt{binary} or 
+  \texttt{swap}
+
+\subsubsection{Procedure
+\texttt{get\_cif1} [$\mathit{options}$] $\mathit{fileId}$}
+    \label{bin-io-get-cif1}
+
+  Read next frame from cif (Conmap Input File).
+  \\Options:
+  \\
+  \texttt{-g 0|1}: 
+  \texttt{1} (default) for geographic mode, 
+  \texttt{0} for non-geographic mode
+  \\
+  \texttt{-m} 
+  \textbf{real}: Input missing value (default: 
+  \texttt{-7777777.0})
+  \\
+  \texttt{-s 0|1}: 
+  \texttt{0} (default) for binary mode, 
+  \texttt{1} for swap (byte-swapping) mode
+  \\
+  \texttt{-um} 
+  \textbf{text}: Units for matrix (default: none)
+  \\
+  \texttt{-ux} 
+  \textbf{text}: Units for x (default: if geographic mode then 
+  \texttt{degrees\_east}, else none)
+  \\
+  \texttt{-uy} 
+  \textbf{text}: Units for y (default: if geographic mode then 
+  \texttt{degrees\_north}, else none)
+  \\
+  \texttt{-x} 
+  \textbf{text}: Name of dimension x (default: if geographic mode then 
+  \texttt{longitude} else x)
+  \\
+  \texttt{-y} 
+  \textbf{text}: Name of dimension y (default: if geographic mode then 
+  \texttt{latitude} else x)
+  
+
+The following example reads the first frame of a cif named 
+  \texttt{7.cif} into a NAO called 
+  \texttt{in}, then displays it (including the coordinate
+  variables).
+  \begin{verbatim}
+% set f [open 7.cif]
+file5
+% nap "in = [get_cif1 $f]"
+::NAP::218-218
+% close $f
+% $in all
+::NAP::218-218  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+This data originated from ascii conmap input file 'acif.7'
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable: ::NAP::97-97
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable: ::NAP::169-169
+Value:
+ 1  1  2 -3
+ 1  _  3 -4
+ 2  0  4  5
+% ::NAP::97-97
+-60 30 60
+% ::NAP::169-169
+-90 30 90 180
+\end{verbatim}
+
+\subsubsection{Procedure \texttt{put\_cif1} $napExpr$ [$\mathit{fileId}$ [$\mathit{mode}$]]}
+    \label{bin-io-put-cif1}
+
+  Write NAO as frame of cif.
+  \\
+  $napExpr$: Nap expression to be evaluated in caller
+  namespace
+  \\
+  $\mathit{fileId}$: Tcl file handle (default: 
+  \texttt{stdout})
+  \\
+  $\mathit{mode}$: 
+  \texttt{auto} (default), 
+  \texttt{binary} or 
+  \texttt{swap}
+
+\subsection{Writing HDF and netCDF files}
+    \label{bin-io-hdf-netcdf}
+
+\subsubsection{Procedure \texttt{put16} $\mathit{napExpr}$
+$\mathit{fileName}$ $\mathit{variableName}$}
+    \label{bin-io-put16}
+
+  Write automatically-scaled 16-bit variable to netCDF or HDF
+  file.
+  \\
+  $napExpr$: Nap expression to be evaluated in caller
+  name-space
+  \\
+  $\mathit{fileName}$: name of netCDF (\texttt{.nc}) or HDF (\texttt{.hdf}) file
+  \\
+  $\mathit{variableName}$: name of 16-bit netCDF variable or HDF SDS
+  
+
+Example:
+  \begin{verbatim}
+% put16 "{{1.2e4 -99 _}{_ 101 0}}" m.nc matrix
+\end{verbatim}
+
+\subsection{Utilities}
+    \label{bin-io-Utilities}
+
+\subsubsection{Procedure \texttt{byte\_order\_mode} $\mathit{mode}$}
+    \label{bin-io-byte-order-mode}
+
+Binary I/O may require byte swapping.
+Some Nap commands take an argument with the value \texttt{"swap"} to specify \emph{byte swapping}
+and \texttt{"binary"} to specify \emph{no byte swapping}.
+
+The need for byte swapping depends on two things.
+Is the file big-endian or little-endian?
+Is the computer platform big-endian or little-endian?
+
+Procedure \texttt{byte\_order\_mode} allows one to specify whether 
+the file is big-endian or little-endian without having to worry about whether
+this matches the platform.
+The result of this procedure is \texttt{"binary"} or \texttt{"swap"}.
+
+The argument can be the value \texttt{"auto"}, \texttt{"bigEndian"}, \texttt{"binary"},
+\texttt{"littleEndian"} or \texttt{"swap"}.
+These can be abbreviated to a unique prefix.
+Note that \texttt{"auto"} is treated as \texttt{"bigEndian"} for historic reasons.
+
+The following example (run on a little-endian PC) shows how \texttt{byte\_order\_mode} 
+can be used with
+the \texttt{nap\_get} command (see section \ref{nap-get-Reading-Binary-Data})
+and the binary output object-oriented commands (see sections \ref{ooc-write-binary}
+and \ref{ooc-write-swap}).
+  \begin{verbatim}
+% set mode [byte_order_mode bigEndian]
+swap
+% set f [open a.big w]
+file131c788
+% [nap "0 .. 3"] $mode $f
+% close $f
+% set f [open a.big]
+file131c788
+% [nap_get $mode $f i32]
+0 1 2 3
+% close $f
+\end{verbatim}

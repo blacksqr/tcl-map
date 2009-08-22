@@ -1,0 +1,854 @@
+%  $Id: indexing.tex,v 1.1 2006/03/01 05:59:17 dav480 Exp $ 
+    % NAP Indexing
+    \section{Indexing}
+
+  \subsection{
+    \label{Introduction}Introduction
+  }
+
+  
+
+
+  \emph{Indexing} is the process of extracting elements from arrays.
+  NAP extends this concept to the estimation (using interpolation) of
+  values 
+  \emph{between} the elements.
+  
+
+An index can appear:
+  \begin{itemize}
+    \item within a NAP expression
+    \item as an argument of an OOC. E.g. method 
+    \texttt{set\ value} takes an argument that specifies
+    which elements are to be modified
+    \item as an argument of commands 
+    \texttt{nap\_get hdf} and 
+    \texttt{nap\_get netcdf}, specifying positions within a
+    file
+  \end{itemize}
+  
+
+NAP provides powerful indexing (subscripting) facilities. The
+  subscript origin is 0 (as in other aspects of Tcl such as lists). The
+  rightmost dimension is the least significant (varies fastest). Here
+  is a simple example of a vector indexed by a scalar:
+  \begin{verbatim}
+% nap "vector = {2 -5 9 4}"
+::NAP::14-14
+% [nap "vector(2)"]
+9
+\end{verbatim}
+
+  \subsubsection{
+    \label{Syntax}Indexing Syntax
+  }
+NAP syntax specifies that indexing is implied by two adjacent
+  NAOs, with the base array on the left and the index on the right.
+  Thus it is not necessary to parenthesise an index that is simply a
+  constant or variable-name. However parentheses may make the code
+  clearer to humans, who are likely to be familiar with languages where
+  this is required.
+  
+
+This syntax means that the above example can be rewritten without
+  parentheses as:
+  \begin{verbatim}
+% [nap "vector 2"]
+9
+\end{verbatim}
+
+It also means that any non-scalar expression (including a
+constant of course) can be indexed, as shown by:
+  \begin{verbatim}
+% [nap "{2 -5 9 4} 2"]
+9
+% [nap "({2 -5 9 4} + 10) 2"]
+19
+\end{verbatim}
+
+  \subsubsection{
+    \label{Dimension-Position}Dimension-Position
+  }
+A 
+  \emph{dimension-position} is a scalar value defining the position
+  along a dimension. Fractional values are valid and represent
+  positions 
+  \emph{between} the array elements. Values at non-integral positions
+  are estimated using n-dimensional linear interpolation. The following
+  demonstrates this (continuing the above example):
+  \begin{verbatim}
+% [nap "vector 2.5"]
+6.5
+\end{verbatim}
+
+Note that the dimension-position 
+  \texttt{2.5} is halfway between 
+  \texttt{2} (corresponding to the value 
+  \texttt{9}) and 
+  \texttt{3} (corresponding to the value 
+  \texttt{4}). Thus the value is estimated to be 
+  \mbox{
+    \texttt{0.5 * 9.0 + 0.5 * 4.0 = 4.5 + 2.0 = 6.5}
+  } using ordinary one-dimensional linear interpolation.
+  
+
+If 
+  $n$ is the dimension-size and 
+  $p$ the position, then 
+  \mbox{0 $\le$ 
+  $p$ $<$ 
+  $n$.} Values between 
+  $n$-1 and 
+  $n$ are defined by treating position 
+  $n$ as equivalent to 0. This gives wraparound useful with
+  cyclic dimensions such as longitude. Thus
+  \begin{verbatim}
+% [nap "vector 3.1"]
+3.8
+\end{verbatim}
+
+Note that the dimension-position 
+  \texttt{3.1} is 10\% of the distance between 
+  \texttt{3} (corresponding to the value 
+  \texttt{4}) and 
+  \texttt{4} (equivalent to 
+  \texttt{0} and corresponding to the value 
+  \texttt{2}). Thus the value is estimated to be 
+  \mbox{
+    \texttt{0.9 * 4.0 + 0.1 * 2.0 = 3.6 + 0.2 = 3.8}
+  }
+  \subsubsection{
+    \label{Subscript}Subscript
+  }
+
+  \emph{Dimension-positions} are always specified via 
+  \emph{subscripts}. A 
+  \emph{subscript} is similar to a 
+  \emph{dimension-position} except that there are no size limits. If 
+  $s$ is the subscript and 
+  $n$ is the dimension-size, then the dimension-position 
+  $p$ is defined by 
+  \mbox{
+  $s$ 
+  \texttt{\%} 
+  $n$,} the remainder after dividing 
+  $s$ by 
+  $n$.
+  
+
+Thus in our example subscript 
+  \texttt{6} is treated as 
+  \texttt{6\%4} = 
+  \texttt{2}. So we get
+  \begin{verbatim}
+% [nap "vector 6"]
+9
+\end{verbatim}
+
+It also means that negative values can be use to index backward
+from the end, as shown by:
+  \begin{verbatim}
+% [nap "vector(-1)"]
+4
+% [nap "vector(-2)"]
+9
+% [nap "vector(-3)"]
+-5
+\end{verbatim}
+
+  \subsubsection{
+    \label{Elemental-Index}Elemental Index
+  }
+An 
+  \emph{elemental index} is a vector of 
+  $rank$ subscripts, specifying the subscripts of an element
+  of an array. The following example creates a matrix 
+  \texttt{mat} and illustrates the use of elemental indices to
+  extract individual elements.
+  \begin{verbatim}
+% nap "mat = {{1.5 0 7}{2 -4 -9}}"
+::NAP::60-60
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat {0 1}"]
+0
+% [nap "mat {1 -1}"]
+-9
+% 
+% [nap "mat {0.5 1.5}"]
+-1.5
+\end{verbatim}
+
+The value corresponding to the index 
+  \texttt{\{0.5\ 1.5\}} is estimated, using bilinear
+  interpolation, to be 
+  \mbox{
+    \texttt{0.25\ *\ 0.0\ +\ 0.25\ *\ 7.0\ +\ 0.25\ *\ (-4.0)\ +\ 0.25\ *\ (-9.0)
+    = -1.5}
+  }
+  \subsection{
+    \label{Index}Index
+  }
+An 
+  \emph{index} is an array defining one or more elemental indices.
+  The following table lists the four types, which are explained in the
+  sections below:
+  \\ \par \begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Index Type} & 
+      \textbf{Rank of Indexed Array}
+    \\
+    \hline 
+      shape-preserving & 
+      1
+    \\
+    \hline 
+      vector-flip & 
+      1
+    \\
+    \hline 
+      full & 
+      2 or more
+    \\
+    \hline 
+      cross-product & 
+      2 or more
+    \\
+  \hline
+\end{tabular} \\ \par
+  \subsubsection{
+    \label{Shape-Preserving}Shape-Preserving
+  }
+
+  \emph{Shape-preserving} indexing is used to index a vector. The
+  shape of the result is the same as that of the index. The following
+  example shows how the previously defined variable 
+  \texttt{vector} can be indexed by
+  \begin{itemize}
+    \item a scalar to produce a scalar
+    \item a vector to produce a vector
+    \item a matrix to produce a matrix:
+  \end{itemize}
+  \begin{verbatim}
+% $vector
+2 -5 9 4
+% [nap "vector(2)"] all
+::NAP::57-57  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Value:
+9
+% [nap "vector({2 2.5 2})"] all
+::NAP::61-61  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9 6.5 9
+% [nap "vector({
+{1 0 2.5}
+{-1 2 1}
+})"] all
+
+::NAP::67-67  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-5.0  2.0  6.5
+ 4.0  9.0 -5.0
+\end{verbatim}
+
+The 
+  \emph{shape-preserving} property means one can use a vector to
+  define a mapping. The following example maps 0 to 4, 1 to 1, 2 to 9
+  and 3 to 4:
+  \begin{verbatim}
+% [nap "{4 1 9 4} {
+{2 1 2 0}
+{3 3 0 1}
+}"]
+9 1 9 4
+4 4 4 1
+\end{verbatim}
+
+The following example uses the same technique to implement a
+simple substitution cipher (mapping space to R, A to X, B to B, C to T,
+$\ldots$ as shown) to encrypt the message `HELLO\ WORLD'
+as `A\ HHVREVZHC' which is then decrypted.
+  \begin{verbatim}
+% nap "plain   = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ'"
+::NAP::63-63
+% nap "cipher  = 'RXBTC MUAFGWHYIVJKZDLNOEPQS'"
+::NAP::64-64
+% [nap "plain((plain @@ cipher)(plain @@ 'HELLO
+WORLD'))"]; # encrypt
+A HHVREVZHC
+% [nap "cipher((cipher @@ plain)(cipher @@ 'A
+HHVREVZHC'))"]; # decrypt
+HELLO WORLD
+\end{verbatim}
+
+  \subsubsection{
+    \label{Vector-flip}Vector-Flip
+  }
+
+  
+
+It is often necessary to reverse the order of elements in a
+  vector. One could use 
+  \emph{shape-preserving} indexing, as in:
+  \begin{verbatim}
+% [nap "{2 4 6 8}(3 .. 0)"]
+8 6 4 2
+\end{verbatim}
+
+  
+
+NAP provides the 
+  \emph{niladic} operator `\texttt{-}' to specify such reversal (or 
+  \emph{flipping}). (A 
+  \emph{niladic} operator is one without any operands.) Thus one can
+  simplify the above example to:
+  \begin{verbatim}
+% [nap "{2 4 6 8}(-)"]
+8 6 4 2
+\end{verbatim}
+
+  
+
+Such an index of a vector, consisting of just `\texttt{-}', is called a 
+  \emph{vector-flip}. Note that 
+  \ref{Cross-product-index}cross-product-indexing also allows
+  the niladic `\texttt{-}' to specify flipping of one or more
+  dimensions.
+  
+
+What does the niladic `\texttt{-}' generate? Let's see:
+  \begin{verbatim}
+% [nap "-"] all
+::NAP::62-62  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+-Inf
+\end{verbatim}
+
+It generates a scalar 32-bit NAO with the value 
+  \emph{negative infinity}! Indexing treats such a NAO as meaning
+  `flip$\backslash$\&amp;quot. So the above indexing example could also (but
+  less conveniently) be written as:
+  \begin{verbatim}
+% [nap "{2 4 6 8}(-1if32)"]
+8 6 4 2
+\end{verbatim}
+
+  \subsubsection{
+    \label{Full-index}Full-index
+  }
+A 
+  \emph{full-index} is an array specifying a separate elemental index
+  for every element of the result. The shape of the index is the shape
+  of the result with 
+  $r$ (the rank of the indexed array) appended. Each row of
+  the index contains a vector of 
+  $r$ elements defining an elemental index.
+  
+
+The following example shows how the previously defined variable 
+  \texttt{mat} can be indexed by
+  \begin{itemize}
+    \item a vector to produce a scalar
+    \item a matrix to produce a vector
+  \end{itemize}
+  \begin{verbatim}
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat {0.5 1.5}"] all
+::NAP::148-148  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+-1.5
+% [nap "mat {
+{0.5 1.5}
+{0 1}
+{-1 -1}
+}"] all
+::NAP::157-157  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-1.5 0 -9
+\end{verbatim}
+
+Note that 
+  \emph{shape-preserving} indexing is similar to applying 
+  \emph{full} indexing to a vector (if this were allowed). The
+  shape-preserving-index is the hypothetical full-index reshaped to
+  omit the final redundant dimension of size 1.
+  \subsubsection{
+    \label{Cross-product-index}Cross-product-index
+  }
+A 
+  \emph{cross-product-index} is a boxed vector containing 
+  \emph{rank} elements pointing to scalars, vectors, nulls and 
+  \ref{Vector-flip}flips. The cross-product combination of
+  this vector defines the elemental indices of the indexed array.
+  
+
+A cross-product-index is usually defined using the operator `\texttt{,}$\backslash$\&amp;quot.
+    This allows the left and/or right operand to
+  be omitted and such 
+  \emph{null} (missing) operands are treated as 
+  \mbox{`\texttt{0..(}$n$\texttt{-1)}',} where 
+  $n$ is the dimension-size. Scalar operands produce no
+  corresponding dimension in the result. A flip (dimension reversal) is
+  normally represented by the niladic `\texttt{-}' operator,
+    which is equivalent to 
+  \mbox{`\texttt{(}$n$\texttt{-1)..0}'.}
+  
+
+The following examples again use the previously defined variable 
+  \texttt{mat}. We begin by repeating the first 
+  \emph{full-index} example above and then we provide the 
+  \emph{cross-product-index} equivalent:
+  \begin{verbatim}
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat({0.5 1.5})"] all
+::NAP::196-196  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+-1.5
+% [nap "mat(0.5,1.5)"] all
+::NAP::204-204  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+-1.5
+\end{verbatim}
+
+The next example shows how the previously defined variable 
+  \texttt{mat} can be indexed by the cross-product of two vectors
+  to produce a matrix, then provides the equivalent 
+  \emph{full-index}:
+  \begin{verbatim}
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat({1 0},{2 0 -1 0})"] all
+::NAP::174-174  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-9.0  2.0 -9.0  2.0
+ 7.0  1.5  7.0  1.5
+% [nap "mat({
+{{1 2}{1 0}{1 -1}{1 0}}
+{{0 2}{2 0}{2 -1}{2 0}}
+})"] all
+::NAP::180-180  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-9.0  2.0 -9.0  2.0
+ 7.0  1.5  7.0  1.5
+\end{verbatim}
+
+The following example illustrates the effect of a null operand to
+`\texttt{,}$\backslash$\&amp;quot. It also shows the difference between a
+  scalar operand and a single-element vector containing the same value.
+  \begin{verbatim}
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat(1,)"] all
+::NAP::209-209  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 -4 -9
+% [nap "mat({1},)"] all
+::NAP::213-213  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 1      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 2 -4 -9
+\end{verbatim}
+
+The following examples show how the niladic `\texttt{-}' operator is used to flip (reverse) dimensions:
+  \begin{verbatim}
+% $mat
+ 1.5  0.0  7.0
+ 2.0 -4.0 -9.0
+% [nap "mat(,-)"]
+ 7.0  0.0  1.5
+-9.0 -4.0  2.0
+% [nap "mat(-,)"]
+ 2.0 -4.0 -9.0
+ 1.5  0.0  7.0
+% [nap "mat(-,-)"]
+-9.0 -4.0  2.0
+ 7.0  0.0  1.5
+% [nap "mat(0,-)"]
+7 0 1.5
+% [nap "mat(-,{2 0 0})"]
+-9.0  2.0  2.0
+ 7.0  1.5  1.5
+\end{verbatim}
+
+The following example creates a rank-3 array 
+  \texttt{a3d} with shape 
+  \texttt{\{2\ 2\ 3\}}, then extracts all of row 0 from both
+  layers:
+  \begin{verbatim}
+% nap "a3d = {
+{
+{9 1 4}
+{0 8 7}
+}{
+{2 3 5}
+{9 6 0}
+}
+}"
+::NAP::215-215
+% $a3d all
+::NAP::215-215  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9 1 4
+0 8 7
+
+2 3 5
+9 6 0
+% [nap "a3d(,0,)"] all
+::NAP::220-220  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9 1 4
+2 3 5
+\end{verbatim}
+
+  \subsection{
+    \label{indirect-indexing}Indirect Indexing and Unary Operators `\texttt{@}' and `\texttt{@@}'
+  }
+
+  \emph{Indirect indexing} is indexing via coordinate variables. An
+  example is specifying latitudes and longitudes rather than rows and
+  columns. One can convert a latitude of say 20$^{\circ}$S to a subscript using
+  `\texttt{lat@-20}', where 
+  \texttt{lat} is the latitude coordinate variable. This uses the 
+  \emph{binary} interpolated subscript `\texttt{@}' operator discussed in section
+  \ref{Interpolated-Subscript}.
+  Within an index expression it is
+  possible to use the 
+  \emph{unary} `\texttt{@}' operator and simply write
+  `\texttt{@-20}'. The omitted left operand defaults to the
+  corresponding coordinate variable.
+  
+
+There are three such unary operators for indirect indexing: `\texttt{@}',
+  `\texttt{@@}' and `\texttt{@@@}'.
+  However `\texttt{@@@}' is seldom used and will not be mentioned
+  further.
+  
+
+There were restrictions on the use of these unary operators prior
+  to version 5 of NAP. Each subscript had to have the form `\texttt{@} 
+  $expr$' or `\texttt{@@} 
+  $expr$'. These restrictions have now been lifted, as
+  demonstrated at the end of the following 
+  \ref{indirect-1d}1D Time-Series Example.
+  
+
+However these unary operators can no longer be used with 
+  \emph{full indexing}. This facility was seldom if ever used.
+  
+
+The unary `\texttt{@}' and `\texttt{@@}'
+  operators previously worked by simply creating
+  a copy of their operand and attaching to it (via the 
+\emph{link slot} discussed in section \ref{nao})
+an ancillary NAO containing an integer with the value
+  \\$\bullet$ 1 for indirect indexing using `\texttt{@}'
+  \\$\bullet$ 2 for indirect indexing using `\texttt{@@}'.
+  
+
+The function 
+  \texttt{invert\_grid()} still produces an indirect full index with
+  such an attached NAO and the indexing code still handles such
+  indices. However such NAOs are no longer produced in any other way
+  and can be considered an anachronistic kludge.
+  
+
+The new version of NAP is based on a parser which produces a 
+  \emph{parse tree} and then executes this tree. This allows cleverer
+  execution of various things such as indexing, during which the
+  coordinate variables are visible and can be used by the unary `\texttt{@}'
+  and `\texttt{@@}' operators.
+  
+
+The operators `\texttt{@}' and `\texttt{@@}'
+  are often used with indexing to interpolate to
+  a finer or coarser grid. The operand of `\texttt{@}'
+  and `\texttt{@@}' is normally the desired coordinate variable of
+  the result. In many case this would happen using normal NAP
+  processes, but there are some situations where this would not be the
+  case. One example is producing a finer grid using `\texttt{@@}' to produce 
+  \emph{nearest-neighbour} values. Another is using `\texttt{@}'
+  with longitude wrap-around.
+  
+
+NAP ensures that the right-hand operand is used as the coordinate
+  variable by attaching it to the result of `\texttt{@}'
+  and `\texttt{@@}' using the 
+  \href{nao.html}{ \emph{link slot} } . This is discussed further in 
+  \href{op.html\#Inverse-Indexing}{Inverse Indexing Operators `\texttt{@}', `\texttt{@@}' 
+and `\texttt{@@@}'}. The 
+  \ref{indirect-2d}2D Geographic Example shows how `\texttt{@@}' produces 
+  \emph{nearest-neighbour} values and such coordinate variables.
+  \subsubsection{
+    \label{indirect-1d}1D Time-Series Example
+  }
+
+  
+
+Suppose we have temperatures at two-hourly intervals from time
+  10:00 to 16:00 as follows:
+  \begin{verbatim}
+% nap "time = 10 .. 16 ... 2"
+::NAP::20-20
+% nap "temperature = {20.2 21.6 24.9 22.7}"
+::NAP::21-21
+% $temperature set coord time
+\end{verbatim}
+
+We could estimate temperatures every hour during this period
+using either the binary or unary `\texttt{@}' as follows:
+  \begin{verbatim}
+% [nap "temperature(time @ (10 .. 16))"] value; # Use binary
+@
+20.2 20.9 21.6 23.25 24.9 23.8 22.7
+% [nap "temperature(@ (10 .. 16))"] value; # Use unary @
+20.2 20.9 21.6 23.25 24.9 23.8 22.7
+\end{verbatim}
+
+  
+
+These unary operators can only be used within index expressions.
+  Let's see what happens if we use one elsewhere:
+  \begin{verbatim}
+% nap "@10"
+Nap_Indirect: Illegal coordinate variable corresponding to unary
+'@'
+Error at line 583 of file
+/cygdrive/c/dav480/tcl/nap/generic/napMonad.c,m4
+expr1: Error with unary operator '@'
+Error at line 52 of file c:/dav480/tcl/tcl-nap/generic/eval_tree.c
+\end{verbatim}
+
+Note that this unary `\texttt{@}'
+operator makes no sense because it is not within
+  an index and thus there is no corresponding coordinate variable.
+  
+
+The following examples illustrate useful index expressions which
+  now work but did not work prior to version 5 of NAP:
+  \begin{verbatim}
+% [nap "temperature(@@11.5 + 2)"]; # Example 1
+22.7
+% [nap "temperature(@@11.5 .. @@16.5)"]; # Example 2
+21.6 24.9 22.7
+% [nap "temperature(>@10.5 .. <@15.5)"]; # Example 3
+21.6 24.9
+\end{verbatim}
+
+Example 1 gives the second temperature after that closest to time
+11:30. Example 2 gives all the temperatures from that closest to time
+11:30 to that closest to time 16:30. Example 3 gives all the
+temperatures from the first following time 11:30 to the first before
+time 15:30.
+  \subsubsection{
+    \label{indirect-2d}2D Geographic Example
+  }
+
+  
+
+The following creates a 3×4 matrix 
+  \texttt{temperature}, which has
+  \begin{itemize}
+    \item unit of 
+    \texttt{degC} ($^{\circ}$C).
+    \item rows corresponding to latitudes 10$^{\circ}$N, 20$^{\circ}$N and 30$^{\circ}$N
+    \item columns corresponding to longitudes 110$^{\circ}$E, 120$^{\circ}$E, 130$^{\circ}$E and
+    140$^{\circ}$E
+  \end{itemize}
+  \begin{verbatim}
+% nap "temperature = f32{
+{31.5 37.2 32.9 34.0}
+{25.1 25.2 29.0 21.9}
+{20.5 21.2 21.0 19.9}
+}"
+::NAP::72-72
+% $temperature set unit degC
+% nap "latitude = f32{10 20 30}"
+::NAP::76-76
+% $latitude set unit degrees_north
+% nap "longitude = f32(110 .. 140 ... 10)"
+::NAP::86-86
+% $longitude set unit degrees_east
+% $temperature set coo latitude longitude
+\end{verbatim}
+
+The following verifies that the main NAO and its coordinate
+variables are as expected:
+  \begin{verbatim}
+% $temperature all
+::NAP::72-72  f32  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable:
+::NAP::76-76
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable:
+::NAP::86-86
+Value:
+31.5 37.2 32.9 34.0
+25.1 25.2 29.0 21.9
+20.5 21.2 21.0 19.9
+% [$temperature coo 0] all
+::NAP::76-76  f32  MissingValue: NaN  References: 2  Unit:
+degrees_north
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+10 20 30
+% [$temperature coo 1] all
+::NAP::86-86  f32  MissingValue: NaN  References: 2  Unit: degrees_east
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+110 120 130 140
+\end{verbatim}
+
+The following illustrates the use of both direct and indirect
+indexing to display the value of 
+  \texttt{29} in row 1 and column 2:
+  \begin{verbatim}
+% [nap "temperature(1,2)"]
+29
+% [nap "temperature(@20, @130)"]; # latitude=20 longitude=130
+29
+% [nap "temperature(@@20, @@130)"]
+29
+% [nap "temperature(1, @130)"]
+29
+\end{verbatim}
+
+In this case there is a point exactly corresponding to 20$^{\circ}$S,
+130$^{\circ}$E, so the operators 
+  \texttt{@} and 
+  \texttt{@@} give the same result. Let us try the point 21$^{\circ}$S,
+  138$^{\circ}$E, which is not a grid point:
+  \begin{verbatim}
+% [nap "temperature(@21, @138)"]
+23
+% [nap "temperature(@@21, @@138)"]
+21.9
+\end{verbatim}
+
+Now we get different results for the two operators. Operator 
+  \texttt{@} gives a value estimated using bilinear interpolation.
+  Operator 
+  \texttt{@@} gives the data value at the nearest row (1) and
+  column (3).
+  
+
+If the unary operators 
+  \texttt{@} and 
+  \texttt{@@} did not exist we would have to use their binary
+  equivalents as follows:
+  \begin{verbatim}
+% nap "interpolated_row = coordinate_variable(temperature,0) @ 21"
+::NAP::96-96
+% $interpolated_row
+1.1
+% nap "interpolated_col = coordinate_variable(temperature,1) @ 138"
+::NAP::103-103
+% $interpolated_col
+2.8
+% [nap "temperature(interpolated_row, interpolated_col)"]
+23
+% nap "nearest_row = coordinate_variable(temperature,0) @@ 21"
+::NAP::112-112
+% $nearest_row
+1
+% nap "nearest_col = coordinate_variable(temperature,1) @@ 138"
+::NAP::119-119
+% $nearest_col
+3
+% [nap "temperature(nearest_row, nearest_col)"]
+21.9
+\end{verbatim}
+
+Say we want to estimate temperatures on a grid with
+  \begin{itemize}
+    \item latitudes 19$^{\circ}$N, 20$^{\circ}$N and 21$^{\circ}$N
+    \item longitudes 121$^{\circ}$E, 122$^{\circ}$E 123$^{\circ}$E and 124$^{\circ}$E
+    \\Naming the new matrix 
+    \texttt{region\_temperature}, this can be done as follows:
+  \end{itemize}
+  \begin{verbatim}
+% nap "region_temperature = temperature(@(19 .. 21), @(121 .. 124))"
+::NAP::147-147
+% $region_temperature all
+::NAP::147-147  f32  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable:
+::NAP::145-145
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable:
+::NAP::146-146
+Value:
+26.699 26.998 27.297 27.596
+25.580 25.960 26.340 26.720
+25.140 25.480 25.820 26.160
+% ::NAP::145-145 all
+::NAP::145-145  i32  MissingValue: -2147483648  References: 1  Unit:
+degrees_north
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+19 20 21
+% ::NAP::146-146 all
+::NAP::146-146  i32  MissingValue: -2147483648  References: 1  Unit:
+degrees_east
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+121 122 123 124
+\end{verbatim}
+
+Why has the new longitude coordinate-variable been converted to
+data-type 
+  \texttt{f32}? NAP recognises 
+  \texttt{degrees\_east} as a special unit implying longitude
+  characteristics such as
+  \begin{itemize}
+    \item wrap around to allow interpolation across longitude 180
+    \item data-type 
+    \texttt{f32}
+  \end{itemize}
+  
+
+The above use of `\texttt{@}' produces 
+  \emph{interpolated} values. The following illustrates the use of
+  `\texttt{@@}' to produce 
+  \emph{nearest-neighbour} values. Note the use of the original
+  operands as the final coordinate variables.
+  \begin{verbatim}
+% nap "nearest_temperature = temperature(@@(14 .. 16), @@(123 .. 127))"
+::NAP::222-222
+% $nearest_temperature all
+::NAP::222-222  f32  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable:
+::NAP::212-212
+Dimension 1   Size: 5      Name: longitude  Coordinate-variable:
+::NAP::217-217
+Value:
+37.2 37.2 32.9 32.9 32.9
+25.2 25.2 29.0 29.0 29.0
+25.2 25.2 29.0 29.0 29.0
+% [$nearest_temperature coo 0]
+14 15 16
+% [$nearest_temperature coo 1]
+123 124 125 126 127
+\end{verbatim}
+

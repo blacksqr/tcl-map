@@ -1,0 +1,620 @@
+%  $Id: geog.tex,v 1.13 2007/11/09 09:32:08 dav480 Exp $ 
+    % Nap Library: Geographic
+
+\section{Geographic Functions}
+    \label{geog}
+
+\subsection{Introduction}
+    \label{geog-Introduction}
+
+Except where otherwise stated,
+the following functions are defined in the file \texttt{geog.tcl}.
+Note that this file also defines 
+geographic {\em procedures}, as described in section \ref{geog-proc}.
+
+\subsection{Divergence and Vorticity of Wind}
+    \label{geog-Wind}
+
+Functions 
+  \texttt{div\_wind(}$u$\texttt{,} $v$\texttt{)}
+and 
+  \texttt{vorticity\_wind(}$u$\texttt{,} $v$\texttt{)}
+give the divergence (second$^{-1}$) and vorticity (second$^{-1}$)
+  of a 2D wind, where
+  \\
+  $u$ is matrix containing zonal (x-component i.e. from west
+  to east) wind in metres/sec.
+  \\
+  $v$ is matrix containing meridional (y-component i.e. from
+  south to north) wind in metres/sec.
+  \\Coordinate variables of 
+  $u$ and 
+  $v$ are latitude ($^{\circ}$N) and longitude ($^{\circ}$E).
+  
+ Let 
+  $\theta$ be latitude in radians, 
+  $\phi$ be longitude in radians, 
+  $r$ be radius of earth in metres.
+
+  The divergence of a 2D wind is defined as
+\[
+  \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y}
+\]
+Function \texttt{div\_wind} uses the equivalent formula
+\[
+  \frac{\frac{\partial u}{\partial \phi} + \frac{\partial(v \cos \theta)}{\partial \theta})}
+  {r cos \theta}
+\]
+  The vorticity of a 2D wind is defined as
+\[
+  \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}
+\]
+  Function 
+  \texttt{vorticity\_wind} uses the equivalent formula
+\[
+  \frac{\frac{\partial v}{\partial \phi} - \frac{\partial(u \cos \theta)}{\partial \theta})}
+  {r cos \theta}
+\]
+
+\subsection{Things related to Latitude and Longitude}
+    \label{geog-latlon}
+
+\subsubsection{\texttt{area\_on\_globe(}$latitude$\texttt{,} $longitude$\texttt{)}}
+    \label{geog-area-on-globe}
+
+Given latitude and longitude vectors, this function calculates a
+  matrix whose values are fractions of the Earth's surface area
+  corresponding to cells defined by the functions 
+\texttt{merid\_bounds(}$longitude$\texttt{)}
+(see section \ref{geog-merid-bounds})
+and 
+\texttt{zone\_bounds(}$latitude$\texttt{)}
+(see section \ref{geog-zone-bounds}).
+  
+ Example:
+  \begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "area = area_on_globe(lats, lons)"] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+\subsubsection{\texttt{fix\_longitude(}$longitude$\texttt{)}}
+    \label{geog-fix-longitude}
+
+Adjust elements of longitude vector by adding or subtracting
+  multiple of 360 to ensure:
+\[-180 \le x_{0} < 180\]
+\[0 \le x_{i+1} - x_{i} < 360\]
+Also ensure unit is \texttt{degrees\_east}.
+
+\subsubsection{\texttt{merid\_bounds(}$longitude$\texttt{)}}
+    \label{geog-merid-bounds}
+
+This function defines reasonable boundary longitudes from a
+  vector giving the central longitudes of each cell. The range of
+  longitudes should not exceed 360$^{\circ}$ but may be much smaller.
+  
+ The result is a vector with one more element than the argument.
+  The midpoints between adjacent argument values define all the
+  elements of the result except the first and final ones.
+  
+ The first and final values are defined as follows. Trial outer
+  cells are added with the same width as their adjacent cell. If these
+  outer cells overlap (due to global wrap-around) then both outer
+  boundaries are set to the value (plus an integer multiple of 360$^{\circ}$)
+  midway between the first and final values of the argument.
+  
+ Examples:
+  \begin{verbatim}
+% [nap "merid_bounds {-180 -90 0 30 90 180}"] value; # global-range
+-180 -135 -45 15 60 135 180
+% [nap "merid_bounds {10 30 40 50 60}"] value; # local-range
+0 20 35 45 55 65
+\end{verbatim}
+
+\subsubsection{\texttt{merid\_wt(}$longitude$\texttt{)}}
+    \label{geog-merid-wt}
+
+Calculate normalised (so sum of weights is 1) meridional weights
+  from longitudes. These weights are proportional to the widths of the
+  cells defined by the above 
+(section \ref{geog-merid-bounds})
+function 
+\\
+\texttt{merid\_bounds(}$longitude$\texttt{)}.
+  
+ Examples:
+  \begin{verbatim}
+% [nap "merid_wt {-180 -90 0 30 90 180}"] value; # global-range
+0.125 0.25 0.166667 0.125 0.208333 0.125
+% [nap "merid_wt {10 30 40 50 60}"] value; # local-range
+0.307692 0.230769 0.153846 0.153846 0.153846
+\end{verbatim}
+
+\subsubsection{\texttt{zone\_bounds(}$latitude$\texttt{)}}
+    \label{geog-zone-bounds}
+
+This function defines reasonable boundary latitudes from a
+  vector giving the central latitudes of each cell.
+  
+ The result is a vector with one more element than the argument. If
+  the argument is an arithmetic progression (AP) then the midpoints
+  between adjacent argument values define all the elements of the
+  result except the first and final ones, otherwise each of these
+  boundaries separates two equal 
+  \textit{surface areas} between adjacent argument values. The two
+  outer boundaries are defined using steps (in latititude or area)
+  equal to their adjacent step, with the obvious limit in magnitude of
+  90$^{\circ}$.
+  
+ Examples:
+  \begin{verbatim}
+% [nap "zone_bounds(-80 .. 80 ... 40)"] value; # global-range AP
+-90 -60 -20 20 60 90
+% [nap "zone_bounds(90 .. -90 ... -30)"] value; # global-range AP
+90 75 45 15 -15 -45 -75 -90
+% [nap "zone_bounds{-80 -40 -10 10 40 80}"] value; # global-range non-AP
+-90 -54.4687 -24.0929 0 24.0929 54.4687 90
+% [nap "zone_bounds(10 .. 60 ... 10)"] value; # local-range AP
+5 15 25 35 45 55 65
+\end{verbatim}
+
+\subsubsection{\texttt{zone\_wt(}$latitude$\texttt{)}}
+    \label{geog-zone-wt}
+
+Calculate normalised (so sum of weights is 1) zonal weights from latitudes.
+These weights are proportional to the surface areas of the
+  cells (of longitude width 360$^{\circ}$) defined by the above 
+(section  \ref{geog-zone-bounds})
+function 
+\texttt{zone\_bounds(}$latitude$\texttt{)}.
+If the Earth's radius is 
+  $R$ then the area between two latitudes 
+  $\theta_1$ and 
+  $\theta_2$ is 
+  $2\pi R^2(\sin{\theta_1} - \sin{\theta_2})$.
+  
+ Examples:
+  \begin{verbatim}
+% [nap "zone_wt(-80 .. 80 ... 40)"] value; # global-range AP
+0.0669873 0.262003 0.34202 0.262003 0.0669873
+% [nap "zone_wt(90 .. -90 ... -30)"] value; # global-range AP
+0.0170371 0.12941 0.224144 0.258819 0.224144 0.12941 0.0170371
+% [nap "zone_wt{-80 -40 -10 10 40 80}"] value; # global-range non-AP
+0.0931011 0.20279 0.204109 0.204109 0.20279 0.0931011
+% [nap "zone_wt(10 .. 60 ... 10)"] value; # local-range AP
+0.209562 0.199962 0.184286 0.16301 0.136782 0.106398
+\end{verbatim}
+
+\subsection{Land, Water and Shoreline}
+    \label{geog-land}
+
+Functions \texttt{is\_land}, \texttt{is\_coast} and \texttt{fraction\_land} produce grid results.
+Function \texttt{acof2boxed} produces a boxed array of polyline matrix NAOs.
+Function \texttt{get\_gshhs} produces a {\em linked list} of polyline matrix NAOs.
+
+\subsubsection{Functions based on \texttt{nap\_land\_flag}}
+\label{land-flag-functions}
+
+The functions 
+  \texttt{is\_land}, 
+  \texttt{is\_coast} and 
+  \texttt{fraction\_land} are based on the 
+\texttt{nap\_land\_flag} command described in section \ref{land-flag}.
+This uses data which has an accuracy of 0.01$^{\circ}$.
+  
+These three functions are defined in the file \texttt{land.tcl}.
+
+These functions take an optional argument 
+  $data\_dir$, which specifies the directory containing the 
+  \texttt{nap\_land\_flag} data files. This argument is not needed
+  when the standard data directory is used.
+
+\paragraph{\texttt{is\_land(}$latitude$\texttt{,} $longitude$[\texttt{,} $data\_dir$]\texttt{)}\\}
+    \label{geog-is-land}
+
+Produce a land/sea mask in the form of an 
+  \texttt{i8} (8-bit signed integer) matrix with 1 for land and 0
+  for sea.
+  
+ The arguments 
+  $latitude$ and 
+  $longitude$ can be scalars, vectors or matrices. If they are
+  either both vectors, or one is a vector and the other is a scalar,
+  then they are used as the coordinate variables of the matrix result.
+  Otherwise the result has the same shape and coordinate variables as
+  the one of higher rank.
+  
+ Note that each element of the result corresponds to just the
+  single point defined by its latitude and longitude. It is often
+  better to test multiple points, which can be done using function 
+\texttt{fraction\_land(}$latitude$\texttt{,}
+$longitude$[\texttt{,} $nlat$\texttt{,} $nlon$\texttt{,} $data\_dir$]\texttt{)}
+described in section \ref{geog-fraction-land}.
+  
+ The following example produces a matrix with 
+  \texttt{0} for sea and 
+  \texttt{1} for land:
+  \begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "isLand = is_land(lats, lons)"] value
+0 0 0 0 0 0 0 0 0
+0 0 1 0 1 1 1 1 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+The following shows how this can be used to mask out (make
+missing) the sea points in the matrix named 
+  \texttt{area} defined in the the above example 
+in section \ref{geog-area-on-globe}:
+  \begin{verbatim}
+% [nap "isLand ? area : _"] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+The following masks out the land points:
+  \begin{verbatim}
+% [nap "isLand ? _ : area"] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313      _ 0.0313      _      _      _      _ 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+     _      _      _      _      _      _      _      _      _
+\end{verbatim}
+
+The following alternative method defines a mask consisting of
+zeros and missing values. Masking is done by adding this mask.
+  \begin{verbatim}
+% [nap "mask = {_ 0}(isLand)"] value
+_ _ _ _ _ _ _ _ _
+_ _ 0 _ 0 0 0 0 _
+_ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _
+0 0 0 0 0 0 0 0 0
+% [nap "area + mask"] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+\paragraph{\texttt{is\_coast(}$latitude$\texttt{,}
+$longitude$[\texttt{,} $nlat$\texttt{,} $nlon$\texttt{,} $data\_dir$]\texttt{)}\\}
+    \label{geog-is-coast}
+
+This function produces an 
+  \texttt{i8} (8-bit signed integer) matrix with 1 for coast and 0
+  otherwise.
+
+Cells are defined around each latitude and longitude using the functions 
+\texttt{zone\_bounds(}$latitude$\texttt{)} (see section  \ref{geog-zone-bounds}) and
+\texttt{merid\_bounds(}$longitude$\texttt{)} (see section  \ref{geog-merid-bounds}).
+Each cell is divided into $nlat$ rows and $nlon$ columns.
+A cell is considered land if more than half its 
+$nlat \times nlon$ points are classified as land by function \texttt{is\_land}.
+
+ The result is 1 if a cell is land and has at least one adjacent
+  sea cell to the north, south, east or west. The coordinate variables
+  of the result are copies of the vector arguments 
+  $latitude$ and 
+  $longitude$.
+  
+ The optional argument 
+  $nlat$ defaults to 8.
+  \\The optional argument 
+  $nlon$ defaults to 
+  $nlat$.
+  \\If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes. (A single point is often
+  adequate for shoreline overlays on maps, etc.)
+
+\paragraph{\texttt{fraction\_land(}$latitude$\texttt{,}
+$longitude$[\texttt{,} $nlat$\texttt{,} $nlon$\texttt{,} $data\_dir$]\texttt{)}\\}
+    \label{geog-fraction-land} 
+
+This function produces an 
+  \texttt{f32} (32-bit floating-point) matrix containing the
+  estimated proportion of land in each cell.
+
+Cells are defined around each latitude and longitude using the functions 
+\texttt{zone\_bounds(}$latitude$\texttt{)} (see section  \ref{geog-zone-bounds}) and
+\texttt{merid\_bounds(}$longitude$\texttt{)} (see section  \ref{geog-merid-bounds}).
+Each cell is divided into $nlat$ rows and $nlon$ columns.
+The result is defined by the proportion of the 
+$nlat \times nlon$ points which are classified as land by function \texttt{is\_land}.
+  
+ The coordinate variables of the result are copies of the vector
+  arguments 
+  $latitude$ and 
+  $longitude$.
+  
+The optional argument $nlat$ defaults to 8.
+The optional argument $nlon$ defaults to $nlat$.
+If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes.
+
+The minimum resolution is 0.01$^{\circ}$ even if the specified 
+  $nlat$ or 
+  $nlon$ would give less. The value of 
+  $nlat$ or 
+  $nlon$ is automatically reduced if its specified value would
+  give a resolution less than 0.01$^{\circ}$.
+
+The following example produces a similar (but much more accurate)
+land/sea mask to that produced in the above example 
+in section  \ref{geog-is-land} for function \texttt{is\_land}:
+\begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "fraction_land(lats, lons)"] value -format %0.2f
+0.05 0.14 0.28 0.55 0.08 0.17 0.34 0.19 0.11
+0.06 0.39 0.67 0.13 0.52 0.88 1.00 0.50 0.17
+0.00 0.00 0.22 0.38 0.47 0.45 0.17 0.23 0.00
+0.00 0.00 0.09 0.13 0.03 0.05 0.00 0.25 0.02
+0.25 0.59 0.69 0.47 0.81 0.95 0.95 0.98 0.47
+% [nap "fraction_land(lats, lons) > 0.5f32"] value
+0 0 0 1 0 0 0 0 0
+0 0 1 0 1 1 1 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 1 1 0 1 1 1 1 0
+\end{verbatim}
+
+\subsubsection{\texttt{acof2boxed(}$\mathit{filename}$[\texttt{,}
+$\mathit{min\_longitude}$]\texttt{)}}
+    \label{geog-acof2boxed}
+
+Read \emph{ACOF (ascii coastal outline file)} coastline file and return a boxed nao.
+
+Each element of this boxed nao is a 2-row matrix.
+Row 0 contains longitudes.
+Row 1 contains latitudes.
+These coordinates define a polyline shoreline of an island, lake, etc.
+
+The argument 
+$\mathit{min\_longitude}$
+(default: $-180$) specifies the desired minimum longitude.
+This is normally $-180$ (giving longitudes in the range $-180$ to $180$)
+or $0$ (giving longitudes in the range $0$ to $360$).
+
+An ACOF file is a text file defining polyline shorelines.
+Each polyline commences with two header lines.
+The first of these contains arbitrary text (for name of Island, etc.)
+which function \texttt{acof2boxed} ignores.
+The second line contains the number of points in the polyline.
+Each point corresponds to a line containing a longitude and latitude.
+
+The following is a listing of an ACOF file
+\texttt{nz\_tas.acof} defining very simple shorelines for Tasmania and New Zealand:
+
+\begin{verbatim}
+Tasmania
+       5
+    143.44    -44.60
+    143.44    -41.41
+    149.06    -41.41
+    149.06    -44.60
+    143.44    -44.60
+New Zealand
+       7
+    165.94    -44.60
+    165.94    -41.41
+    177.19    -41.41
+    177.19    -38.23
+    171.56    -38.23
+    171.56    -44.60
+    165.94    -44.60
+\end{verbatim}
+
+The following example reads this file:
+
+\begin{verbatim}
+% nap "nz_tas = acof2boxed('nz_tas.acof', 0)"; # longitudes from 0 to 360
+::NAP::425-425
+% [nap "open_box(nz_tas(0))"] value
+143.44 143.44 149.06 149.06 143.44
+-44.60 -41.41 -41.41 -44.60 -44.60
+% [nap "open_box(nz_tas(1))"] value
+165.94 165.94 177.19 177.19 171.56 171.56 165.94
+-44.60 -41.41 -41.41 -38.23 -38.23 -44.60 -44.60
+\end{verbatim}
+
+The following example shows how \texttt{acof2boxed}
+can be used in conjunction with \texttt{plot\_nao} to draw shorelines:
+
+\begin{verbatim}
+plot_nao u -overlay "E acof2boxed('nz_tas.acof')"
+\end{verbatim}
+
+\subsubsection{Functions based on GSHHS}
+\label{gshhs-functions}
+
+The following functions are defined in the file \texttt{gshhs.tcl}.
+\href{http://www.ngdc.noaa.gov/mgg/shorelines/gshhs.html}
+{\emph{GSHHS}}
+stands for
+\emph{Global Self-consistent Hierarchical High-resolution Shorelines}.
+This data was produced by the National Geophysical Data Center (NGDC), which is part of
+the U.S. National Oceanic and Atmospheric Administration (NOAA).
+GSHHS includes the following data files:
+
+\begin{tabular}{|l|l|r|r|}
+\hline
+Filename & Description & Resolution & File Size \\
+\hline
+\texttt{gshhs\_c.b} & crude resolution & 25 km & 0.2 Mb \\
+\texttt{gshhs\_l.b} & low resolution & 5 km & 1.2 Mb \\
+\texttt{gshhs\_i.b} & intermediate resolution & 1 km & 5.3 Mb \\
+\texttt{gshhs\_h.b} & high resolution & 0.2 km & 21.4 Mb \\
+\texttt{gshhs\_f.b} & full resolution &   & 90.3 Mb \\
+\hline
+\end{tabular}
+
+Only the crude, low and intermediate resolution files are distributed with Nap.
+If higher resolution is required then copy the required files to the
+{\em GSHHS data directory}.
+
+The {\em GSHHS data directory} contains GSHHS files with various resolutions.
+This directory can be specified using an optional argument of each function.
+The default directory is
+    \\
+    $\mathit{tcl\_root}$\texttt{/lib/nap*.*/data/gshhs}
+    \\
+     unless the environment variable
+    \texttt{GSHHS\_DATA\_DIR}
+     is defined to overide this.
+
+Function \texttt{proj4gshhs}, described in section \ref{geog-proj4gshhs},
+overlays a GSHHS coastline on various map projections.
+
+\paragraph{\texttt{get\_gshhs(}$\mathit{resolution}$\texttt{,} 
+$\mathit{min\_area}$\texttt{,} 
+$\mathit{min\_longitude}$\texttt{,} 
+$\mathit{max\_longitude}$\texttt{,} 
+$\mathit{min\_latitude}$\texttt{,} 
+$\mathit{max\_latitude}$\texttt{,} 
+$\mathit{data\_dir}$\texttt{)}\\}
+    \label{geog-get-gshhs}
+
+Read GSHHS data to produce a {\em linked list} of \texttt{f64} NAOs.
+Each NAO defines the polyline shoreline (of an island, lake, etc.)
+and is a matrix with two rows containing longitudes and latitudes respectively.
+Each NAO (except the final one) points to the next using the
+the {\em link} component described in sections
+\ref{ooc-meta-link}, \ref{ooc-modify-set-link} and \ref{nao}.
+
+The arguments are:
+\begin{simpleitems}
+\item $\mathit{resolution}$ (default: 1):
+    Required accuracy (km).
+    This determines which data file is used.
+\item $\mathit{min\_area}$ (default: \texttt{"\{-1 -1 -1 -1\}"}): \\
+This is a four-element vector specifying the minimum area (square km) of:
+    \begin{bullets}
+	\item land with sea boundary,
+	\item lake (including inland sea),
+	\item island in lake,
+	\item pond in island in lake.
+    \end{bullets}
+If the value is scalar or contains less than 4 elements
+then the final element is repeated to give a 4-element vector.
+A value of $-1$ is treated as $\mathit{resolution}^2/4$.
+\item $\mathit{min\_longitude}$ (default: $-180$):
+    Left boundary of region. 
+\item $\mathit{max\_longitude}$ (default: $\mathit{min\_longitude} + 360$):
+    Right boundary of region.
+\item $\mathit{min\_latitude}$ (default: $-90$):
+    Bottom boundary of region.
+\item $\mathit{max\_latitude}$ (default: $90$):
+    Top boundary of region.
+\item $\mathit{data\_dir}$:
+    GSHHS data directory (see above)
+\end{simpleitems}
+
+An example of the use of \texttt{get\_gshhs}
+can be found in the definition of the library function \texttt{proj4gshhs} in the library
+file \texttt{proj4.tcl}.
+
+\paragraph{\texttt{read\_gshhs(}$\mathit{channelId}$\texttt{,} 
+$\mathit{min\_area}$\texttt{,} 
+$\mathit{min\_longitude}$\texttt{,} 
+$\mathit{max\_longitude}$\texttt{,} 
+$\mathit{min\_latitude}$\texttt{,} 
+$\mathit{max\_latitude}$\texttt{)}\\}
+    \label{geog-read-gshhs}
+
+Read next record of GSHHS data which satifies the specified conditions.
+The first argument is the Tcl I/O channel (file) ID.
+The remaining arguments are the same as those described above for function \texttt{get\_gshhs} in
+section \ref{geog-get-gshhs}.
+The data is read using the \texttt{nap\_get} command.
+
+\subsection{Cartographic Projections}
+    \label{geog-Cartographic}
+
+The following functions are defined in the file \texttt{proj4.tcl}
+and are based on the built-in cartographic projections functions described in
+\ref{function-Cart-Proj}.
+
+\subsubsection{\texttt{proj4gshhs(}$\mathit{in}$[\texttt{,}
+$\mathit{projection\_spec}$\texttt{,}
+$\mathit{want\_lat\_lon}$\texttt{,}
+$\mathit{nx}$\texttt{,}
+$\mathit{s}$\texttt{,}
+$\mathit{min\_area}$\texttt{,}
+$\mathit{resolution}$\texttt{,}
+$\mathit{data\_dir}$\texttt{,}
+$\mathit{lat\_min}$\texttt{,}
+$\mathit{lat\_max}$\texttt{,}
+$\mathit{lon\_min}$\texttt{,}
+$\mathit{lon\_max}$]\texttt{)}}
+    \label{geog-proj4gshhs}
+
+This performs the forward mapping of any PROJ.4 projection.
+The input matrix has latitude and longitude as coordinate variables.
+GSHHS (see section \ref{gshhs-functions})
+shorelines are overlaid unless suppressed by setting $s$ to be an empty vector.
+The arguments are:
+\begin{simpleitems}
+\item $\mathit{in}$ Input matrix
+\item $\mathit{projection\_spec}$ PROJ.4 specification. (default: \texttt{'proj=eqc'})
+\item $\mathit{want\_lat\_lon}$ Type of coordinate variables of result: \\
+    $0=$ northing and easting (This is default), \\
+    $1=$ latitude and longitude (Legal only for projections which produce
+    rows of constant latitude and columns of constant longitude)
+\item $\mathit{nx}$ Number of columns in result (default: number of input columns)
+\item $\mathit{s}$ Shoreline value (scalar). No shorelines if s is \texttt{\{\}} (empty vector).
+    (default: missing value)
+\item $\mathit{min\_area}$ Exclude shoreline polygons whose area (square km)
+$< \mathit{min\_area}$ (default: 0)
+\item $\mathit{resolution}$ Required shoreline accuracy (km). (default: mean input latitude step)
+\item $\mathit{data\_dir}$ GSHHS data directory (default: \texttt{''} giving GSHHS default)
+\item $\mathit{lat\_min}$ Minimum latitude in result (default: minimum input latitude)
+\item $\mathit{lat\_max}$ Maximum latitude in result (default: maximum input latitude)
+\item $\mathit{lon\_max}$ Minimum longitude in result (default: minimum input longitude)
+\item $\mathit{lon\_max}$ Maximum longitude in result (default: maximum input longitude)
+\end{simpleitems}
+
+\subsection{Reading Miscellaneous Geographic Files}
+    \label{geog-Reading}
+
+\subsubsection{\texttt{get\_gridascii(}$\mathit{filename}$[\texttt{,} $\mathit{unit}$]\texttt{)}}
+    \label{geog-get-gridascii}
+
+Read a file in ARC/INFO GRIDASCII format.
+  
+ The optional argument 
+  $unit$ specifies the unit of x and y. If this argument is
+  omitted then:
+  \\Dimension 
+  $x$ is longitude and has unit 
+  \texttt{"degrees\_east"}.
+  \\Dimension 
+  $y$ is latitude and has unit 
+  \texttt{"degrees\_north"}.
+  
+ Examples:
+  \begin{verbatim}
+% nap "in = get_gridascii('abc.gridascii')"; # x is longitude, y is latitude
+% nap "in = get_gridascii('abc.gridascii', 'metres')"
+\end{verbatim}
+

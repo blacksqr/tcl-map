@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_stat.html,v 1.5 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Statistics</title>
+  </head>
+  <body>
+    <center>
+      <h2>Statistics</h2>
+    </center>
+    <h3>Elementary Descriptive Statistics (Toy example)</h3>
+    <pre>
+% nap &quot;score = f32 {56 75 47 99 49}&quot;
+::NAP::38995-932
+% $score all
+::NAP::38995-932  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+56 75 47 99 49
+% [nap &quot;am(score)&quot;]; # arithmetic mean
+65.2
+% [nap &quot;range(score)&quot;]; # min, max
+47 99
+% [nap &quot;sd(score)&quot;]; # standard deviation
+19.5796
+% [nap &quot;median(score)&quot;]
+56
+% [nap &quot;gm(score)&quot;]; # geometric mean
+62.5512
+% [nap &quot;rms(score)&quot;]; # root mean square
+68.0764
+% [nap &quot;percentile(score, 0 .. 100 ... 25)&quot;]; # quartiles
+47 49.082 56.0391 75.1836 99
+% [nap &quot;# {4 1 3 4 0 0 4}&quot;]; # frequencies of 0, 1, 2, ...
+2 1 0 1 3
+</pre>
+    <h3>Example using real satellite data</h3>
+    <pre>
+cd /sol/home/dav480/tcl_nap/data
+% nap &quot;c1 = [nap_get netcdf modis.nc c1]&quot;; # Read channel 1.
+(Could use GUI)
+::NAP::42178-9292
+% $c1 head
+::NAP::42178-9292  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 532    Name: latitude  Coordinate-variable:
+::NAP::42179-78
+Dimension 1   Size: 742    Name: longitude  Coordinate-variable:
+::NAP::42180-2473
+% nap &quot;zm_c1 = am(c1,1)&quot;; # zonal mean of channel 1
+::NAP::42200-98
+% $zm_c1 a; # a = all
+::NAP::42200-98  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 532    Name: latitude  Coordinate-variable:
+::NAP::42179-78
+Value:
+_ 2367.32 2516.54 2522.22 2543.68 2528.35 ..
+% plot_nao zm_c1
+.win10
+% nap &quot;c2 = [nap_get netcdf modis.nc c2]&quot;; # Read channel 2.
+::NAP::43687-4396
+% plot_nao &quot;am(c2,1)&quot; -title &quot;zonal mean of channel 2&quot;
+.win11
+% [nap &quot;moving_correlation(c1, c2)&quot;]; # r = 0.908556 based on
+n = 287695
+     0.908556
+
+287695.000000
+% nap &quot;dif = c2 - c1&quot;; # difference between channels
+::NAP::45219-9984
+% plot_nao dif
+.win12
+% plot_nao &quot;am(dif,1)&quot; -title &quot;zonal mean of c2-c1&quot;
+.win13
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: demo_stat.html,v 1.2
+            2005/03/15 01:12:28 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

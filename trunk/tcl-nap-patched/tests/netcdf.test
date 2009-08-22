@@ -1,0 +1,9 @@
+# netcdf.test --
+# 
+# Copyright (c) 2000, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: netcdf.test,v 1.6 2000/11/03 08:16:41 dav480 Exp $
+
+set hdf_nc netcdf
+source $::tcltest::testsDirectory/hdf_netcdf.tcl
+return

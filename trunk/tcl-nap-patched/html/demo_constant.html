@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_constant.html,v 1.3 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Constants</title>
+  </head>
+  <body>
+    <center>
+      <h2>Constants</h2>
+    </center>
+    <h3>Scalar Constants</h3>
+    <pre>
+% [nap &quot;14&quot;] all
+::NAP::14465-9991  i32  MissingValue: -2147483648  References: 0
+Value:
+14
+% [nap &quot;i16(14)&quot;] all; # i16 = 16-bit signed integer
+::NAP::14467-9991  i16  MissingValue: -32768  References: 0
+Value:
+14
+% [nap &quot;14i16&quot;] all
+::NAP::14469-9991  i16  MissingValue: -32768  References: 0
+Value:
+14
+% [nap &quot;14u8&quot;] all; # u8 = unsigned 8-bit integer
+::NAP::14471-9991  u8  MissingValue: (NULL)  References: 0
+Value:
+14
+% [nap &quot;4.0&quot;] all
+::NAP::14473-9991  f64  MissingValue: NaN  References: 0
+Value:
+4
+% [nap &quot;4.&quot;] all
+4.
+ ^
+parse error, unexpected &#39;.&#39;, expecting $
+Error at line 791 of file /usr/share/bison/bison.simple
+% [nap &quot;.4&quot;] all
+.4
+^
+parse error, unexpected &#39;.&#39;
+Error at line 791 of file /usr/share/bison/bison.simple
+% [nap &quot;4f32&quot;] all
+::NAP::14475-109  f32  MissingValue: NaN  References: 0
+Value:
+4
+% [nap &quot;2r3&quot;] all
+::NAP::14477-109  f64  MissingValue: NaN  References: 0
+Value:
+0.666667
+% [nap &quot;2r3f32&quot;] all
+::NAP::14478-109  f32  MissingValue: NaN  References: 0
+Value:
+0.666667
+% [nap &quot;1e4&quot;] all
+::NAP::14480-109  f64  MissingValue: NaN  References: 0
+Value:
+10000
+% [nap &quot;1p1&quot;] all
+::NAP::14481-109  f64  MissingValue: NaN  References: 0
+Value:
+3.14159
+% [nap &quot;1p&quot;]
+3.14159
+% [nap &quot;180p-1f32&quot;] all
+::NAP::14482-109  f32  MissingValue: NaN  References: 0
+Value:
+57.2958
+% [nap &quot;1r3p1&quot;] all
+::NAP::14484-109  f64  MissingValue: NaN  References: 0
+Value:
+1.0472
+% [nap &quot;1i&quot;] all; # infinity
+::NAP::22-22  f64  MissingValue: NaN  References: 0
+Value:
+Inf
+% [nap &quot;-1i&quot;] all; # -infinity
+::NAP::24-24  f64  MissingValue: NaN  References: 0
+Value:
+-Inf
+% [nap &quot;1n&quot;] all; # NaN
+::NAP::25-25  f64  MissingValue: NaN  References: 0
+Value:
+_
+% [nap &quot;_&quot;] all; # missing
+::NAP::26-26  i32  MissingValue: -2147483648  References: 0
+Value:
+_
+</pre>
+    <h3>Array Constants</h3>
+    <pre>
+% [nap &quot;{3 -5 _ 9}&quot;] all
+::NAP::14486-9829  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 -5 _ 9
+% [nap &quot;{3 3#-5 _ 9}&quot;] all
+::NAP::14489-109  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 -5 -5 -5 _ 9
+% [nap &quot;{{1 3 5}{2 4 6}}&quot;] all
+::NAP::14492-9829  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 5
+2 4 6
+% [nap &quot;{
+{1 3 5}
+{2 4 6}
+}&quot;]
+1 3 5
+2 4 6
+% [nap &quot;{
+2#{1 3 5}
+3#{2 4 6}
+}&quot;]
+1 3 5
+1 3 5
+2 4 6
+2 4 6
+2 4 6
+</pre>
+    <h3>String Constants</h3>
+    <pre>
+% [nap &quot;&#39;Hello world&#39;&quot;]
+Hello world
+% [nap &quot;`can&#39;t`&quot;]
+can&#39;t
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: demo_constant.html,v 1.1
+            2005/03/11 05:41:58 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

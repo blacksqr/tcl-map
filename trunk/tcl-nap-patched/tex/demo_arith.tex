@@ -1,0 +1,99 @@
+%  $Id: demo_arith.tex,v 1.4 2006/09/20 08:48:49 dav480 Exp $ 
+    % Arithmetic
+
+\section{Arithmetic}
+    \label{demo-arith}
+
+\subsection{Binary arithmetic operators}
+
+    \begin{verbatim}
+% [nap "2+2"]
+4
+% [nap "{4.2 9} + {5 -1}"]
+9.2 8
+% [nap "{4.2 9} + 2"]
+6.2 11
+% [nap "{4.2 9} - 2"]
+2.2 7
+% [nap "{4.2 9} * 2"]
+8.4 18
+% [nap "{4.2 9} / 2"]
+2.1 4.5
+% [nap "{4.2 9} % 2"]; # remainder (mod)
+0.2 1
+% [nap "{4.2 9} ** 2"]; # power
+17.64 81
+% [nap "{4 5 8} < 5"]
+1 0 0
+% [nap "{4 5 8} > 5"]
+0 0 1
+% [nap "{4 5 8} <= 5"]
+1 1 0
+% [nap "{4 5 8} >= 5"]
+0 1 1
+% [nap "{4 5 8} == 5"]; # equal
+0 1 0
+% [nap "{4 5 8} != 5"]; # not equal
+1 0 1
+% [nap "{0 0 1 1} && {0 1 0 1}"]; # and
+0 0 0 1
+% [nap "{0 0 1 1} || {0 1 0 1}"]; # or
+0 1 1 1
+% [nap "{4 5 8} <<< 5"];# lesser of (min)
+4 5 5
+% [nap "{4 5 8} >>> 5"];# greater of (max)
+5 5 8
+\end{verbatim}
+
+\subsection{Unary arithmetic operators \texttt{- +}}
+
+    \begin{verbatim}
+% [nap "- {6 -3}"]
+-6 3
+% nap "x = 7"
+::NAP::14583-9829
+% $x all
+::NAP::14583-9829  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Value:
+7
+% nap "y = x"
+::NAP::14583-9829
+% $y all
+::NAP::14583-9829  i32  MissingValue: -2147483648  References: 2  Unit: (NULL)
+Value:
+7
+% $x all
+::NAP::14583-9829  i32  MissingValue: -2147483648  References: 2  Unit: (NULL)
+Value:
+7
+% nap "y = +x"; # new copy of
+::NAP::14587-109
+% $y all
+::NAP::14587-109  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Value:
+7
+% $x all
+::NAP::14583-9829  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Value:
+7
+\end{verbatim}
+
+\subsection{Ternary choice operator \texttt{?:}}
+
+    \begin{verbatim}
+% expr 1 ? 9 : 3
+9
+% expr 0 ? 9 : 3
+3
+% nap "x = -3 .. 3"
+::NAP::14595-9985
+% $x value
+-3 -2 -1 0 1 2 3
+% [nap "x < 0 ? -9 : x"] value
+-9 -9 -9 0 1 2 3
+% [nap "x %3 == 0 ? _ : x"] value
+_ -2 -1 _ 1 2 _
+% [nap "x < 0 ? -1 : x > 0 ? 1 : 0"] value
+-1 -1 -1 0 1 1 1
+\end{verbatim}
+

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: ooc_write.html,v 1.13 2006/03/01 21:22:10 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>OOC Methods: Write</title>
+  </head>
+  <body>
+  <center>
+    <h2>OOC Methods which Write to File</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#binary">Method 
+      <code>binary</code></a>
+    </li>
+    <li>
+      <a href="#hdf">Method 
+      <code>hdf</code></a>
+    </li>
+    <li>
+      <a href="#netcdf">Method 
+      <code>netcdf</code></a>
+    </li>
+    <li>
+      <a href="#swap">Method 
+      <code>swap</code></a>
+    </li>
+  </ol>
+
+The examples in this section use the NAOs created by:
+  <pre>
+% nap &quot;x = 0 .. 2 ... 0.5&quot;
+::NAP::21-21
+% nap &quot;y = x ** 2&quot;
+::NAP::24-24
+% $y set coord x
+% $y set unit m^2
+% $y set label &quot;areas of squares&quot;
+% $y all
+::NAP::24-24  f64  MissingValue: NaN  References: 1  Unit: m^2
+areas of squares
+Dimension 0   Size: 5      Name: x         Coordinate-variable:
+::NAP::21-21
+Value:
+0 0.25 1 2.25 4
+</pre>
+  <h3>
+    <a name="binary">Method <code>binary</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>binary</code> ?
+  <var>tcl_channel</var>?
+  <br /></p>
+  <p>This writes raw (binary) data to the file specified by 
+  <var>tcl_channel</var>, which defaults to 
+  <code>stdout</code> (standard output). For example:</p>
+  <pre>
+% set file [open y.tmp w]
+file4
+% $y binary $file
+% close $file
+% set file [open y.tmp]
+file4
+% [nap_get binary $file f64] all
+::NAP::248-248  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 0.25 1 2.25 4
+% close $file
+</pre>
+  <h3>
+    <a name="hdf">Method <code>hdf</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>hdf</code> ?
+  <var>switches</var>? 
+  <var>filename</var> 
+  <var>name</var>
+  <br /></p>
+  <p>This writes data from the NAO to an SDS or attribute within an HDF
+  file named 
+  <var>filename</var>.</p>
+  <p>
+  <var>name</var> is the name of an SDS or attribute and has the
+  form:</p>
+  <ul>
+    <li>
+    <var>varname</var> for an SDS</li>
+    <li>
+    <var>varname</var>
+    <code>:</code>
+    <var>attribute</var> for an attribute of an SDS</li>
+    <li>
+    <code>:</code>
+    <var>attribute</var> for a global attribute
+    <br /></li>
+  </ul>
+  <p>
+  <var>switches</var> can be:
+  <br />
+  <code>-unlimited</code>: Create SDS with unlimited dimension 0
+  <br />
+  <code>-coordinateVariable</code> 
+  <var>expr</var>: boxed NAO which specifies coordinate variables.
+  <br />
+  <code>-datatype</code> 
+  <var>type</var>: HDF datatype: 
+  <code>c8, i8, i16, i32, u8, u16, u32, f32</code> or 
+  <code>f64</code>
+  <br />
+  <code>-range</code> 
+  <var>expr</var>: HDF 
+  <code>valid_range</code>
+  <br />
+  <code>-scale</code> 
+  <var>expr</var>: HDF 
+  <code>scale_factor</code>
+  <br />
+  <code>-offset</code> 
+  <var>expr</var>: HDF 
+  <code>add_offset</code>
+  <br />
+  <code>-index</code> 
+  <var>expr</var>: position within SDS where data is to be written.</p>
+  <p>If &quot;<code>-coordinateVariable</code> 
+  <var>expr</var>&quot; is not specified then the coordinate variables
+  of the main NAO are used if these exist.</p>
+  <p>If &quot;<code>-index</code> 
+  <var>expr</var>&quot; is specified then 
+  <var>expr</var> must be an index compatible with the rank 
+  <var>r</var> of the SDS. If 
+  <var>r</var>&#160;=&#160;1 then 
+  <var>expr</var> must be a 
+  <a href="indexing.html#Shape_Preserving">shape-preserving</a> index.
+  If 
+  <var>r</var>&#160;&gt;&#160;1 then 
+  <var>expr</var> must be a 
+  <a href="indexing.html#Cross_product_index">cross-product</a> index
+  containing 
+  <var>r</var> scalar and vector elements. The vector elements
+  correspond to dimensions which exist in both the SDS and the NAO. The
+  scalar elements correspond to dimensions which exist in the SDS but
+  not the NAO.</p>
+  <p>If &quot;<code>-index</code> 
+  <var>expr</var>&quot; is not specified then the coordinate variables
+  of the main NAO are used if these exist, otherwise writing starts at
+  the beginning of the SDS.</p>
+  <p>If &quot;<code>-scale</code> 
+  <var>expr</var>&quot; and/or &quot;<code>-offset</code> 
+  <var>expr</var>&quot; are specified then these values are:</p>
+  <ul>
+    <li>written as attributes 
+    <code>scale_factor</code> and 
+    <code>add_offset</code></li>
+    <li>used to scale the data before writing it.</li>
+  </ul>
+  <p>Example:</p>
+  <pre>
+% $y hdf y.hdf y
+% exec hdp dumpsds y.hdf
+File name: y.hdf 
+
+Variable Name = y
+         Index = 0
+         Type= 64-bit floating point
+         Ref. = 2
+         Rank = 1
+         Number of attributes = 3
+         Dim0: Name=x
+                 Size = 5
+                 Scale Type = 64-bit floating point
+                 Number of attributes = 0
+         Attr0: Name = _FillValue
+                 Type = 64-bit floating point 
+                 Count= 1
+                 Value = DoubleInf 
+         Attr1: Name = long_name
+                 Type = 8-bit signed char 
+                 Count= 16
+                 Value = areas of squares
+         Attr2: Name = units
+                 Type = 8-bit signed char 
+                 Count= 3
+                 Value = m^2
+         Data : 
+                0.000000 0.250000 1.000000 2.250000 4.000000 
+
+
+Dimension Variable Name = x
+         Index = 1
+         Scale Type= 64-bit floating point
+         Ref. = 3
+         Rank = 1
+         Number of attributes = 0
+         Dim0: Name=x
+                 Size = 5
+         Data : 
+                0.000000 0.500000 1.000000 1.500000 2.000000 
+</pre>
+  <p>Procedure 
+  <a href="bin_io.html#put16"> <code>put16</code> </a> can be used to write an automatically-scaled 16-bit SDS to an
+  HDF file.</p>
+  <h3>
+    <a name="netcdf">Method <code>netcdf</code></a>
+  </h3>
+  <var>ooc_name</var> 
+  <code>netcdf</code> ?
+  <var>switches</var>? 
+  <var>filename</var> 
+  <var>name</var>
+  <p>This writes data from the NAO to a variable or attribute within a
+  netCDF file named 
+  <var>filename</var>.</p>
+  <p>
+  <var>name</var> is the name of a netCDF variable or attribute and has
+  the form:</p>
+  <ul>
+    <li>
+    <var>varname</var> for a variable</li>
+    <li>
+    <var>varname</var>
+    <code>:</code>
+    <var>attribute</var> for an attribute of a variable</li>
+    <li>
+    <code>:</code>
+    <var>attribute</var> for a global attribute
+    <br /></li>
+  </ul>
+  <p>
+  <var>switches</var> can be:
+  <br />
+  <code>-unlimited</code>: Create variable with unlimited dimension 0
+  <br />
+  <code>-coordinateVariable</code> 
+  <var>expr</var>: boxed NAO which specifies coordinate variables.
+  <br />
+  <code>-datatype</code> 
+  <var>type</var>: netCDF datatype: 
+  <code>c8, i16, i32, u8, f32</code> or 
+  <code>f64</code>
+  <br />
+  <code>-range</code> 
+  <var>expr</var>: netCDF 
+  <code>valid_range</code>
+  <br />
+  <code>-scale</code> 
+  <var>expr</var>: netCDF 
+  <code>scale_factor</code>
+  <br />
+  <code>-offset</code> 
+  <var>expr</var>: netCDF 
+  <code>add_offset</code>
+  <br />
+  <code>-index</code> 
+  <var>expr</var>: position within netCDF variable where data is to be
+  written.</p>
+  <p>If &quot;<code>-coordinateVariable</code> 
+  <var>expr</var>&quot; is not specified then the coordinate variables
+  of the main NAO are used if these exist.</p>
+  <p>If &quot;<code>-index</code> 
+  <var>expr</var>&quot; is specified then 
+  <var>expr</var> must be an index compatible with the rank 
+  <var>r</var> of the netCDF variable. If 
+  <var>r</var>&#160;=&#160;1 then 
+  <var>expr</var> must be a 
+  <a href="indexing.html#Shape_Preserving">shape-preserving</a> index.
+  If 
+  <var>r</var>&#160;&gt;&#160;1 then 
+  <var>expr</var> must be a 
+  <a href="indexing.html#Cross_product_index">cross-product</a> index
+  containing 
+  <var>r</var> scalar and vector elements. The vector elements
+  correspond to dimensions which exist in both the netCDF variable and
+  the NAO. The scalar elements correspond to dimensions which exist in
+  the netCDF variable but not the NAO.</p>
+  <p>If &quot;<code>-index</code> 
+  <var>expr</var>&quot; is not specified then the coordinate variables
+  of the main NAO are used if these exist, otherwise writing starts at
+  the beginning of the netCDF variable.</p>
+  <p>If &quot;<code>-scale</code> 
+  <var>expr</var>&quot; and/or &quot;<code>-offset</code> 
+  <var>expr</var>&quot; are specified then these values are:</p>
+  <ul>
+    <li>written as attributes 
+    <code>scale_factor</code> and 
+    <code>add_offset</code></li>
+    <li>used to scale the data before writing it.</li>
+  </ul>
+  <p>Example:</p>
+  <pre>
+% $y netcdf y.nc y -coordinateVariable &quot;x // {3 6 9}&quot;
+% exec ncdump y.nc
+netcdf y {
+dimensions:
+        x = 8 ;
+variables:
+        double x(x) ;
+        double y(x) ;
+                y:_FillValue = nan ;
+                y:long_name = &quot;areas of squares&quot; ;
+                y:units = &quot;m^2&quot; ;
+data:
+
+ x = 0, 0.5, 1, 1.5, 2, 3, 6, 9 ;
+
+ y = 0, 0.25, 1, 2.25, 4, _, _, _ ;
+}
+</pre>
+Note that the netCDF variable 
+  <code>area</code> is dimensioned to 8 (the shape of the argument
+  specified by the 
+  <nobr>
+    <code>-coordinateVariable</code>
+  </nobr> option).
+  <p>Procedure 
+  <a href="bin_io.html#put16"> <code>put16</code> </a> can be used to write an automatically-scaled 16-bit variable to
+  a netCDF file.</p>
+  <h3>
+    <a name="swap">Method <code>swap</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>swap</code> ?
+  <var>tcl_channel</var>?
+  <br /></p>
+  <p>Method 
+  <code>swap</code> is like method 
+  <code>binary</code>, except that bytes are swapped. This enables
+  writing of data to be read on a machine with opposite byte-order
+  within words.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: ooc_write.html,v 1.7
+          2005/08/04 05:35:20 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

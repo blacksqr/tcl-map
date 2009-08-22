@@ -1,0 +1,187 @@
+%  $Id: demo_functions.tex,v 1.5 2006/09/20 08:48:49 dav480 Exp $ 
+    % Built-in Functions
+
+\section{Built-in Functions}
+
+\subsection{Built-in elemental functions}
+
+An 
+  \emph{elemental function} is one whose result
+\begin{bullets}
+    \item has the same shape as its argument
+    \item consists of elements defined by applying the function to the
+    corresponding elements of the argument
+\end{bullets}
+
+\subsubsection{Mathematical Elemental Functions}
+
+  \begin{verbatim}
+% [nap "sqrt(5)"]
+2.23607
+% nap "x = {1p 0 0.5p -1r6p}"
+::NAP::79-79
+% $x all
+::NAP::79-79  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3.14159 0 1.5708 -0.523599
+% [nap "180p-1 * x"]; # in degrees
+180 0 90 -30
+% [nap "sin(x)"]
+1.22461e-16 0 1 -0.5
+% [nap "sin x"]; # parentheses not needed!
+1.22461e-16 0 1 -0.5
+% [nap "abs(x)"]
+3.14159 0 1.5708 0.523599
+% [nap "sign(x)"]
+1 0 1 -1
+% [nap "nint(x)"] all; # nearest integer
+::NAP::91-91  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 2 -1
+% [nap "floor(x)"] all; # nearest integer <= x
+::NAP::93-93  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 -1
+% [nap "ceil(x)"] all; # nearest integer >= x
+::NAP::95-95  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 0 2 0
+\end{verbatim}
+
+\subsubsection{Type-conversion Elemental Functions}
+
+  \begin{verbatim}
+% [nap "f32(x)"] all
+::NAP::97-97  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3.14159 0 1.5708 -0.523599
+% [nap "i16(x)"] all
+::NAP::100-100  i16  MissingValue: -32768  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 0
+% [nap "u16(x)"] all
+::NAP::103-103  u16  MissingValue: 65535  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 _
+% [nap "i32('ABCXYZ')"]
+65 66 67 88 89 90
+% [nap "c8({65 66 67 88 89 90})"] all
+::NAP::194-194  c8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ABCXYZ
+% [nap "c8{65 66 67 88 89 90}"]; # parentheses not needed
+ABCXYZ
+\end{verbatim}
+
+\subsubsection{Elemental Functions which test for Special Values}
+
+  \begin{verbatim}
+% [nap "x = {2.5 0 -9 _ 7}"] all
+::NAP::201-201  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.5 0 -9 _ 7
+% $x set missing -9
+% $x all
+::NAP::201-201  f64  MissingValue: -9  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.5 0 _ _ 7
+% [nap "isPresent(x)"]
+1 1 0 0 1
+% [nap "isMissing(x)"]
+0 0 1 1 0
+% [nap "isnan(x)"]
+0 0 0 1 0
+\end{verbatim}
+
+\subsubsection{Elemental Function \texttt{random}, which generates random numbers}
+
+  \begin{verbatim}
+% [nap "random(100)"]; # random real number from 0 to 100
+62.8871
+% [nap "1 + floor(random(20 # 6))"] value; # 20 throws of dice
+3 4 6 6 4 5 1 4 1 2 1 5 1 3 1 1 6 2 4 6
+\end{verbatim}
+
+\subsection{Non-elemental functions}
+
+\subsubsection{Meta-data functions}
+
+  \begin{verbatim}
+% nap "matrix = {
+{2 4 0}
+{9 1 7}
+}"
+::NAP::253-253
+% $matrix all
+::NAP::253-253  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 4 0
+9 1 7
+% [nap "shape(matrix)"]
+2 3
+% [nap "rank(matrix)"]
+2
+% [nap "shape(shape(matrix))"]; # same as this
+2
+% [nap "nels(matrix)"]; # number of elements
+6
+% [nap "prod(shape(matrix))"]; # same as this
+6
+\end{verbatim}
+
+\subsubsection{Reduction functions applied to vector}
+
+  \begin{verbatim}
+% nap "x = f32{3 7 _ 1}"
+::NAP::278-278
+% $x a; # can abbreviate 'all' to 'a'
+::NAP::278-278  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 7 _ 1
+% [nap "sum(x)"]
+11
+% [nap "prod(x)"]; # product
+21
+% [nap "min(x)"]
+1
+% [nap "max(x)"]
+7
+% [nap "count(x)"]; # number not missing
+3
+% [nap "sum(x) / count(x)"]; # mean
+3.66667
+\end{verbatim}
+
+\subsubsection{Reduction functions applied to \texttt{matrix} defined above}
+
+  \begin{verbatim}
+% [nap "sum(matrix)"]; # sum of each column
+11 5 7
+% [nap "sum(matrix) / count(matrix)"]; # mean of each column
+5.5 2.5 3.5
+% [nap "sum(matrix, 1)"]; # sum of each row
+6 17
+% [nap "sum(matrix,1) / count(matrix,1)"]; # mean of each row
+2 5.66667
+\end{verbatim}
+
+\subsubsection{Partial sum function \texttt{psum}}
+
+  \begin{verbatim}
+% [nap "psum(x)"]
+3 10 10 11
+\end{verbatim}
+

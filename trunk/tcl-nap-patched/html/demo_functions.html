@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_functions.html,v 1.4 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Built-in Functions</title>
+  </head>
+  <body>
+  <center>
+    <h2>Built-in Functions</h2>
+  </center>
+  <h3>Built-in elemental functions</h3>An 
+  <em>elemental function</em> is one whose result
+  <ul>
+    <li>has the same shape as its argument</li>
+    <li>consists of elements defined by applying the function to the
+    corresponding elements of the argument</li>
+  </ul>
+  <h4>Mathematical Elemental Functions</h4>
+  <pre>
+% [nap &quot;sqrt(5)&quot;]
+2.23607
+% nap &quot;x = {1p 0 0.5p -1r6p}&quot;
+::NAP::79-79
+% $x all
+::NAP::79-79  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3.14159 0 1.5708 -0.523599
+% [nap &quot;180p-1 * x&quot;]; # in degrees
+180 0 90 -30
+% [nap &quot;sin(x)&quot;]
+1.22461e-16 0 1 -0.5
+% [nap &quot;sin x&quot;]; # parentheses not needed!
+1.22461e-16 0 1 -0.5
+% [nap &quot;abs(x)&quot;]
+3.14159 0 1.5708 0.523599
+% [nap &quot;sign(x)&quot;]
+1 0 1 -1
+% [nap &quot;nint(x)&quot;] all; # nearest integer
+::NAP::91-91  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 2 -1
+% [nap &quot;floor(x)&quot;] all; # nearest integer &lt;= x
+::NAP::93-93  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 -1
+% [nap &quot;ceil(x)&quot;] all; # nearest integer &gt;= x
+::NAP::95-95  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 0 2 0
+</pre>
+  <h4>Type-conversion Elemental Functions</h4>
+  <pre>
+% [nap &quot;f32(x)&quot;] all
+::NAP::97-97  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3.14159 0 1.5708 -0.523599
+% [nap &quot;i16(x)&quot;] all
+::NAP::100-100  i16  MissingValue: -32768  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 0
+% [nap &quot;u16(x)&quot;] all
+::NAP::103-103  u16  MissingValue: 65535  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 0 1 _
+% [nap &quot;i32(&#39;ABCXYZ&#39;)&quot;]
+65 66 67 88 89 90
+% [nap &quot;c8({65 66 67 88 89 90})&quot;] all
+::NAP::194-194  c8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ABCXYZ
+% [nap &quot;c8{65 66 67 88 89 90}&quot;]; # parentheses not needed
+ABCXYZ
+</pre>
+  <h4>Elemental Functions which test for Special Values</h4>
+  <pre>
+% [nap &quot;x = {2.5 0 -9 _ 7}&quot;] all
+::NAP::201-201  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.5 0 -9 _ 7
+% $x set missing -9
+% $x all
+::NAP::201-201  f64  MissingValue: -9  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.5 0 _ _ 7
+% [nap &quot;isPresent(x)&quot;]
+1 1 0 0 1
+% [nap &quot;isMissing(x)&quot;]
+0 0 1 1 0
+% [nap &quot;isnan(x)&quot;]
+0 0 0 1 0
+</pre>
+  <h4>Elemental Function 
+  <code>random</code>, which generates random numbers</h4>
+  <pre>
+% [nap &quot;random(100)&quot;]; # random real number from 0 to 100
+62.8871
+% [nap &quot;1 + floor(random(20 # 6))&quot;] value; # 20 throws of
+dice
+3 4 6 6 4 5 1 4 1 2 1 5 1 3 1 1 6 2 4 6
+</pre>
+  <h3>Non-elemental functions</h3>
+  <h4>Meta-data functions</h4>
+  <pre>
+% nap &quot;matrix = {
+{2 4 0}
+{9 1 7}
+}&quot;
+::NAP::253-253
+% $matrix all
+::NAP::253-253  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 4 0
+9 1 7
+% [nap &quot;shape(matrix)&quot;]
+2 3
+% [nap &quot;rank(matrix)&quot;]
+2
+% [nap &quot;shape(shape(matrix))&quot;]; # same as this
+2
+% [nap &quot;nels(matrix)&quot;]; # number of elements
+6
+% [nap &quot;prod(shape(matrix))&quot;]; # same as this
+6
+</pre>
+  <h4>Reduction functions applied to vector</h4>
+  <pre>
+% nap &quot;x = f32{3 7 _ 1}&quot;
+::NAP::278-278
+% $x a; # can abbreviate &#39;all&#39; to &#39;a&#39;
+::NAP::278-278  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 7 _ 1
+% [nap &quot;sum(x)&quot;]
+11
+% [nap &quot;prod(x)&quot;]; # product
+21
+% [nap &quot;min(x)&quot;]
+1
+% [nap &quot;max(x)&quot;]
+7
+% [nap &quot;count(x)&quot;]; # number not missing
+3
+% [nap &quot;sum(x) / count(x)&quot;]
+3.66667
+</pre>
+  <h4>Reduction functions applied to 
+  <code>matrix</code> defined above</h4>
+  <pre>
+% [nap &quot;sum(matrix)&quot;]; # sum of each column
+11 5 7
+% [nap &quot;sum(matrix) / count(matrix)&quot;]; # mean of each column
+5.5 2.5 3.5
+% [nap &quot;sum(matrix, 1)&quot;]; # sum of each row
+6 17
+% [nap &quot;sum(matrix,1) / count(matrix,1)&quot;]; # mean of each row
+2 5.66667
+</pre>
+  <h4>Partial sum function 
+  <code>psum</code></h4>
+  <pre>
+% [nap &quot;psum(x)&quot;]
+3 10 10 11
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: demo_functions.html,v 1.2
+          2005/03/14 23:37:26 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

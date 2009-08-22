@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: array.html,v 1.4 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Arrays</title>
+  </head>
+  <body>
+  <center>
+    <h2>Arrays</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Vectors">Vectors</a>
+    </li>
+    <li>
+      <a href="#Matrices">Matrices</a>
+    </li>
+    <li>
+      <a href="#Higher">Higher Rank Arrays</a>
+    </li>
+    <li>
+      <a href="#Grids">Grids</a>
+    </li>
+    <li>
+      <a href="#Strings">Strings</a>
+    </li>
+  </ol>
+    <a name="Introduction">
+  <h3>
+Introduction</a>
+  </h3>
+    NAP stores data in 
+  <em>NAOs</em>. A NAO is essentially an object based on the concept of
+  an 
+  <em>n-dimensional array</em>. The number of dimensions is called the 
+  <em>rank</em>. A scalar is simply an array of rank 0.
+  <p>Dimensions can have names and 
+  <em>coordinate variables (CVs)</em>. A CV maps a subscript to another
+  variable such as a physical dimension (e.g. time). Arrays with CVs
+  are called 
+  <em>grids</em>.</p>
+  <p>NAP provides powerful and efficient facilities for processing
+  arrays, including:</p>
+  <ul>
+    <li>
+    <em>elemental</em> (element by element) extension of scalar
+    arithmetic</li>
+    <li>array operations such as sum, concatenation and reshaping</li>
+    <li>indexing in a variety of ways</li>
+    <li>searching (inverse indexing)</li>
+  </ul>
+    <a name="Vectors">
+  <h3>
+    Vectors</a>
+  </h3>
+  An array with exactly one dimension is called a 
+  <em>vector</em>.
+  <p>NAP array constants are enclosed in braces &quot;<code>{}</code>&quot;. The following example doubles a vector
+  containing four elements:</p>
+  <pre>
+% [nap &quot;2 * {3.4 -0.1 _ 7}&quot;]
+6.8 -0.2 _ 14
+</pre>
+Note that an underscore (&quot;<code>_</code>&quot;) represents a missing element.
+  <p>The ordinary scalar arithmetic operators and functions are applied
+  to arrays in an elemental fashion, as shown by:</p>
+  <pre>
+% [nap &quot;{1 _ 4 -6} + {2 0 -9 _}&quot;]
+3 _ -5 _
+% [nap &quot;sqrt(-{1 _ 9 -6} + 10)&quot;]
+3 _ 1 4
+</pre>
+  <p>The function 
+  <code>sum</code> has the functionality of the mathematical
+  &quot;&#931;&quot;. When applied to a vector it returns the sum of
+  the elements (ignoring any that are missing), as shown by:</p>
+  <pre>
+% [nap &quot;sum{1 _ 9 -6 3}&quot;]
+7
+</pre>
+  <p>The following example applies the concatenation operator &quot;<code>//</code>&quot; to vectors and scalars:</p>
+  <pre>
+% [nap &quot;{1 _ 9} // 7 // {-3 8}&quot;]
+1 _ 9 7 -3 8
+</pre>
+  <p>The operators &quot;<code>..</code>&quot; and &quot;<code>...</code>&quot; generate 
+  <em>arithmetic progression (AP)</em> vectors. For example:</p>
+  <pre>
+% [nap &quot;3 .. 7&quot;]
+3 4 5 6 7
+% [nap &quot;7 .. 3&quot;]
+7 6 5 4 3
+% [nap &quot;0 .. 10 ... 2.5&quot;]; # From 0 to 10 with step of 2.5
+0 2.5 5 7.5 10
+% [nap &quot;5 ... 0 .. 10&quot;]; # 5 elements from 0 to 10
+0 2.5 5 7.5 10
+</pre>
+  <p>An 
+  <em>index</em> specifies a position within an array, commencing from
+  0. If two operands (representing NAOs) are adjacent then NAP treats
+  the right operand as the index of the left operand. For example:</p>
+  <pre>
+% nap &quot;abc = {4 9 8 2}&quot;
+::NAP::283-283
+% [nap &quot;abc(2)&quot;]
+8
+% [nap &quot;abc 0&quot;]; # parentheses not needed
+4
+% [nap &quot;abc{2 0 3 2 1}&quot;]; # vector index
+8 4 2 8 9
+</pre>
+  <p>Some computer languages allow indexed variable names on the left
+  of the assignment operator &quot;<code>=</code>&quot;. So one might expect to be able to modify
+  element 2 of 
+  <code>abc</code> as follows:</p>
+  <pre>
+% nap &quot;abc(2) = 5&quot;
+abc(2) = 5
+       ^
+syntax error, unexpected &#39;=&#39;, expecting $end
+Error at line 1768 of file napParse.tab.c
+</pre>
+  <p>NAP does not allow indexed variable names on the left of the
+  assignment operator &quot;<code>=</code>&quot;. However the &quot;<code>set value</code>&quot; OOC method does provide a way to modify
+  elements of a NAO. Element 2 of 
+  <code>abc</code> can be changed to 5 as follows:</p>
+  <pre>
+% $abc set value 5 2
+% $abc
+4 9 5 2
+</pre>
+  <p>The following examples show how several elements (or the entire
+  array) can be changed using a single OOC:</p>
+  <pre>
+% $abc set value &quot;{13 11}&quot; &quot;{0 2}&quot;
+% $abc
+13 9 11 2
+% $abc set value -3
+% $abc
+-3 -3 -3 -3
+% $abc set value &quot;{13 11}&quot;
+% $abc
+13 11 13 11
+</pre>
+  <p>The default OOC displays only the first six elements, as in:</p>
+  <pre>
+% [nap &quot;1 .. 9&quot;]
+1 2 3 4 5 6 ..
+</pre>
+  <p>The &quot;<code>value</code>&quot; OOC method displays all elements, as in:</p>
+  <pre>
+% [nap &quot;1 .. 9&quot;] value
+1 2 3 4 5 6 7 8 9
+</pre>
+    <a name="Matrices">
+  <h3>
+    Matrices</a>
+  </h3>An array with exactly two dimensions is called a 
+  <em>matrix</em>.
+  <p>A matrix constant has two levels of braces, as in:</p>
+  <pre>
+% [nap &quot;{{2 4 8}{0 -1 9}}&quot;] all
+::NAP::298-298  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 2  4  8
+ 0 -1  9
+</pre>
+  <p>It is often convenient to use a separate line for each row, as
+  in:</p>
+  <pre>
+% nap &quot;mat = {
+{2 1.5 7}
+{0  -2 1.1}
+}&quot;
+::NAP::301-301
+% $mat all
+::NAP::301-301  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 2.0  1.5  7.0
+ 0.0 -2.0  1.1
+</pre>
+  <p>The function &quot;<code>sum</code>&quot; gives column and row sums, as in:</p>
+  <pre>
+% [nap &quot;sum(mat)&quot;]
+2 -0.5 8.1
+% [nap &quot;sum(mat, 1)&quot;]
+10.5 -0.9
+</pre>
+  <p>Matrices (and higher rank arrays) can be indexed using either 
+  <em>cross-product indexing</em> or 
+  <em>full indexing</em>. A cross-product index of a matrix has the
+  form &quot;<var>rows</var>, <var>columns</var>&quot;, where 
+  <var>rows</var> and 
+  <var>columns</var> are scalars or vectors. Here are two examples of
+  cross-product indexing:</p>
+  <pre>
+% [nap &quot;mat(0,2)&quot;]
+7
+% [nap &quot;mat(0 .. 1, {0 2})&quot;]
+2.0 7.0
+0.0 1.1
+</pre>
+  <p>A full index of a matrix is an array with two columns
+  corresponding to 
+  <em>row</em> and 
+  <em>column</em>. Here are two examples of full indexing:</p>
+  <pre>
+% [nap &quot;mat{0 2}&quot;]
+7
+% [nap &quot;mat{{0 2}{0 0}{1 3}}&quot;]
+7 2 0
+</pre>
+  <p>The function &quot;<code>transpose</code>&quot; swaps the row and column dimensions.
+  E.g.</p>
+  <pre>
+% $mat
+ 2.0  1.5  7.0
+ 0.0 -2.0  1.1
+% [nap &quot;transpose mat&quot;]
+ 2.0  0.0
+ 1.5 -2.0
+ 7.0  1.1
+</pre>
+  <p>The function &quot;<code>reshape</code>&quot; uses the elements of the first argument
+  (recycled if necessary) to produce an array whose shape is specified
+  by the second argument. If there is only one argument then this is
+  reshaped to a vector with the same number of elements. E.g.</p>
+  <pre>
+% [nap &quot;reshape(mat, {3 4})&quot;]
+ 2.0  1.5  7.0  0.0
+-2.0  1.1  2.0  1.5
+ 7.0  0.0 -2.0  1.1
+% [nap &quot;reshape mat&quot;]
+2 1.5 7 0 -2 1.1
+% [nap &quot;reshape(9, {2 5})&quot;]
+9 9 9 9 9
+9 9 9 9 9
+</pre>
+  <p>The concatenation operator &quot;<code>//</code>&quot; can be applied to matrices. For example:</p>
+  <pre>
+nap &quot;m33 = {{4 6 8}{3 5 9}{0 4 1}}&quot;
+::NAP::14-14
+% $m33
+4 6 8
+3 5 9
+0 4 1
+% $mat
+ 2.0  1.5  7.0
+ 0.0 -2.0  1.1
+% [nap &quot;m33 // mat&quot;]
+ 4.0  6.0  8.0
+ 3.0  5.0  9.0
+ 0.0  4.0  1.0
+ 2.0  1.5  7.0
+ 0.0 -2.0  1.1
+</pre>
+  <p>The laminate operator &quot;<code>///</code>&quot; joins its operands over a new dimension. The
+  following example creates a matrix from two vectors:</p>
+  <pre>
+% [nap &quot;{9 3 5} /// {1 7 2}&quot;]
+9 3 5
+1 7 2
+% [nap &quot;{9 3 5} // {1 7 2}&quot;]; # Note difference
+9 3 5 1 7 2
+</pre>
+    <a name="Higher">
+  <h3>
+    Higher Rank Arrays</a>
+  </h3>A NAO can have up to 32 dimensions. The following example
+  creates a 3-dimensional array, sums it along each dimension, then
+  extracts an element using cross-product indexing.
+  <pre>
+% nap &quot;a3D = reshape(0 .. 99, {2 3 4})&quot;
+::NAP::47-47
+% $a3D 
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23
+% [nap &quot;sum(a3D)&quot;]
+12 14 16 18
+20 22 24 26
+28 30 32 34
+% [nap &quot;sum(a3D, 1)&quot;]
+ 6 22 38
+54 70 86
+% [nap &quot;sum(a3D, 2)&quot;]
+12 15 18 21
+48 51 54 57
+% [nap &quot;a3D(0,2,1)&quot;]
+9
+</pre>
+    <a name="Grids">
+  <h3>
+    Grids</a>
+  </h3>
+  <p>Grids are arrays with 
+  <em>coordinate variables (CVs)</em>. Dimensions often correspond to
+  physical dimensions such as time and length. A CV maps a subscript to
+  another variable, which is typically a physical dimension such as
+  time.</p>
+  <p>The following example creates a NAO corresponding to the grid
+  described in 
+  <a href="grid.html#Missing">Missing Data</a>. Note how the &quot;<code>set coo</code>&quot; OOC method is used to attach the CVs and
+  name the dimensions.</p>
+  <pre>
+% nap &quot;latitude = {30 25 10 -10}&quot;
+::NAP::74-74
+% nap &quot;longitude = {30 40 60 65 75}&quot;
+::NAP::76-76
+% nap &quot;grid2d = {
+{15 17 10  _ 21}
+{16 14 18 18 19}
+{ _ 11 12 11  _}
+{10  9  _ 12 11}
+}&quot;
+::NAP::78-78
+% $grid2d set coo latitude longitude
+% $grid2d all
+::NAP::78-78  i32  MissingValue: -2147483648  References: 1
+Dimension 0   Size: 4      Name: latitude  Coordinate-variable:
+::NAP::74-74
+Dimension 1   Size: 5      Name: longitude  Coordinate-variable:
+::NAP::76-76
+Value:
+15 17 10  _ 21
+16 14 18 18 19
+ _ 11 12 11  _
+10  9  _ 12 11
+</pre>
+  <p>Grids can be indexed using 
+  <em>indirect indexing</em>, which is indexing via CVs. Continuing the
+  above example, let us extract the value corresponding to a latitude
+  of 25 and a longitude of 75:</p>
+  <pre>
+% [nap &quot;grid2d(@25, @75)&quot;]; # indirect indexing
+19
+% [nap &quot;grid2d(1, 4)&quot;]; # direct indexing
+19
+</pre>
+  <p>NAP allows fractional subscripts, which correspond to interpolated
+  values. The following produces a value corresponding to row 0.5
+  (27.5°N) and column 1.5 (50°E):</p>
+  <pre>
+% [nap &quot;grid2d(0.5, 1.5)&quot;]; # direct indexing
+14.75
+% [nap &quot;grid2d(@27.5, @50)&quot;]; # indirect indexing
+14.75
+% expr (17+10+14+18) * 0.25; # check arithmetic
+14.75
+</pre>
+    <a name="Strings">
+  <h3>
+    Strings</a>
+  </h3>String constants are enclosed in apostrophes &quot;<code>&#39;&#39;</code>&quot; or grave accents &quot;<code>``</code>&quot; and generate character vectors. For example:
+  <pre>
+% nap &quot;message = &#39;hello world&#39;&quot;
+::NAP::329-329
+% $message all
+::NAP::329-329  c8  MissingValue: (NULL)  References: 1
+Dimension 0   Size: 11     Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+hello world
+% [nap &quot;`don&#39;t`&quot;]
+don&#39;t
+</pre>
+  <p>The following example uses the library function &quot;<code>gets_matrix</code>&quot; to
+    read the text file &quot;<code>abc.txt</code>&quot; into a NAO referenced
+    by &quot;<code>in</code>&quot;.</p>
+  <pre>
+% nap &quot;in = gets_matrix(&#39;abc.txt&#39;)&quot;
+::NAP::349-349
+% $in all
+::NAP::349-349  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 2  9 -3
+ 0 12  7
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: array.html,v 1.1 2004/11/05
+          06:25:54 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

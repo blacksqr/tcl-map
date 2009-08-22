@@ -1,0 +1,83 @@
+%  $Id: scripts.tex,v 1.6 2006/06/07 04:58:22 dav480 Exp $ 
+    % Sample Startup Scripts
+
+\section{Sample Startup Scripts}
+    \label{scripts}
+    \label{scripts-Sample-Startup-Scripts}
+
+\subsection{Introduction}
+    \label{scripts-Introduction}
+
+These startup scripts tailor 
+  \emph{Tcl} and 
+  \emph{tkcon} to personal requirements. The scripts can be copied to
+  your home directory and modified as desired.
+
+\subsection{Script \texttt{my.tcl}}
+    \label{scripts-my}
+
+The script 
+  \verb!~/my.tcl! is called by the script 
+  \verb!~/.tclshrc! or 
+  \verb!~/tclshrc.tcl! that is created by the standard nap
+  installation. This 
+  \verb!~/my.tcl! script can be used to tailor Tcl in various
+  ways such as
+\begin{bullets}
+    \item initialising packages
+    \item initialising libraries
+    \item defining procedures
+    \item sourcing other scripts
+\end{bullets}
+  
+ The following sample script initialises a personal library and
+  defines some simple aliases:
+  \begin{verbatim}
+# my.tcl --
+#
+# Initialise my library of Tcl procedures (including Nap functions) by
+sourcing its tclIndex.
+# The library consists of files in directory ~/my_tcl_lib
+# The file tclIndex is created by the following command:
+#     auto_mkindex ~/my_tcl_lib *.tcl
+foreach dir {~/my_tcl_lib} {source $dir/tclIndex}
+#
+proc define_alias {alias args} {proc $alias args "eval $args \$args"}
+#
+define_alias e expr
+define_alias n nap
+define_alias p pwd
+define_alias cp file copy
+define_alias md file mkdir
+define_alias rm file delete
+\end{verbatim}
+
+\subsection{Script \texttt{my\_tkcon.tcl}}
+    \label{scripts-my-tkcon}
+
+The script 
+  \verb!~/my_tkcon.tcl! is called by the script 
+  \verb!~/.tkconrc! or 
+  \verb!~/tkcon.cfg! that is created by the standard nap
+  installation. This 
+  \verb!~/my_tkcon.tcl! script can be used to tailor various
+  aspects of tkcon.
+  
+ The following sample script defines
+\begin{bullets}
+    \item the font used by tkcon
+    \item the number of rows and columns provided by tkcon
+    \item the number of commands in history
+    \item the prompt at start of each input line
+\end{bullets}
+\begin{verbatim}
+# my_tkcon.cfg --
+#
+set ::tkcon::OPT(font) "Courier 10"
+set ::tkcon::OPT(rows) 40
+set ::tkcon::OPT(cols) 80
+set ::tkcon::OPT(history) 200; # number of commands in history
+set ::tkcon::OPT(prompt1) {% };# prompt at start of each input line
+# set ::tkcon::OPT(prompt1) {[history nextid] % };# alternative
+\end{verbatim}
+

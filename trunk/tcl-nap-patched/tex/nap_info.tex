@@ -1,0 +1,56 @@
+%  $Id: nap_info.tex,v 1.6 2006/06/07 04:58:19 dav480 Exp $ 
+    % nap\_info
+
+\section{The \texttt{nap\_info} Command}
+    \label{nap-info}
+
+The 
+  \texttt{nap\_info} command provides information (mainly about the
+  Nap system). There are three variants which are shown in the
+  following example:
+  \begin{verbatim}
+% nap_info bytes
+2692 2920 68216 68224
+% nap_info seconds
+12.519
+% nap_info sequence
+15
+\end{verbatim}
+
+  
+
+The command `\texttt{nap\_info bytes}' provides information about
+  Nap's use of memory. This use falls into the following three
+  categories:
+\begin{bullets}
+    \item direct use for 
+    \emph{NAOs} within a Tcl interpreter
+    \item 
+    \emph{other} purposes local to a Tcl interpreter
+    \item 
+    \emph{global} purposes
+\end{bullets}
+There can be multiple Tcl interpreters, each with its own Nap.
+  No statistics are available on 
+  \emph{global} memory usage. The command `\texttt{nap\_info bytes}' returns the following four numbers
+  relating to Nap's memory usage within the current Tcl
+  interpreter:
+  \begin{enumerate}
+    \item current number of bytes of memory being used by 
+    \emph{NAOs} (2692 in above example)
+    \item maximum number of bytes used by 
+    \emph{NAOs} at any time so far (2920 in above example)
+    \item current number of bytes of memory being used for 
+    \emph{other} purposes (68216 in above example)
+    \item maximum number of bytes used for 
+    \emph{other} purposes at any time so far (68224 in above
+    example)
+  \end{enumerate}
+  
+
+The command `\texttt{nap\_info seconds}' returns the processor time used
+  by tcl, as defined by the C function `\texttt{clock()}'.
+  
+
+The command `\texttt{nap\_info sequence}' returns the sequence-number of
+  the most recently created NAO.

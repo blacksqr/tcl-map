@@ -1,0 +1,296 @@
+%  $Id: ooc_write.tex,v 1.7 2006/10/27 08:05:37 dav480 Exp $ 
+    % OOC Methods: Write
+
+\section{OOC Methods which Write to File}
+
+The examples in this section use the NAOs created by:
+  \begin{verbatim}
+% nap "x = 0 .. 2 ... 0.5"
+::NAP::21-21
+% nap "y = x ** 2"
+::NAP::24-24
+% $y set coord x
+% $y set unit m^2
+% $y set label "areas of squares"
+% $y all
+::NAP::24-24  f64  MissingValue: NaN  References: 1  Unit: m^2
+areas of squares
+Dimension 0   Size: 5      Name: x         Coordinate-variable: ::NAP::21-21
+Value:
+0 0.25 1 2.25 4
+\end{verbatim}
+
+\subsection{Method \texttt{binary}}
+    \label{ooc-write-binary}
+
+  $ooc\_name$ \texttt{binary} [$tcl\_channel$]
+
+This writes raw (binary) data to the file specified by 
+  $tcl\_channel$, which defaults to 
+  \texttt{stdout} (standard output). For example:
+  \begin{verbatim}
+% set file [open y.tmp w]
+file4
+% $y binary $file
+% close $file
+% set file [open y.tmp]
+file4
+% [nap_get binary $file f64] all
+::NAP::248-248  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 0.25 1 2.25 4
+% close $file
+\end{verbatim}
+
+\subsection{Method \texttt{hdf}}
+    \label{ooc-write-hdf}
+
+  $ooc\_name$ \texttt{hdf} [$switches$]  $filename$ $name$
+
+This writes data from the NAO to an SDS or attribute within an HDF
+  file named 
+  $filename$.
+The HDF file format is discussed in section \ref{hdf-netcdf}.
+
+  $name$ is the name of an SDS or attribute and has the
+  form:
+\begin{bullets}
+    \item $varname$ for an SDS
+    \item $varname$\texttt{:}$attribute$ for an attribute of an SDS
+    \item \texttt{:}$attribute$ for a global attribute
+\end{bullets}
+  
+  $switches$ can be:
+  \\
+  \texttt{-unlimited}: Create SDS with unlimited dimension 0
+  \\
+  \texttt{-coordinateVariable} 
+  $expr$: boxed NAO which specifies coordinate variables.
+  \\
+  \texttt{-datatype} 
+  $type$: HDF datatype: 
+  \texttt{c8, i8, i16, i32, u8, u16, u32, f32} or 
+  \texttt{f64}
+  \\
+  \texttt{-range} 
+  $expr$: HDF 
+  \texttt{valid\_range}
+  \\
+  \texttt{-scale} 
+  $expr$: HDF 
+  \texttt{scale\_factor}
+  \\
+  \texttt{-offset} 
+  $expr$: HDF 
+  \texttt{add\_offset}
+  \\
+  \texttt{-index} 
+  $expr$: position within SDS where data is to be written.
+  
+
+If `\texttt{-coordinateVariable} 
+  $expr$' is not specified then the coordinate variables
+  of the main NAO are used if these exist.
+  
+
+If `\texttt{-index} $expr$' is specified then 
+  $expr$ must be an index compatible with the rank $r$ of the SDS. 
+If $r = 1$ then $expr$ must be a {\em shape-preserving} index,
+as described in section \ref{indexing-Shape-Preserving}.
+If $r > 1$ then $expr$ must be a {\em cross-product} index
+(as described in section \ref{indexing-Cross-product-index})
+containing $r$ scalar and vector elements.
+The vector elements
+  correspond to dimensions which exist in both the SDS and the NAO. The
+  scalar elements correspond to dimensions which exist in the SDS but
+  not the NAO.
+  
+
+If `\texttt{-index} 
+  $expr$' is not specified then the coordinate variables
+  of the main NAO are used if these exist, otherwise writing starts at
+  the beginning of the SDS.
+  
+If `\texttt{-scale} 
+  $expr$' and/or `\texttt{-offset} 
+  $expr$' are specified then these values are:
+\begin{bullets}
+    \item written as attributes \texttt{scale\_factor} and \texttt{add\_offset}
+    \item used to scale the data before writing it.
+\end{bullets}
+
+Example:
+  \begin{verbatim}
+% $y hdf y.hdf y
+% exec hdp dumpsds y.hdf
+File name: y.hdf 
+
+Variable Name = y
+         Index = 0
+         Type= 64-bit floating point
+         Ref. = 2
+         Rank = 1
+         Number of attributes = 3
+         Dim0: Name=x
+                 Size = 5
+                 Scale Type = 64-bit floating point
+                 Number of attributes = 0
+         Attr0: Name = _FillValue
+                 Type = 64-bit floating point 
+                 Count= 1
+                 Value = DoubleInf 
+         Attr1: Name = long_name
+                 Type = 8-bit signed char 
+                 Count= 16
+                 Value = areas of squares
+         Attr2: Name = units
+                 Type = 8-bit signed char 
+                 Count= 3
+                 Value = m^2
+         Data : 
+                0.000000 0.250000 1.000000 2.250000 4.000000 
+
+
+Dimension Variable Name = x
+         Index = 1
+         Scale Type= 64-bit floating point
+         Ref. = 3
+         Rank = 1
+         Number of attributes = 0
+         Dim0: Name=x
+                 Size = 5
+         Data : 
+                0.000000 0.500000 1.000000 1.500000 2.000000 
+\end{verbatim}
+
+Procedure \texttt{put16}
+(see section  \ref{bin-io-put16})
+ can be used to write an automatically-scaled 16-bit SDS to an HDF file.
+
+\subsection{Method \texttt{netcdf}}
+    \label{ooc-write-netcdf}
+
+  $ooc\_name$ \texttt{netcdf} [$switches$]  $filename$ $name$
+
+This writes data from the NAO to a variable or attribute within a
+  netCDF file named 
+  $filename$.
+The netCDF file format is discussed in section \ref{hdf-netcdf}.
+
+  $name$ is the name of a netCDF variable or attribute and has
+  the form:
+\begin{bullets}
+    \item $varname$ for a variable
+    \item $varname$\texttt{:}$attribute$ for an attribute of a variable
+    \item \texttt{:}$attribute$ for a global attribute
+\end{bullets}
+
+  $switches$ can be:
+  \\
+  \texttt{-unlimited}: Create variable with unlimited dimension 0
+  \\
+  \texttt{-coordinateVariable} 
+  $expr$: boxed NAO which specifies coordinate variables.
+  \\
+  \texttt{-datatype} 
+  $type$: netCDF datatype: 
+  \texttt{c8, i16, i32, u8, f32} or 
+  \texttt{f64}
+  \\
+  \texttt{-range} 
+  $expr$: netCDF 
+  \texttt{valid\_range}
+  \\
+  \texttt{-scale} 
+  $expr$: netCDF 
+  \texttt{scale\_factor}
+  \\
+  \texttt{-offset} 
+  $expr$: netCDF 
+  \texttt{add\_offset}
+  \\
+  \texttt{-index} 
+  $expr$: position within netCDF variable where data is to be
+  written.
+  
+
+If `\texttt{-coordinateVariable} 
+  $expr$' is not specified then the coordinate variables
+  of the main NAO are used if these exist.
+  
+
+If `\texttt{-index} 
+  $expr$' is specified then 
+  $expr$ must be an index compatible with the rank 
+  $r$ of the netCDF variable.
+If $r = 1$ then $expr$ must be a {\em shape-preserving} index,
+as described in section \ref{indexing-Shape-Preserving}.
+If $r > 1$ then $expr$ must be a {\em cross-product} index
+(as described in section \ref{indexing-Cross-product-index})
+containing $r$ scalar and vector elements.
+The vector elements
+  correspond to dimensions which exist in both the netCDF variable and
+  the NAO. The scalar elements correspond to dimensions which exist in
+  the netCDF variable but not the NAO.
+  
+
+If `\texttt{-index} 
+  $expr$' is not specified then the coordinate variables
+  of the main NAO are used if these exist, otherwise writing starts at
+  the beginning of the netCDF variable.
+  
+
+If `\texttt{-scale} 
+  $expr$' and/or `\texttt{-offset} 
+  $expr$' are specified then these values are:
+\begin{bullets}
+    \item written as attributes 
+    \texttt{scale\_factor} and 
+    \texttt{add\_offset}
+    \item used to scale the data before writing it.
+\end{bullets}
+
+Example:
+  \begin{verbatim}
+% $y netcdf y.nc y -coordinateVariable "x // {3 6 9}"
+% exec ncdump y.nc
+netcdf y {
+dimensions:
+        x = 8 ;
+variables:
+        double x(x) ;
+        double y(x) ;
+                y:_FillValue = nan ;
+                y:long_name = "areas of squares" ;
+                y:units = "m^2" ;
+data:
+
+ x = 0, 0.5, 1, 1.5, 2, 3, 6, 9 ;
+
+ y = 0, 0.25, 1, 2.25, 4, _, _, _ ;
+}
+\end{verbatim}
+
+Note that the netCDF variables \texttt{x} and \texttt{y} 
+are dimensioned to 8 (the shape of the argument
+  specified by the 
+  \mbox{
+    \texttt{-coordinateVariable}
+  } option).
+  
+Procedure \texttt{put16}
+(see section  \ref{bin-io-put16})
+can be used to write an automatically-scaled 16-bit variable to
+  a netCDF file.
+
+\subsection{Method \texttt{swap}}
+    \label{ooc-write-swap}
+
+  $ooc\_name$ \texttt{swap} [$tcl\_channel$]
+
+Method 
+  \texttt{swap} is like method 
+  \texttt{binary}, except that bytes are swapped. This enables
+  writing of data to be read on a machine with opposite byte-order
+  within words.

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: nao_ooc.html,v 1.9 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAOs, OOCs and nap command</title>
+  </head>
+  <body>
+  <center>
+    <h2>NAOs, OOCs and 
+    <code>nap</code> command</h2>
+  </center>The standard Tcl 
+  <code>expr</code> command produces a single (scalar) number. For
+  example:
+  <pre>
+% expr &quot;2 * 3.5&quot;
+7.0
+</pre>
+Note that the Tcl result of this command is simply the text
+&quot;<code>7.0</code>&quot;.
+  <p>However the 
+  <code>nap</code> command often produces an array containing millions
+  of numbers. It is not practical to store, process and display
+  millions of numbers as text. It is far better to store and process
+  them in binary form. The binary values are stored in a memory object
+  called an 
+  <em>N-dimensional Array Object (NAO)</em>, which also includes other
+  information such as the number of elements and the data-type. NAP is
+  designed to efficiently handle large arrays, but let us begin
+  demonstrating it on the above simple scalar expression:</p>
+  <pre>
+% nap &quot;2 * 3.5&quot;
+::NAP::16-16
+</pre>
+What is this strange Tcl result &quot;<code>::NAP::16-16</code>&quot;? It is the ID of the NAO result and
+  also the name of the command that is used to examine the NAO and make
+  changes to it. Such a command is called an 
+  <em>Object-Oriented Command (OOC)</em>. The ID is called the 
+  <em>OOC-name</em>. Continuing the above example, let&#39;s execute
+  the OOC by typing its name &quot;<code>::NAP::16-16</code>&quot;:
+  <pre>
+% ::NAP::16-16
+7
+</pre>
+This displays the value in the NAO.
+  <p>However the following attempt to repeat the command fails because
+  the NAO and its associated OOC were automatically deleted at the end
+  of the first execution of the OOC. NAP detected the fact that this
+  NAO was not referenced by anything and it was therefore treated as 
+  <em>use once and then discard</em>.</p>
+  <pre>
+% ::NAP::16-16
+invalid command name &quot;::NAP::16-16&quot;
+</pre>
+  <p>Tcl syntax allows a command to include another command within
+  square brackets 
+  <code>[]</code>. First the bracketed command is executed and its Tcl
+  result replaces it. Then the modified whole command is executed. So
+  the above commands can be simplified by enclosing the 
+  <code>nap</code> command in brackets as follows:</p>
+  <pre>
+% [nap &quot;2 * 3.5&quot;]
+7
+</pre>
+  <p>NAP expressions can contain the assignment operator &quot;<code>=</code>&quot; with a Tcl variable name on its left and any
+  expression on its right. For example:</p>
+  <pre>
+% nap &quot;result = 2 * 3.5&quot;
+::NAP::24-24
+</pre>
+The following shows that this sets the Tcl variable 
+  <code>result</code> to the string value &quot;<code>::NAP::24-24</code>&quot;.
+  <pre>
+% set result
+::NAP::24-24
+</pre>
+Tcl syntax replaces &quot;<code>$</code>
+  <var>name</var>&quot; by the contents of variable 
+  <var>name</var>. So in our example &quot;<code>$result</code>&quot; is replaced by &quot;<code>::NAP::24-24</code>&quot;, as shown in the following:
+  <pre>
+% $result
+7
+</pre>
+The fact that this NAO is referenced by something (the variable
+&quot;<code>result</code>&quot;) means that it is not deleted after it
+  executes. So we can repeat the command:
+  <pre>
+% $result
+7
+</pre>
+We can also use variable names within NAP expressions. For
+example:
+  <pre>
+% [nap &quot;result + 4&quot;]
+11
+</pre>
+Note that no &quot;<code>$</code>&quot; is needed before variable names in NAP
+  expressions. Variables can also contain numeric strings, as in:
+  <pre>
+% set offset 8.2
+8.2
+% [nap &quot;result + offset&quot;]
+15.2
+</pre>
+  <p>An OOC can have arguments. The following example demonstrates the
+  argument 
+  <code>all</code>, which requests additional information about the
+  NAO.</p>
+  <pre>
+% $result all
+::NAP::24-24  f64  MissingValue: NaN  References: 1
+Value:
+7
+</pre>
+  <p>The following additional information is provided:</p>
+  <ul>
+    <li>
+    <em>OOC-name</em> 
+    <code>::NAP::24-24</code></li>
+    <li>
+    <em>Data-type</em> 
+    <code>f64</code> (64-bit floating-point)</li>
+    <li>
+    <em>Missing-value</em> 
+    <code>NaN</code> (special value for missing data)</li>
+    <li>
+    <em>Reference-count</em> The value is 
+    <code>1</code> because there is one variable (
+    <code>result</code>) pointing to this NAO. If it were 0 the NAO
+    would be deleted.</li>
+  </ul>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002-2004, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: nao_ooc.html,v 1.4
+          2005/08/04 05:33:57 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

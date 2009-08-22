@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: model.html,v 1.4 2006/02/24 04:02:06 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP: Data Models</title>
+  </head>
+  <body>
+  <center>
+    <h2>Data Models</h2>
+  </center>
+  <p>A 
+  <em>data model</em> is a mental model of the nature of some data. It
+  answers such questions as the following:</p>
+  <h3>What values can the data take?</h3>Are they all numeric? Are they
+  all integers? Is the set of possible values finite? What are the
+  minimum and maximum possible values? Are &#8734; and 
+  <em>NaN</em> possible values? Do some values have special meanings,
+  such as indicating undefined or missing data?
+  <h3>What is the measurement level?</h3>
+  <p>Data is often classified as follows according to 
+  <i>measurement level</i>:</p>
+  <table border="1">
+    <tr>
+      <th align="center">Name of Level</th>
+      <th align="center">Description</th>
+      <th align="center">Valid Operations</th>
+      <th align="center">Appropriate Measure of Central&#160;Tendency</th>
+      <th align="center">Examples</th>
+    </tr>
+    <tr>
+      <td>nominal</td>
+      <td>Values denote categories which have no order</td>
+      <td>= &#8800;</td>
+      <td>mode</td>
+      <td>color, postal code (e.g. zip), chemical species (e.g. CO<sub>2</sub>)</td>
+    </tr>
+    <tr>
+      <td>ordinal</td>
+      <td>Values ordered. Differences meaningless</td>
+      <td>= &#8800; &lt; &#8804; &gt; &#8805;</td>
+      <td>median</td>
+      <td>Richter earthquake scale, dates in form YYYYMMDD</td>
+    </tr>
+    <tr>
+      <td>interval</td>
+      <td>Differences valid. Quotients meaningless</td>
+      <td>= &#8800; &lt; &#8804; &gt; &#8805; + &#8722;</td>
+      <td>arithmetic mean</td>
+      <td>temperature in &deg;C</td>
+    </tr>
+    <tr>
+      <td>ratio</td>
+      <td>Quotients valid</td>
+      <td>= &#8800; &lt; &#8804; &gt; &#8805; + &#8722; × ÷</td>
+      <td>geometric mean</td>
+      <td>temperature in &deg;K</td>
+    </tr>
+  </table>
+  <h3>How accurate are the values?</h3>
+  <p>A 
+  <em>measurement error</em> is the difference between the 
+  <em>true value</em> and the 
+  <em>measured value</em>. Measured values can differ from true values
+  due to:</p>
+  <ul>
+    <li>finite precision of instrument</li>
+    <li>systematic errors (e.g. inadequately calibrated
+    instrument)</li>
+    <li>random errors (due to finite size of sample)</li>
+    <li>sampling errors (due to non-randomness of sample)</li>
+    <li>blunders (e.g. a human misreading an instrument)</li>
+  </ul>It is desirable to include error estimates with data.
+  <h3>Are the data located in some space?</h3>
+  <p>A 
+  <em>time series</em> consists of values located along the time
+  dimension. 
+  <em>Geographic</em> data is located along spatial dimensions such as
+  latitude, longitude and altitude and may also have a time dimension.
+  Note that longitude is 
+  <em>cyclic</em>.</p>
+  <p>The dimensions of the space can have a measurement level of 
+  <em>nominal</em>. For example, an accounting spreadsheet might have
+  columns corresponding to 
+  <em>charge codes</em> and rows corresponding to 
+  <em>company divisions</em>.</p>
+  <p>Data located in a continuous space can be either 
+  <em>gridded</em> or 
+  <em>scattered</em>. Both types are discussed in 
+  <a href="grid.html">NAP Grids</a>.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: model.html,v 1.1 2002/08/07
+          08:09:24 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

@@ -1,0 +1,134 @@
+%  $Id: nap_cmd.tex,v 1.6 2006/06/06 08:09:42 dav480 Exp $ 
+    % The Nap command
+
+\section{The \texttt{nap} command}
+
+\subsection{Introduction}
+
+The standard Tcl command\  `\texttt{expr}' is based on C conventions for operators and
+    functions. Nap expressions use similar conventions and can include
+    any of the following tokens separated by white-space
+    characters:
+    \begin{itemize}
+      \item Operands
+      \begin{itemize}
+        \item OOC-names
+        \item names of Tcl variables (may include namespaces)
+        \item constants
+        \begin{itemize}
+          \item numeric scalar
+          \item numeric array
+          \item string
+        \end{itemize}
+      \end{itemize}
+      \item Operators (including assignment operator `\texttt{=}')
+      \item Parentheses (`\texttt{()}')
+      \item Function names
+      \begin{itemize}
+        \item built-in functions
+        \item names (may include namespaces) of Tcl procedures defining
+        Nap functions
+      \end{itemize}
+      \item Tcl substitution characters (`\texttt{[]\$}')
+    \end{itemize}
+    
+
+If the 
+    \texttt{nap} command has multiple arguments then these are
+    concatenated. Thus it is not always necessary to enclose the
+    expression by quote (\texttt{"}) characters, but this practice is recommended
+    because it
+\begin{bullets}
+      \item prevents Tcl from removing braces (\texttt{\{\}})
+      \item allows standard Tcl (\texttt{\$[]}) substitution within braces
+      \item allows multi-line expressions.
+\end{bullets}
+
+\subsection{Substitution}
+
+Like `\texttt{expr}', Nap does the Tcl substitution defined by
+    any brackets and dollars (`\texttt{[]\$}') remaining after normal command parsing.
+    
+
+However, unlike `\texttt{expr}', Nap also substitutes for Tcl variable
+    names that are not preceded by a `\texttt{\$}' (except where the name is the left operand of
+    the assignment operator `\texttt{=}'). The value of the Tcl name is treated as a
+    Nap expression, which is evaluated and the OOC-name of the result
+    replaces the name. This substitution is repeated (up to eight
+    times) until a single OOC-name is generated. The expressions in the
+    following example include:
+\begin{bullets}
+      \item Tcl variable 
+      \texttt{length} containing the string `\texttt{3.5}"
+      \item Tcl variable 
+      \texttt{breadth} defined by Nap to contain `\texttt{::NAP::13-13}"
+      \item Nap constants 
+      \texttt{2} and 
+      \texttt{10}
+      \item Tcl variable 
+      \texttt{area} containing the string `\texttt{length * breadth}"
+\end{bullets}
+    \\
+    \begin{verbatim}
+% set length 3.5
+3.5
+% nap "breadth = 2"
+::NAP::13-13
+% [nap "2 * (length + breadth)"]
+11
+% set area "length * breadth"
+length * breadth
+% [nap "10 * area"]
+70
+\end{verbatim}
+
+    
+
+Each constant is replaced by the OOC-name of a NAO representing
+    its value. After substitution, the expression consists of
+    OOC-names, operators, function names and parentheses.
+
+\subsection{Namespaces}
+
+Nap allows names which include namespaces, as in:
+    \begin{verbatim}
+% namespace eval ::mySpace {}; # create namespace "mySpace"
+% nap "::mySpace::x = 8"
+::NAP::13-13
+% [nap "3 + ::mySpace::x"]
+11
+\end{verbatim}
+
+\subsection{Functions}
+
+Function arguments can be enclosed by parentheses (as required
+    by many other languages), but these parentheses are not required by
+    the syntax. A name (which cannot be a Tcl variable name or it would
+    have been substituted) followed by a OOC-name is treated as a
+    function name. Thus the following two commands are equivalent:
+    \begin{verbatim}
+% [nap "sin(3.14)"]
+0.00159265
+% [nap "sin 3.14"]
+0.00159265
+\end{verbatim}
+
+\subsection{Indexing}
+
+Tcl array indices are enclosed by parentheses (`\texttt{()}'), while C uses brackets (`\texttt{[]}'). Nap requires neither, since indexing is
+    simply implied by adjacent OOC-names. Thus the following two
+    commands (which give elements 1, 0, 2 and 0 of the vector 
+    \texttt{\{5 7 6\}}) are equivalent:
+    \begin{verbatim}
+% [nap "{5 7 6}({1 0 2 0})"]
+7 5 6 5
+% [nap "{5 7 6}{1 0 2 0}"]
+7 5 6 5
+\end{verbatim}
+
+\subsection{Parenthesising Function Arguments and Indices}
+
+As explained above, there is no syntactic need for parentheses
+    around single function arguments and array indices. However, since
+    most other computer languages do require such parentheses, it may
+    aid human readability to include them.

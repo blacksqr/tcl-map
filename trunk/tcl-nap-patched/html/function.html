@@ -1,0 +1,1692 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: function.html,v 1.17 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Built-in Functions</title>
+  </head>
+  <body>
+  <center>
+    <h2>Built-in Functions</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Elemental">Elemental Functions</a>
+    </li>
+    <li>
+      <a href="#Reduction">Reduction and Scan Functions</a>
+      <ul>
+        <li>
+          <a href="#psum">Partial-sum Functions 
+          <code>psum(</code> 
+          <var>x</var> 
+          <code>)</code> and 
+          <code>psum1(</code> 
+          <var>x</var>[ 
+          <code>,</code> 
+          <var>r</var>] 
+          <code>)</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Metadata">Metadata Functions</a>
+    </li>
+    <li>
+      <a href="#change_shape_or_order">Functions which change shape or
+      order</a>
+    </li>
+    <li>
+      <a href="#Linear_algebra">Linear-algebra Functions</a>
+    </li>
+    <li>
+      <a href="#Correlation">Correlation</a>
+      <ul>
+        <li>
+          <a href="#function_correlation">Function 
+          <code>correlation</code></a>
+        </li>
+        <li>
+          <a href="#moving_correlation">Function 
+          <code>moving_correlation</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Geometry">Geometry</a>
+      <ul>
+        <li>
+          <a href="#inPolygon">Testing whether points are in
+          polygon</a>
+        </li>
+        <li>
+          <a href="#Triangulation">Triangulation</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Grid">Grid Functions</a>
+    </li>
+    <li>
+      <a href="#Special_Data_types">Functions related to Special
+      Data-types</a>
+    </li>
+    <li>
+      <a href="#Morphological">Morphological Functions</a>
+      <ul>
+        <li>
+          <a href="#Dilation_and_Erosion">Morphological Binary Dilation
+          and Erosion</a>
+        </li>
+        <li>
+          <a href="#Moving_Range">Moving Range</a>
+        </li>
+      </ul>
+    </li>
+  </ol>
+  <h3>
+    <a name="Elemental">Elemental Functions</a>
+  </h3>
+  <p>The result of an elemental function has the same shape as its
+  argument(s). Each element of the result is defined by applying the
+  function to the corresponding element of the argument.</p>
+  <p>The following table is very similar to 
+  <b>Table 5.3</b> in Ousterhout&#39;s 1994 classic 
+  <cite>Tcl and the Tk Toolkit</cite>:</p>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr valign="bottom">
+        <td>
+        <code>abs(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Absolute value of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>acos(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Arc cosine of 
+        <var>x</var>, in the range 0 to &#960;</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>asin(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Arc sine of 
+        <var>x</var>, in the range -&#960;/2 to &#960;/2</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>atan(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Arc tangent of 
+        <var>x</var>, in the range -&#960;/2 to &#960;/2</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>atan(</code> 
+        <var>y</var> 
+        <code>,</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Arc tangent of 
+        <var>y</var>/ 
+        <var>x</var>, in the range -&#960; to &#960;</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>atan2(</code> 
+        <var>y</var> 
+        <code>,</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Alias for 
+        <code>atan</code></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>ceil(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Smallest integer not less than 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>cos(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Cosine of 
+        <var>x</var> ( 
+        <var>x</var> in radians)</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>cosh(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Hyperbolic cosine of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>exp(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>
+        <var>e</var> 
+        <sup>
+          <var>x</var>
+        </sup> , where 
+        <var>e</var> is base of natural logarithms</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>floor(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Largest integer not greater than 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>fmod(</code> 
+        <var>x</var> 
+        <code>,</code> 
+        <var>y</var> 
+        <code>)</code></td>
+        <td>
+        <var>x</var> 
+        <code>%</code> 
+        <var>y</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>hypot(</code> 
+        <var>x</var> 
+        <code>,</code> 
+        <var>y</var> 
+        <code>)</code></td>
+        <td>&#8730;( 
+        <var>x</var> 
+        <sup>2</sup>+ 
+        <var>y</var> 
+        <sup>2</sup>)</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>isnan(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>1 if 
+        <var>x</var> is NaN, 0 otherwise</td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>log(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>log 
+        <sub>
+          <var>e</var>
+        </sub> 
+        <var>x</var> (natural logarithm of 
+        <var>x</var>)</td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>log(</code> 
+        <var>x</var>, 
+        <var>y</var> 
+        <code>)</code></td>
+        <td>log 
+        <sub>
+          <var>y</var>
+        </sub> 
+        <var>x</var></td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>log10(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>log 
+        <sub>10</sub> 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>nint(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Nearest integer to 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>pow(</code> 
+        <var>x</var> 
+        <code>,</code> 
+        <var>y</var> 
+        <code>)</code></td>
+        <td>
+        <var>x</var> 
+        <sup>
+          <var>y</var>
+        </sup></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>random(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>
+        <code>f32</code> or 
+        <code>f64</code> random number 
+        <var>r</var> such that 
+        <code>0</code> &#8804; 
+        <var>r</var> &lt; 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>round(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Alias for 
+        <code>nint</code></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>sign(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Sign of 
+        <var>x</var>, &#160; i.e. 
+        <code>(</code> 
+        <var>x</var>&gt; 
+        <code>0)-(</code> 
+        <var>x</var>&lt; 
+        <code>0)</code></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>sin(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Sine of 
+        <var>x</var> ( 
+        <var>x</var> in radians)</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>sinh(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Hyperbolic sine of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>sqrt(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>&#8730; 
+        <var>x</var></td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>tan(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Tangent of 
+        <var>x</var> ( 
+        <var>x</var> in radians)</td>
+      </tr>
+      <tr valign="bottom">
+        <td>
+        <code>tanh(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Hyperbolic tangent of 
+        <var>x</var></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The following data-type conversion functions are also elemental:
+  <br />
+  <code>c8(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>f32(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>f64(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>i8(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>i16(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>i32(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>u8(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>u16(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />
+  <code>u32(</code> 
+  <var>x</var> 
+  <code>)</code>
+  <br />Here are some examples of their use:</p>
+  <pre>
+% [nap &quot;f32(97 .. 102)&quot;] all; # convert from i32 to f32
+::NAP::43-43  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+97 98 99 100 101 102
+% [nap &quot;u8(&#39;abcdef&#39;)&quot;]; # Display ASCII codes for
+&#39;abcdef&#39;
+97 98 99 100 101 102
+% [nap &quot;c8(97 .. 102)&quot;]; # Reverse this process
+abcdef
+</pre>
+  <h3>
+    <a name="Reduction">Reduction and Scan Functions</a>
+  </h3>
+  <p>A 
+  <em>reduction</em> or 
+  <em>insert</em> function is one which has the effect of inserting a
+  binary operator between the 
+  <em>cells</em> of its argument. If the argument is a vector then its
+  elements are the cells and the result is a scalar. If the argument is
+  a matrix then its rows are the cells and the result is a vector
+  containing the sum of each column. Such functions are termed 
+  <em>reductions</em> because the result has a rank which is one less
+  than the argument.</p>
+  <p>A classic example is the &#8721; summation operation, which
+  corresponds to the NAP function 
+  <code>sum</code>. This can be used as follows to produce a scalar
+  (rank 0) result by summing a vector (rank 1):</p>
+  <pre>
+% [nap &quot;sum({0.5 2 -1 8})&quot;]
+9.5
+</pre>
+This function 
+  <code>sum</code> can be applied to a matrix (rank 2) to produce a
+  vector (rank 1). If the second argument is omitted then we get the
+  sum of each column. If it is 1 we get the sum of each row. This is
+  shown by:
+  <pre>
+% nap &quot;mat = {
+{2 5 0}
+{6 7 1}
+}&quot;
+::NAP::49-49
+% [nap &quot;sum mat&quot;]
+8 12 1
+% [nap &quot;sum(mat,1)&quot;]
+7 14
+</pre>
+  <p>The NAP reduction and scan functions are listed in the following
+  table:</p>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Type</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr valign="top">
+        <td>
+        <code>count(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>reduction</td>
+        <td>Number of non-missing elements in rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var></td>
+        <td></td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>max(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>reduction</td>
+        <td>Maximum of rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>min(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>reduction</td>
+        <td>Minimum of rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>prod(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>reduction</td>
+        <td>Product of rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var></td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>psum(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>scan</td>
+        <td>Multi-directional partial-sums of 
+        <var>x</var> (see below)</td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>psum1(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>scan</td>
+        <td>Uni-directional partial-sums of rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var> (see below)</td>
+      </tr>
+      <tr valign="top">
+        <td>
+        <code>sum(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>reduction</td>
+        <td>Sum of rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The optional second argument of reduction functions is called the 
+  <em>verb-rank</em> (as in J). It specifies the rank of the sub-arrays
+  (cells) to which the process is applied. In the above example the
+  verb-rank was 1, so the matrix was split into vectors (corresponding
+  to each row) before doing the summation. This final summation process
+  is always done by summing along the first (most significant)
+  dimension.</p>
+  <p>It is possible to specify a verb-rank of 0. This is useful with 
+  <code>count()</code> because each (rank 0) element is processed
+  separately. If it is missing the result is 0, otherwise it is 1. So
+  this gives us an elemental function for testing whether values are
+  missing. Note that the rank does not change in this case! E.g.</p>
+  <pre>
+% [nap &quot;count({4 _ 2 -9}, 0)&quot;]
+1 0 1 1
+</pre>
+  <h4>
+    <a name="psum">Partial-sum Functions <code>psum(</code> <var>x</var> <code>)</code> and <code>psum1(</code> <var>x</var>[ <code>,</code> <var>r</var>] <code>)</code></a>
+  </h4>The result of 
+  <code>psum(</code> 
+  <var>x</var> 
+  <code>)</code> or 
+  <code>psum1(</code> 
+  <var>x</var>[ 
+  <code>,</code> 
+  <var>r</var>] 
+  <code>)</code> has the same shape as 
+  <var>x</var>.
+  <p>If 
+  <var>x</var> is a vector then these two functions give the same
+  result. Let 
+  <var>r</var> be this result. Each element of 
+  <var>r</var> is defined by
+  <br /></p>
+  <table>
+    <tr align="center">
+      <td></td>
+      <td>
+        <var>I</var>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+      <var>r</var> 
+      <sub>
+        <var>I</var>
+      </sub> =</td>
+      <td>&#8721;</td>
+      <td>
+      <var>x</var> 
+      <sub>
+        <var>i</var>
+      </sub></td>
+    </tr>
+    <tr align="center">
+      <td></td>
+      <td>
+        <var>i=0</var>
+      </td>
+    </tr>
+  </table>
+  <p>For example:</p>
+  <pre>
+% nap &quot;x = {2 7 1 3 8 2 5 0 2 5}&quot;
+::NAP::14-14
+% [nap &quot;psum(x)&quot;] value
+2 9 10 13 21 23 28 28 30 35
+% [nap &quot;psum1(x)&quot;] value
+2 9 10 13 21 23 28 28 30 35
+</pre>
+  <p>Missing values are treated as zeros. E.g.</p>
+  <pre>
+% [nap &quot;psum{5 -9 _ 6 4}&quot;]
+5 -4 -4 2 6
+</pre>
+  <p>The following example shows how partial sums can be used to
+  calculate a 3-point moving-average in an efficient manner:</p>
+  <pre>
+% nap &quot;ps = 0 // psum(x)&quot;
+::NAP::25-25
+% $ps value
+0 2 9 10 13 21 23 28 28 30 35
+% [nap &quot;(ps(3 .. 10) - ps(0 .. 7)) / 3.0&quot;] value
+3.33333 3.66667 4 4.33333 5 2.33333 2.33333 2.33333
+</pre>
+  <p>Missing values can be handled as follows:</p>
+  <pre>
+% nap &quot;x = f64{2 7 1 _ 3 8 2 5 _ 0 2 5}&quot;
+::NAP::187-187
+% nap &quot;ps = 0 // psum(x)&quot;
+::NAP::192-192
+% $ps value
+0 2 9 10 10 13 21 23 28 28 28 30 35
+% nap &quot;psc = 0 // psum(isPresent x)&quot;; # psum of counts
+::NAP::203-203
+% $psc value
+0 1 2 3 3 4 5 6 7 7 8 9 10
+% nap &quot;i = 0 .. 9&quot;
+::NAP::209-209
+% [nap &quot;(ps(i+3) - ps(i)) / (psc(i+3) - psc(i))&quot;] value
+3.33333 4 2 5.5 4.33333 5 3.5 2.5 1 2.33333
+</pre>
+  <p>The library function 
+  <a href="stat.html#moving_average"> <code>moving_average</code> </a> generalises this moving-average technique to any rank.</p>
+  <p>If the rank of 
+  <var>x</var> exceeds 1 then 
+  <code>psum(</code> 
+  <var>x</var> 
+  <code>)</code> and 
+  <code>psum1(</code> 
+  <var>x</var>[ 
+  <code>,</code> 
+  <var>r</var>] 
+  <code>)</code> give different results. Function 
+  <code>psum1</code> sums in a single direction defined by the
+  verb-rank in the same manner as the reduction functions. If 
+  <var>x</var> is a matrix and 
+  <var>r</var> is the result 
+  <code>psum(</code> 
+  <var>x</var> 
+  <code>)</code>, then each element of 
+  <var>r</var> is defined by
+  <br /></p>
+  <table>
+    <tr align="center">
+      <td></td>
+      <td>
+        <var>I</var>
+      </td>
+      <td>
+        <var>J</var>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+      <var>r</var> 
+      <sub>
+        <var>IJ</var>
+      </sub> =</td>
+      <td>&#8721;</td>
+      <td>&#8721;</td>
+      <td>
+      <var>x</var> 
+      <sub>
+        <var>ij</var>
+      </sub></td>
+    </tr>
+    <tr align="center">
+      <td></td>
+      <td>
+        <var>i=0</var>
+      </td>
+      <td>
+        <var>j=0</var>
+      </td>
+    </tr>
+  </table>
+  <p>The following example uses the matrix 
+  <code>mat</code> defined above:</p>
+  <pre>
+% $mat
+2 5 0
+6 7 1
+% [nap &quot;psum1(mat)&quot;]
+ 2  5  0
+ 8 12  1
+% [nap &quot;psum1(mat, 1)&quot;]
+2 7 7
+6 7 1
+% [nap &quot;psum(mat)&quot;]
+ 2  7  7
+ 8 20 21
+</pre>
+  <p>Other similar 
+  <em>scan</em> functions can be defined for partial products and so
+  on. However NAP currently has only 
+  <code>psum</code> and 
+  <code>psum1</code>.</p>
+  <h3>
+    <a name="Metadata">Metadata Functions</a>
+  </h3>Metadata functions return information (other than data values)
+  from a NAO. The same information can be obtained using an OOC, but
+  these functions are more convenient within expressions.
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>
+        <code>coordinate_variable(</code> 
+        <var>x</var>[, 
+        <var>d</var>] 
+        <code>)</code></td>
+        <td>Coordinate variable of dimension 
+        <var>d</var> (default 0)</td>
+      </tr>
+      <tr>
+        <td>
+        <code>label(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Descriptive title</td>
+      </tr>
+      <tr>
+        <td>
+        <code>missing_value(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Value indicating null or undefined data</td>
+      </tr>
+      <tr>
+        <td>
+        <code>nels(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Number of elements 
+        <code>= prod(</code> 
+        <var>shape</var> 
+        <code>)</code></td>
+      </tr>
+      <tr>
+        <td>
+        <code>rank(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Number of dimensions 
+        <code>= nels(</code> 
+        <var>shape</var> 
+        <code>)</code></td>
+      </tr>
+      <tr>
+        <td>
+        <code>shape(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Vector of dimension sizes</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>
+    <a name="change_shape_or_order">Functions which change shape or order</a>
+  </h3>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>
+        <code>sort(</code> 
+        <var>x</var>[ 
+        <code>,</code> 
+        <var>r</var>] 
+        <code>)</code></td>
+        <td>Sort rank- 
+        <var>r</var> sub-arrays of 
+        <var>x</var> into ascending order over most significant
+        dimension</td>
+      </tr>
+      <tr>
+        <td>
+        <code>reshape(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Spread the elements of 
+        <var>x</var> into a vector with shape 
+        <code>nels(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+      </tr>
+      <tr>
+        <td>
+        <code>reshape(</code> 
+        <var>x</var>, 
+        <var>s</var> 
+        <code>)</code></td>
+        <td>Reshape the elements of 
+        <var>x</var> into an array with shape 
+        <var>s</var></td>
+      </tr>
+      <tr>
+        <td>
+        <code>transpose(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Reverse the order of dimensions of 
+        <var>x</var></td>
+      </tr>
+      <tr>
+        <td>
+        <code>transpose(</code> 
+        <var>x</var>, 
+        <var>p</var> 
+        <code>)</code></td>
+        <td>Permute the dimensions of 
+        <var>x</var> to the order specified by 
+        <var>p</var></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Here are some examples of the use of these functions:</p>
+  <pre>
+% [nap &quot;sort {6.3 0.5 9 -2.1 0}&quot;]
+-2.1 0 0.5 6.3 9
+% [nap &quot;sort({{3 0 2}{1 9 1}})&quot;]; # sort each column
+1 0 1
+3 9 2
+% [nap &quot;sort({{3 0 2}{1 9 1}}, 1)&quot;]; # sort each row
+0 2 3
+1 1 9
+% [nap &quot;reshape {{1 3 7}{0 9 2}}&quot;] all
+::NAP::217-217  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 7 0 9 2
+% [nap &quot;reshape({6.3 0.5 9 -2.1 0}, {2 4})&quot;] all
+::NAP::224-224  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 6.3  0.5  9.0 -2.1
+ 0.0  6.3  0.5  9.0
+% [nap &quot;transpose {{1 3 7}{0 9 2}}&quot;] all
+::NAP::228-228  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 0
+3 9
+7 2
+</pre>
+  <h3>
+    <a name="Linear_algebra">Linear-algebra Functions</a>
+  </h3>
+  <p>The function 
+  <code>solve_linear(</code> 
+  <var>A</var>[, 
+  <var>B</var>]) solves a system of linear equations defined by matrix 
+  <var>A</var> and right-hand-sides 
+  <var>B</var>. 
+  <var>B</var> can be either a vector or a matrix (representing
+  multiple right-hand sides). If 
+  <var>B</var> is omitted then the result is the matrix inverse.</p>
+  <p>If the system is 
+  <em>over-determined</em> (more equations than unknowns) then the
+  result is the solution of the 
+  <em>linear least-squares problem</em>. This solution minimizes the
+  sum of the squares of the differences between the left and right-hand
+  sides.</p>
+  <p>The following system of linear equations is solved by the
+  following example:
+  <br />&#160; 3 
+  <var>x</var> &#8722; 4 
+  <var>y</var> = 20
+  <br />&#8722;5 
+  <var>x</var> + 8 
+  <var>y</var> = &#8722;36</p>
+  <pre>
+% nap &quot;A = {
+{3 -4}
+{-5 8}
+}&quot;
+::NAP::14-14
+% nap &quot;B = {20 -36}&quot;
+::NAP::17-17
+% nap &quot;x = solve_linear(A, B)&quot;
+::NAP::20-20
+% $x a
+::NAP::20-20  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 -2
+</pre>
+  <p>We can check the result using matrix multiplication:</p>
+  <pre>
+% [nap &quot;A . x&quot;]
+20 -36
+</pre>
+  <h3>
+    <a name="Correlation">Correlation</a>
+  </h3>
+  <p>The functions 
+  <code>correlation</code> and 
+  <code>moving_correlation</code> both calculate Pearson product-moment
+  correlations. Function 
+  <code>correlation</code> calculates correlations between variables
+  defined by the dimensions of its (one or two) arguments. Function 
+  <code>moving_correlation</code> calculates pattern (spacial)
+  correlations between a (vector or matrix) window variable and
+  variables defined by moving a window of the same shape around a
+  larger array of the same rank.</p>
+  <p>Both functions handle missing values by omitting cases where one
+  or both values are missing. The result consists of two layers. Layer
+  0 contains the correlation values themselves. Layer 1 contains the
+  corresponding number of (non-missing) cases (sample size 
+  <var>n</var>) used to calculate these values.</p>
+  <p>Both functions produce an 
+  <code>f64</code> result if any of the data is 
+  <code>f64</code>, but otherwise the result is 
+  <code>f32</code>.</p>
+  <h4>
+    <a name="function_correlation">Function <code>correlation(</code> <var>x</var>[, <var>y</var>] <code>)</code></a>
+  </h4>
+  <p>If 
+  <var>y</var> is not specified then it defaults to 
+  <var>x</var>.</p>
+  <p>The 1st (most significant) dimensions of 
+  <var>x</var> and 
+  <var>y</var> must have the same size, since this corresponds to the
+  number of cases. (For time-series this dimension is time.) The
+  remaining dimensions (if any) of 
+  <var>x</var> and 
+  <var>y</var> are essentially merged into column dimensions, but do
+  appear in the result.</p>
+  <p>For example, let 
+  <var>x</var> be a 80×3 matrix and 
+  <var>y</var> a 80×5 matrix. The command</p>
+  <pre>
+nap &quot;r = correlation(x, y)&quot;
+</pre>
+produces a 2×3×5 array 
+  <var>r</var>. 
+  <var>r</var> 
+  <sub>0 
+  <var>i</var> 
+  <var>j</var></sub> is the correlation between column 
+  <var>i</var> of 
+  <var>x</var> and column 
+  <var>j</var> of 
+  <var>y</var>. 
+  <var>r</var> 
+  <sub>1 
+  <var>i</var> 
+  <var>j</var></sub> is the number of cases ( 
+  <var>n</var>) used to calculate 
+  <var>r</var> 
+  <sub>0 
+  <var>i</var> 
+  <var>j</var></sub>.
+  <p>A simple example is:</p>
+  <pre>
+% [nap &quot;correlation({1 3 _ 6 6}, {6 6 4 2 3})&quot;]
+-0.924138 4
+</pre>
+Element 2 (base 0) of 
+  <var>x</var> is missing, so element 2 from 
+  <var>y</var> is not used and the sample size is 4 (as shown in the
+  second element of the result). The correlation between
+  {1&#160;3&#160;6&#160;6} and {6&#160;6&#160;2&#160;3} is calculated
+  to be -0.924138.
+  <p>The following example is from Table 15.2 (page 274) of 
+  <cite>Schaum&#39;s Outline of Theory and Problems of
+  Statistics</cite>, M.R. Spiegel, 1961:</p>
+  <pre>
+% [nap &quot;correlation{
+        {64 57 8}
+        {71 59 10}
+        {53 49 6}
+        {67 62 11}
+        {55 51 8}
+        {58 50 7}
+        {77 55 10}
+        {57 48 9}
+        {56 52 10}
+        {51 42 6}
+        {76 61 12}
+        {68 57 9}
+}&quot;] -f %6.4f
+ 1.0000  0.8196  0.7698
+ 0.8196  1.0000  0.7984
+ 0.7698  0.7984  1.0000
+
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000
+</pre>
+Layer 0 of the result is the correlation matrix.
+  <br />The correlation between columns 0 and 1 is 0.8196.
+  <br />The correlation between columns 0 and 2 is 0.7698.
+  <br />The correlation between columns 1 and 2 is 0.7984.
+  <br />There is no missing data, so all values in layer 1 are 12.
+  <h4>
+    <a name="moving_correlation">Function <code>moving_correlation(</code> <var>x</var>, <var>y</var>, [ <var>lag</var> <sub>0</sub>[, <var>lag</var> <sub>1</sub>]] <code>)</code></a>
+  </h4>
+  <p>The ranks of 
+  <var>x</var> and 
+  <var>y</var> must be the same. (The current version supports ranks 1
+  and 2 only.)</p>
+  <p>If 
+  <var>x</var> and 
+  <var>y</var> have the same shape then the result contains a single
+  correlation, calculated by treating the elements of each array as two
+  lists of values.</p>
+  <p>If 
+  <var>x</var> and 
+  <var>y</var> have different shapes then the smaller of 
+  <var>x</var> and 
+  <var>y</var> is a window ( 
+  <em>chip</em>) array which is moved around in the other array,
+  producing a correlation for each position.
+  <br />
+  <var>lag</var> 
+  <sub>0</sub> is vector of row lags (default: all possible)
+  <br />
+  <var>lag</var> 
+  <sub>1</sub> is vector of column lags (default: all possible)</p>
+  <h3>
+    <a name="Geometry">Geometry</a>
+  </h3>
+  <h4>
+    <a name="inPolygon">Testing whether points are in polygon</a>
+  </h4>
+  <p>Function 
+  <code>inPolygon(</code> 
+  <var>x</var>, 
+  <var>y</var>, 
+  <var>p</var> 
+  <code>)</code> tests whether the points defined by 
+  <var>x</var> and 
+  <var>y</var> are inside the polygon defined by 
+  <var>p</var>. The result is</p>
+  <ul>
+    <li>-1 if ( 
+    <var>x</var>, 
+    <var>y</var>) is outside the polygon.</li>
+    <li>0 if ( 
+    <var>x</var>, 
+    <var>y</var>) is exactly on an edge (boundary) of the polygon.</li>
+    <li>1 if ( 
+    <var>x</var>, 
+    <var>y</var>) is inside the polygon.</li>
+  </ul>
+  <p>The algorithm is an extension of Wm. Randolph Franklin&#39;s 
+  <a href="http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html"> <code>PNPOLY</code> </a> . 
+  <code>PNPOLY</code> classifies points into only two categories, 
+  <em>inside</em> and 
+  <em>outside</em>. Points exactly on an edge can be classified either
+  way. The modified algorithm in 
+  <code>inPolygon</code> does detect edge points.</p>
+  <p>The ranks of 
+  <var>x</var> and 
+  <var>y</var> can differ provided their trailing dimensions match. The
+  shape of the result is that of the one of higher rank. If an element
+  of 
+  <var>x</var> or 
+  <var>y</var> is missing then the corresponding element of the result
+  is missing.</p>
+  <p>The argument 
+  <var>p</var> is an 
+  <var>n</var>× 
+  <var>m</var> matrix defining the 
+  <var>n</var> vertices ( 
+  <var>x</var>, 
+  <var>y</var>) of the polygon. There must be at least one vertex. The
+  number of columns ( 
+  <var>m</var>) must be at least 2. Column 0 contains 
+  <var>x</var>. Column 1 contains 
+  <var>y</var>. Any other columns are ignored.</p>
+  <p>The following example tests whether the points (1,2), (2,2),
+  (3,2), (4,2), (5,2), (6,2) are in the triangle with vertices (0,0),
+  (5,0), (5,5):</p>
+  <pre>
+% [nap &quot;inPolygon(1 .. 6, 2, {{0 0}{5 0}{5 5}})&quot;]
+-1 0 1 1 0 -1
+</pre>
+  <h4>
+    <a name="Triangulation">Triangulation</a>
+  </h4>
+  <p>
+  <em>Triangulation</em> is the process of joining scattered ( 
+  <var>x</var>, 
+  <var>y</var>) points (called 
+  <em>sites</em>) to form triangles. One important use of triangulation
+  is interpolation of 
+  <nobr>( 
+  <var>x</var>, 
+  <var>y</var>, 
+  <var>z</var>)</nobr> data. Function 
+  <a href="nap_function_lib.html#scattered2grid"> <code>scattered2grid</code> </a> . interpolates by defining a plane for each triangle produced by
+  triangulation.</p>
+  <p>The 
+  <a href="http://www.ics.uci.edu/~eppstein/gina/delaunay.html">Delaunay triangulation</a> is the optimal triangulation in various senses. For
+  example, it maximises the minimum angle. Delaunay triangulation is
+  closely related to 
+  <a href="http://www.ics.uci.edu/~eppstein/gina/voronoi.html">Voronoi Diagrams</a> which consist of polygons around each site. The points
+  within each polygon are those which are closer to this site than to
+  any other site. A good survey of Delaunay triangulation and Voronoi
+  diagrams is given by</p>
+  <blockquote>Franz Aurenhammer, 
+  <a href="http://portal.acm.org/citation.cfm?doid=116873.116880"> <cite>Voronoi diagrams -- a survey of a fundamental geometric data structure</cite> </a> , ACM Computing Surveys, Volume 23 , Issue 3 (September 1991),
+  pp345-405, 1991</blockquote>
+  <p>Function 
+  <code>triangulate</code> gives the triangles defined by Delaunay
+  triangulation. Function 
+  <code>triangulate_edges</code> gives the edges defined by the same
+  Delaunay triangulation. The code of both functions is based on a
+  program written by 
+  <a href="http://goanna.cs.rmit.edu.au/~gl/">Geoff Leach</a>,
+  Department of Computer Science, RMIT, Melbourne, Australia. This
+  program implements a very efficient Delaunay triangulation algorithm
+  that is O( 
+  <var>n</var> log 
+  <var>n</var>) time and O( 
+  <var>n</var>) space. This worst-case optimal divide-and-conquer
+  algorithm is described in</p>
+  <blockquote>Guibas, L. and Stolfi, J., 
+  <a href="http://portal.acm.org/citation.cfm?id=808751&amp;dl=ACM&amp;coll=portal"> <cite>Primitives for the manipulation of general subdivisions and the computation of Voronoi diagrams</cite> </a> , Proceedings of the fifteenth annual ACM symposium on theory of
+  computing, pp221-234, 1983.</blockquote>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>
+        <code>triangulate(</code> 
+        <var>sites</var> 
+        <code>)</code></td>
+        <td>
+        <var>t</var>×3 matrix of site indices defining 
+        <var>t</var> triangles</td>
+      </tr>
+      <tr>
+        <td>
+        <code>triangulate_edges(</code> 
+        <var>sites</var> 
+        <code>)</code></td>
+        <td>
+        <var>e</var>×2 matrix of site indices defining 
+        <var>e</var> edges</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The argument 
+  <var>sites</var> is an 
+  <var>n</var>× 
+  <var>m</var> matrix defining the 
+  <var>n</var> points ( 
+  <var>x</var>, 
+  <var>y</var>). The number of columns ( 
+  <var>m</var>) must be at least 2. Column 0 contains 
+  <var>x</var>. Column 1 contains 
+  <var>y</var>. Any other columns are ignored. The row number is called
+  the 
+  <em>site index</em> and ranges from 0 to 
+  <var>n</var>-1.</p>
+  <p>The following example triangulates the sites (0,0), (2,1), (0,1)
+  and (1,2). These have site indices 0, 1, 2 and 3 respectively.
+  Function 
+  <code>triangulate</code> gives the site indices of the vertices of
+  each of two triangles. Function 
+  <code>triangulate_edges</code> gives the site indices of the vertices
+  of each of the five edges of these same two triangles.</p>
+  <pre>
+% [nap &quot;triangulate({{0 0}{2 1}{0 1}{1 2}})&quot;]
+0 1 2
+1 2 3
+% [nap &quot;triangulate_edges({{0 0}{2 1}{0 1}{1 2}})&quot;]
+0 2
+0 1
+1 3
+1 2
+2 3
+</pre>
+  <h3>
+    <a name="Grid">Grid Functions</a>
+  </h3>
+  <p>There are currently just two closely related grid functions, 
+  <code>invert_grid</code> and 
+  <code>invert_grid_no_trim</code>. These can be applied to</p>
+  <ul>
+    <li>one-dimensional data to define a piecewise-linear mapping as
+    the inverse of a given piecewise-linear mapping.</li>
+    <li>two-dimensional data to define a piecewise-bilinear mapping as
+    the inverse of a given piecewise-bilinear mapping.</li>
+  </ul>
+  <p>There is only a minor difference between these two functions.
+  Function 
+  <code>invert_grid</code> suppresses edges (rows and columns in 2D
+  case) containing nothing except missing values. Function 
+  <code>invert_grid_no_trim</code> does no such trimming.</p>
+  <p>In the 1D case we have a piecewise-linear mapping from 
+  <var>x</var> to 
+  <var>y</var>, and we want a piecewise-linear mapping from 
+  <var>y</var> to 
+  <var>x</var>. The functions are called by
+  <br />
+  <code>invert_grid(</code> 
+  <var>y 
+  <code>,</code>ycv</var> 
+  <code>)</code>
+  <br />or
+  <br />
+  <code>invert_grid_no_trim(</code> 
+  <var>y 
+  <code>,</code>ycv</var> 
+  <code>)</code>
+  <br />where 
+  <var>y</var> is the known mapping (and has a coordinate variable
+  corresponding to 
+  <var>x</var>)
+  <br />and 
+  <var>ycv</var> is the desired new 
+  <var>y</var> coordinate variable.
+  <br /></p>
+  <p>The following example starts with a mapping from 
+  <var>x</var> to 
+  <var>y</var> defined by the two lines joining the three points
+  (0,&#160;0), (2,&#160;1) and (5,&#160;4). The difference between 
+  <code>invert_grid</code> and 
+  <code>invert_grid_no_trim</code> is shown by attempting to
+  extrapolate to 
+  <var>y</var>&#160;=&#160;&#8722;1 with both these functions. Both
+  produce the inverse mapping from 
+  <var>y</var> to 
+  <var>x</var> defined by the four lines joining the five points
+  (0,&#160;0), (2,&#160;1), (3,&#160;2), (4,&#160;3) and (5,&#160;4).
+  Function 
+  <code>invert_grid_no_trim</code> generates the requested point for 
+  <var>y</var>&#160;=&#160;&#8722;1 (with 
+  <var>x</var> missing) whereas 
+  <code>invert_grid</code> suppresses this point.</p>
+  <pre>
+% nap &quot;y = {0 1 4}&quot;
+::NAP::56-56
+% $y set coo &quot;{0 2 5}&quot;
+% [nap &quot;coordinate_variable(y) /// y&quot;]
+0 2 5
+0 1 4
+% [nap &quot;ycv = -1 .. 4&quot;] value
+-1 0 1 2 3 4
+% nap &quot;x = invert_grid(y,ycv)&quot;
+::NAP::75-75
+% $x all
+::NAP::75-75  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::76-76
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable:
+::NAP::72-72
+Value:
+0 2 3 4 5
+% [nap &quot;coordinate_variable(x) /// x&quot;]
+0 1 2 3 4
+0 2 3 4 5
+% nap &quot;xnt = invert_grid_no_trim(y,ycv)&quot;
+::NAP::86-86
+% $xnt all
+::NAP::86-86  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::87-87
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable:
+::NAP::83-83
+Value:
+_ 0 2 3 4 5
+% [nap &quot;coordinate_variable(xnt) /// xnt&quot;]
+-1  0  1  2  3  4
+ _  0  2  3  4  5
+</pre>
+  <p>In the 2D case, the functions are called by
+  <br />
+  <code>invert_grid(</code> 
+  <var>y 
+  <code>,</code>ycv</var> 
+  <code>,</code> 
+  <var>x,xcv</var> 
+  <code>)</code>,
+  <br />or
+  <br />
+  <code>invert_grid_no_trim(</code> 
+  <var>y 
+  <code>,</code>ycv</var> 
+  <code>,</code> 
+  <var>x,xcv</var> 
+  <code>)</code>,
+  <br />where matrix 
+  <var>y</var> defines a mapping from 
+  <var>ij</var> space to 
+  <var>y</var>.
+  <br />matrix 
+  <var>x</var> defines a mapping from 
+  <var>ij</var> space to 
+  <var>x</var>.
+  <br />The result is a 3D array whose</p>
+  <ul>
+    <li>Dimension 0 has the specified coordinate-variable 
+    <var>ycv</var></li>
+    <li>Dimension 1 has the specified coordinate-variable 
+    <var>xcv</var>.
+    <br /></li>
+    <li>dimension 2 is of size 2, corresponding to the 
+    <var>i</var> and 
+    <var>j</var> mappings We can think of the result as two matrices
+    defining mappings from 
+    <var>xy</var> space to 
+    <var>i</var> and 
+    <var>j</var> respectively.</li>
+  </ul>
+  <p>The following 2D example shows how a satellite image can be mapped
+  to latitude/longitude space (i.e. a 
+  <em>Cylindrical Equidistant</em> map projection). Note that the terms
+  
+  <em>line</em> and 
+  <em>pixel</em> refer to the row and column of a raw satellite image
+  respectively. We are interested in an input region bounded by line
+  40, line 50, pixel 1 and pixel 21. Assume we know the latitude and
+  longitude on a 3×3 grid corresponding to lines 40, 50, 60 and pixels
+  1, 11, 21. The following defines and displays an inverse grid for
+  latitudes 40°S, 30°S, 25°S and longitudes 150°E, 160°E, 170°E,
+  180°E:</p>
+  <pre>
+nap &quot;line = {40 50 60}&quot;
+nap &quot;pixel = {1 11 21}&quot;
+nap &quot;lat_grid = {{-40 -50 _}{-30 -40 -50}{-20 -30 -40}}&quot;
+$lat_grid set coo line pixel
+nap &quot;lon_grid = {{200 180 _}{180 160 140}{160 140 120}}&quot;
+$lon_grid set coo line pixel
+nap &quot;lat_cv = {-40 -30 -25}&quot;
+$lat_cv set unit degrees_north
+nap &quot;lon_cv = 150 .. 180 ... 10&quot;
+$lon_cv set unit degrees_east
+nap &quot;ig = invert_grid(lat_grid, lat_cv, lon_grid, lon_cv)&quot;
+$ig all
+</pre>
+This displays the following inverse grid:
+  <pre>
+::NAP::46-46  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::47-47
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable:
+::NAP::36-36
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable:
+::NAP::39-39
+Dimension 2   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+52.5 13.5
+50.0 11.0
+47.5  8.5
+45.0  6.0
+
+57.5  8.5
+55.0  6.0
+52.5  3.5
+50.0  1.0
+
+60.0  6.0
+57.5  3.5
+55.0  1.0
+   _    _
+</pre>
+The following displays the coordinate variables of this inverse
+grid 
+  <code>ig</code>:
+  <pre>
+% [$ig coo 0] all
+::NAP::36-36  f32  MissingValue: NaN  References: 1  Unit:
+degrees_north
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-40 -30 -25
+% [$ig coo 1] all
+::NAP::39-39  f32  MissingValue: NaN  References: 1  Unit: degrees_east
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+150 160 170 180
+</pre>
+The first row of 
+  <code>ig</code> is
+  <pre>
+52.5 13.5
+</pre>
+Let us use these values as indirect indices of the original
+latitude and longitude grids:
+  <pre>
+% [nap &quot;lat_grid(@52.5, @13.5)&quot;]
+-40
+% [nap &quot;lon_grid(@52.5, @13.5)&quot;]
+150
+</pre>
+Note that these results correspond to the initial values of the
+coordinate variables of 
+  <code>ig</code>.
+  <p>Now let us define a small extract from a raw satellite image:</p>
+  <pre>
+nap &quot;raw = {
+{99 91 91 90}
+{95 95 92 91}
+{90 89 88 88}
+}&quot;
+nap &quot;line = 50 .. 52&quot;
+nap &quot;pixel = 1 .. 4&quot;
+$raw set coo line pixel
+</pre>
+  <p>The latitudes and longitudes at these points are given by</p>
+  <pre>
+% [nap &quot;lat_grid(@line, @pixel)&quot;]
+-30 -31 -32 -33
+-29 -30 -31 -32
+-28 -29 -30 -31
+% [nap &quot;lon_grid(@line, @pixel)&quot;]
+180 178 176 174
+178 176 174 172
+176 174 172 170
+</pre>
+  <p>We can map this image to a 
+  <em>Cylindrical Equidistant</em> projection as follows:</p>
+  <pre>
+% nap &quot;latitude = f32(-29 .. -33)&quot;
+::NAP::135-135
+% nap &quot;longitude = f32(170 .. 180)&quot;
+::NAP::142-142
+% nap &quot;cyl_eq = raw(@ig(@latitude, @longitude, ))&quot;
+::NAP::166-166
+% $cyl_eq all -f %.1f -col 11
+::NAP::166-166  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable:
+::NAP::152-152
+Dimension 1   Size: 11     Name: (NULL)    Coordinate-variable:
+::NAP::153-153
+Value:
+91.0    _    _    _    _    _    _    _    _    _    _
+89.2 88.7 88.0 89.4 91.0 92.9 95.0 94.5 95.0 96.5 99.0
+88.0 88.8 89.8 90.8 92.0 92.3 92.2 91.8 91.0 92.1 92.2
+91.0 91.1 91.0 91.0 91.0 91.0 91.0 90.3 89.8 89.3 89.0
+95.0 94.7 93.8 92.2 90.0 89.7 89.2 88.7 88.0 89.4 91.0
+% [$cyl_eq coo 0] all
+::NAP::152-152  f32  MissingValue: NaN  References: 1  Unit:
+degrees_north
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-29 -30 -31 -32 -33
+% [$cyl_eq coo 1] all -col 11
+::NAP::153-153  f32  MissingValue: NaN  References: 1  Unit:
+degrees_east
+Dimension 0   Size: 11     Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+170 171 172 173 174 175 176 177 178 179 180
+</pre>
+  <h3>
+    <a name="Special_Data_types">Functions related to Special Data-types</a>
+  </h3>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>
+        <code>open_box(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>NAO pointed to by boxed NAO 
+        <var>x</var></td>
+      </tr>
+      <tr>
+        <td>
+        <code>pad(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Normal NAO corresponding to ragged NAO 
+        <var>x</var></td>
+      </tr>
+      <tr>
+        <td>
+        <code>prune(</code> 
+        <var>x</var> 
+        <code>)</code></td>
+        <td>Ragged NAO corresponding to normal NAO 
+        <var>x</var></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The following example illustrates the use of the function 
+  <code>open_box</code>, which allows one to extract NAOs from a
+  structure created with the operator &quot;<code>,</code>&quot;.</p>
+  <pre>
+% nap &quot;pointers = {4 5} , &#39;hello&#39; , 9&quot;
+::NAP::9776-9776
+% $pointers
+9772 9773 9775
+% [nap &quot;open_box(pointers(0))&quot;] all
+::NAP::9772-9772  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 5
+% [nap &quot;open_box(pointers(1))&quot;] all
+::NAP::9773-9773  c8  MissingValue: (NULL)  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+hello
+% [nap &quot;open_box(pointers(2))&quot;] all
+::NAP::9775-9775  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Value:
+9
+</pre>
+  <p>The following example illustrates the use of functions 
+  <code>prune</code> and its inverse 
+  <code>pad</code>. Function 
+  <code>prune</code> creates a 
+  <code>ragged</code> array. This suppresses missing values at the
+  start and end of the least significant dimension (column in this
+  matrix case). In this matrix case it creates a separate NAO for each
+  row and stores an index (slot number) to these in the result.</p>
+  <pre>
+% nap &quot;data = {{0 1.5 2 -1}{_ 1 4 1n}{4#_}{2#_ 9 -9}}&quot;
+::NAP::9736-9736
+% $data
+ 0.0  1.5  2.0 -1.0
+   _  1.0  4.0    _
+   _    _    _    _
+   _    _  9.0 -9.0
+% nap &quot;compressed_data = prune(data)&quot;
+::NAP::9738-9738
+% $compressed_data all
+::NAP::9738-9738  ragged  MissingValue: 0  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+
+0   start-index: 0   ::NAP::9740-9740
+1   start-index: 1   ::NAP::9741-9741
+2   start-index: 4   ::NAP::9742-9742
+3   start-index: 2   ::NAP::9743-9743
+% ::NAP::9743-9743
+9 -9
+% [nap &quot;pad(compressed_data)&quot;] all
+::NAP::9745-9745  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 0.0  1.5  2.0 -1.0
+   _  1.0  4.0    _
+   _    _    _    _
+   _    _  9.0 -9.0
+</pre>
+  <h3>
+    <a name="Morphological">Morphological Functions</a>
+  </h3>
+  <p>The basic concepts are explained in the MATLAB documentation on 
+  <a href="http://www.mathworks.com/access/helpdesk/help/toolbox/images/morph.html"> Morphological Operations</a>.</p>
+  <table border="1" rules="groups">
+    <colgroup span="1"></colgroup>
+    <colgroup span="1"></colgroup>
+    <tr>
+      <th align="center">Function</th>
+      <th align="center">Result</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>
+        <code>dilate(</code> 
+        <var>x</var>, 
+        <var>se</var>[, 
+        <var>seo</var>])</td>
+        <td>Binary dilation of 
+        <var>x</var>; 
+        <var>se</var> = structure-element; 
+        <var>seo</var> = origin of structure-element</td>
+      </tr>
+      <tr>
+        <td>
+        <code>erode(</code> 
+        <var>x</var>, 
+        <var>se</var>[, 
+        <var>seo</var>])</td>
+        <td>Binary erosion of 
+        <var>x</var>; 
+        <var>se</var> = structure-element; 
+        <var>seo</var> = origin of structure-element</td>
+      </tr>
+      <tr>
+        <td>
+        <code>moving_range(</code> 
+        <var>x</var>, 
+        <var>s</var> 
+        <code>)</code></td>
+        <td>Range (max-min) of moving shape- 
+        <var>s</var> window around matrix 
+        <var>x</var></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4>
+    <a name="Dilation_and_Erosion">Morphological Binary Dilation and Erosion</a>
+  </h4>
+  <p>
+  <var>x</var> is an 
+  <var>n</var> by 
+  <var>m</var> non-negative matrix that is being dilated or eroded.
+  <br />
+  <var>se</var> is the morphological structure element, an 
+  <var>a</var> by 
+  <var>b</var> matrix, where 
+  <var>a</var>&lt; 
+  <var>n</var> and 
+  <var>b</var>&lt; 
+  <var>m</var>.
+  <br />
+  <var>seo</var> is the origin of the structure element indexed from 0
+  at the top left corner.
+  <br /></p>
+  <h4>
+    <a name="Moving_Range">Moving Range</a>
+  </h4>
+  <p>Move a window over the matrix 
+  <var>x</var> and find the maximum difference between values in the
+  moving window. The result is placed in the element nearest the centre
+  of the moving window.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: function.html,v 1.13
+          2005/08/04 05:32:52 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

@@ -1,0 +1,98 @@
+% $Id: nap.tex,v 1.5 2006/03/01 20:29:45 dav480 Exp $
+
+\documentclass[a4paper]{book}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage[pdftex,
+        colorlinks=true,
+        urlcolor=rltblue,       % \href{...}{...} external (URL)
+        filecolor=rltgreen,     % \href{...} local file
+        linkcolor=rltred        % \ref{...} and \pageref{...}
+        ]{hyperref}
+\usepackage{color}
+\definecolor{rltred}{rgb}{0.75,0,0}
+\definecolor{rltgreen}{rgb}{0,0.5,0}
+\definecolor{rltblue}{rgb}{0,0,0.75}
+
+\title{NAP User's Guide\\Version 6.0}
+\author{Harvey Davies\\CSIRO Marine and Atmospheric Research\\Melbourne, Australia}
+\date{\today}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Introduction}
+    \input{overview.tex}
+    \input{typo.tex}
+    \input{ack.tex}
+\chapter{Background}
+    \input{tcl_log.tex}
+    \input{model.tex}
+    \input{term.tex}
+    \input{grid.tex}
+    \input{refs.tex}
+\chapter{Installation}
+    \input{install.tex}
+    \input{scripts.tex}
+\chapter{Basics}
+    \input{sample.tex}
+    \input{nao_ooc.tex}
+    \input{nap_args.tex}
+    \input{data_type.tex}
+    \input{array.tex}
+\chapter{NAP Expressions}
+    \input{syntax.tex}
+    \input{const.tex}
+    \input{op.tex}
+    \input{indexing.tex}
+    \input{function.tex}
+\chapter{Object-Oriented Commands (OOCs)}
+    \input{ooc.tex}
+    \input{ooc_data.tex}
+    \input{ooc_meta.tex}
+    \input{ooc_modify.tex}
+    \input{ooc_write.tex}
+\chapter{Reading Files using \texttt{nap\_get} Command}
+    \input{nap_get.tex}
+\chapter{Other Commands}
+    \input{nap_info.tex}
+    \input{land_flag.tex}
+\chapter{Defining New NAP Commands and Functions}
+    \input{writing_procs.tex}
+    \input{make_dll.tex}
+\chapter{Tcl Procedures called as NAP Functions}
+    \input{date_function.tex}
+    \input{stat.tex}
+    \input{geog.tex}
+    \input{nap_function_lib.tex}
+\chapter{Tcl Procedures called as Commands}
+    \input{date_proc.tex}
+    \input{bin_io.tex}
+    \input{geog_proc.tex}
+    \input{projection.tex}
+\chapter{Tk GUI Procedures}
+    \input{caps_nap_menu.tex}
+    \input{choose_file.tex}
+    \input{hdf.tex}
+    \input{plot_nao.tex}
+\chapter{NAP Internal Details}
+    \input{nao.tex}
+    \input{photo.tex}
+\chapter{Demonstrations of NAP}
+    \input{demo_intro.tex}
+    \input{demo_simple.tex}
+    \input{demo_constant.tex}
+    \input{demo_arith.tex}
+    \input{demo_ooc.tex}
+    \input{demo_functions.tex}
+    \input{demo_construct.tex}
+    \input{demo_indexing.tex}
+    \input{demo_linear.tex}
+    \input{demo_io.tex}
+    \input{demo_define_function.tex}
+    \input{demo_stat.tex}
+
+\end{document}

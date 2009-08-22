@@ -1,0 +1,132 @@
+%  $Id: demo_ooc.tex,v 1.2 2006/03/01 22:05:15 dav480 Exp $ 
+    % OOCs (Object-Oriented Commands)
+      \section{OOCs (Object-Oriented Commands)}
+
+    \subsection{
+      \label{display}Display contents (data \& attributes) of NAO (n-dimensional array object)
+    }
+
+    \subsubsection{Default OOC}
+
+    \begin{verbatim}
+% [nap "2 ** (0 .. 8)"]
+1 2 4 8 16 32 ..
+% [nap "2 ** (0 .. 8)"] -columns 8 -format %.1f
+1.0 2.0 4.0 8.0 16.0 32.0 64.0 128.0 ..
+% [nap "2 ** (0 .. 8)"] -columns -1; # -1 = infinity
+1 2 4 8 16 32 64 128 256
+\end{verbatim}
+
+    \subsubsection{Method 
+    \texttt{value}: Display all lines \& columns}
+
+    \begin{verbatim}
+% [nap "2 ** (0 .. 8)"] value
+1 2 4 8 16 32 64 128 256
+% [nap "2 ** (0 .. 8)"] v; # can abbreviate, provided unique
+1 2 4 8 16 32 64 128 256
+\end{verbatim}
+
+    \subsubsection{Method 
+    \texttt{head}}
+
+    \begin{verbatim}
+% [nap "2 ** (0 .. 8)"] head
+::NAP::233-233  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+\end{verbatim}
+
+    \subsubsection{Method 
+    \texttt{all}}
+
+    \begin{verbatim}
+% [nap "2 ** (0 .. 8)"] all
+::NAP::242-242  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 2 4 8 16 32 ..
+% [nap "2 ** (0 .. 8)"] all -columns -1 -lines -1; # all
+columns \&amp; lines
+::NAP::252-252  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 2 4 8 16 32 64 128 256
+\end{verbatim}
+
+    \subsubsection{Individual attributes}
+
+    \begin{verbatim}
+% [nap "x = {{0 2.4 1}{3.6 2 -9}}"]
+ 0.0  2.4  1.0
+ 3.6  2.0 -9.0
+% $x datatype
+f64
+% $x shape
+2 3
+% $x missing
+NaN
+\end{verbatim}
+
+    \subsection{
+      \label{set}Method \texttt{set}: Change these contents
+    }
+
+    \subsubsection{Set 
+    \emph{missing value}}
+
+    \begin{verbatim}
+% [nap "sum(x)"]
+3.6 4.4 -8
+% $x set missing -9
+% $x missing
+-9
+% $x 
+0.0 2.4 1.0
+3.6 2.0   _
+% [nap "sum(x)"]
+3.6 4.4 1
+% $x set value "{-1 -3}" "1,{0 2}"; # Set x(1,0) =
+-1, x(1,2) = -3
+% $x
+ 0.0  2.4  1.0
+-1.0  2.0 -3.0
+\end{verbatim}
+
+    \subsubsection{Set 
+    \emph{coordinate variable}}
+
+    \begin{verbatim}
+% nap "x = 999 ... -2p .. 2p"
+::NAP::339-339
+% $x all
+::NAP::339-339  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-6.28319 -6.27059 -6.258 -6.24541 -6.23282 -6.22023 ..
+% nap "y = sin x"
+::NAP::341-341
+% $y all
+::NAP::341-341  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.44921e-16 0.0125912 0.0251804 0.0377657 0.0503449 0.0629162 ..
+% $y set coord x
+% $y all
+::NAP::341-341  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: x         Coordinate-variable:
+::NAP::339-339
+Value:
+2.44921e-16 0.0125912 0.0251804 0.0377657 0.0503449 0.0629162 ..
+% plot_nao y; # Display graph. Note that x axis corresponds to
+coordinate variable 'x'
+.win0
+\end{verbatim}
+
+    \subsection{
+      \label{write}Write data to (netCDF) file
+    }
+
+    \begin{verbatim}
+% $y netcdf test.nc sin; # write to variable "sin" in netCDF file "test.nc"
+\end{verbatim}
+

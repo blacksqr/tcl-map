@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: photo.html,v 1.6 2005/12/05 05:08:03 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Photo Image Format</title>
+  </head>
+  <body>
+  <center>
+    <h2>NAP Photo Image Format</h2>
+  </center>NAP defines a new photo image format. This enables one to
+  use Tk&#39;s &quot;<code>image create photo</code>&quot; command to produce a photo
+  image from a NAO. One can also use the photo image write operation to
+  produce a NAO from a photo image.
+  <p>The data type of the NAO is normally 
+  <code>u8</code> (8-bit unsigned integer). Any other type will be
+  converted to 
+  <code>u8</code>.</p>
+  <p>The rank can be 2 or 3. A matrix gives a grey-scale image. Colour
+  requires three dimensions. In this case there normally are three
+  layers corresponding to red, green and blue. If there are only two
+  layers then the first is used for both red and green (which together
+  give yellow).</p>
+  <p>The name of the new photo image format is &quot;<code>NAO</code>&quot;.</p>
+  <p>The following example (input only shown) creates and displays a
+  grey-scale photo image from a 
+  <code>u8</code> matrix:</p>
+  <pre>
+nap &quot;u = u8(reshape(0 .. 255, 2 # 255))&quot;
+set i [image create photo -format NAO -data $u]
+button .b -image $i
+pack .b
+</pre>
+  <p>The following example (input only shown) creates and displays a
+  colour photo image from a three-dimensional 
+  <code>u8</code> array. It then writes this image to a GIF file named
+  &quot;<code>n.gif</code>&quot;.</p>
+  <pre>
+destroy .b
+nap &quot;u = u8(reshape({32768#0 65536#255}, {3 2#256}))&quot;
+set i [image create photo -format NAO -data $u]
+button .b -image $i
+pack .b
+$i write n.gif -format GIF
+</pre>
+  <p>The following example (input and output shown) first creates a
+  photo image by reading this GIF file named &quot;<code>n.gif</code>&quot;. Then a new NAO is created and assigned the
+  name &quot;<code>abc</code>&quot;.</p>
+  <pre>
+% set pi [image create photo -file n.gif]
+image8
+% $pi write abc -format NAO
+% $abc header
+::NAP::2790-2790  u8  MissingValue: (NULL)  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 256    Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 256    Name: (NULL)    Coordinate-variable: (NULL)
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: photo.html,v 1.3 2004/10/04
+          04:06:18 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

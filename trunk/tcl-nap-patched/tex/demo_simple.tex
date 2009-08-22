@@ -1,0 +1,50 @@
+%  $Id: demo_simple.tex,v 1.4 2006/09/20 08:48:49 dav480 Exp $ 
+    % Simple NAP
+
+\section{Simple Nap}
+
+  The following calculates areas of circles.
+  \begin{verbatim}
+% set r 10
+10
+% nap "area = 1p * r ** 2"; # 1p = pi
+::NAP::2125-2125
+% $area
+314.159
+% set area
+::NAP::2125-2125
+% ::NAP::2125-2125
+314.159
+% [nap "1p * r ** 2"]
+314.159
+% [nap "1p * r ** 2"] all
+::NAP::2141-2141  f64  MissingValue: NaN  References: 0
+Value:
+314.159
+% nap "r = 1 .. 3 ... 0.5"; # arithmetic progression from 1 to 3 in steps of 0.5
+::NAP::2150-2150
+% $r
+1 1.5 2 2.5 3
+% nap "area = 1p * r ** 2"
+::NAP::2160-2160
+% $area
+3.14159 7.06858 12.5664 19.635 28.2743
+% $area set coord r
+% $area all
+::NAP::2160-2160  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 5      Name: r         Coordinate-variable: ::NAP::2150-2150
+Value:
+3.14159 7.06858 12.5664 19.635 28.2743
+% plot_nao area
+.plot_nao1
+% [nap "r /// area"]; # /// joins over new dimension
+ 1.00000  1.50000  2.00000  2.50000  3.00000
+ 3.14159  7.06858 12.56637 19.63495 28.27433
+% [nap "transpose(r /// area)"]
+ 1.00000  3.14159
+ 1.50000  7.06858
+ 2.00000 12.56637
+ 2.50000 19.63495
+ 3.00000 28.27433
+\end{verbatim}
+

@@ -1,0 +1,94 @@
+%  $Id: date_proc.tex,v 1.4 2006/06/07 00:21:24 dav480 Exp $ 
+    % Nap Library: date.tcl procedures
+
+\section{Procedures for Formatting Dates and Times}
+    \label{date-proc}
+
+\subsection{Introduction}
+    \label{date-proc-Introduction}
+
+Date/time concepts are introduced in 
+section \ref{date-function-Introduction} (Functions for Formatting Dates and Times).
+The file 
+  \texttt{date.tcl} defines the two formatting procedures 
+  \texttt{format\_jdn} and 
+  \texttt{format\_mjd}, as well as these functions.
+
+These two formatting procedures use the standard Tcl 
+  \texttt{clock} command. The range of dates which 
+  \texttt{clock} can handle depends on the platform. The current
+  (8.4.7) Windows version uses a 32-bit signed integer offset (seconds)
+  from 1970-01-01, allowing dates from 1901-12-13 to 2038-01-19.
+
+The default formats for both procedures are based on the ISO 8601 standard for dates and times.
+This standard is discussed in many places, including
+\href{http://en.wikipedia.org/wiki/ISO_8601}{Wikipedia}.
+
+\subsection{Formatting Julian Day Numbers (JDNs)}
+    \label{date-proc-format-jdn}
+
+The command
+  \\
+  \texttt{format\_jdn} $\mathit{jdn}$ [$\mathit{format}$]
+  \\formats the Julian Day Number 
+  $\mathit{jdn}$, one value per line.
+
+  $\mathit{jdn}$ can be any Nap expression.
+
+  $\mathit{format}$ is that required for the 
+  \texttt{clock} command. The default format is 
+  \texttt{"\%Y-\%m-\%d"}, which produces a standard ISO 8601
+  date in the form `\texttt{$\mathit{yyyy}$-$\mathit{mm}$-$\mathit{dd}$}'.
+
+\subsubsection{Examples}
+
+  \begin{verbatim}
+% format_jdn 2453305
+2004-10-26
+% format_jdn 2453305 "%A %B %d, %Y"
+Tuesday October 26, 2004
+% format_jdn "{0 7} + date2jdn{2004 10 22}"
+2004-10-22
+2004-10-29
+% format_jdn "{0 7} + date2jdn{2004 10 22}" "%y %m %d"
+04 10 22
+04 10 29
+\end{verbatim}
+
+\subsection{Formatting Modified Julian Dates (MJDs)}
+    \label{date-proc-format-mjd}
+
+The command
+  \\
+  \texttt{format\_mjd} $\mathit{mjd}$ [$\mathit{format}$]
+  \\formats the Modified Julian Date 
+  $\mathit{mjd}$, one value per line.
+  
+
+
+  $\mathit{mjd}$ can be any Nap expression. This is rounded to the
+  nearest second.
+  
+
+
+  $\mathit{format}$ is that required for the 
+  \texttt{clock} command. The default format is 
+  \texttt{"\%Y-\%m-\%dT\%H:\%M:\%S"}, which produces a standard
+  ISO 8601 date/time in the form
+`\texttt{$\mathit{yyyy}$-$\mathit{mm}$-$\mathit{dd}$T$\mathit{HH}$:$\mathit{MM}$:$\mathit{SS}$}'.
+
+\subsubsection{Examples}
+
+  \begin{verbatim}
+% format_mjd 49797.75
+1995-03-21T18:00:00
+% format_mjd 49797.75 "%I %p on %A %d %B, %Y."
+06 PM on Tuesday 21 March, 1995.
+% format_mjd "{0 0.5} + dateTime2mjd{2004 10 22 16 30 59}"
+2004-10-22T16:30:59
+2004-10-23T04:30:59
+% format_mjd "{0 0.5} + dateTime2mjd{2004 10 22 16 30 59}" "%y%m%d %H%M"
+041022 1630
+041023 0430
+\end{verbatim}
+

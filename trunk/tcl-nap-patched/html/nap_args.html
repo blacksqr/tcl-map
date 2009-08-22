@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: nap_args.html,v 1.3 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Arguments of nap Command</title>
+  </head>
+  <body>
+    <center>
+      <h2>Arguments of 
+      <code>nap</code> Command</h2>
+    </center>
+    <p>If the 
+    <code>nap</code> command has multiple arguments then these are
+    concatenated. Thus it is not always necessary to enclose the
+    expression by quote (
+    <code>&quot;</code>) characters, but this practice is recommended
+    because it</p>
+    <ul>
+      <li>prevents Tcl from removing braces (
+      <code>{}</code>)</li>
+      <li>allows standard Tcl (
+      <code>$[]</code>) substitution within braces</li>
+      <li>allows multi-line expressions.</li>
+    </ul>
+    <p>For example, the following works without quotes:</p>
+    <pre>
+% [nap 2 * 3]
+6
+</pre>
+    <p>But the following fails without quotes:</p>
+    <pre>
+% [nap {3 5} * 2]
+3 5 * 2
+  ^
+syntax error, unexpected UNUMBER, expecting $end
+Error at line 1768 of file napParse.tab.c
+% [nap &quot;{3 5} * 2&quot;]
+6 10
+</pre>
+    <p>Multi-line expressions are convenient for matrices, as in:</p>
+    <pre>
+% [nap &quot;transpose{
+{1 2}
+{3 4}
+}&quot;]
+1 3
+2 4
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2002-2004, CSIRO
+            Australia. &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: nap_args.html,v 1.1
+            2004/11/04 01:31:37 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

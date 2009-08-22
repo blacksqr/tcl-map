@@ -1,0 +1,392 @@
+%  $Id: nap_get.tex,v 1.7 2006/09/28 05:12:30 dav480 Exp $ 
+    % nap\_get
+
+\label{nap-get}
+
+\section{Introduction}
+    \label{nap-get-Introduction}
+
+The 
+  \texttt{nap\_get} command creates a NAO containing data read from
+  a file. The first argument specifies the type of file, which can be 
+  \texttt{binary}, 
+  \texttt{hdf}, 
+  \texttt{netcdf} or 
+  \texttt{swap}.
+
+The HDF and netCDF file formats are discussed in section \ref{hdf-netcdf}.
+The \texttt{netcdf} option supports (but only on the Linux Intel
+  386 platform at the time of writing) access to remote data provided
+  by an 
+  \href{http://www.opendap.org/}{OPeNDAP (a.k.a. DODS)} server.
+  In this case the 
+  $\mathit{filename}$ is a URL rather than the pathname of a local
+  file. There is an OPeNDAP example at the end of 
+  section \ref{nap-get-Reading-netCDF-Data} (\emph{Reading netCDF Data}).
+
+\section{Reading Binary Data}
+    \label{nap-get-Reading-Binary-Data}
+
+Binary data is read using the command
+\\
+\texttt{nap\_get binary} $\mathit{channel}$ [$\mathit{datatype}$ [$\mathit{shape}$]]
+\\
+where 
+  $\mathit{datatype}$ defaults to 
+  \texttt{u8} and 
+  $\mathit{shape}$ defaults to a vector containing a single element, the file size.
+
+The command
+\\
+\texttt{nap\_get swap} $\mathit{channel}$ [$\mathit{datatype}$ [$\mathit{shape}$]]
+\\
+is similar, except that bytes are swapped.
+This enables reading of data written on a machine with opposite byte-order within words.
+
+The following example first writes six 32-bit floating-point
+  values to a file using the OOC 
+  \texttt{binary} method. It then reads them back into a NAO named
+  `\texttt{in}' using `\texttt{nap\_get binary}':
+  \begin{verbatim}
+% set file [open float.dat w]
+filee15170
+% [nap "f32{1.5 -3 0 2 4 5}"] binary $file
+% close $file
+% set file [open float.dat]
+filee15170
+% nap "in = [nap_get binary $file f32]"
+::NAP::22-22
+% close $file
+% $in all
+::NAP::22-22  f32  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+\end{verbatim}
+
+Note that no shape was specified, giving a 6-element vector. The
+following example reads the file again, this time specifying a shape of
+  \texttt{\{2 3\}}. The NAO is displayed but not saved.
+  \begin{verbatim}
+% set file [open float.dat]
+file6
+% [nap_get binary $file f32 "{2 3}"] all
+::NAP::32-32  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 1.5 -3.0  0.0
+ 2.0  4.0  5.0
+% close $file
+\end{verbatim}
+
+\section{Reading netCDF Data}
+    \label{nap-get-Reading-netCDF-Data}
+
+NetCDF data is read using the command
+  \\
+  \texttt{nap\_get netcdf} $\mathit{filename}$ $\mathit{name}$ [$\mathit{index}$ [$\mathit{raw}$]]
+
+\noindent
+  $\mathit{filename}$ is either:
+\begin{bullets}
+    \item pathname of a local file
+    \item URL of a remote 
+    \href{http://www.opendap.org/}{OPeNDAP}
+    server
+\end{bullets}
+
+\noindent
+$\mathit{name}$ is the name of a variable or attribute and has one of
+the following forms:
+\begin{bullets}
+    \item $\mathit{varname}$ for a variable
+    \item $\mathit{varname}\texttt{:}\mathit{attribute}$ for an attribute of a variable
+    \item $\texttt{:}\mathit{attribute}$ for a global attribute
+\end{bullets}
+
+A single-element attribute gives a scalar. Other attributes give
+  vectors. Neither 
+  $\mathit{index}$ nor 
+  $\mathit{raw}$ can be specified for attributes.
+
+A variable with no 
+  $\mathit{index}$ gives the entire variable.
+If $\mathit{index}$ is specified then it selects using 
+{\em cross-product} indexing, as described in section
+  \ref{indexing-Cross-product-index}.
+
+If 
+  $\mathit{raw}$ is 1 then the result contains raw data read from the
+  file. If 
+  $\mathit{raw}$ is 0 (default) then this data is transformed using the
+  attributes 
+  \texttt{scale\_factor}, 
+  \texttt{add\_offset}, 
+  \texttt{\_FillValue}, 
+  \texttt{valid\_min}, 
+  \texttt{valid\_max} and 
+  \texttt{valid\_range} if any of these are present.
+  
+
+The following example first creates a netCDF file using the netCDF
+  utility 
+  \texttt{ncgen}. There is one variable called 
+  \texttt{vec}. It is a 3-element 32-bit integer vector with
+  elements 6, -9 and 4. The data is read into a NAO called 
+  \texttt{v} using 
+  \texttt{nap\_get netcdf}.
+  \begin{verbatim}
+% exec ncgen -b << {
+    netcdf int {
+        dimensions:
+            n = 3 ;
+        variables:
+            int vec(n) ;
+        data:
+            vec = 6, -9, 4 ;
+    }
+}
+% nap "v = [nap_get netcdf int.nc vec]"
+::NAP::52-52
+% $v all
+::NAP::52-52  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: n         Coordinate-variable: (NULL)
+Value:
+6 -9 4
+\end{verbatim}
+
+  
+
+Now let's specify the index 
+  \texttt{\{0 2\}} to select the first and third elements:
+  \begin{verbatim}
+% [nap_get netcdf int.nc vec "{0 2}"] all
+::NAP::58-58  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 4
+\end{verbatim}
+
+  
+
+The following shows the different effects of a single-element
+  vector index and a scalar index with the same value:
+  \begin{verbatim}
+% [nap_get netcdf int.nc vec "{1}"] all
+::NAP::65-65  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 1      Name: n         Coordinate-variable: ::NAP::69-69
+Value:
+-9
+% [nap_get netcdf int.nc vec "1"] all
+::NAP::83-83  i32  MissingValue: -2147483648  References: 0
+Value:
+-9
+\end{verbatim}
+
+The following is an 
+  \href{http://www.opendap.org/}{OPeNDAP (a.k.a. DODS)} example.
+  It displays the altitude of the south pole.
+  \begin{verbatim}
+% set url \
+http://www.marine.csiro.au/dods/nph-dods/dods-data/climatology-netcdf/etopo5.nc
+% [nap_get netcdf $url height "@@-90, 0"]
+2810
+\end{verbatim}
+
+\section{Reading HDF Data}
+    \label{nap-get-Reading-HDF-Data}
+
+HDF data is read using the command
+\\
+\texttt{nap\_get hdf} $\mathit{filename}$ $\mathit{name}$ [$\mathit{index}$ [$\mathit{raw}$]]
+
+\noindent
+  $\mathit{filename}$ is the pathname of a local file.
+
+\noindent
+  $\mathit{name}$ is the name of an SDS or attribute and has 
+one of the following forms:
+\begin{bullets}
+    \item $\mathit{sdsname}$ for a SDS
+    \item $\mathit{sdsname}$\texttt{:}$\mathit{attribute}$ for an attribute of a SDS
+    \item \texttt{:}$\mathit{attribute}$ for a global attribute
+\end{bullets}
+  
+A single-element attribute gives a scalar. Other attributes give
+  vectors. Neither 
+  $\mathit{index}$ nor 
+  $\mathit{raw}$ can be specified for attributes.
+
+An SDS with no $\mathit{index}$ gives the entire SDS.
+If $\mathit{index}$ is specified then it selects using 
+{\em cross-product} indexing, as described in section
+  \ref{indexing-Cross-product-index}.
+
+If 
+  $\mathit{raw}$ is 1 then the result contains raw data read from the
+  file. If 
+  $\mathit{raw}$ is 0 (default) then this data is transformed using the
+  attributes 
+  \texttt{scale\_factor}, 
+  \texttt{add\_offset}, 
+  \texttt{\_FillValue}, 
+  \texttt{valid\_min}, 
+  \texttt{valid\_max} and 
+  \texttt{valid\_range} if any of these are present.
+  
+The following example writes data to an HDF file using the OOC 
+  \texttt{hdf} method. Then 
+  \texttt{nap\_get hdf} is used with various index values (including
+  default) to read the data back into temporary NAOs (which are deleted
+  after being displayed):
+  \begin{verbatim}
+% [nap "f64{{1 0 9}{3 2 -1}}"] hdf mat.hdf mat64
+% [nap_get hdf mat.hdf mat64] all; # default index giving whole SDS
+::NAP::47-47  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: fakeDim1  Coordinate-variable: (NULL)
+Value:
+ 1  0  9
+ 3  2 -1
+% [nap_get hdf mat.hdf mat64 "1,0"] all; # select element
+giving scalar
+::NAP::78-78  f64  MissingValue: NaN  References: 0
+Value:
+3
+% [nap_get hdf mat.hdf mat64 "{1},0"] all; # select element
+giving vector
+::NAP::102-102  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 1      Name: fakeDim0  Coordinate-variable: ::NAP::92-92
+Value:
+3
+% [nap_get hdf mat.hdf mat64 "0,"] all; # select row
+::NAP::123-123  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 3      Name: fakeDim1  Coordinate-variable: (NULL)
+Value:
+1 0 9
+% [nap_get hdf mat.hdf mat64 ",2"] all; # select column
+::NAP::147-147  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Value:
+9 -1
+% [nap_get hdf mat.hdf mat64 ",{0 2}"] all; # select
+sub-matrix
+::NAP::154-154  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: fakeDim1  Coordinate-variable: ::NAP::161-161
+Value:
+ 1  9
+ 3 -1
+\end{verbatim}
+
+\section{Listing Names of Variables/SDSs and Attributes in HDF and netCDF Files}
+    \label{nap-get-Listing-Names}
+
+One can list the names of variables/SDSs and attributes matching
+  a regular expression 
+  $\mathit{RE}$ using the command
+\\
+\texttt{nap\_get hdf -list} $\mathit{filename}$ [$\mathit{RE}$]
+\\or
+\\
+\texttt{nap\_get netcdf -list} $\mathit{filename}$ [$\mathit{RE}$]
+\\All variables/SDSs and attributes are listed if 
+  $\mathit{RE}$ is omitted. For example, using the HDF file created
+  above:
+  \begin{verbatim}
+% nap_get hdf -list mat.hdf
+mat64
+mat64:_FillValue
+\end{verbatim}
+
+Some useful regular expressions are
+
+\begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Regular Expression} & \textbf{Select all:}
+    \\
+    \hline 
+    \hline 
+        \verb/^[^:]*$/ & variables/SDSs
+    \\
+    \hline 
+        \verb/:/ & attributes
+    \\
+    \hline 
+        \verb/^:/ & global attributes
+    \\
+    \hline 
+        \verb/.:/ & non-global attributes
+    \\
+  \hline
+\end{tabular}
+
+\vspace{1 mm}
+
+Thus we can restrict the above list to SDSs only using:
+  \begin{verbatim}
+% nap_get hdf -list mat.hdf {^[^:]*$}
+mat64
+\end{verbatim}
+
+\section{Reading Metadata from HDF and netCDF Files}
+    \label{nap-get-Metadata}
+
+The command
+  \\
+  \texttt{nap\_get hdf -datatype} 
+  $\mathit{filename}$ $\mathit{sdsname}$
+  \\or
+  \\
+  \texttt{nap\_get netcdf -datatype} 
+  $\mathit{filename}$ $\mathit{varname}$
+  \\returns the data-type of a specified SDS/variable in the
+  specified file.
+  
+
+The command
+  \\
+  \texttt{nap\_get hdf -rank} 
+  $\mathit{filename}$ $\mathit{sdsname}$
+  \\or
+  \\
+  \texttt{nap\_get netcdf -rank} 
+  $\mathit{filename}$ $\mathit{varname}$
+  \\returns the rank (number of dimensions) of a specified
+  SDS/variable in the specified file.
+  
+
+The command
+  \\
+  \texttt{nap\_get hdf -shape} 
+  $\mathit{filename}$ $\mathit{sdsname}$
+  \\or
+  \\
+  \texttt{nap\_get netcdf -shape} 
+  $\mathit{filename}$ $\mathit{varname}$
+  \\returns the shape (dimension sizes) of a specified SDS/variable
+  in the specified file.
+  
+
+The command
+  \\
+  \texttt{nap\_get hdf -dimension} 
+  $\mathit{filename}$ $\mathit{sdsname}$
+  \\or
+  \\
+  \texttt{nap\_get netcdf -dimension} 
+  $\mathit{filename}$ $\mathit{varname}$
+  \\returns the dimension names of a specified SDS/variable in the
+  specified file.
+  
+
+The command
+  \\
+  \texttt{nap\_get hdf -coordinate} $\mathit{filename}$ $\mathit{sdsname}$ $\mathit{dim\_name}|\mathit{dim\_number}$
+  \\or
+  \\
+  \texttt{nap\_get netcdf -coordinate} $\mathit{filename}$ $\mathit{\mathit{varname}}$ $\mathit{\mathit{dim\_name}}|\mathit{\mathit{dim\_number}}$
+  \\returns the coordinate variable NAO corresponding to the
+  specified dimension of the specified SDS/variable in the specified
+  file.

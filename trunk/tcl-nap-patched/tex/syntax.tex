@@ -1,0 +1,221 @@
+%  $Id: syntax.tex,v 1.8 2006/09/21 07:40:12 dav480 Exp $ 
+    % Syntax of Nap Expressions
+
+\section{Syntax of Nap Expressions}
+    \label{syntax}
+
+\subsection{Introduction}
+      \label{syntax-Introduction}
+
+The standard Tcl command\  `\texttt{expr}' is based on C conventions for operators and
+    functions. Nap expressions use similar conventions and can include
+    any of the following tokens separated by white-space
+    characters:
+    \begin{itemize}
+      \item Operands
+      \begin{itemize}
+        \item OOC-names
+        \item names of Tcl variables (may include namespaces)
+        \item constants
+        \begin{itemize}
+          \item numeric scalar
+          \item numeric array
+          \item string
+        \end{itemize}
+      \end{itemize}
+      \item Operators (including assignment operator `\texttt{=}')
+      \item Parentheses (`\texttt{()}')
+      \item Function names
+      \begin{itemize}
+        \item built-in functions
+        \item names (may include namespaces) of Tcl procedures defining
+        Nap functions
+      \end{itemize}
+      \item Tcl substitution characters (`\texttt{[]\$}')
+    \end{itemize}
+
+\subsection{Substitution}
+      \label{syntax-Substitution}
+
+Like `\texttt{expr}', Nap does the Tcl substitution defined by
+    any brackets and dollars (`\texttt{[]\$}') remaining after normal command parsing.
+    
+
+However, unlike `\texttt{expr}', Nap also substitutes for Tcl variable
+    names that are not preceded by a `\texttt{\$}' (except where the name is the left operand of
+    the assignment operator `\texttt{=}'). The value of the Tcl name is treated as a
+    Nap expression, which is evaluated and the OOC-name of the result
+    replaces the name. This substitution is repeated (up to eight
+    times) until a single OOC-name is generated. The expressions in the
+    following example include:
+\begin{bullets}
+      \item Tcl variable 
+      \texttt{length} containing the string `\texttt{3.5}'
+      \item Tcl variable 
+      \texttt{breadth} defined by Nap to contain `\texttt{::NAP::13-13}'
+      \item Nap constants 
+      \texttt{2} and 
+      \texttt{10}
+      \item Tcl variable 
+      \texttt{area} containing the string `\texttt{length * breadth}'
+\end{bullets}
+\begin{verbatim}
+% set length 3.5
+3.5
+% nap "breadth = 2"
+::NAP::13-13
+% [nap "2 * (length + breadth)"]
+11
+% set area "length * breadth"
+length * breadth
+% [nap "10 * area"]
+70
+\end{verbatim}
+
+    
+
+Each constant is replaced by the OOC-name of a NAO representing
+    its value. After substitution, the expression consists of
+    OOC-names, operators, function names and parentheses.
+    
+
+Similarly one can use a Tcl variable as a generic function, as
+    in:
+    \begin{verbatim}
+% set f sqrt
+sqrt
+% [nap "f 9"]
+3
+\end{verbatim}
+
+\subsection{Nap Names}
+      \label{syntax-Names}
+
+Nap names are used to identify variables and functions.
+Nap variables are just Tcl variables pointing to NAOs.
+Tcl procedures can be defined to be called as Nap functions.
+Nap does allow names to be prefixed by namespace pathnames.
+
+Tcl procedures have always had their own namespaces for the names of variables.
+However many packages need to use many global names for both variables and procedures.
+Namespaces (introduced into Tcl in version 8.0)
+provide a systematic heirarchical (tree) structure for such global names,
+just as file directories (folders) provide such a structure for files.
+The components of a Tcl name are separated by a double colon (`\texttt{::}') separator.
+
+The following examples illustrate the use of namespaces with Nap.
+\begin{verbatim}
+% namespace eval ::mySpace {}; # create namespace "mySpace"
+% nap "::mySpace::x = 8"
+::NAP::13-13
+% [nap "3 + ::mySpace::x"]
+11
+% proc ::mySpace::square x {nap "x * x"}; # Define function
+% [nap "::mySpace::square {3 5 2}"];      # Call it
+9 25 4
+\end{verbatim}
+
+Tcl allows any string to be the name of a variable or a procedure.
+The rules for Nap names are more restrictive.
+The only valid characters are letters, digits, underscore (`\texttt{\_}') and colons.
+Colons are only allowed as double colon (`\texttt{::}') namespace separators.
+The final component (excluding the namespace pathname) must commence with either a
+letter or an underscore.
+If it commences with an underscore it must contain at least one other character.
+The components of the namespace pathname must either conform to the same rule or
+be unsigned integers.
+
+\subsection{Functions}
+      \label{syntax-Functions}
+
+Function arguments can be enclosed by parentheses (as required
+    by many other languages), but these parentheses are not required by
+    the syntax. A name (which cannot be a Tcl variable name or it would
+    have been substituted) followed by an operand (now an OOC-name) is
+    treated as a function name. Thus the following two commands are
+    equivalent:
+    \begin{verbatim}
+% [nap "sin(3.14)"]
+0.00159265
+% [nap "sin 3.14"]
+0.00159265
+\end{verbatim}
+This `sin' function (and `hypot' used below) are described in section \ref{function-Elemental}.
+
+Multiple arguments are separated by commas in the usual way. For
+    example:
+    \begin{verbatim}
+% [nap "hypot(3,4)"]
+5
+\end{verbatim}
+
+    
+
+A comma is treated as a low-precedence operator which produces a
+    \emph{boxed} array. The parentheses 
+    \emph{are} needed to force the comma to be executed before the
+    function. The fact that comma is just another operator is shown
+    by:
+\begin{verbatim}
+% nap "a = 3"
+::NAP::13-13
+% nap "b = 4"
+::NAP::14-14
+% nap "both = a , b"
+::NAP::15-15
+% $both all
+::NAP::15-15  boxed  MissingValue: 0  References: 1
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+13 14
+% [nap "hypot both"]
+5
+\end{verbatim}
+Note that the values of `\texttt{both}' are the slot numbers of `\texttt{a}' and `\texttt{b}' .
+
+\subsection{Indexing}
+      \label{syntax-Indexing}
+
+Tcl array indices are enclosed by parentheses (`\texttt{()}'), while C uses brackets (`\texttt{[]}'). Nap requires neither, since indexing is
+    simply implied by adjacent operands (now OOC-names). Thus the
+    following two commands (which give elements 1, 0, 2 and 0 of the
+    vector 
+    \texttt{\{5 7 6\}}) are equivalent:
+    \begin{verbatim}
+% [nap "{5 7 6}({1 0 2 0})"]
+7 5 6 5
+% [nap "{5 7 6}{1 0 2 0}"]
+7 5 6 5
+\end{verbatim}
+
+\subsection{Parenthesising Function Arguments and Indices}
+      \label{syntax-Parenthesising}
+
+As explained above, there is no syntactic need for parentheses
+    around single function arguments and array indices. However, since
+    most other computer languages do require such parentheses, it may
+    aid human readability to include them.
+    
+
+Multiple function arguments and cross-product-indexing are both
+    defined using a 
+    \emph{boxed} argument. A boxed argument is normally produced
+    using the comma operator. The comma operator has low precedence, so
+    parentheses 
+    \emph{are} normally needed for multiple function arguments and
+    cross-product-indexing. The following example shows how an element
+    of a matrix can be extracted using either 
+    \emph{full} or 
+    \emph{cross-product} indexing:
+    \begin{verbatim}
+% nap "matrix = {
+{2 3 4}
+{5 6 7}
+}"
+::NAP::30-30
+% [nap "matrix{0 2}"]; # Full index
+4
+% [nap "matrix(0,2)"]; # Cross-product index
+4
+\end{verbatim}
+

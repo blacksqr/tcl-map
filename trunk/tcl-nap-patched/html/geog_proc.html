@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: geog_proc.html,v 1.5 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: Geographic Procedures</title>
+  </head>
+  <body>
+  <center>
+    <h2>Geographic Procedures</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#put_gridascii">Write 
+      <em>ARC/INFO GRIDASCII</em> file using 
+      <code>put_gridascii</code></a>
+    </li>
+    <li>
+      <a href="#put_text_surfer">Write 
+      <em>Surfer</em> file using 
+      <code>put_text_surfer</code></a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The following procedures are defined in the file 
+  <code>geog.tcl</code>. Note that there are also 
+  <a href="geog.html">Geographic Functions</a>.
+  <h3>
+    <a name="put_gridascii">Write <em>ARC/INFO GRIDASCII</em> file using <code>put_gridascii</code></a>
+  </h3>Procedure 
+  <code>put_gridascii</code> writes a file in ARC/INFO GRIDASCII
+  format. All cells must be squares of the same size. Coordinate
+  variable 0 (usually latitude) can be either ascending or descending.
+  <h4>Usage</h4>
+  <code>put_gridascii</code> 
+  <var>expr</var> 
+  <var>filename</var> [ 
+  <var>missing_value_string</var>]
+  <dl>
+    <dt>
+      <var>expr</var>
+    </dt>
+    <dd>NAP expression defining a matrix with coordinate variables
+    (normally latitude and longitude)</dd>
+    <dt>
+      <var>filename</var>
+    </dt>
+    <dd>Pathname of the output file</dd>
+    <dt>
+      <var>missing_value_string</var>
+    </dt>
+    <dd>String representing missing value in file (Default: 
+    <code>1e9</code>)</dd>
+  </dl>
+  <h4>Example</h4>
+  <code>% put_gridascii mat abc.txt -999</code>
+  <h3>
+    <a name="put_text_surfer">Write <em>Surfer</em> file using <code>put_text_surfer</code></a>
+  </h3>Procedure 
+  <code>put_text_surfer</code> writes a file in 
+  <em>Surfer</em> format. Surfer is a package developed by 
+  <em>Golden Software</em>.
+  <h4>Usage</h4>
+  <code>put_text_surfer</code> 
+  <var>expr</var> [ 
+  <var>filename</var>] [ 
+  <var>format</var>]
+  <dl>
+    <dt>
+      <var>expr</var>
+    </dt>
+    <dd>NAP expression defining a matrix with coordinate variables</dd>
+    <dt>
+      <var>filename</var>
+    </dt>
+    <dd>Pathname of the output file. If none then writes to standard
+    output.</dd>
+    <dt>
+      <var>format</var>
+    </dt>
+    <dd>C format specification of each output element (Default: 
+    <code>&quot;%g&quot;</code>)</dd>
+  </dl>
+  <h4>Example</h4>
+  <code>% put_text_surfer mat abc.txt %8.4f</code>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: geog_proc.html,v 1.2
+          2004/11/18 06:29:03 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

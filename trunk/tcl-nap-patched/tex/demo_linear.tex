@@ -1,0 +1,138 @@
+%  $Id: demo_linear.tex,v 1.6 2006/09/06 05:06:36 dav480 Exp $ 
+    % Linear algebra
+
+\section{Linear algebra}
+
+\subsection{Solving System of Linear Equations}
+
+Solve the following system
+  of 2 linear equations in 2 unknowns:
+\begin{eqnarray*}
+x - 2 y & = & -5
+\\
+2 x - y & = & -1
+\end{eqnarray*}
+  \begin{verbatim}
+% nap "A = {
+{1 -2}
+{2 -1}
+}"
+::NAP::51972-9971
+% $A
+ 1 -2
+ 2 -1
+% nap "B = {-5 -1}"
+::NAP::51975-9977
+% $B
+-5 -1
+% nap "x = solve_linear(A, B)"
+::NAP::51979-9257
+% $x a
+::NAP::51979-9257  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3
+\end{verbatim}
+
+\subsection{Inner-product operator (`\texttt{.}')}
+
+The inner-product operator (' 
+  \texttt{.}') gives the 
+  \textit{matrix} product if the operands are matrices. Thus we can use
+  it as follows to check the above result:
+  \begin{verbatim}
+% [nap "A . x"]
+-5 -1
+\end{verbatim}
+
+It gives the 
+  \textit{dot} (\textit{scalar}) product if the operands are vectors. Here are some
+  examples:
+  \begin{verbatim}
+% [nap "w = {1r4 1r2 1r4}"]
+0.25 0.5 0.25
+% [nap "x = {3 2 4}"]
+3 2 4
+% [nap "w . x"]
+2.75
+% [nap "sum(w * x)"]; # same as this
+2.75
+% # i.e. weighted-sum or 'vector dot-product'
+\end{verbatim}
+
+\subsection{Linear Regression}
+
+The following defines the least-squares
+  straight line using function 
+  \texttt{regression}:
+  \begin{verbatim}
+% nap "x = {1 3 4 6 8 9 11 14}"
+::NAP::14-14
+% nap "y = {1 2 4 4 5 7  8  9}"
+::NAP::16-16
+% nap "c = regression(x, y)"
+::NAP::31-31
+% $c
+0.545455 0.636364
+% nap "y_intercept = c(0)"
+::NAP::34-34
+% nap "slope = c(1)"
+::NAP::37-37
+% nap "yy = y /// y_intercept + slope * x"; # actual = row 0, predicted = row 1
+::NAP::42-42
+% $yy set coo "" x
+% $yy a
+::NAP::42-42  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 8      Name: x         Coordinate-variable: ::NAP::14-14
+Value:
+1.00000 2.00000 4.00000 4.00000 5.00000 7.00000 ..
+1.18182 2.45455 3.09091 4.36364 5.63636 6.27273 ..
+% plot_nao yy -dash {{ } {}} -symbols {circle {}}
+.win0
+\end{verbatim}
+
+\subsection{Multiple Regression}
+
+The following uses function 
+  \texttt{regression} to define the least-squares regression
+  equation that predicts 
+  $y$ from $x_1$ and $x_2$.
+  \begin{verbatim}
+% nap "x1 = {3 5 6 8 12 14}"
+::NAP::45-45
+% nap "x2 = {16 10 7 4 3 2}"
+::NAP::47-47
+% nap "y = {90 72 54 42 30 12}"
+::NAP::49-49
+% nap "c = regression(transpose(x1 /// x2), y)"; # Define coefficients of regression equation
+::NAP::69-69
+% $c
+61.4 -3.64615 2.53846
+% [nap "{1 10 6} . c"]; # Use to predict y for x1 = 10, x2 = 6
+40.1692
+\end{verbatim}
+
+\subsection{Least-squares Polynomial}
+
+The following uses function 
+  \texttt{fit\_polynomial} to define the least-squares parabola that
+  predicts 
+  $y$ from 
+  $x$. It then uses function 
+  \texttt{polynomial} to predict 
+  $y$ at two values of 
+  $x$.
+  \begin{verbatim}
+% nap "x = 20 .. 70 ... 10"
+::NAP::20-20
+% nap "y = {54 90 138 206 292 396}"
+::NAP::22-22
+% nap "c = fit_polynomial(x, y, 2)"; # Define coefficients of parabola (polynomial of order 2)
+::NAP::59-59
+% $c
+41.7714 -1.09571 0.0878571
+% [nap "polynomial(c, {45 80})"]; # Use to predict y for x = 45, x = 80
+170.375 516.4
+\end{verbatim}
+
