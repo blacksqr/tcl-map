@@ -1,0 +1,88 @@
+%  $Id: demo_construct.tex,v 1.3 2006/09/20 08:48:49 dav480 Exp $ 
+    % Constructing Arrays
+
+\section{Constructing Arrays}
+
+\subsection{Arithmetic Progression}
+
+    \begin{verbatim}
+% [nap "3 .. 8"]l # Default step is either 1
+3 4 5 6 7 8
+% [nap "8 .. 3"]; # or -1
+8 7 6 5 4 3
+% [nap "-1 .. 2 ... 1r2"] value; # From -1 to 2 in steps of 1/2
+-1 -0.5 0 0.5 1 1.5 2
+% [nap "-1 .. 0.9 ... 1r2"] value; # Final step may be smaller!
+-1 -0.5 0 0.5 0.9
+% [nap "4 ... 3 .. 8"]; # 4-element vector from 3 to 8 
+3 4.66667 6.33333 8
+\end{verbatim}
+
+\subsection{Catenate: (`\texttt{//}')}
+
+    \begin{verbatim}
+% [nap "{3 1 9} // {0 -1 5}"]
+3 1 9 0 -1 5
+\end{verbatim}
+
+\subsection{Laminate (`\texttt{///}')}
+
+    \begin{verbatim}
+% [nap "{3 1 9} // {0 -1 5}"]
+% [nap "{3 1 9} /// {0 -1 5}"]
+ 3  1  9
+ 0 -1  5
+\end{verbatim}
+
+\subsection{Reverse (niladic `\texttt{-}')}
+
+    \begin{verbatim}
+% nap "x = {9 1 0 2 3}"
+::NAP::24-24
+% [nap "x(-)"]
+3 2 0 1 9
+\end{verbatim}
+
+\subsection{Replicate (binary `\texttt{\#}')}
+
+    \begin{verbatim}
+% [nap "{2 0 1 1 0} # x"]
+9 9 0 2
+% [nap "2 # x"] value
+9 9 1 1 0 0 2 2 3 3
+% [nap "(x % 2 == 0) # x"]; # select even elements
+0 2
+% [nap "(x % 2 == 0)"]
+0 0 1 1 0
+\end{verbatim}
+
+\subsection{Function \texttt{reshape}}
+
+    \begin{verbatim}
+% nap "m = reshape(1 .. 6, {3 4})"
+::NAP::126-126
+% $m
+1 2 3 4
+5 6 1 2
+3 4 5 6
+% [nap "reshape(m)"] value
+1 2 3 4 5 6 1 2 3 4 5 6
+\end{verbatim}
+
+\subsection{Function \texttt{transpose}}
+
+    \begin{verbatim}
+% [nap "transpose(m)"] value
+1 5 3
+2 6 4
+3 1 5
+4 2 6
+\end{verbatim}
+
+\subsection{Function \texttt{sort}}
+
+    \begin{verbatim}
+% [nap "sort({3.6 -1 0 -9 9})"]
+-9 -1 0 3.6 9
+\end{verbatim}
+

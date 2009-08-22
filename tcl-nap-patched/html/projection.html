@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: projection.html,v 1.4 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: projection.tcl</title>
+  </head>
+  <body>
+  <center>
+    <h2>Map Projection Procedures</h2>
+  </center>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The following procedures are defined in the file 
+  <code>projection.tcl</code>.
+  <h3>
+  <code>projection</code> 
+  <var>code</var> 
+  <var>p0</var> 
+  <var>p1</var> 
+  <var>p2</var> &#8230;</h3>Define functions 
+  <code>projection_x</code> and 
+  <code>projection_y</code> for specified map projection.
+  <p>
+  <var>code</var> is map projection code (default: 
+  <code>CylindricalEquidistant</code>) as follows:</p>
+  <ul>
+    <li>
+    <code>CylindricalEquidistant</code>: 
+    <var>p0</var> = x-origin (default: 
+    <code>&quot;&quot;</code>)</li>
+    <li>
+    <code>Mercator</code>: 
+    <var>p0</var> = x-origin (default: 
+    <code>&quot;&quot;</code>)</li>
+    <li>
+    <code>NorthPolarEquidistant</code>: North Polar azimuthal
+    equidistant</li>
+    <li>
+    <code>SouthPolarEquidistant</code>: South Polar azimuthal
+    equidistant</li>
+    <li>
+    <code>SouthPolarStereographic</code>: As used by IASOS</li>
+  </ul>
+  <p>
+  <var>p0</var> 
+  <var>p1</var> 
+  <var>p2</var> &#8230; define parameters of the projection. Some
+  projections use 
+  <var>p0</var> to specify an &quot;x-origin&quot;. This is the minimum
+  result to be returned by projection_x. If x-origin is 
+  <code>&quot;&quot;</code> then there is no defined minimum
+  result.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: projection.html,v 1.2
+          2003/03/17 05:12:27 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

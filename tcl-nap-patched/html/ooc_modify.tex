@@ -1,0 +1,395 @@
+%  $Id: ooc_modify.tex,v 1.2 2006/03/01 20:43:48 dav480 Exp $ 
+    % OOC Methods: Modify
+    \section{OOC Methods which Modify NAO}
+
+  \subsection{
+    \label{draw}Method \texttt{draw}
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{draw} 
+  $xy$ ?
+  $value$?
+  \\
+  
+
+This draws a polyline in the NAO 
+  $ooc\_name$, which must be type 
+  \texttt{f32} in the current version. It sets data elements on the
+  polyline defined by NAO 
+  $xy$ to the value of scalar NAO 
+  $value$ (default: missing value). NAO 
+  $xy$ can be:
+  \begin{itemize}
+    \item matrix with 2 rows, row 0 is x values, row 1 is y values
+    \item vector of y values with coordinate variable (CV) of x
+    values
+    \item vector of y values without CV (x defaults to 0 1 2 3 $\ldots$)
+    \\The polyline is not closed, so to draw a polygon, the first
+    point should be duplicated at the end.
+  \end{itemize}
+  
+
+Example:
+  \begin{verbatim}
+% [nap "z = reshape(0f32, 2 # 5)"] draw y 1
+% $z
+1 0 0 0 0
+0 1 0 0 0
+0 1 0 0 0
+0 0 1 0 0
+0 0 1 0 0
+\end{verbatim}
+
+  \subsection{
+    \label{fill}Method \texttt{fill}
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{fill} 
+  $xy$ ?
+  $value$?
+  \\
+  
+
+This fills a polygon in the NAO 
+  $ooc\_name$, which must be type 
+  \texttt{f32} in the current version. It sets data elements within
+  the polygon defined by NAO 
+  $xy$ to the value of the scalar NAO 
+  $value$ (default: missing value).
+  \\NAO 
+  $xy$ can be:
+  \begin{itemize}
+    \item matrix with 2 rows, row 0 is x values, row 1 is y values
+    \item vector of y values with coordinate variable (CV) of x
+    values
+    \item vector of y values without CV (x defaults to 0 1 2 3 $\ldots$)
+    \\The polygon is closed (unlike 
+    \texttt{draw} method).
+  \end{itemize}
+  
+
+Example:
+  \begin{verbatim}
+% [nap "z = reshape(0f32, 2 # 8)"] fill "{{2 2 4 4}{2 4
+4 2}}" 1
+% $z value
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 1 1 1 0 0 0
+0 0 1 1 1 0 0 0
+0 0 1 1 1 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+\end{verbatim}
+
+  \subsection{
+    \label{set}Method \texttt{set}
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set} 
+  $attribute$ $arg$ $arg$ $\ldots$
+  
+
+This modifies the NAO attribute specified by 
+  $attribute$. The sub-methods corresponding to these
+  attributes are discussed below in separate sections. Note that the
+  names of these attributes is the same as that of the method which
+  returns their value.
+  \subsubsection{
+    \label{set-coordinate}set coordinate
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set coordinate} 
+  $coord\_var$ 
+  $coord\_var$ 
+  $coord\_var$ $\ldots$
+  \\
+  
+
+This sets one or more coordinate variables.
+  \\
+  $coord\_var$ can be a name, OOC-name or 
+  \texttt{""}.
+  \\If 
+  $coord\_var$ is a valid name then this is also used as
+  dimension name if this is undefined.
+  \\If 
+  $coord\_var$ is 
+  \texttt{""} then any existing coordinate variable is
+  removed.
+  \\If the number of 
+  $coord\_var$ arguments $<$ rank then trailing values default
+  to 
+  \texttt{""}. Thus the following command removes all
+  coordinate variables:
+  \begin{verbatim}
+<var>ooc_name</var> se coo
+\end{verbatim}
+
+  
+
+An example is provided in 
+  \href{ooc-meta.html\#coordinate}{Method \texttt{coordinate}}.
+  \subsubsection{
+    \label{set-count}set count
+  }
+
+  $ooc\_name$ \texttt{set count} ?$int$? ?\texttt{-keep}?
+
+This sets or increments the reference count. One situation where
+  this facility is needed is where a GUI window points to a NAO and
+  must be retained until the window is destroyed.
+  \\
+  \texttt{-keep}: Do not delete NAO (even if new value of count is 0 or less)
+  \\
+If $int$ is signed then add it to reference count.
+  \\
+If $int$ is unsigned then set reference count to $int$.
+  \\
+If $int$ not specified then add 1 to reference count (i.e.  treat as `+1')
+
+  \subsubsection{
+    \label{set-dimension}Set dimension
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set dimension} 
+  $dim\_name$ 
+  $dim\_name$ 
+  $dim\_name$ $\ldots$
+  \\
+  
+
+This sets one or more dimension names.
+  \\If 
+  $dim\_name$ is a tcl name pointing to a NAO then this also
+  defines the coordinate variable if this is undefined.
+  \\If 
+  $dim\_name$ is 
+  \texttt{""} then any existing dimension name is
+  removed.
+  \\If the number of 
+  $dim\_name$s $<$ rank then trailing values default to 
+  \texttt{""}. Thus the following command removes all
+  dimension names:
+  \begin{verbatim}
+<var>ooc_name</var> se d
+\end{verbatim}
+
+  
+
+Example:
+  \begin{verbatim}
+% $x set dim time
+% $x dim
+\end{verbatim}
+
+  \subsubsection{
+    \label{set-format}set format
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set format} ?
+  $string$?
+  \\
+  
+
+This sets the C format for printing. The default is NULL i.e. no
+  format.
+  
+
+An example is provided in 
+  \href{ooc-meta.html\#format}{Method \texttt{format}}.
+  \subsubsection{
+    \label{set-label}set label
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set label} ?
+  $string$?
+  \\
+  
+
+This sets the label (title). The default is NULL i.e. no
+  label.
+  
+
+An example is provided in 
+  \href{ooc-meta.html\#label}{Method \texttt{label}}.
+
+  \subsubsection{
+    \label{set-link}Set link
+  }
+
+  
+
+
+  $ooc\_name$ \texttt{set link} ?$nao$?
+  \\
+  
+
+This sets the link slot number to point to a NAO
+  \\The default is NULL i.e. no link.
+  
+
+An example is provided in 
+  \href{ooc-meta.html\#link}{Method \texttt{link}}.
+  \subsubsection{
+    \label{set-missing}Set missing
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set missing} ?
+  $value$?
+  \\
+  
+
+This sets the missing value. The default is NULL i.e. no missing
+  value.
+  
+
+Example:
+  \begin{verbatim}
+% $x set miss 0
+% $x
+_ 0.5 1 1.5 2
+\end{verbatim}
+
+Note that the value of 0 is now treated as missing.
+  \subsubsection{
+    \label{set-unit}Set unit
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set unit} ?
+  $unit$?
+  \\
+  
+
+This sets the unit of measure. The default is NULL i.e. no
+  unit.
+  
+
+An example is provided in 
+  \href{ooc-meta.html\#unit}{Method \texttt{unit}}.
+  \subsubsection{
+    \label{set-value}Set value
+  }
+
+  
+
+
+  $ooc\_name$ 
+  \texttt{set value} ?
+  $value$? ?
+  $index$?
+  \\
+  
+
+This sets the value of data elements selected by NAO 
+  $index$ to new values copied from successive elements of NAO
+  $value$.
+  
+
+If 
+  $value$ is absent or 
+  \texttt{""} it is treated as the null (missing) value.
+  Elements of 
+  $value$ are recycled if necessary.
+  
+
+If 
+  $index$ is absent or 
+  \texttt{""} it is treated as the whole array. The 
+  $index$ expression can include the operators `\texttt{,}' (giving 
+  \href{indexing.html\#Cross-product-index}{cross-product-indexing})
+  and `\texttt{@@}' (giving 
+  \href{indexing.html\#indirect-indexing}{indirect indexing}).
+  However 
+  \href{indexing.html\#Full-index}{full-indexing} is not yet
+  implemented.
+  
+
+Note that the NAP assignment operator `\texttt{=}' does not allow its left operand to be indexed,
+  as in `\texttt{v(2) = 9}'. However the `\texttt{set value}' method does provide a way to modify all
+  or part of an array. The following example sets element 2 of 
+  \texttt{v} to 9:
+  \begin{verbatim}
+% nap "v = {3 6 4 7}"
+::NAP::52-52
+% $v set value 9 2
+% $v
+3 6 9 7
+\end{verbatim}
+
+  
+
+The following example changes elements 1 to 3. Note how the
+  elements of 
+  $value$ are recycled.
+  \begin{verbatim}
+% $v set value "{8 5}" "1 .. 3"
+% $v
+3 8 5 8
+\end{verbatim}
+
+  
+
+The following example illustrates indirect indexing:
+  \begin{verbatim}
+% $v set coo "10 .. 40 ... 10"
+% $v set value 0 "@@{20 40}"
+% $v
+3 0 5 0
+\end{verbatim}
+
+  
+
+The following example illustrates cross-product indexing:
+  \begin{verbatim}
+% [nap "matrix = {{0 2 4}{1 3 5}}"]
+0 2 4
+1 3 5
+% $matrix set v 9 0,2; # Note that 'value' can be abbreviated
+to 'v'
+% $matrix
+0 2 9
+1 3 5
+% $matrix set v "-1 .. -9" ",{0 2}"
+% $matrix
+-1  2 -2
+-3  3 -4
+\end{verbatim}
+

@@ -1,12 +1,13 @@
+" root "
 scrollregion on vectors
-#XXX spacial/transformer_lat/long toolbar
-#XXX autozoom rest_ogr_geometries zoom_bug/scale palette_rendering starpack
-#XXX grab info save tcltest
-we assume that we can always get projection from gis file which is not just lat/long
-# wrapping/reprojection(set spacial data) loadworldfile zoom_limits fit_to_window centered_zoom progressbar_when_opening and elsewhere
-# enhanced-zoom always-centered-map rulers/grid
+#XXX spacial/transformer_lat/long
+#XXX rest_ogr_geometries zoom_bug/scale palette_rendering starpack
+#XXX grab info save read-write toolbar
+# wrapping/reprojection(set spacial data) loadworldfile zoom_limits centered_zoom progressbar_when_opening
+# interpolated-raster-zoom always-centered-map rulers/grid
 # ReadRasterNAP, ExportToList
-better GetProjections.tcl
+# better GetProjections.tcl
+
 # Show/hide layers, hightlight geometries, info for each, set&save colors, etc
 
 MAX_NC_NAME
@@ -15,7 +16,6 @@ Segfault
 alpha channel
 ReadRasterNAP compilation
 HDF/netcdf optional
-
 
 gdal:
 GDALLoadWorldFile
@@ -40,4 +40,3 @@ OGR_G_Transform
 OGR_G_TransformTo
 OGR_G_Distance
 OGR_G_GetArea
-#puts [$layer GetSpatialRef] ;# ZZZ

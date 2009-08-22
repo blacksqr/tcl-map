@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: term.html,v 1.4 2005/12/05 04:57:06 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Terminology</title>
+  </head>
+  <body>
+    <center>
+      <h2>Terminology</h2>
+    </center>
+    <h3>Arrays</h3>
+    <dl>
+      <dt>scalar</dt>
+      <dd>array with 0 dimensions i.e. a simple number, character,
+      etc.</dd>
+      <dt>vector</dt>
+      <dd>array with 1 dimension.</dd>
+      <dt>matrix</dt>
+      <dd>array with 2 dimensions.</dd>
+      <dt>dimension-size</dt>
+      <dd>number of values along a dimension.</dd>
+      <dt>shape</dt>
+      <dd>vector of dimension-sizes of array.</dd>
+      <dt>rank</dt>
+      <dd>number of dimensions (a.k.a. dimensionality) i.e. shape of
+      shape.</dd>
+      <dt>row</dt>
+      <dd>final (least-significant) dimension</dd>
+      <dt>dimension-name</dt>
+      <dd>name given to dimension e.g. &quot;latitude&quot;.</dd>
+      <dt>coordinate-variable (CV)</dt>
+      <dd>vector (usually sorted) associated with a dimension of the
+      same size. CVs are often used to map an array&#39;s dimensions to
+      physical dimensions such as length and time, thus locating the
+      array elements in physical space and time.</dd>
+    </dl>
+    <h3>Special Numeric Values</h3>
+    <dl>
+      <dt>missing-value (MV)</dt>
+      <dd>numeric value of data which is abnormal in some way such as:
+	  <ul>
+	    <li>not applicable (e.g. land point for ocean data)</li>
+	    <li>not available (e.g. instrument failure or delay in
+	    obtaining data)</li>
+	    <li>result of some illegal operation such as dividing 0 by 0</li>
+	    <li>undefined for some other reason </li>
+	  </ul>
+      </dd>
+      <dt>infinity</dt>
+      <dd>floating-point value representing a value which is too
+          large (or small in the case of negative infinity) to
+          represent. This can result from operations such as dividing
+          by 0.</dd>
+      <dt>NaN (not-a-number)</dt>
+      <dd>floating-point value resulting from an illegal operation
+          such as dividing 0 by 0.</dd>
+    </dl>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: term.html,v 1.2 2004/07/20
+            04:05:14 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

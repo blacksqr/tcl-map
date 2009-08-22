@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: stat.html,v 1.12 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: stat.tcl</title>
+  </head>
+  <body>
+  <center>
+    <h2>Statistical Functions</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Simple_Statistics">Simple Statistics</a>
+      <ul>
+        <li>
+          <a href="#am">Arithmetic mean: 
+          <code>am</code></a>
+        </li>
+        <li>
+          <a href="#gm">Geometric mean: 
+          <code>gm</code></a>
+        </li>
+        <li>
+          <a href="#median">Median: 
+          <code>median</code></a>
+        </li>
+        <li>
+          <a href="#mode">Mode: 
+          <code>mode</code></a>
+        </li>
+        <li>
+          <a href="#percentile">Percentiles: 
+          <code>percentile</code></a>
+        </li>
+        <li>
+          <a href="#rms">Root mean square: 
+          <code>rms</code></a>
+        </li>
+        <li>
+          <a href="#sd">Standard-deviation (with division by n): 
+          <code>sd</code></a>
+        </li>
+        <li>
+          <a href="#sd1">Standard-deviation (with division by n-1): 
+          <code>sd1</code></a>
+        </li>
+        <li>
+          <a href="#var">Variance (with division by n): 
+          <code>var</code></a>
+        </li>
+        <li>
+          <a href="#var1">Variance (with division by n-1): 
+          <code>var1</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#moving_average">Moving average: 
+      <code>moving_average</code></a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>These are defined in 
+  <code>stat.tcl</code>. Note that there are also built-in statistical
+  functions called 
+  <a href="function.html#Correlation"> <code>correlation</code> </a> and 
+  <a href="function.html#Correlation"> <code>moving_correlation</code> </a>. The 
+  <a href="op.html#Tally">Tally Unary Operator &quot;<code>#</code>&quot;</a> also has statistical applications.
+  <h3>
+    <a name="Simple_Statistics">Simple Statistics</a>
+  </h3>
+  <p>Three examples are provided for each function. The first uses the
+  vector 
+  <code>v</code> which is defined as follows (note the missing
+  values):</p>
+  <pre>
+% nap &quot;v = {12 6 _ 7 3 15 _ 10 18 6}&quot;
+</pre>
+  <p>The second example produces statistics of each column of a matrix.
+  The third example produces statistics of each row of the same matrix.
+  This matrix is called 
+  <code>m</code> and is defined as follows:</p>
+  <pre>
+% nap &quot;m = {
+    {1.5 2.1 1.5 0.2}
+    {6.2 4.9   _ 0.2}
+}&quot;
+</pre>
+  <h4>
+    <a name="am">Arithmetic mean: <code>am(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;am(v)&quot;]
+9.625
+% [nap &quot;am(m)&quot;]
+3.85 3.5 1.5 0.2
+% [nap &quot;am(m,1)&quot;]
+1.325 3.76667
+</pre>
+  <h4>
+    <a name="gm">Geometric mean: <code>gm(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;gm(v)&quot;]
+8.38752
+% [nap &quot;gm(m)&quot;]
+3.04959 3.2078 1.5 0.2
+% [nap &quot;gm(m,1)&quot;]
+0.985957 1.82476
+</pre>
+  <h4>
+    <a name="median">Median: <code>median(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;median(v)&quot;]
+8.5
+% [nap &quot;median(m)&quot;]
+3.85 3.5 1.5 0.2
+% [nap &quot;median(m,1)&quot;]
+1.5 4.9
+</pre>
+  <h4>
+    <a name="mode">Mode: <code>mode(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;mode(v)&quot;]
+6
+% [nap &quot;mode(m)&quot;]
+3.85 3.5 1.5 0.2
+% [nap &quot;mode(m,1)&quot;]
+1.50625 3.7625
+</pre>
+  <h4>
+    <a name="percentile">Percentiles: <code>percentile(</code> <var>x</var> <code>,</code> <var>pc</var> [ <code>,</code> <var>verb_rank</var> [ <code>,</code> <var>nc</var>]] <code>)</code></a>
+  </h4>
+  <p>
+  <var>pc</var> = vector of required percentiles
+  <br />
+  <var>nc</var> = number of class intervals (default: 256)</p>
+  <p>The following examples calculate the following percentiles:</p>
+  <ul>
+    <li>0 (minimum)</li>
+    <li>50 (median)</li>
+    <li>100 (maximum)</li>
+  </ul>
+  <pre>
+% [nap &quot;percentile(v, {0 50 100})&quot;]
+3 8.50781 18
+% [nap &quot;percentile(m, {0 50 100})&quot;]
+1.50000 2.10000 1.50000 0.20000
+3.85918 3.50547 1.50000 0.20000
+6.20000 4.90000 1.50000 0.20000
+% [nap &quot;percentile(m, {0 50 100}, 1)&quot;]
+0.20000 0.20000
+1.50254 4.92266
+2.10000 6.20000
+</pre>
+  <h4>
+    <a name="rms">Root mean square: <code>rms(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;rms(v)&quot;]
+10.7413
+% [nap &quot;rms(m)&quot;]
+4.51054 3.76962 1.5 0.2
+% [nap &quot;rms(m,1)&quot;]
+1.49583 4.56399
+</pre>
+  <h4>
+    <a name="sd">Standard-deviation (with division by n): <code>sd(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;sd(v)&quot;]
+4.76806
+% [nap &quot;sd(m)&quot;]
+2.35 1.4 0 0
+% [nap &quot;sd(m,1)&quot;]
+0.694172 2.57725
+</pre>
+  <h4>
+    <a name="sd1">Standard-deviation (with division by n-1): <code>sd1(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;sd1(v)&quot;]
+5.09727
+% [nap &quot;sd1(m)&quot;]
+3.3234 1.9799 _ 0
+% [nap &quot;sd1(m,1)&quot;]
+0.801561 3.15647
+</pre>
+  <h4>
+    <a name="var">Variance (with division by n): <code>var(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;var(v)&quot;]
+22.7344
+% [nap &quot;var(m)&quot;]
+5.5225 1.96 0 0
+% [nap &quot;var(m,1)&quot;]
+0.481875 6.64222
+</pre>
+  <h4>
+    <a name="var1">Variance (with division by n-1): <code>var1(</code> <var>x</var>[ <code>,</code> <var>verb_rank</var>] <code>)</code></a>
+  </h4>
+  <pre>
+% [nap &quot;var1(v)&quot;]
+25.9821
+% [nap &quot;var1(m)&quot;]
+11.045 3.92 _ 0
+% [nap &quot;var1(m,1)&quot;]
+0.6425 9.96333
+</pre>
+  <h3>
+    <a name="moving_average">Moving Average: <code>moving_average(</code> <var>x</var> <code>,</code> <var>shape_window</var>[, <var>step</var>] <code>)</code></a>
+  </h3>Move window of specified shape by specified step (can vary for
+  each dimension). Result is arithmetic mean of 
+  <var>x</var> values in each window. 
+  <var>x</var> can have any rank &gt; 0.
+  <p>
+  <var>shape_window</var> is either a scalar or a vector with an
+  element for each dimension. If it is a scalar then it is treated as a
+  vector with 
+  <code>rank(</code>
+  <var>x</var>
+  <code>)</code> identical elements.</p>
+  <p>Similarly, 
+  <var>step</var> is either a scalar or a vector with an element for
+  each dimension. If it is a scalar then it is treated as a vector with
+  
+  <code>rank(</code>
+  <var>x</var>
+  <code>)</code> identical elements. The default value for 
+  <var>step</var> is 1. If 
+  <var>step</var> has the same value as 
+  <var>shape_window</var> then the windows do not overlap. The value -1
+  is treated like 1, except that missing values are prepended &amp;
+  appended (along this dimension of 
+  <var>x</var>) to produce a result with the same dimension size as 
+  <var>x</var>.</p>
+  <p>The following examples illustrate the application of 
+  <code>moving_average</code> to a vector.</p>
+  <pre>
+% nap &quot;v = {12 6 _ 7 3 15 _ 10 18 5}&quot;
+% [nap &quot;moving_average(v, 3)&quot;] value
+9 6.5 5 8.33333 9 12.5 14 11
+% [nap &quot;moving_average(v, 3, 3)&quot;] value
+9 8.33333 14
+% [nap &quot;moving_average(v, 3, -1)&quot;] value
+9 9 6.5 5 8.33333 9 12.5 14 11 11.5
+</pre>
+  <p>The following examples illustrate the application of 
+  <code>moving_average</code> to a matrix.</p>
+  <pre>
+% nap &quot;m = {
+    {1 2 1 4 0 0}
+    {5 4 2 9 2 7}
+    {0 1 1 3 1 4}
+}&quot;
+% [nap &quot;moving_average(m, {3 3})&quot;] value
+1.88889 3.00000 2.55556 3.33333
+% [nap &quot;moving_average(m, {3 3}, {3 3})&quot;] value
+1.88889 3.33333
+% [nap &quot;moving_average(m, 3, 3)&quot;] value
+1.88889 3.33333
+% [nap &quot;moving_average(m, 3, -1)&quot;] value
+3.00000 2.50000 3.66667 3.00000 3.66667 2.25000
+2.16667 1.88889 3.00000 2.55556 3.33333 2.33333
+2.50000 2.16667 3.33333 3.00000 4.33333 3.50000
+% [nap &quot;moving_average(m, {1 3})&quot;] value
+1.333333 2.333333 1.666667 1.333333
+3.666667 5.000000 4.333333 6.000000
+0.666667 1.666667 1.666667 2.666667
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: stat.html,v 1.7 2005/10/27
+          04:57:49 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

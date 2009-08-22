@@ -1,0 +1,126 @@
+%  $Id: nao.tex,v 1.6 2006/06/06 08:09:42 dav480 Exp $ 
+    % Nap NAOs
+
+\section{N-dimensional Array Objects (NAOs)}
+    \label{nao}
+
+  A NAO is a data structure in memory. A NAO consists of the
+  following components:
+  \begin{description}
+    \item[slot number]
+    Index of entry in internal table used to provide fast access to
+    NAOs.
+    \item[sequence number]
+    Number (starting from 1) assigned in order of creation of
+    NAOs.
+    \item[OOC-name]
+    Name of object-oriented command associated with NAO. Also used
+    as unique identifier of NAO.
+    \item[reference count]
+    Number of Tcl variables, NAOs, windows, etc. pointing to this
+    NAO. If the count decrements to 0 then Nap deletes the NAO and its
+    associated OOC.
+    \item[nap\_cd]
+    pointer to Nap structure created for each interpreter.
+    \item[dataType]
+    one of the following:
+
+\begin{tabular}{|l|l|}
+      \hline 
+        \textbf{Name} & \textbf{Description}
+      \\
+      \hline 
+          \texttt{c8} & 8-bit character
+      \\
+      \hline 
+          \texttt{i8} & 8-bit signed integer
+      \\
+      \hline 
+          \texttt{i16} & 16-bit signed integer
+      \\
+      \hline 
+          \texttt{i32} & 32-bit signed integer
+      \\
+      \hline 
+          \texttt{u8} & 8-bit unsigned integer
+      \\
+      \hline 
+          \texttt{u16} & 16-bit unsigned integer
+      \\
+      \hline 
+          \texttt{u32} & 32-bit unsigned integer
+      \\
+      \hline 
+          \texttt{f32} & 32-bit floating-point
+      \\
+      \hline 
+          \texttt{f64} & 64-bit floating-point
+      \\
+      \hline 
+          \texttt{ragged} & compressed
+      \\
+      \hline 
+          \texttt{boxed} & slot numbers (used as pointers to NAOs)
+      \\
+    \hline
+\end{tabular}
+
+See section
+\ref{data-type-Nap-Data-types}
+(Data Types)
+for further details of these types.
+
+    \item[step]
+    An efficiency hint for searching vectors. If this component is
+    undefined before a search then Nap defines it according to whether
+    the vector is
+    \begin{bullets}
+      \item unordered
+      \item sorted into ascending order
+      \item sorted into descending order
+      \item quasi-arithmetic-progression i.e. a vector all of whose steps
+      are equal, except possibly the final one which may be
+      shorter.
+    \end{bullets}
+    \item[mortal]
+    This is set FALSE for NAOs (e.g. standard missing values) which
+    must not be deleted regardless of reference count.
+    \item[format]
+    Text containing C format for printing.
+    \item[label]
+    Text containing title, description of data, etc.
+    \item[unit]
+    Text defining unit of measure.
+    \item[rank]
+    number of dimensions.
+    \item[nels]
+    number of elements = product(shape).
+    \item[nbytes]
+    number of bytes in NAO. Mainly for debugging.
+    \item[link slot]
+    slot number (0 = none) of link NAO, which can be used to attach
+    further information to a NAO (possibly via a boxed NAO which could
+    link to any number of further NAOs).
+    \item[next slot]
+    used internally to create NAO 
+    \emph{death list} when executing a Tcl procedure defining a NAP
+    function. (0 = none)
+    \item[missing value slot]
+    slot number (0=none) of missing-value NAO.
+    \item[pointer to missing value]
+    pointer to missing value NAO (for fast access).
+    \item[pointer to missing value function]
+    This function tests whether an element of a NAO is
+    missing.
+    \item[ragged start slot number]
+    slot number (0=none) of vector NAO giving start index of each
+    row of ragged array.
+    \item[shape]
+    sizes of dimensions.
+    \item[dimension names]
+    names (if any) of dimensions.
+    \item[coordinate-variable slot numbers]
+    slot numbers (0 = none) of CVs.
+    \item[data]
+    Main data.
+  \end{description}

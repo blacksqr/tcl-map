@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: date_function.html,v 1.9 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: date.tcl functions</title>
+  </head>
+  <body>
+    <center>
+      <h2>Functions for Dates and Times</h2>
+    </center>
+  <h3>Table of Contents</h3>
+    <ol>
+      <li>
+        <a href="#Introduction">Introduction</a>
+      </li>
+      <li>
+        <a href="#jdn">Dates and Julian Day Numbers (JDNs)</a>
+        <ul>
+          <li>
+            <a href="#date2jdn">
+            <code>date2jdn(</code> 
+            <var>ymd</var> 
+            <code>)</code></a>
+          </li>
+          <li>
+            <a href="#jdn2date">
+            <code>jdn2date(</code> 
+            <var>jdn</var> 
+            <code>)</code></a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#mjd">Date/Times and Modified Julian Dates (MJDs)</a>
+        <ul>
+          <li>
+            <a href="#dateTime2mjd">
+            <code>dateTime2mjd(</code> 
+            <var>ymdhms</var> 
+            <code>)</code></a>
+          </li>
+          <li>
+            <a href="#mjd2dateTime">
+            <code>mjd2dateTime(</code> 
+            <var>mjd</var>[ 
+            <code>,</code> 
+            <var>delta</var>] 
+            <code>)</code></a>
+          </li>
+        </ul>
+      </li>
+      <li>
+      <a href="#fixed_years">Calendars with Fixed-length Years</a>
+      <ul>
+        <li>
+          <a href="#dateTime2days">
+          <code>dateTime2days(</code> 
+          <var>ymdhms, ndim</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#days2dateTime">
+          <code>days2dateTime(</code> 
+          <var>days, ndim [, delta]</var> 
+          <code>)</code></a>
+        </li>
+  </ul>
+      <h3>
+        <a name="Introduction">Introduction</a>
+      </h3>The calendar we use is the 
+      <a href="http://scienceworld.wolfram.com/astronomy/GregorianCalendar.html"> Gregorian Calendar</a> introduced by Pope Gregory XIII in 1582.
+      Years divisible by 400 (e.g. 1600, 2000) are leap years but other
+      years divisible by 100 (e.g. 1800, 1900) are not. The Gregorian
+      Calendar replaced the 
+      <a href="http://scienceworld.wolfram.com/astronomy/JulianCalendar.html"> Julian Calendar</a> introduced by Julius Caesar in 46 BC.
+      <p>A 
+      <em>date</em> is defined by a 
+      <em>year</em> (AD for these functions), a 
+      <em>month-of-year</em> and a 
+      <em>day-of-month</em>. The following are examples of date
+      problems:
+      <br />How many days are there between two specified dates?
+      <br />What is the date 
+      <var>n</var> days after a specified date?
+      <br />What day of the week corresponds to a specified date?
+      <br />Such problems can be solved by converting both ways between
+      dates and the (integer) number of days since some fixed date.</p>
+      <p>Let us call a combination of date and time of day a 
+      <em>date/time</em>. The following are examples of date/time
+      problems:
+      <br />How many seconds are there between two specified
+      date/times?
+      <br />What is the date/time 
+      <var>t</var> seconds after a specified date/time?
+      <br />Such problems can be solved by converting both ways between
+      date/time and the time (as a real number of say days or seconds)
+      since some fixed date/time.</p>
+      <p>The XXIIIrd International Astronomical Union General Assembly
+      (1997) 
+      <a href="http://www.iers.org/iers/earth/resolutions/UAI_b1.html">Resolution B1</a> recommends and defines (using different wording) the
+      following terms:</p>
+      <dl>
+        <dt>Julian Day Number (JDN)</dt>
+        <dd>integer assigned to a solar day, counting from 0 assigned
+        to the day starting at noon 
+        <a href="http://tycho.usno.navy.mil/systime.html">UTC</a> on
+        1st January 4713 BC (Julian Calendar).</dd>
+        <dt>Julian Date (JD)</dt>
+        <dd>JDN plus the fraction of the day since the preceding noon
+        UTC.</dd>
+        <dt>Modified Julian Date (MJD)</dt>
+        <dd>time (in days) since 0000 hours UTC on 17th November 1858.
+        <br />MJD = JD &#8722; 2400000.5.</dd>
+      </dl>
+      <p>This astronomical definition of JDN can be relaxed for civil
+      date calculations. Here one simply requires a way to associate a
+      date with an integer. So the JDN can be used for civil dates
+      commencing at local midnight. Alternatively, one can use the MJD
+      corresponding to the preceding midnight. There is a difference of
+      2400001 between these integer JDN and MJD values used to identify
+      entire days (see example below). Modern dates correspond to a
+      7-digit JDN, as shown in the examples below.</p>
+      <p>The file 
+      <code>date.tcl</code> defines the four functions 
+      <code>date2jdn</code>, 
+      <code>jdn2date</code>, 
+      <code>dateTime2mjd</code> and 
+      <code>mjd2dateTime</code>. These are valid for all Gregorian
+      dates from 1st January, 1 AD. The file 
+      <code>date.tcl</code> also defines the two formatting procedures 
+      <a href="date_proc.html#format_jdn"> <code>format_jdn</code> </a> and 
+      <a href="date_proc.html#format_mjd"> <code>format_mjd</code> </a> .</p>
+      <p>Function 
+      <code>date2jdn</code> converts Gregorian dates to JDNs.
+      <br />Function 
+      <code>jdn2date</code> converts JDNs to Gregorian dates.</p>
+      <p>Function 
+      <code>dateTime2mjd</code> converts Gregorian date/times to MJDs.
+      <br />Function 
+      <code>mjd2dateTime</code> converts MJDs to Gregorian date/times.
+      <br />Double-precision (64-bit) floating point gives accuracy of
+      about a microsecond for years around 2000 AD.</p>
+      <p>These functions do not the handle the 
+      <a href="http://tycho.usno.navy.mil/leapsec.html">leap seconds</a> that occur in 
+      <a href="http://tycho.usno.navy.mil/systime.html">UTC</a>. These
+      functions simply assume that each day contains exactly 86400
+      seconds (as in 
+      <a href="http://tycho.usno.navy.mil/systime.html">UT1</a>). This
+      can cause errors of several seconds in UTC time differences. This
+      problem can be solved using a table of leap seconds such as that
+      at the end of 
+      <a href="http://www.iers.org/iers/earth/resolutions/UAI_b1.html">Resolution B1</a>.</p>
+      <h3>
+        <a name="jdn">Dates and Julian Day Numbers (JDNs)</a>
+      </h3>
+      <h4>
+        <a name="date2jdn"> <code>date2jdn(</code> <var>ymd</var> <code>)</code></a>
+      </h4>This returns the JDNs of the specified Gregorian dates. The
+      unit is set to 
+      <code>JDN</code>.
+      <p>The argument 
+      <var>ymd</var> is an array whose final dimension has the size 3.
+      <br />Column 0 contains the year AD (positive integer).
+      <br />Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...).
+      <br />Column 2 contains the day of month (0 to 31). Final example
+      below illustrates 0.</p>
+      <p>Examples:</p>
+      <pre>
+% [nap &quot;date2jdn{1997 3 21}&quot;] all; # 21st March, 1997. Note
+unit
+::NAP::112-112  i32  MissingValue: -2147483648  References: 0  Unit:
+JDN
+Value:
+2450529
+% [nap &quot;date2jdn{1 1 1}&quot;]; # 1st January, 1 AD
+1721426
+% [nap &quot;date2jdn{1858 11 16}&quot;]; # 16th November, 1858 AD
+2400000
+% [nap &quot;date2jdn{{1997 2 28}{1997 3 1}}&quot;]; # 28th February
+&amp; 1st March, 1997
+2450508 2450509
+% [nap &quot;date2jdn{{2004 8 31}{2004 9 0}}&quot;]; # Both 31st August
+2004
+2453249 2453249
+</pre>
+      <p>The following example calculates the day of the week for the
+      first ten days of September 2004:</p>
+      <pre>
+% [nap &quot;ymd = transpose(2004 // (9 /// 1 .. 10))&quot;]; # 1st to
+10th Sept 2004
+2004    9    1
+2004    9    2
+2004    9    3
+2004    9    4
+2004    9    5
+2004    9    6
+2004    9    7
+2004    9    8
+2004    9    9
+2004    9   10
+% [nap &quot;date2jdn(ymd) % 7&quot;] value; # 0 = Mon, 1 = Tue, 2 =
+Wed, ..., 6 = Sun
+2 3 4 5 6 0 1 2 3 4
+% [nap &quot;1 + date2jdn(ymd) % 7&quot;] value; # 1 = Mon, 2 = Tue,
+..., 7 = Sun
+3 4 5 6 7 1 2 3 4 5
+% [nap &quot;1 + (1 + date2jdn(ymd)) % 7&quot;] value; # 1 = Sun, 2 =
+Mon, ..., 7 = Sat
+4 5 6 7 1 2 3 4 5 6
+</pre>
+      <h4>
+        <a name="jdn2date"> <code>jdn2date(</code> <var>jdn</var> <code>)</code></a>
+      </h4>This is the inverse of function 
+      <code>date2jdn</code> above. It converts JDNs to Gregorian dates.
+      The argument 
+      <var>jdn</var> is an array of JDNs. The shape of the result is
+      <br />
+      <code>shape( 
+      <var>jdn</var>) // 3</code>
+      <br />where the final dimension (3) corresponds to year, month,
+      day. The result is {_ _ _} for any date prior to 1st January, 1
+      AD (JDN = 1721426).
+      <p>The following examples are the inverses of the first four
+      examples above for 
+      <code>date2jdn</code>:</p>
+      <pre>
+% [nap &quot;jdn2date(1721426)&quot;]
+1 1 1
+% [nap &quot;jdn2date(2400000)&quot;]
+1858 11 16
+% [nap &quot;jdn2date(2450529)&quot;]
+1997 3 21
+% [nap &quot;jdn2date{2450508 2450509}&quot;]
+1997    2   28
+1997    3    1
+</pre>
+      <h3>
+        <a name="mjd">Date/Times and Modified Julian Dates (MJDs)</a>
+      </h3>
+      <h4>
+        <a name="dateTime2mjd"> <code>dateTime2mjd(</code> <var>ymdhms</var> <code>)</code></a>
+      </h4>This returns the MJDs corresponding to the specified
+      Gregorian date/times. The unit is set to 
+      <code>MJD</code>.
+      <p>The argument 
+      <var>ymdhms</var> is an array whose final dimension has a size
+      from 1 to 6.
+      <br />Column 0 contains the year AD (positive integer)
+      <br />Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...) (Default: 1)
+      <br />Column 2 contains the day of month (0 to 31) (0: day before
+      1st) (Default: 1)
+      <br />Column 3 contains the hour of day (0 to 23) (default: 0)
+      <br />Column 4 contains the minute of hour (0 to 59) (default: 0)
+      <br />Column 5 contains the (possibly fractional) second of
+      minute (0 to 60) (default: 0)</p>
+      <p>Examples:</p>
+      <pre>
+% [nap &quot;dateTime2mjd{2004 8 16 14 39 59.5}&quot;] all -f %.7f
+::NAP::525-525  f64  MissingValue: NaN  References: 0  Unit: MJD
+Value:
+53233.6111053
+% [nap &quot;dateTime2mjd{
+{1858 11 16}
+{1858 11 17}
+{1858 11 18}
+}&quot;]
+-1 0 1
+% [nap &quot;dateTime2mjd{1 1 1}&quot;];# 1st Jan 0001 AD
+-678575
+% [nap &quot;dateTime2mjd{2000 1 0 12}&quot;]; # 1200 hours, 31st
+December 1999
+51543.5
+# The following gives the difference between the JDN &amp; MJD for a
+date
+% [nap &quot;date2jdn{2004 8 16} - dateTime2mjd{2004 8 16}&quot;] -f %d
+2400001
+</pre>
+      <h4>
+        <a name="mjd2dateTime"> <code>mjd2dateTime(</code> <var>mjd</var>[ <code>,</code> <var>delta</var>] <code>)</code></a>
+      </h4>This is the inverse of function 
+      <code>dateTime2mjd</code> above. It converts MJDs to Gregorian
+      date/times.
+      <p>The argument 
+      <var>mjd</var> is an array of MJDs.</p>
+      <p>The optional argument 
+      <var>delta</var> controls rounding. The result is rounded to the
+      nearest multiple of 
+      <var>delta</var> seconds. The default value is 1, which rounds to
+      the nearest second. A value of 60 would round to the nearest
+      minute. A value of 1e-3 would round to the nearest
+      millisecond.</p>
+      <p>The shape of the result is
+      <br />
+      <code>shape( 
+      <var>mjd</var>) // 6</code>
+      <br />where the final dimension (6) corresponds to year, month,
+      day, hour, minute, second.</p>
+      <p>The following examples are the inverses of the first three
+      examples for 
+      <code>dateTime2mjd</code>:</p>
+      <pre>
+% [nap &quot;mjd2dateTime(53233.6111053, 0.1)&quot;]; # round to
+multiple of 0.1 seconds
+2004 8 16 14 39 59.5
+% [nap &quot;mjd2dateTime(-1 .. 1)&quot;]
+1858   11   16    0    0    0
+1858   11   17    0    0    0
+1858   11   18    0    0    0
+% [nap &quot;mjd2dateTime(-678575)&quot;];# 1st Jan 0001 AD
+1 1 1 0 0 0
+</pre>
+      <h3>
+        <a name="fixed_years">Calendars with Fixed-length Years</a>
+      </h3>Computer models (of climate etc.) sometimes use simplified
+      calendars in which every year has the same number of days (e.g.
+      360, 365 or 366). The following two functions 
+      <code>dateTime2days</code> and 
+      <code>days2dateTime</code>, handle such calendars. In each case
+      there is a 12-element vector argument specifying the number of
+      days in each month of the year. Time is measured relative to the
+      start of the base year (year 0) and can be negative.
+      <h4>
+        <a name="dateTime2days"> <code>dateTime2days(</code> <var>ymdhms, ndim</var> <code>)</code></a>
+      </h4>This returns the time in days since the start of year 0.
+      This function is similar to the above 
+      <a href="#dateTime2mjd"> <code>dateTime2mjd</code> </a> except that it uses the unconventional calendar defined by 
+      <var>ndim</var>.
+      <p>The argument 
+      <var>ymdhms</var> is an array whose final dimension has a size
+      from 1 to 6.
+      <br />Column 0 contains the (possibly negative) integer year
+      relative to year 0
+      <br />Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...) (Default: 1)
+      <br />Column 2 contains the day of month (0 to 31) (0: day before
+      1st) (Default: 1)
+      <br />Column 3 contains the hour of day (0 to 23) (default: 0)
+      <br />Column 4 contains the minute of hour (0 to 59) (default: 0)
+      <br />Column 5 contains the (possibly fractional) second of
+      minute (0 to 60) (default: 0)</p>
+      <p>The argument 
+      <var>ndim</var> is a 12-element vector giving 
+      <em>number of days in month</em>.</p>
+      <p>Examples:</p>
+      <pre>
+% nap &quot;ndim = {31 28 31 30 31 30 31 31 30 31 30 31}&quot;; #
+number of days in month
+% [nap &quot;dateTime2days({1 1 1 18}, ndim)&quot;]
+365.75
+% [nap &quot;dateTime2days({{1 1 1}{1 4 10}{0 1 1}{-1 1 1}},
+ndim)&quot;]
+365 464 0 -365
+</pre>
+      <h4>
+        <a name="days2dateTime"> <code>days2dateTime(</code> <var>days, ndim [, delta]</var> <code>)</code></a>
+      </h4>This converts a time (in days since the start of year 0) to
+      a calendar date and time-of-day. This function is similar to the
+      above 
+      <a href="#mjd2dateTime"> <code>mjd2dateTime</code> </a> except that it uses the unconventional calendar defined by 
+      <var>ndim</var>.
+      <p>The argument 
+      <var>days</var> is the (possibly negative) time in days since the
+      start of the year 0.</p>
+      <p>The argument 
+      <var>ndim</var> is a 12-element vector giving 
+      <em>number of days in month</em>.</p>
+      <p>The optional argument 
+      <var>delta</var> controls rounding. The result is rounded to the
+      nearest multiple of 
+      <var>delta</var> seconds. The default value is 1, which rounds to
+      the nearest second. A value of 60 would round to the nearest
+      minute. A value of 1e-3 would round to the nearest
+      millisecond.</p>
+      <p>Examples:</p>
+      <pre>
+% nap &quot;ndim = {31 28 31 30 31 30 31 31 30 31 30 31}&quot;; #
+number of days in month
+% [nap &quot;days2dateTime(365.75, ndim)&quot;]
+1 1 1 18 0 0
+% [nap &quot;days2dateTime({365 464 0 -365}, ndim)&quot;]
+ 1  1  1  0  0  0
+ 1  4 10  0  0  0
+ 0  1  1  0  0  0
+-1  1  1  0  0  0
+</pre>
+      <table width="100%" border="0" cellspacing="0" cellpadding="2"
+      bgcolor="#737B9C">
+        <tr>
+          <td align="center">
+            <font color="#FFFFFF" size="-2">
+              <span class="titlebar">
+              <b>Author:</b> 
+              <a href="http://sourceforge.net/users/dav480/">Harvey
+              Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+              &#160; &#160; &#160; 
+              <a href="http://www.csiro.au/legalnotices/disclaimer.html">
+              Legal Notice and Disclaimer</a>
+              <br />
+              <b>CVS Version Details:</b> $Id: date_function.html,v 1.5
+              2005/07/11 07:01:16 dav480 Exp $</span>
+            </font>
+          </td>
+        </tr>
+      </table></li>
+    </ol>
+  </body>
+</html>

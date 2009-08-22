@@ -1,0 +1,132 @@
+%  $Id: demo_constant.tex,v 1.2 2006/04/06 09:54:46 dav480 Exp $ 
+    % Constants
+
+\section{Constants}
+
+\subsection{Scalar Constants}
+
+    \begin{verbatim}
+% [nap "14"] all
+::NAP::14465-9991  i32  MissingValue: -2147483648  References: 0
+Value:
+14
+% [nap "i16(14)"] all; # i16 = 16-bit signed integer
+::NAP::14467-9991  i16  MissingValue: -32768  References: 0
+Value:
+14
+% [nap "14i16"] all
+::NAP::14469-9991  i16  MissingValue: -32768  References: 0
+Value:
+14
+% [nap "14u8"] all; # u8 = unsigned 8-bit integer
+::NAP::14471-9991  u8  MissingValue: (NULL)  References: 0
+Value:
+14
+% [nap "4.0"] all
+::NAP::14473-9991  f64  MissingValue: NaN  References: 0
+Value:
+4
+% [nap "4."] all
+4.
+ ^
+parse error, unexpected '.', expecting $
+Error at line 791 of file /usr/share/bison/bison.simple
+% [nap ".4"] all
+.4
+^
+parse error, unexpected '.'
+Error at line 791 of file /usr/share/bison/bison.simple
+% [nap "4f32"] all
+::NAP::14475-109  f32  MissingValue: NaN  References: 0
+Value:
+4
+% [nap "2r3"] all
+::NAP::14477-109  f64  MissingValue: NaN  References: 0
+Value:
+0.666667
+% [nap "2r3f32"] all
+::NAP::14478-109  f32  MissingValue: NaN  References: 0
+Value:
+0.666667
+% [nap "1e4"] all
+::NAP::14480-109  f64  MissingValue: NaN  References: 0
+Value:
+10000
+% [nap "1p1"] all
+::NAP::14481-109  f64  MissingValue: NaN  References: 0
+Value:
+3.14159
+% [nap "1p"]
+3.14159
+% [nap "180p-1f32"] all
+::NAP::14482-109  f32  MissingValue: NaN  References: 0
+Value:
+57.2958
+% [nap "1r3p1"] all
+::NAP::14484-109  f64  MissingValue: NaN  References: 0
+Value:
+1.0472
+% [nap "1i"] all; # infinity
+::NAP::22-22  f64  MissingValue: NaN  References: 0
+Value:
+Inf
+% [nap "-1i"] all; # -infinity
+::NAP::24-24  f64  MissingValue: NaN  References: 0
+Value:
+-Inf
+% [nap "1n"] all; # NaN
+::NAP::25-25  f64  MissingValue: NaN  References: 0
+Value:
+_
+% [nap "_"] all; # missing
+::NAP::26-26  i32  MissingValue: -2147483648  References: 0
+Value:
+_
+\end{verbatim}
+
+\subsection{Array Constants}
+
+    \begin{verbatim}
+% [nap "{3 -5 _ 9}"] all
+::NAP::14486-9829  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 -5 _ 9
+% [nap "{3 3#-5 _ 9}"] all
+::NAP::14489-109  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+3 -5 -5 -5 _ 9
+% [nap "{{1 3 5}{2 4 6}}"] all
+::NAP::14492-9829  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 5
+2 4 6
+% [nap "{
+{1 3 5}
+{2 4 6}
+}"]
+1 3 5
+2 4 6
+% [nap "{
+2#{1 3 5}
+3#{2 4 6}
+}"]
+1 3 5
+1 3 5
+2 4 6
+2 4 6
+2 4 6
+\end{verbatim}
+
+\subsection{String Constants}
+
+    \begin{verbatim}
+% [nap "'Hello world'"]
+Hello world
+% [nap "`can't`"]
+can't
+\end{verbatim}
+

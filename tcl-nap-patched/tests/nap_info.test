@@ -1,0 +1,24 @@
+# nap_info.test --
+# 
+# Test command 'nap_info'
+#
+# Copyright (c) 2001, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: nap_info.test,v 1.4 2005/11/03 07:29:41 dav480 Exp $
+
+Test nap_info-1.1 {nap_info bytes} {
+    [nap "{[nap_info bytes]} > 0"]
+} {1 1 1 1}
+
+Test nap_info-1.2 {nap_info seconds} {
+    expr "[nap_info seconds] >= 0"
+} {1}
+
+Test nap_info-1.3 {nap_info sequence} {
+    set s [[nap "0"] sequence]
+    expr "$s == [nap_info sequence]"
+} {1}
+
+unset s
+
+return

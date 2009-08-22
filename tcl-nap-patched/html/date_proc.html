@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: date_proc.html,v 1.6 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: date.tcl procedures</title>
+  </head>
+  <body>
+  <center>
+    <h2>Procedures for Formatting Dates and Times</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#format_jdn">Formatting Julian Day Numbers (JDNs)</a>
+    </li>
+    <li>
+      <a href="#format_mjd">Formatting Modified Julian Dates (MJDs)</a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>Date/time concepts are introduced in 
+  <a href="date_function.html#Introduction">Functions for Formatting Dates and Times</a>. The file 
+  <code>date.tcl</code> defines the two formatting procedures 
+  <code>format_jdn</code> and 
+  <code>format_mjd</code>, as well as these functions.
+  <p>These two formatting procedures use the standard Tcl 
+  <code>clock</code> command. The range of dates which 
+  <code>clock</code> can handle depends on the platform. The current
+  (8.4.7) Windows version uses a 32-bit signed integer offset (seconds)
+  from 1970-01-01, allowing dates from 1901-12-13 to 2038-01-19.</p>
+  <h3>
+    <a name="format_jdn">Formatting Julian Day Numbers (JDNs)</a>
+  </h3>The command
+  <br />
+  <code>format_jdn</code> 
+  <var>jdn</var> [ 
+  <var>format</var>]
+  <br />formats the Julian Day Number 
+  <var>jdn</var>, one value per line.
+  <p>
+  <var>jdn</var> can be any NAP expression.</p>
+  <p>
+  <var>format</var> is that required for the 
+  <code>clock</code> command. The default format is 
+  <code>&quot;%Y-%m-%d&quot;</code>, which produces a standard ISO 8601
+  date in the form &quot;yyyy-mm-dd&quot;.</p>
+  <h4>Examples</h4>
+  <pre>
+% format_jdn 2453305
+2004-10-26
+% format_jdn 2453305 &quot;%A %B %d, %Y&quot;
+Tuesday October 26, 2004
+% format_jdn &quot;{0 7} + date2jdn{2004 10 22}&quot;
+2004-10-22
+2004-10-29
+% format_jdn &quot;{0 7} + date2jdn{2004 10 22}&quot; &quot;%y %m %d&quot;
+04 10 22
+04 10 29
+</pre>
+  <h3>
+    <a name="format_mjd">Formatting Modified Julian Dates (MJDs)</a>
+  </h3>The command
+  <br />
+  <code>format_mjd</code> 
+  <var>mjd</var> [ 
+  <var>format</var>]
+  <br />formats the Modified Julian Date 
+  <var>mjd</var>, one value per line.
+  <p>
+  <var>mjd</var> can be any NAP expression. This is rounded to the
+  nearest second.</p>
+  <p>
+  <var>format</var> is that required for the 
+  <code>clock</code> command. The default format is 
+  <code>&quot;%Y-%m-%dT%H:%M:%S&quot;</code>, which produces a standard
+  ISO 8601 date/time in the form &quot;yyyy-mm-ddTHH:MM:SS&quot;.</p>
+  <h4>Examples</h4>
+  <pre>
+% format_mjd 49797.75
+1995-03-21T18:00:00
+% format_mjd 49797.75 &quot;%I %p on %A %d %B, %Y.&quot;
+06 PM on Tuesday 21 March, 1995.
+% format_mjd &quot;{0 0.5} + dateTime2mjd{2004 10 22 16 30 59}&quot;
+2004-10-22T16:30:59
+2004-10-23T04:30:59
+% format_mjd &quot;{0 0.5} + dateTime2mjd{2004 10 22 16 30 59}&quot; &quot;%y%m%d %H%M&quot;
+041022 1630
+041023 0430
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: date_proc.html,v 1.2
+          2004/10/26 01:48:55 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

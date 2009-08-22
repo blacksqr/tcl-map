@@ -1,0 +1,173 @@
+# geog.test --
+# 
+# Test functions defined in file $env(LIBRARY_DIR)/geog.tcl
+#
+# Copyright (c) 2003, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: geog.test,v 1.8 2007/11/10 04:28:32 dav480 Exp $
+
+proc put_info text {
+    # puts "${text}: [llength [list_naos]] NAOs using [lindex [nap_info bytes] 0] bytes"
+}
+
+source $env(LIBRARY_DIR)/geog.tcl
+source $env(LIBRARY_DIR)/gshhs.tcl
+source $env(LIBRARY_DIR)/proj4.tcl
+namespace import -force ::NAP::*
+
+Test geog-1.1 {put_text_surfer} {
+    nap "z = {
+	{91.03 60.55}
+	{96.04 62.38}
+	{92.10 65.09}
+    }"
+    nap "y = 3 ...  0.0 .. 7.0"
+    nap "x = {0.0 9.0}"
+    $z set coo y x
+    put_text_surfer z surfer.txt
+    unset x y z
+    gets_file surfer.txt
+} {DSAA
+2 3
+0 9
+0 7
+60.55 96.04
+91.03 60.55
+96.04 62.38
+ 92.1 65.09
+}
+
+file delete surfer.txt
+
+Test geog-2.1 {put_gridascii} {
+    nap "z = {
+	{91.03 60.55}
+	{96.04 _}
+	{92.10 65.09}
+    }"
+    nap "y = 3 ...  0.0 .. 7.0"
+    nap "x = {0.0 3.5}"
+    $z set coo y x
+    put_gridascii z gridascii.txt
+    unset x y z
+    gets_file gridascii.txt
+} {NCOLS 2
+NROWS 3
+XLLCORNER -1.75
+YLLCORNER -1.75
+CELLSIZE 3.5
+NODATA_VALUE 1e9
+92.1 65.09
+96.04 1e9
+91.03 60.55
+}
+
+Test geog-2.2 {get_gridascii} {
+    [nap "in = get_gridascii('gridascii.txt')"]
+} {92.10 65.09
+96.04     _
+91.03 60.55}
+
+file delete gridascii.txt
+
+Test geog-2.3 {get_gridascii check cv 0} {
+    [$in coo 0]
+} {7 3.5 0}
+
+Test geog-2.4 {get_gridascii check cv 1} {
+    [$in coo 1]
+} {0 3.5}
+
+Test geog-3.1 {fix_longitude} {
+    [nap "fix_longitude{-200 600 -100 0 -200}"] v
+} {160 240 260 360 520}
+
+Test geog-4.1 {merid_bounds} {
+    [nap "merid_bounds(-180 .. 180 ... 90)"] v
+} {-180 -135 -45 45 135 180}
+
+Test geog-4.2 {merid_bounds} {
+    [nap "merid_bounds(10 .. 170 ... 40)"] v
+} {-10 30 70 110 150 190}
+
+Test geog-5.1 {merid_wt} {
+    [nap "merid_wt(-180 .. 180 ... 90)"] v
+} {0.125 0.25 0.25 0.25 0.125}
+
+Test geog-5.2 {merid_wt} {
+    [nap "merid_wt (10 .. 170 ... 40)"] v
+} {0.2 0.2 0.2 0.2 0.2}
+
+Test geog-6.1 {zone_bounds} {
+    [nap "zone_bounds(-90 .. 90 ... 30)"] v
+} {-90 -75 -45 -15 15 45 75 90}
+
+Test geog-6.2 {zone_bounds} {
+    [nap "zone_bounds{-60 -10 10 20}"] v
+} {-90 -31.3213 0 14.9416 31.0421}
+
+Test geog-7.1 {zone_wt} {
+    [nap "zone_wt (-90 .. 90 ... 30)"] v
+} {0.0170371 0.12941 0.224144 0.258819 0.224144 0.12941 0.0170371}
+
+Test geog-7.2 {zone_wt} {
+    [nap "zone_wt {-60 -10 10 20}"] v
+} {0.3168 0.342975 0.170113 0.170113}
+
+Test geog-7.3 {zone_wt} {
+    [nap "zone_wt {-90 -60 -10 10 20 90}"] v
+} {0.0334936 0.206588 0.259918 0.128917 0.206588 0.164495}
+
+Test geog-8.1 {fraction_land} {
+    nap "expect = {
+	{0.25 0.59 0.69 0.47 0.81 0.95 0.95 0.98 0.47}
+	{0.00 0.00 0.09 0.13 0.03 0.05 0.00 0.25 0.02}
+	{0.00 0.00 0.22 0.38 0.47 0.45 0.17 0.23 0.00}
+	{0.06 0.39 0.67 0.13 0.52 0.88 1.00 0.50 0.17}
+	{0.05 0.14 0.28 0.55 0.08 0.17 0.34 0.19 0.11}
+    }"
+    nap "f = fraction_land(-90 .. 90 ... 45, -180 .. 180 ... 45)"
+    [nap "max(max(| (expect - f))) < 0.02"]
+} 1
+
+Test geog-8.2 {fraction_land} {
+    [nap "' *'(fraction_land(90 .. -90 ... -10, -180 .. 180 ... 10) > 0.5f32)"] v
+} {                                     
+          * ****                     
+   *  ** *   ***     *  ***********  
+  *******  *       ****************  
+      *******     ***************    
+      *****       * ************     
+       ***       **************      
+        *        *******  * *        
+           *     ******              
+           ***     ****              
+           ****     **               
+           ***      **        ***    
+           **       *         ****   
+           *                         
+           *                         
+                                     
+           *         **************  
+   ********* * ********************  
+*************************************}
+
+Test geog-9.1 {dmp_gshhs} {
+    dmp_gshhs 1 2 dmp_gshhs.tmp
+    gets_file dmp_gshhs.tmp} "GSHHS File $env(GSHHS_DATA_DIR)/gshhs_c.b
+
+record 0, 1240 points, level=1, area=79793839.9 km^2
+west=-17.533778 east=190.326000 south=-34.830444 north=77.716250
+start:
+68.993778
+180.000000
+end:
+68.993778
+180.000000
+1 records read
+"
+file delete dmp_gshhs.tmp
+
+Test geog-9.2 {list_gshhs_resolutions} {list_gshhs_resolutions} {1 5 25}
+
+unset in f expect

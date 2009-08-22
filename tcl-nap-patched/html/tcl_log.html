@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: tcl_log.html,v 1.5 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Simple Tcl/Tk</title>
+  </head>
+  <body>
+  <center>
+    <h2>Demonstration of Simple Tcl/Tk</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#tcl1">First Look at Tcl</a>
+    </li>
+    <li>
+      <a href="#tk1">First Look at Tk</a>
+    </li>
+    <li>
+      <a href="#syntax">Syntax of Tcl</a>
+    </li>
+    <li>
+      <a href="#lists_strings">Lists and Strings</a>
+    </li>
+    <li>
+      <a href="#file">File Input and Output</a>
+    </li>
+    <li>
+      <a href="#control">Procedures and Control Structures</a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The following are logs of demonstrations of simple 
+  <em>Tcl/Tk</em> (excluding NAP). These can be used as a starting
+  point from which to explore the system.
+  <h3>
+    <a name="tcl1">First Look at Tcl</a>
+  </h3>The following demonstrates Tcl syntax, variables and the
+  following commands:
+  <ul>
+    <li>
+    <code>expr</code> (arithmetic)</li>
+    <li>
+    <code>set</code> (setting and displaying variables)</li>
+    <li>
+    <code>puts</code> (output)</li>
+    <li>
+    <code>for</code> (looping)</li>
+  </ul>
+  <pre>
+% expr 3.1416 * 10 * 10
+314.16
+% set pi 3.1416
+3.1416
+% set pi
+3.1416
+% set r 10
+10
+% expr $pi * $r * $r
+314.16
+% set area [expr $pi * $r * $r]
+314.16
+% puts &quot;circle of radius $r has area $area&quot;
+circle of radius 10 has area 314.16
+% puts &quot;circle of radius $r has area [expr $pi * $r * $r]&quot;
+circle of radius 10 has area 314.16
+% for {set r 4} {$r &lt; 5.1} {set r [expr $r + 0.2]} {
+puts &quot;circle of radius $r has area [expr $pi * $r * $r]&quot;
+}
+circle of radius 4 has area 50.2656
+circle of radius 4.2 has area 55.417824
+circle of radius 4.4 has area 60.821376
+circle of radius 4.6 has area 66.476256
+circle of radius 4.8 has area 72.382464
+circle of radius 5.0 has area 78.54
+</pre>
+  <h3>
+    <a name="tk1">First Look at Tk</a>
+  </h3>Tcl was designed to be extended. One of the first extensions was
+  
+  <em>Tk</em>, which provides a toolkit for building GUIs (Graphical
+  User Interfaces).
+  <p>The following demonstration is intended to provide just a hint of
+  the nature of Tk. It displays two buttons which can be pressed to
+  execute simple commands.</p>
+  <pre>
+% button .hello -text &quot;press me&quot; -command {puts &quot;Hello
+world&quot;}
+.hello
+% pack .hello
+Hello world
+% button .beep -text beep -command bell
+.beep
+% pack .beep
+</pre>
+  <h3>
+    <a name="syntax">Syntax of Tcl</a>
+  </h3>The syntax of Tcl is based on the following 
+  <em>metacharacters</em> (characters treated in special ways):
+  <br />
+  <code>; # $ &quot; \ {} []</code>
+  <br />Note that the following are 
+  <em>not</em> metacharacters:
+  <br />
+  <code>&#39; * ()</code>
+  <pre>
+% set s1 the; set s2 &quot;This is $s1&quot;; set s3 {end of it all.}
+end of it all.
+% puts &quot;$s2$s3&quot;
+This is theend of it all.
+% puts &quot;${s1}2&quot;; # Braces around name are needed when next
+char could be part of name
+the2
+% puts \
+&quot;$s2 $s3&quot;
+This is the end of it all.
+% puts &quot;$s2
+$s3&quot;
+This is the
+end of it all.
+% puts &quot;$s2\
+$s3&quot;
+This is the end of it all.
+% puts \
+&quot;$s2\n$s3&quot;
+This is the
+end of it all.
+% # This is a comment
+% set s1; # Value of s1
+the
+% # Character # is only special at start:
+% puts #
+#
+% puts [expr [string length $s2] + 1 + [string length $s3]]
+26
+% unset s1
+% set s1
+can&#39;t read &quot;s1&quot;: no such variable
+% puts [expr &quot;2 + 2&quot;]
+4
+% puts [nap &quot;2 + 2&quot;]
+::NAP::15-15
+% puts [[nap &quot;2 + 2&quot;]]
+4
+</pre>
+  <h3>
+    <a name="lists_strings">Lists and Strings</a>
+  </h3>Tcl is a 
+  <em>text-oriented</em> language in which text can be treated as
+  either a single 
+  <em>string</em> or a 
+  <em>list</em> of elements. A sentence is a simple 
+  <em>list</em> of words separated by white-space. An element of a list
+  can itself be a list.
+  <pre>
+% set names &quot;Bill Jan Harry&quot;; # Simple list of 3 words
+Bill Jan Harry
+% lindex $names 0
+Bill
+% lindex $names 2
+Harry
+% lsort $names
+Bill Harry Jan
+% foreach name $names {puts &quot;&#39;$name&#39; has [string length
+$name] letters&quot;}
+&#39;Bill&#39; has 4 letters
+&#39;Jan&#39; has 3 letters
+&#39;Harry&#39; has 5 letters
+% set names {{Bill Jones} {Jan Smith} {Harry Brown}}; # list of lists
+{Bill Jones} {Jan Smith} {Harry Brown}
+% foreach name $names {puts &quot;&#39;$name&#39; has [string length
+$name] letters&quot;}
+&#39;Bill Jones&#39; has 10 letters
+&#39;Jan Smith&#39; has 9 letters
+&#39;Harry Brown&#39; has 11 letters
+% string toupper $names
+{BILL JONES} {JAN SMITH} {HARRY BROWN}
+% string map {i a rr r} $names; # change &quot;i&quot; to &quot;a&quot;, &quot;rr&quot; to &quot;r&quot;
+{Ball Jones} {Jan Smath} {Hary Brown}
+% string index hello 0
+h
+% string index hello 4
+o
+% foreach name $names {puts &quot;[lindex $name 1], [lindex $name
+0]&quot;}
+Jones, Bill
+Smith, Jan
+Brown, Harry
+% foreach name $names {
+    foreach word $name {
+       puts -nonewline [string index $word 0]
+    }
+    puts &quot;&quot;
+}
+BJ
+JS
+HB
+</pre>
+  <h3>
+    <a name="file">File Input and Output</a>
+  </h3>The following commands are demonstrated in the following log:
+  <ul>
+    <li>
+      <code>open</code>
+    </li>
+    <li>
+      <code>close</code>
+    </li>
+    <li>
+    <code>puts</code> (Write to file or screen)</li>
+    <li>
+    <code>gets</code> (Read from file)</li>
+    <li>
+    <code>format</code> (Controlled conversion of values to text)</li>
+    <li>
+    <code>glob</code> (List of files matching pattern)</li>
+  </ul>
+  <pre>
+% # Write file containing height &amp; width on each line
+% set lines {{2 4} {1 1} {9 3}}
+{2 4} {1 1} {9 3}
+% set f [open hw.txt w]; # open file for writing
+filee1c290
+% foreach line $lines {puts $f $line}
+% close $f
+% 
+% # Read this file &amp; display: height, width, area of rectangle
+% set f [open hw.txt]; # open file for reading
+filee1cd80
+% while {[gets $f line] &gt;= 0} {
+     set h [lindex $line 0]
+     set w [lindex $line 1]
+     puts &quot;$h $w [expr $h * $w]&quot;
+}
+2 4 8
+1 1 1
+9 3 27
+% close $f
+% 
+% format {%s is %5.2f} {my age} 60.127
+my age is 60.13
+% format {%s is %8.1f} {my age} 60.127
+my age is     60.1
+%
+% # For files *.txt: Display lines containing &quot;if&quot;
+% foreach file [glob *.txt] {
+     set f [open $file]
+     while {[gets $f line] &gt;= 0} {
+         if {[string match {*if*} $line]} {puts &quot;$file
+$line&quot;}
+     }
+}
+</pre>
+  <h3>
+    <a name="control">Procedures and Control Structures</a>
+  </h3>The following shows how the 
+  <code>proc</code> command can be used to define a procedure and thus
+  a new command. It also illustrates the control-structure commands 
+  <code>if</code>, 
+  <code>for</code> and 
+  <code>foreach</code>.
+  <pre>
+% proc initials words {
+    foreach word $words {append result [string index $word 0]}
+    return $result
+}
+% initials {Bill Harry Jan}
+BHJ
+% 
+% # arithmetic progression
+% proc ap {
+     from
+     to
+     {step 1}
+} {
+     for {set next $from} {$next &lt;= $to} {set next [expr $next +
+$step]} {
+         lappend result $next
+     }
+     return $result
+}
+% ap 1 9 2
+1 3 5 7 9
+% ap 1 9
+1 2 3 4 5 6 7 8 9
+% ap 0 3 0.5
+0 0.5 1.0 1.5 2.0 2.5 3.0
+% foreach r [ap 1 9 2] {puts &quot;square of $r is [expr $r *
+$r]&quot;}
+square of 1 is 1
+square of 3 is 9
+square of 5 is 25
+square of 7 is 49
+square of 9 is 81
+% 
+% # Define factorial using recursion
+% proc factorial n {
+     if {$n &gt; 1} {
+         return [expr $n * [factorial [expr $n - 1]]]
+     } else {
+         return 1
+     }
+}
+% factorial 3
+6
+% foreach i [ap 0 5] {puts &quot;$i [factorial $i]&quot;}
+0 1
+1 1
+2 2
+3 6
+4 24
+5 120
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: tcl_log.html,v 1.2
+          2005/03/11 01:21:54 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

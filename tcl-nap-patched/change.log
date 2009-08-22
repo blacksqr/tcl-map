@@ -1,0 +1,1043 @@
+CVS changes from 2005-08-05 (version 5.0.5) to 2006-10-03 (version 6.2.2)
+Produced by shell-script 'cvs_rev'
+
+=============================================================================
+generic/cart_proj.c
+----------------------------
+revision 1.13
+date: 2006/06/30 04:42:42;  author: dav480;  state: Exp;  lines: +4 -5
+comments only
+----------------------------
+revision 1.12
+date: 2005/11/03 07:36:50;  author: dav480;  state: Exp;  lines: +5 -5
+Include nap_cd in changes function calls
+----------------------------
+revision 1.11
+date: 2005/10/22 04:11:06;  author: dav480;  state: Exp;  lines: +3 -3
+assert -> CHECK2NULL
+----------------------------
+revision 1.10
+date: 2005/10/22 04:00:44;  author: dav480;  state: Exp;  lines: +18 -19
+revert to (x,y) in place of (y,x)
+----------------------------
+revision 1.9
+date: 2005/10/22 00:59:24;  author: dav480;  state: Exp;  lines: +96 -107
+major rewrite -- result now not boxed
+----------------------------
+revision 1.8
+date: 2005/10/20 23:40:42;  author: dav480;  state: Exp;  lines: +55 -26
+tidy up
+----------------------------
+revision 1.7
+date: 2005/10/20 13:54:47;  author: dav480;  state: Exp;  lines: +13 -8
+Nap_cart_proj_inv: Check whether result maps back to arg
+----------------------------
+revision 1.6
+date: 2005/10/20 13:15:23;  author: dav480;  state: Exp;  lines: +11 -7
+fix index bug
+----------------------------
+revision 1.5
+date: 2005/10/20 07:32:05;  author: dav480;  state: Exp;  lines: +5 -5
+fix details
+----------------------------
+revision 1.4
+date: 2005/10/20 07:18:14;  author: dav480;  state: Exp;  lines: +83 -80
+make work
+----------------------------
+revision 1.3
+date: 2005/10/19 22:58:23;  author: dav480;  state: Exp;  lines: +4 -2
+Use pj_strerrno, pj_free
+----------------------------
+revision 1.2
+date: 2005/10/19 22:10:29;  author: dav480;  state: Exp;  lines: +134 -28
+complete initial code
+----------------------------
+revision 1.1
+date: 2005/10/19 13:54:41;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/eval_tree.c
+----------------------------
+revision 1.12
+date: 2005/11/05 03:27:13;  author: dav480;  state: Exp;  lines: +4 -4
+allow right operand of "," to be null
+----------------------------
+revision 1.11
+date: 2005/11/05 03:15:08;  author: dav480;  state: Exp;  lines: +106 -55
+op_str: new. eval_expr: more CHECKs
+----------------------------
+revision 1.10
+date: 2005/09/29 23:38:16;  author: dav480;  state: Exp;  lines: +3 -3
+rename unary sort ops
+----------------------------
+revision 1.9
+date: 2005/09/29 13:20:05;  author: dav480;  state: Exp;  lines: +3 -3
+swap unary << and >>
+----------------------------
+revision 1.8
+date: 2005/09/29 11:32:01;  author: dav480;  state: Exp;  lines: +3 -1
+implement unary << and >>
+=============================================================================
+generic/function.c,m4
+----------------------------
+revision 1.15
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +12 -12
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.14
+date: 2006/04/05 00:11:37;  author: dav480;  state: Exp;  lines: +39 -38
+Nap_Func, Nap_StdFuncs & Nap_FuncProc: allow no args
+----------------------------
+revision 1.13
+date: 2006/03/24 01:20:35;  author: dav480;  state: Exp;  lines: +7 -4
+Nap_FuncProc: allow NULL args with functions defined by proc
+----------------------------
+revision 1.12
+date: 2006/03/23 23:37:53;  author: dav480;  state: Exp;  lines: +2 -2
+Nap_Func1: assert -> CHECK2NULL
+----------------------------
+revision 1.11
+date: 2005/12/02 07:11:31;  author: dav480;  state: Exp;  lines: +2 -1
+Add FREEs for unit, format, label
+----------------------------
+revision 1.10
+date: 2005/11/03 07:38:03;  author: dav480;  state: Exp;  lines: +16 -16
+Include nap_cd in changes function calls
+----------------------------
+revision 1.9
+date: 2005/10/19 22:15:39;  author: dav480;  state: Exp;  lines: +5 -1
+cart_proj_fwd & cart_proj_inv
+----------------------------
+revision 1.8
+date: 2005/09/30 01:41:52;  author: dav480;  state: Exp;  lines: +15 -4
+Nap_sort: Fix NaN stuff, etc.
+----------------------------
+revision 1.7
+date: 2005/09/29 23:38:16;  author: dav480;  state: Exp;  lines: +3 -3
+rename unary sort ops
+----------------------------
+revision 1.6
+date: 2005/09/29 11:32:01;  author: dav480;  state: Exp;  lines: +56 -1
+implement unary << and >>
+=============================================================================
+generic/land_flag.c
+----------------------------
+revision 1.3
+date: 2005/11/06 05:45:15;  author: dav480;  state: Exp;  lines: +5 -1
+malloc -> ckalloc. free -> ckfree
+=============================================================================
+generic/nap.c,m4
+----------------------------
+revision 1.223
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +16 -16
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.222
+date: 2005/12/02 07:03:57;  author: dav480;  state: Exp;  lines: +3 -3
+totalBytes -> otherBytes
+----------------------------
+revision 1.221
+date: 2005/11/26 11:24:02;  author: dav480;  state: Exp;  lines: +4 -1
+Nap_expression: define braceLevel
+----------------------------
+revision 1.220
+date: 2005/11/06 06:13:29;  author: dav480;  state: Exp;  lines: +3 -3
+comments only
+----------------------------
+revision 1.219
+date: 2005/11/03 07:40:32;  author: dav480;  state: Exp;  lines: +22 -16
+nap_info bytes: extra 2 values. Include nap_cd in changes function calls
+=============================================================================
+generic/nap.h,m4
+----------------------------
+revision 1.213
+date: 2006/09/26 12:36:06;  author: dav480;  state: Exp;  lines: +1 -3
+NapClientData: rm lookupN, freeSize
+----------------------------
+revision 1.212
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +1 -14
+remove all udunits stuff
+----------------------------
+revision 1.211
+date: 2005/12/02 07:02:03;  author: dav480;  state: Exp;  lines: +5 -4
+totalBytes -> otherBytes. Nap_StrDup -> Nap_StrDup0
+----------------------------
+revision 1.210
+date: 2005/11/30 00:34:30;  author: dav480;  state: Exp;  lines: +3 -3
+Nap_CmdDelete: new
+----------------------------
+revision 1.209
+date: 2005/11/26 11:16:46;  author: dav480;  state: Exp;  lines: +5 -2
+Include braceLevel in nap_cd. Nap_DefineUtunit: new. Nap_ConvertUnit: mods
+----------------------------
+revision 1.208
+date: 2005/11/03 07:42:28;  author: dav480;  state: Exp;  lines: +20 -7
+utunit. totalBytes. Various prototypes have extra nap_cd arg
+----------------------------
+revision 1.207
+date: 2005/10/26 13:58:21;  author: dav480;  state: Exp;  lines: +2 -1
+Nap_ConvertUnit
+----------------------------
+revision 1.206
+date: 2005/10/19 22:11:39;  author: dav480;  state: Exp;  lines: +3 -1
+New: Nap_cart_proj_fwd, Nap_cart_proj_inv
+----------------------------
+revision 1.205
+date: 2005/09/29 11:32:01;  author: dav480;  state: Exp;  lines: +2 -1
+implement unary << and >>
+=============================================================================
+generic/napChoice.c,m4
+----------------------------
+revision 1.38
+date: 2006/02/03 01:26:41;  author: dav480;  state: Exp;  lines: +31 -31
+Fix bug with CVs & dim names
+=============================================================================
+generic/napDyad.c,m4
+----------------------------
+revision 1.153
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +14 -99
+remove all udunits stuff
+----------------------------
+revision 1.152
+date: 2006/06/29 01:46:00;  author: dav480;  state: Exp;  lines: +33 -76
+unit stuff
+----------------------------
+revision 1.151
+date: 2005/11/26 11:45:01;  author: dav480;  state: Exp;  lines: +71 -63
+Various mods to Nap_DyadArgs, Nap_DyadInit, etc.
+----------------------------
+revision 1.150
+date: 2005/11/08 18:49:56;  author: dav480;  state: Exp;  lines: +46 -14
+Nap_DyadArgs & others: udunits stuff
+----------------------------
+revision 1.149
+date: 2005/11/07 12:28:06;  author: dav480;  state: Exp;  lines: +35 -5
+Nap_DyadInit: various -- udunit related
+----------------------------
+revision 1.148
+date: 2005/11/06 22:26:55;  author: dav480;  state: Exp;  lines: +7 -6
+Use utStrError
+----------------------------
+revision 1.147
+date: 2005/11/03 07:43:54;  author: dav480;  state: Exp;  lines: +41 -71
+Implement utunit stuff
+----------------------------
+revision 1.146
+date: 2005/10/29 12:40:45;  author: dav480;  state: Exp;  lines: +8 -12
+Nap_DyadInit: utRaise now has double power
+----------------------------
+revision 1.145
+date: 2005/10/27 22:16:53;  author: dav480;  state: Exp;  lines: +8 -4
+Nap_DyadInit: Fix calls to utPrint
+----------------------------
+revision 1.144
+date: 2005/10/26 14:00:48;  author: dav480;  state: Exp;  lines: +55 -49
+Nap_DyadArg -> Nap_DyadArgs. Various stuff related to dim. anal.
+----------------------------
+revision 1.143
+date: 2005/10/25 23:17:59;  author: dav480;  state: Exp;  lines: +104 -26
+start implementing unit calculus
+=============================================================================
+generic/napDyadLib.c,m4
+----------------------------
+revision 1.101
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +7 -7
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.100
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +1 -127
+remove all udunits stuff
+----------------------------
+revision 1.99
+date: 2006/06/29 01:46:00;  author: dav480;  state: Exp;  lines: +1 -2
+unit stuff
+----------------------------
+revision 1.98
+date: 2006/06/09 04:46:06;  author: dav480;  state: Exp;  lines: +3 -4
+Nap_DefineUtunit & Nap_ConvertUnit: Rm call to utStrError
+----------------------------
+revision 1.97
+date: 2005/12/02 07:11:31;  author: dav480;  state: Exp;  lines: +6 -1
+Add FREEs for unit, format, label
+----------------------------
+revision 1.96
+date: 2005/11/26 11:50:30;  author: dav480;  state: Exp;  lines: +97 -88
+Nap_DefineUtunit: new. Nap_ConvertUnit: various. Nap_Subscript: unit stuff
+----------------------------
+revision 1.95
+date: 2005/11/08 18:52:04;  author: dav480;  state: Exp;  lines: +14 -8
+Nap_ConvertUnit & Nap_Subscript: udunits stuff
+----------------------------
+revision 1.94
+date: 2005/11/08 10:40:55;  author: dav480;  state: Exp;  lines: +4 -1
+Fix unit errors in Nap_Subscript & Nap_ConvertUnit
+----------------------------
+revision 1.93
+date: 2005/11/07 12:31:24;  author: dav480;  state: Exp;  lines: +58 -42
+Nap_ConvertUnit: various
+----------------------------
+revision 1.92
+date: 2005/11/06 22:26:55;  author: dav480;  state: Exp;  lines: +4 -3
+Use utStrError
+----------------------------
+revision 1.91
+date: 2005/11/06 13:30:39;  author: dav480;  state: Exp;  lines: +21 -8
+Nap_ConvertUnit: various. Nap_Subscript: fix call to Nap_ConvertUnit
+----------------------------
+revision 1.90
+date: 2005/11/04 14:19:32;  author: dav480;  state: Exp;  lines: +5 -2
+Nap_ConvertUnit: ensure result is defined
+----------------------------
+revision 1.89
+date: 2005/11/03 07:45:18;  author: dav480;  state: Exp;  lines: +74 -67
+Implement utunit stuff. Include nap_cd in changed function calls
+----------------------------
+revision 1.88
+date: 2005/10/27 13:31:37;  author: dav480;  state: Exp;  lines: +1 -2
+Nap_Subscript: fix ref. count error
+----------------------------
+revision 1.87
+date: 2005/10/26 14:02:48;  author: dav480;  state: Exp;  lines: +86 -88
+Nap_ConvertUnit: new. Various stuff related to units
+----------------------------
+revision 1.86
+date: 2005/10/25 12:03:58;  author: dav480;  state: Exp;  lines: +91 -54
+split off new Nap_Subscript_c8 from Nap_Subscript
+----------------------------
+revision 1.85
+date: 2005/10/24 13:12:24;  author: dav480;  state: Exp;  lines: +54 -4
+Nap_Subscript: support unit conversion
+=============================================================================
+generic/napInit.c
+----------------------------
+revision 1.27
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +1 -28
+remove all udunits stuff
+----------------------------
+revision 1.26
+date: 2006/06/09 01:49:18;  author: dav480;  state: Exp;  lines: +5 -1
+Nap_Init: call Tk_InitStubs
+----------------------------
+revision 1.25
+date: 2005/11/30 06:30:36;  author: dav480;  state: Exp;  lines: +1 -1
+revert to 1.23
+----------------------------
+revision 1.24
+date: 2005/11/30 00:37:05;  author: dav480;  state: Exp;  lines: +2 -2
+Nap_Init: Specify Nap_CmdDelete to be called when nap command deleted
+----------------------------
+revision 1.23
+date: 2005/11/06 11:05:06;  author: dav480;  state: Exp;  lines: +4 -4
+Message when udunits not initialised
+----------------------------
+revision 1.22
+date: 2005/11/03 07:47:02;  author: dav480;  state: Exp;  lines: +4 -4
+Include nap_cd in changed function calls
+----------------------------
+revision 1.21
+date: 2005/10/31 01:26:13;  author: dav480;  state: Exp;  lines: +12 -2
+Initialize proj.4
+----------------------------
+revision 1.20
+date: 2005/10/26 22:29:01;  author: dav480;  state: Exp;  lines: +19 -11
+udunits stuff: Better error handling, etc.
+----------------------------
+revision 1.19
+date: 2005/10/25 19:41:46;  author: dav480;  state: Exp;  lines: +2 -2
+trivial
+----------------------------
+revision 1.18
+date: 2005/10/25 12:00:07;  author: dav480;  state: Exp;  lines: +21 -1
+Nap_Init: init udunits
+=============================================================================
+generic/napLib.c,m4
+----------------------------
+revision 1.232
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +39 -39
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.231
+date: 2006/09/26 12:39:09;  author: dav480;  state: Exp;  lines: +17 -36
+rewrite nap_cd->lookup stuff
+----------------------------
+revision 1.230
+date: 2006/06/29 06:08:44;  author: dav480;  state: Exp;  lines: +5 -1
+#define NDEBUG.  Nap_Check: suppress stderr if NDEBUG
+----------------------------
+revision 1.229
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +1 -6
+remove all udunits stuff
+----------------------------
+revision 1.228
+date: 2006/04/05 01:37:19;  author: dav480;  state: Exp;  lines: +2 -2
+Nap_GetNaoFromObj: Better error message
+----------------------------
+revision 1.227
+date: 2005/12/02 07:09:31;  author: dav480;  state: Exp;  lines: +23 -20
+totalBytes -> otherBytes. Nap_StrDup -> Nap_StrDup0. Nap_InterpDeleteProc: revert
+----------------------------
+revision 1.226
+date: 2005/12/01 01:04:27;  author: dav480;  state: Exp;  lines: +19 -36
+rm Nap_CmdDelete & put code into Nap_InterpDeleteProc
+----------------------------
+revision 1.225
+date: 2005/11/30 06:35:32;  author: dav480;  state: Exp;  lines: +1 -2
+Nap_CmdDelete: Do delete namespace (should happen anyway)
+----------------------------
+revision 1.224
+date: 2005/11/30 00:46:41;  author: dav480;  state: Exp;  lines: +41 -14
+Nap_CmdDelete: new Nap_InterpDeleteProc: call Nap_CmdDelete
+----------------------------
+revision 1.223
+date: 2005/11/28 11:57:01;  author: dav480;  state: Exp;  lines: +108 -35
+Nap_mod, Nap_lmod, Nap_fmod_f32, Nap_fmod_f32: Rewrite allowing for missing & infinite operands
+----------------------------
+revision 1.222
+date: 2005/11/26 11:22:17;  author: dav480;  state: Exp;  lines: +7 -5
+Nap_ReshapeNAO2: copy utunitState & utunit
+----------------------------
+revision 1.221
+date: 2005/11/25 06:18:21;  author: dav480;  state: Exp;  lines: +2 -2
+Nap_NewNAO4: ensure data starts at address which is multiple of data size
+----------------------------
+revision 1.220
+date: 2005/11/07 12:25:02;  author: dav480;  state: Exp;  lines: +4 -2
+Nap_Check: minor change to output
+----------------------------
+revision 1.219
+date: 2005/11/06 13:33:39;  author: dav480;  state: Exp;  lines: +28 -19
+Nap_Check: Various incl. write to stderr
+----------------------------
+revision 1.218
+date: 2005/11/06 05:48:35;  author: dav480;  state: Exp;  lines: +5 -5
+Minor mod to defn of CKREALLOC & CKFREE
+----------------------------
+revision 1.217
+date: 2005/11/06 05:33:37;  author: dav480;  state: Exp;  lines: +13 -12
+Make use of CKALLOC, CKREALLOC, CKFREE consistent
+----------------------------
+revision 1.216
+date: 2005/11/06 04:23:52;  author: dav480;  state: Exp;  lines: +27 -15
+Nap_InterpDeleteProc: Fix nasty bug causing crash
+----------------------------
+revision 1.215
+date: 2005/11/04 22:30:37;  author: dav480;  state: Exp;  lines: +8 -1
+Nap_InterpDeleteProc: plub mem. leaks
+----------------------------
+revision 1.214
+date: 2005/11/04 14:48:01;  author: dav480;  state: Exp;  lines: +2 -2
+FREE -> free
+----------------------------
+revision 1.213
+date: 2005/11/04 14:20:35;  author: dav480;  state: Exp;  lines: +3 -3
+debug alloc stuff
+----------------------------
+revision 1.212
+date: 2005/11/04 07:39:05;  author: dav480;  state: Exp;  lines: +32 -20
+Nap_InitTclResult: Fix nasty mem. leak. More alloc stuff
+----------------------------
+revision 1.211
+date: 2005/11/03 23:31:26;  author: dav480;  state: Exp;  lines: +6 -4
+more alloc stuff
+----------------------------
+revision 1.210
+date: 2005/11/03 12:48:31;  author: dav480;  state: Exp;  lines: +35 -6
+better debug printing
+----------------------------
+revision 1.209
+date: 2005/11/03 11:44:32;  author: dav480;  state: Exp;  lines: +35 -21
+More on alloc stuff
+----------------------------
+revision 1.208
+date: 2005/11/03 10:25:11;  author: dav480;  state: Exp;  lines: +36 -18
+various mods to alloc stuff
+----------------------------
+revision 1.207
+date: 2005/11/03 07:51:39;  author: dav480;  state: Exp;  lines: +74 -53
+Some utunits stuff. Rewrite Nap_Alloc, etc. Include nap_cd in changed function calls
+=============================================================================
+generic/napMonad.c,m4
+----------------------------
+revision 1.210
+date: 2006/03/10 01:44:23;  author: dav480;  state: Exp;  lines: +42 -20
+Nap_Indirect: support rank > 1 (full indexing)
+=============================================================================
+generic/napParse.y
+----------------------------
+revision 1.69
+date: 2005/11/26 11:20:10;  author: dav480;  state: Exp;  lines: +3 -2
+allow commas within array constants: treat like spaces
+----------------------------
+revision 1.68
+date: 2005/11/06 06:08:50;  author: dav480;  state: Exp;  lines: +4 -1
+malloc -> ckalloc. free -> ckfree
+----------------------------
+revision 1.67
+date: 2005/10/26 08:34:20;  author: dav480;  state: Exp;  lines: +3 -1
+allow usnv to be indexed (for new unit stuff)
+----------------------------
+revision 1.66
+date: 2005/09/29 23:38:16;  author: dav480;  state: Exp;  lines: +3 -3
+rename unary sort ops
+----------------------------
+revision 1.65
+date: 2005/09/29 11:32:01;  author: dav480;  state: Exp;  lines: +3 -1
+implement unary << and >>
+=============================================================================
+generic/napParseLib.c,m4
+----------------------------
+revision 1.62
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +5 -5
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.61
+date: 2006/06/09 04:40:57;  author: dav480;  state: Exp;  lines: +1 -2
+Nap_lex: rm duplicate line
+----------------------------
+revision 1.60
+date: 2005/11/26 11:37:41;  author: dav480;  state: Exp;  lines: +90 -53
+Nap_mantissa: relax rules for array consts. Nap_lex: Define braceLevel
+----------------------------
+revision 1.59
+date: 2005/11/03 07:52:53;  author: dav480;  state: Exp;  lines: +5 -5
+Include nap_cd in changed function calls
+=============================================================================
+generic/napPolygon.c
+----------------------------
+revision 1.29
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +7 -7
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.28
+date: 2005/11/03 07:53:35;  author: dav480;  state: Exp;  lines: +7 -7
+Include nap_cd in changed function calls
+=============================================================================
+generic/nap_check.h
+created from part of nap.h,m4
+----------------------------
+revision 1.24
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +17 -17
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.23
+date: 2005/12/02 07:02:49;  author: dav480;  state: Exp;  lines: +5 -1
+#define Nap_StrDup
+----------------------------
+revision 1.22
+date: 2005/11/03 12:51:20;  author: dav480;  state: Exp;  lines: +10 -9
+better debug printing
+----------------------------
+revision 1.21
+date: 2005/11/03 07:54:30;  author: dav480;  state: Exp;  lines: +9 -9
+Include nap_cd in changed function calls
+=============================================================================
+generic/nap_get.c
+----------------------------
+revision 1.29
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +3 -3
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.28
+date: 2005/11/03 07:55:05;  author: dav480;  state: Exp;  lines: +5 -5
+Include nap_cd in changed function calls
+=============================================================================
+generic/nap_hdf.c,m4
+----------------------------
+revision 1.156
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +19 -19
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.155
+date: 2006/09/20 05:06:48;  author: dav480;  state: Exp;  lines: +22 -16
+Nap_HdfDefineSubscript: fix cv for @@index. Check index is integer
+----------------------------
+revision 1.154
+date: 2005/12/02 07:11:32;  author: dav480;  state: Exp;  lines: +6 -1
+Add FREEs for unit, format, label
+----------------------------
+revision 1.153
+date: 2005/11/03 07:55:43;  author: dav480;  state: Exp;  lines: +16 -16
+Include nap_cd in changed function calls
+=============================================================================
+generic/nap_netcdf.c,m4
+----------------------------
+revision 1.78
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +16 -16
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.77
+date: 2006/09/20 05:07:31;  author: dav480;  state: Exp;  lines: +23 -16
+Nap_NetcdfDefineSubscript: fix cv for @@index. Check index is integer
+----------------------------
+revision 1.76
+date: 2006/04/05 01:35:07;  author: dav480;  state: Exp;  lines: +5 -1
+Nap_OOC_netcdf: CHECKs
+----------------------------
+revision 1.75
+date: 2005/12/02 07:11:33;  author: dav480;  state: Exp;  lines: +6 -1
+Add FREEs for unit, format, label
+----------------------------
+revision 1.74
+date: 2005/11/03 07:56:07;  author: dav480;  state: Exp;  lines: +13 -13
+Include nap_cd in changed function calls
+=============================================================================
+generic/nap_ooc.c,m4
+----------------------------
+revision 1.61
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +8 -8
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.60
+date: 2006/06/29 05:08:57;  author: dav480;  state: Exp;  lines: +19 -103
+remove all udunits stuff
+----------------------------
+revision 1.59
+date: 2006/06/09 04:43:27;  author: dav480;  state: Exp;  lines: +2 -2
+Nap_ObjectCommand: Rm call to utStrError
+----------------------------
+revision 1.58
+date: 2006/04/05 00:01:22;  author: dav480;  state: Exp;  lines: +7 -3
+Nap_SetValueCopy: allow subscript to be of any datatype
+----------------------------
+revision 1.57
+date: 2005/11/26 13:14:14;  author: dav480;  state: Exp;  lines: +70 -61
+Nap_UnitToText: Rm. Various unit stuff in Nap_ObjectCommand, Nap_AppendNAOValue, Nap_OOC_set
+----------------------------
+revision 1.56
+date: 2005/11/08 18:54:15;  author: dav480;  state: Exp;  lines: +9 -9
+Nap_UnitToText: udunits stuff
+----------------------------
+revision 1.55
+date: 2005/11/06 22:26:55;  author: dav480;  state: Exp;  lines: +3 -2
+Use utStrError
+----------------------------
+revision 1.54
+date: 2005/11/06 11:06:51;  author: dav480;  state: Exp;  lines: +2 -1
+CHECK
+----------------------------
+revision 1.53
+date: 2005/11/03 07:59:02;  author: dav480;  state: Exp;  lines: +86 -24
+Nap_UnitToText: new. utunits stuff. Include nap_cd in changed function calls
+----------------------------
+revision 1.52
+date: 2005/10/27 22:03:08;  author: dav480;  state: Exp;  lines: +17 -10
+Nap_AppendNAOValue: New arg "wantUnit"
+----------------------------
+revision 1.51
+date: 2005/10/27 14:21:24;  author: dav480;  state: Exp;  lines: +18 -11
+Nap_ObjectCommand: new method "quantity"
+=============================================================================
+generic/napsh.c
+----------------------------
+revision 1.7
+date: 2005/11/30 06:09:34;  author: dav480;  state: Exp;  lines: +2 -1
+Tcl_AppInit: call Tcl_StaticPackage
+=============================================================================
+generic/triangulate.c
+----------------------------
+revision 1.5
+date: 2006/09/29 12:38:29;  author: dav480;  state: Exp;  lines: +14 -14
+MALLOC -> NAP_ALLOC, MALLOC0 -> NAP_ALLOC0, REALLOC -> NAP_REALLOC, FREE -> NAP_FREE
+----------------------------
+revision 1.4
+date: 2005/11/03 07:56:42;  author: dav480;  state: Exp;  lines: +20 -17
+Include nap_cd in changed function calls
+=============================================================================
+generic/udunits/cfortran.h
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/search-node.h
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/tdelete.c
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/tfind.c
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/tsearch.c
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/udposix.h
+----------------------------
+revision 1.1
+date: 2005/10/29 12:48:59;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/udunits.h
+----------------------------
+revision 1.4
+date: 2005/11/06 22:27:58;  author: dav480;  state: Exp;  lines: +9 -1
+Define utStrError
+----------------------------
+revision 1.3
+date: 2005/11/03 07:33:35;  author: dav480;  state: Exp;  lines: +9 -6
+PROTO: Get prototypes unless already defined. New function "utIsClear"
+----------------------------
+revision 1.2
+date: 2005/10/29 12:42:05;  author: dav480;  state: Exp;  lines: +3 -3
+change datatype of power to double
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utlib.c
+----------------------------
+revision 1.6
+date: 2005/11/07 05:33:15;  author: dav480;  state: Exp;  lines: +2 -3
+utStrError: Minor tidy up
+----------------------------
+revision 1.5
+date: 2005/11/06 22:27:58;  author: dav480;  state: Exp;  lines: +28 -1
+Define utStrError
+----------------------------
+revision 1.4
+date: 2005/11/03 07:34:19;  author: dav480;  state: Exp;  lines: +19 -1
+New function "utIsClear"
+----------------------------
+revision 1.3
+date: 2005/10/31 06:16:30;  author: dav480;  state: Exp;  lines: +5 -1
+Ensure UT_DEFAULT_PATH is defined
+----------------------------
+revision 1.2
+date: 2005/10/29 12:45:13;  author: dav480;  state: Exp;  lines: +7 -3
+change datatype of power to double. Handle undefined _POSIX_PATH_M
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utparse.c
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utparse.h
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utprivate.h
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utscan.c
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+generic/udunits/utscan.h
+----------------------------
+revision 1.1
+date: 2005/10/29 10:35:17;  author: dav480;  state: Exp;
+add
+=============================================================================
+library/browse_cif.tcl
+----------------------------
+revision 1.4
+date: 2005/09/29 02:48:34;  author: dav480;  state: Exp;  lines: +199 -139
+major rewrite
+=============================================================================
+library/caps_nap_menu.tcl
+----------------------------
+revision 1.19
+date: 2006/09/29 12:12:14;  author: dav480;  state: Exp;  lines: +2 -2
+display_help: fix bug with auto_open
+----------------------------
+revision 1.18
+date: 2006/09/26 07:00:45;  author: dav480;  state: Exp;  lines: +2 -2
+create_main_menu: geometry +0+20 (need +20 for cygwin/X)
+----------------------------
+revision 1.17
+date: 2006/06/27 02:49:27;  author: dav480;  state: Exp;  lines: +33 -46
+rewrite help stuff using proc auto_open
+----------------------------
+revision 1.16
+date: 2005/08/12 06:27:30;  author: dav480;  state: Exp;  lines: +2 -2
+Use auto_execok to define hh (so works with other than windowsXP
+=============================================================================
+library/choose_file.tcl
+----------------------------
+revision 1.13
+date: 2006/06/27 05:26:31;  author: dav480;  state: Exp;  lines: +3 -3
+replace html help file by pdf file
+=============================================================================
+library/date.tcl
+----------------------------
+revision 1.15
+date: 2006/04/07 05:23:10;  author: dav480;  state: Exp;  lines: +4 -4
+date2jdn, dateTime2mjd & dateTime2days: fix rounding bug with prod()
+----------------------------
+revision 1.14
+date: 2005/11/08 09:55:05;  author: dav480;  state: Exp;  lines: +2 -2
+date2jdn: set unit to "days"rather than "JDN"
+=============================================================================
+library/geog.tcl
+----------------------------
+revision 1.12
+date: 2006/09/08 02:47:52;  author: dav480;  state: Exp;  lines: +4 -4
+acof2boxed: change default for min_longitude
+----------------------------
+revision 1.11
+date: 2006/09/07 07:19:55;  author: dav480;  state: Exp;  lines: +10 -7
+acof2boxed: new arg min_longitude. Boxed matrices have 2 rows not 2 cols
+----------------------------
+revision 1.10
+date: 2005/10/03 04:26:08;  author: dav480;  state: Exp;  lines: +1 -41
+Move fraction_land to land.tcl
+----------------------------
+revision 1.9
+date: 2005/10/03 01:00:52;  author: dav480;  state: Exp;  lines: +2 -2
+fraction_land: Default for nlon now nlat
+----------------------------
+revision 1.8
+date: 2005/09/29 08:00:47;  author: dav480;  state: Exp;  lines: +15 -7
+fraction_land: Split arg "n" into nlat * nlon, etc.
+----------------------------
+revision 1.7
+date: 2005/09/29 06:18:28;  author: dav480;  state: Exp;  lines: +106 -14
+New functions merid_bounds, zone_bounds, fraction_land. Rewrite merid_wt, zone_wt
+=============================================================================
+library/gshhs.tcl
+----------------------------
+revision 1.6
+date: 2006/09/15 06:46:50;  author: dav480;  state: Exp;  lines: +5 -9
+change default of min_longitude to -180. Comments
+----------------------------
+revision 1.5
+date: 2006/09/14 23:40:21;  author: dav480;  state: Exp;  lines: +2 -2
+comment only
+----------------------------
+revision 1.4
+date: 2006/09/14 07:16:15;  author: dav480;  state: Exp;  lines: +8 -7
+change order of args
+----------------------------
+revision 1.3
+date: 2006/09/14 07:06:33;  author: dav480;  state: Exp;  lines: +32 -25
+fix bugs & make faster
+----------------------------
+revision 1.2
+date: 2006/09/13 08:10:56;  author: dav480;  state: Exp;  lines: +3 -3
+get_gshhs: Change default for min_area to 0
+----------------------------
+revision 1.1
+date: 2006/09/13 06:48:40;  author: dav480;  state: Exp;
+new
+=============================================================================
+library/hdf.tcl
+----------------------------
+revision 1.123
+date: 2006/06/27 05:26:31;  author: dav480;  state: Exp;  lines: +3 -3
+replace html help file by pdf file
+=============================================================================
+library/land.tcl
+----------------------------
+revision 1.7
+date: 2005/10/03 08:13:58;  author: dav480;  state: Exp;  lines: +2 -2
+fraction_land: ensure result is f32
+----------------------------
+revision 1.6
+date: 2005/10/03 05:11:03;  author: dav480;  state: Exp;  lines: +47 -2
+fraction_land: from geog.tcl.  is_coast: Use fraction_land
+=============================================================================
+library/nap_function_lib.tcl
+----------------------------
+revision 1.53
+date: 2006/09/19 02:28:52;  author: dav480;  state: Exp;  lines: +9 -11
+IBMfp32tof32: mods by harvey
+----------------------------
+revision 1.52
+date: 2006/09/19 02:25:06;  author: dav480;  state: Exp;  lines: +34 -1
+IBMfp32tof32: new
+----------------------------
+revision 1.51
+date: 2006/03/27 00:12:00;  author: dav480;  state: Exp;  lines: +6 -4
+comments. cv: Simplify
+----------------------------
+revision 1.50
+date: 2006/03/24 01:46:15;  author: dav480;  state: Exp;  lines: +2 -2
+comment only
+----------------------------
+revision 1.49
+date: 2006/03/24 01:37:27;  author: dav480;  state: Exp;  lines: +34 -34
+fix order of procs so sorted
+----------------------------
+revision 1.48
+date: 2006/03/24 01:18:16;  author: dav480;  state: Exp;  lines: +56 -1
+cpi: New function for cross-product indexing
+----------------------------
+revision 1.47
+date: 2005/11/28 08:11:07;  author: dav480;  state: Exp;  lines: +1 -30
+regression: mv to stat.tcl
+=============================================================================
+library/plot_nao_procs.tcl
+----------------------------
+revision 1.137
+date: 2006/09/26 06:29:23;  author: dav480;  state: Exp;  lines: +3 -3
+resize_canvas: update -> "update idletasks" (need with cygwin/X)
+----------------------------
+revision 1.136
+date: 2006/09/19 07:19:11;  author: dav480;  state: Exp;  lines: +5 -4
+fix bug setting overlay interactively
+----------------------------
+revision 1.135
+date: 2006/09/19 06:09:35;  author: dav480;  state: Exp;  lines: +8 -3
+draw_z: test for rank > 3.  Fix bug with rank 3 messing up CVs
+----------------------------
+revision 1.134
+date: 2006/09/19 04:49:03;  author: dav480;  state: Exp;  lines: +24 -23
+fix bugs with axes
+----------------------------
+revision 1.133
+date: 2006/09/08 04:29:31;  author: dav480;  state: Exp;  lines: +12 -11
+set_overlay: rewrite to handle "E expr"
+----------------------------
+revision 1.132
+date: 2006/06/27 05:26:31;  author: dav480;  state: Exp;  lines: +3 -3
+replace html help file by pdf file
+----------------------------
+revision 1.131
+date: 2006/02/10 06:25:15;  author: dav480;  state: Exp;  lines: +6 -3
+set_overlay: fix problem with option E
+----------------------------
+revision 1.130
+date: 2005/11/17 22:41:25;  author: dav480;  state: Exp;  lines: +10 -8
+redraw_xy: adjust margins
+----------------------------
+revision 1.129
+date: 2005/11/17 03:50:46;  author: dav480;  state: Exp;  lines: +12 -5
+redraw_xy: spacing related to title, etc.
+----------------------------
+revision 1.128
+date: 2005/11/16 06:23:06;  author: dav480;  state: Exp;  lines: +131 -74
+redraw_xy: Various incl use of gap_height, gap_width, key_width, want_x_axis, want_y_axis
+----------------------------
+revision 1.127
+date: 2005/11/15 00:31:53;  author: dav480;  state: Exp;  lines: +3 -3
+resize_canvas: "update idletasks" -> "update"
+----------------------------
+revision 1.126
+date: 2005/10/26 08:09:42;  author: dav480;  state: Exp;  lines: +3 -2
+minor rewording of message
+----------------------------
+revision 1.125
+date: 2005/10/25 20:45:57;  author: dav480;  state: Exp;  lines: +75 -58
+new vars want_x_axis, want_y_axis
+----------------------------
+revision 1.124
+date: 2005/10/25 07:47:28;  author: dav480;  state: Exp;  lines: +70 -61
+allow major_ticks to be any expression
+----------------------------
+revision 1.123
+date: 2005/10/25 04:52:34;  author: dav480;  state: Exp;  lines: +7 -7
+allow ncols to be set from menu
+----------------------------
+revision 1.122
+date: 2005/10/20 08:53:30;  author: dav480;  state: Exp;  lines: +7 -2
+Use 3-letter extensions .jpg & .tif
+----------------------------
+revision 1.121
+date: 2005/10/03 05:08:34;  author: dav480;  state: Exp;  lines: +25 -4
+Define & use new functions isCoast & isSea
+----------------------------
+revision 1.120
+date: 2005/08/18 05:31:01;  author: dav480;  state: Exp;  lines: +10 -3
+axis_major_ticks_span: allow non-sorted CV
+----------------------------
+revision 1.119
+date: 2005/08/11 08:53:39;  author: dav480;  state: Exp;  lines: +3 -1
+redraw_tiles: Fix z ticks after redraw
+=============================================================================
+library/proc_lib.tcl
+----------------------------
+revision 1.117
+date: 2006/09/22 07:49:37;  author: dav480;  state: Exp;  lines: +2 -2
+auto_open: If no acroread then try xpdf & gv
+----------------------------
+revision 1.116
+date: 2006/07/13 05:42:57;  author: dav480;  state: Exp;  lines: +23 -57
+auto_open: rewrite.  auto_open_command: rm
+----------------------------
+revision 1.115
+date: 2006/06/27 04:34:31;  author: dav480;  state: Exp;  lines: +5 -2
+auto_open: fix problem with file:
+----------------------------
+revision 1.114
+date: 2006/06/27 01:56:41;  author: dav480;  state: Exp;  lines: +13 -16
+auto_open: filename -> file_url. auto_open_command: Use auto_execok
+----------------------------
+revision 1.113
+date: 2006/06/23 08:01:10;  author: dav480;  state: Exp;  lines: +49 -15
+rewrite auto_open & auto_open_command
+----------------------------
+revision 1.112
+date: 2006/03/03 08:19:08;  author: dav480;  state: Exp;  lines: +22 -6
+split auto_open into auto_open_command & auto_open
+----------------------------
+revision 1.111
+date: 2006/03/03 07:36:25;  author: dav480;  state: Exp;  lines: +25 -1
+new proc auto_open
+----------------------------
+revision 1.110
+date: 2005/11/17 03:36:35;  author: dav480;  state: Exp;  lines: +0 -13
+revert to 1.108 (already have equivalent proc)
+----------------------------
+revision 1.109
+date: 2005/11/17 02:42:47;  author: dav480;  state: Exp;  lines: +14 -1
+max_line_length: new
+----------------------------
+revision 1.108
+date: 2005/11/14 04:16:12;  author: dav480;  state: Exp;  lines: +2 -2
+create_window: update to fix timing problem
+----------------------------
+revision 1.107
+date: 2005/11/09 03:50:31;  author: dav480;  state: Exp;  lines: +19 -5
+create_window: Fix geometry using NW, SE, etc.
+----------------------------
+revision 1.106
+date: 2005/10/25 07:44:02;  author: dav480;  state: Exp;  lines: +2 -11
+yes_no: Use create_window
+=============================================================================
+library/stat.tcl
+----------------------------
+revision 1.28
+date: 2005/12/13 01:51:45;  author: dav480;  state: Exp;  lines: +29 -5
+new functions: CV & CV1
+----------------------------
+revision 1.27
+date: 2005/11/28 08:10:18;  author: dav480;  state: Exp;  lines: +65 -1
+regression: mv from nap_function_lib.tcl. fit_polynomial & polynomial: new
+=============================================================================
+library/vif.tcl
+----------------------------
+revision 1.14
+date: 2005/10/20 08:53:30;  author: dav480;  state: Exp;  lines: +7 -2
+Use 3-letter extensions .jpg & .tif
+=============================================================================
+library/tests/gshhs/t.tcl
+----------------------------
+revision 1.1
+date: 2006/09/14 07:22:53;  author: dav480;  state: Exp;
+add
+=============================================================================

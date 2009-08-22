@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: sample.html,v 1.12 2005/12/07 09:38:45 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Sample Session</title>
+  </head>
+  <body>
+    <center>
+      <h2>Sample Session</h2>
+    </center>
+    <p>The following sample session illustrates some basic features of
+    NAP. The input command lines begin with the standard Tcl prompt
+    &quot;<code>%</code>&quot;.</p>
+    <pre>
+    % nap &quot;x = {2 2.5 5}&quot;
+    ::NAP::13-13
+    % nap &quot;y = x * x&quot;
+    ::NAP::14-14
+    % $y
+    4 6.25 25
+</pre>
+    <p>The first command assigns to 
+    <code>x</code> a vector containing the three elements 2, 2.5 and 5.
+    The second command assigns to 
+    <code>y</code> a vector containing the three elements which are the
+    squares of the corresponding elements of 
+    <code>x</code>. The command &quot;<code>$y</code>&quot; returns the value of 
+    <code>y</code>.</p>
+    <p>Nap stores each variable in memory using a data-structure called
+    an 
+    <em>n-dimensional array object</em> (
+    <em>NAO</em>). Each NAO has an associated Tcl command called its 
+    <em>object-oriented command</em> (
+    <em>OOC</em>) which is used to</p>
+    <ul>
+      <li>obtain data and other information from the NAO</li>
+      <li>write data from the NAO to files</li>
+      <li>modify the NAO.</li>
+    </ul>
+    <p>An 
+    <em>OOC-name</em> (command-name of an OOC) is used</p>
+    <ul>
+      <li>to execute the OOC (like any other Tcl command)</li>
+      <li>as a unique identifier for the NAO associated with the OOC.
+      <br />An OOC-name has the form 
+      <code>::NAP::</code>
+      <i>seq</i>
+      <code>-</code>
+      <i>slot</i>, where</li>
+      <li>
+      <code>::NAP::</code> is the Tcl namespace used by NAP</li>
+      <li>
+      <i>seq</i> is the 
+      <i>sequence number</i> assigned in order of creation</li>
+      <li>
+      <i>slot</i> is the index of an internal table used to provide
+      fast access.
+      <br />In the above example, both OOC-names (
+      <code>::NAP::13-13</code> and 
+      <code>::NAP::14-14</code>) have slots equal to their sequence
+      number, but this is not the case in general since the slots of
+      deleted NAOs may be reused.</li>
+    </ul>
+    <p>An assignment (&quot;<code>=</code>&quot;) operator has on its left a standard Tcl
+    variable name which is assigned the (string) value of the OOC-name.
+    Continuing the above example, these string values can be displayed
+    using the standard Tcl command 
+    <code>set</code>.</p>
+    <pre>
+  
+<code>
+  % set x
+  ::NAP::13-13
+  % set y
+  ::NAP::14-14
+  </code>
+</pre>
+    <p>Thus the command &quot;<code>$y</code>&quot; is equivalent to the command &quot;<code>::NAP::14-14</code>&quot;. &#160; Confirming this:</p>
+    <pre>
+  
+<br />
+<code>% ::NAP::14-14
+    4 6.25 25</code>
+</pre>
+    <p>If an OOC has no arguments (as above) then it returns the value
+    of the NAO (abbreviated if the NAO is large). Arguments can be
+    specified as in:</p>
+    <pre>
+<br />
+<code>
+  % $x all
+::NAP::13-13  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 2.5 5
+</code>
+</pre>
+    <p>This illustrates the &quot;<code>all</code>&quot; 
+    <em>method</em> (sub-command), which provides a more detailed
+    description of the NAO than the default method. The&#160; following
+    example uses the &quot;<code>set value</code>&quot; method to change the value of element
+    1 of 
+    <code>x</code> from 2.5 to 7. Note that element 1 is the second
+    element because the subscript origin is 0 (as in other aspects of
+    Tcl) rather than 1 (as in languages such as Fortran).</p>
+    <pre>
+% $x set value 7 1
+% $x all
+::NAP::13-13  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 7 5
+</pre>
+    <p>The similarity between the &quot;<code>expr</code>&quot; and &quot;<code>nap</code>&quot; commands for simple arithmetic is shown
+    by:</p>
+    <pre>
+% expr &quot;2 * (1 - 0.25)&quot;
+1.5
+% nap &quot;2 * (1 - 0.25)&quot;
+::NAP::25-25
+% ::NAP::25-25
+1.5
+% ::NAP::25-25
+invalid command name &quot;::NAP::25-25&quot;
+</pre>
+    <p>Note that the command &quot;<code>::NAP::25-25</code>&quot; worked the first time but failed
+    when it was repeated. The NAOs reference count was zero, as it was
+    not referenced by anything (e.g. a Tcl variable). So the NAO and
+    its associated OOC were automatically deleted after the first
+    execution of the OOC.</p>
+    <p>The need to type the additional command &quot;<code>::NAP::25-25</code>&quot; can be obviated using the Tcl
+    bracket (&quot;<code>[]</code>&quot;) notation. Tcl executes the bracketed
+    command, substitutes its result and then executes the generated
+    command. So the above can be replaced by:</p>
+    <pre>
+% [nap &quot;2 * (1 - 0.25)&quot;]
+1.5
+</pre>
+    <p>The following example illustrates 
+    <em>array indexing</em>. The six commands do the following:</p>
+    <ol>
+      <li>Assign to the variable 
+      <code>score</code> a 32-bit floating-point vector containing the
+      five values 56, 75, 47, 99 and 49.</li>
+      <li>Display 
+      <code>score</code>.</li>
+      <li>Index a vector by a scalar &quot;<code>2</code>&quot; to give a scalar.</li>
+      <li>Index a vector by a vector &quot;<code>{2 0 4}</code>&quot; to give a vector.</li>
+      <li>Illustrate the operator &quot;<code>..</code>&quot; which defines an 
+      <em>arithmetic progression</em>.</li>
+      <li>Use such an arithmetic progression as an index.</li>
+    </ol>
+    <pre>
+% nap &quot;score = f32{56 75 47 99 49}&quot;
+::NAP::16-16
+% $score all
+::NAP::16-16  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+56 75 47 99 49
+% [nap &quot;score(2)&quot;] all
+::NAP::20-20  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+47
+% [nap &quot;score({2 0 4})&quot;] all
+::NAP::25-25  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+47 56 49
+% [nap &quot;0 .. 3&quot;]
+0 1 2 3
+% [nap &quot;score(0 .. 3)&quot;]
+56 75 47 99
+</pre>
+    <p>The following three commands respectively illustrate:</p>
+    <ol>
+      <li>function 
+      <code>sum</code>, which has the functionality of mathematical
+      &quot;&#931;&quot;</li>
+      <li>function 
+      <code>count</code>, which gives the 
+      <em>number of non-missing elements</em></li>
+      <li>the use of these functions to calculate an 
+      <em>arithmetic-mean</em></li>
+    </ol>
+    <pre>
+% [nap &quot;sum(score)&quot;]
+326
+% [nap &quot;count(score)&quot;]
+5
+% [nap &quot;sum(score) / count(score)&quot;]
+65.2
+</pre>
+    <p>The following two commands respectively illustrate:</p>
+    <ol>
+      <li>the definition of a tcl procedure to calculate an
+      arithmetic-mean using NAP</li>
+      <li>the calling of this procedure as a NAP function</li>
+    </ol>
+    <pre>
+% proc mean x {nap &quot;sum(x)/count(x)&quot;}
+% [nap &quot;mean(score)&quot;]
+65.2
+</pre>
+    <p>Procedures defining NAP functions have arguments and results
+    which are OOC-names. All the facilities of Tcl and NAP can be used.
+    So recursion is allowed, as shown by the following 
+    <em>factorial</em> example:</p>
+    <pre>
+% proc factorial n {
+    if {[[nap &quot;n &gt; 1&quot;]]} {
+        nap &quot;n * factorial(n-1)&quot;
+    } else {
+        nap &quot;1&quot;
+    }
+}
+% [nap &quot;factorial(4)&quot;]
+24
+</pre>
+    <p>Note the double brackets (inside braces) in the first line of
+    the body of the above procedure. The inner brackets produce an
+    OOC-name. The outer brackets execute this OOC to produce the string
+    &quot;<code>0</code>&quot; or &quot;<code>1</code>&quot;.</p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: sample.html,v 1.8
+            2004/10/26 05:27:22 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

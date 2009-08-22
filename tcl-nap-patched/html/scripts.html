@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: scripts.html,v 1.5 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Sample Startup Scripts</title>
+  </head>
+  <body>
+  <center>
+    <h2>Sample Startup Scripts</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#my">Script 
+      <code>~/my.tcl</code></a>
+    </li>
+    <li>
+      <a href="#my_tkcon">Script 
+      <code>~/my_tkcon.tcl</code></a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>These startup scripts tailor 
+  <em>Tcl</em> and 
+  <em>tkcon</em> to personal requirements. The scripts can be copied to
+  your home directory and modified as desired.
+  <h3>
+    <a name="my">Script <code>~/my.tcl</code></a>
+  </h3>The script 
+  <code>~/my.tcl</code> is called by the script 
+  <code>~/.tclshrc</code> or 
+  <code>~/tclshrc.tcl</code> that is created by the standard nap
+  installation. This 
+  <code>~/my.tcl</code> script can be used to tailor Tcl in various
+  ways such as
+  <ul>
+    <li>initialising packages</li>
+    <li>initialising libraries</li>
+    <li>defining procedures</li>
+    <li>sourcing other scripts</li>
+  </ul>
+  <p>The following sample script initialises a personal library and
+  defines some simple aliases:</p>
+  <pre>
+# my.tcl --
+#
+# Initialise my library of Tcl procedures (including nap functions) by
+sourcing its tclIndex.
+# The library consists of files in directory ~/my_tcl_lib
+# The file tclIndex is created by the following command:
+#     auto_mkindex ~/my_tcl_lib *.tcl
+foreach dir {~/my_tcl_lib} {source $dir/tclIndex}
+#
+proc define_alias {alias args} {proc $alias args &quot;eval $args \$args&quot;}
+#
+define_alias e expr
+define_alias n nap
+define_alias p pwd
+define_alias cp file copy
+define_alias md file mkdir
+define_alias rm file delete
+</pre>
+  <h3>
+    <a name="my_tkcon">Script <code>~/my_tkcon.tcl</code></a>
+  </h3>The script 
+  <code>~/my_tkcon.tcl</code> is called by the script 
+  <code>~/.tkconrc</code> or 
+  <code>~/tkcon.cfg</code> that is created by the standard nap
+  installation. This 
+  <code>~/my_tkcon.tcl</code> script can be used to tailor various
+  aspects of tkcon.
+  <p>The following sample script defines</p>
+  <ul>
+    <li>the font used by tkcon</li>
+    <li>the number of rows and columns provided by tkcon</li>
+    <li>the number of commands in history</li>
+    <li>the prompt at start of each input line</li>
+  </ul>
+  <pre>
+# my_tkcon.cfg --
+#
+set ::tkcon::OPT(font) &quot;Courier 10&quot;
+set ::tkcon::OPT(rows) 40
+set ::tkcon::OPT(cols) 80
+set ::tkcon::OPT(history) 200; # number of commands in history
+set ::tkcon::OPT(prompt1) {% };# prompt at start of each input line
+# set ::tkcon::OPT(prompt1) {[history nextid] % };# alternative
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: scripts.html,v 1.2
+          2005/10/07 02:59:05 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

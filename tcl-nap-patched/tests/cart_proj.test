@@ -1,0 +1,81 @@
+# cart_proj.test --
+# 
+# Test functions for cartographic projections.
+#
+# Copyright (c) 2005, CSIRO Australia
+# Author: Harvey Davies, CSIRO Marine and Atmospheric Research
+# $Id: cart_proj.test,v 1.8 2005/10/22 04:56:51 dav480 Exp $
+
+proc put_info text {
+    # puts "${text}: [llength [list_naos]] NAOs using [lindex [nap_info bytes] 0] bytes"
+}
+
+Test cart_proj-1.1 {cart_proj_fwd man proj} {
+    [nap "cart_proj_fwd('proj=utm lon_0=112w ellps=clrk66', 45.25919444444, -111.5)"] -f %.2f
+} {460769.27 5011648.45}
+
+Test cart_proj-1.2 {cart_proj_fwd Evenden 1st Interim pp24-25} {
+    [nap "cart_proj_fwd('proj=poly ellps=clrk66 lon_0=90W no_defs', {0 33 77}, {-90 -95 -86})"] \
+	-f %.3f
+} {      0.000       0.000
+-467100.408 3663659.262
+ 100412.759 8553464.807}
+
+Test cart_proj-1.3 {cart_proj_fwd to_utm} {
+    [nap "cart_proj_fwd('proj=utm south zone=55', -37.951033416667, 144.42486788889)"] -f %.3f
+} {273741.297 5796489.777}
+
+Test cart_proj-1.4 {cart_proj_fwd different ranks} {
+    [nap "cart_proj_fwd('+proj=eqc', {-90 0 90}, {{0 90 180}{3#0}})"] -f %.3f
+} {        0.000 -10018754.171
+ 10018754.171         0.000
+ 20037508.343  10018754.171
+
+        0.000 -10018754.171
+        0.000         0.000
+        0.000  10018754.171}
+
+Test cart_proj-1.5 {cart_proj_fwd different ranks} {
+    [nap "cart_proj_fwd('+proj=eqc', {{-90 0 90}{3#0}}, {0 90 180})"] -f %.3f
+} {        0.000 -10018754.171
+ 10018754.171         0.000
+ 20037508.343  10018754.171
+
+        0.000         0.000
+ 10018754.171         0.000
+ 20037508.343         0.000}
+
+Test cart_proj-2.1 {cart_proj_inv man proj} {
+    [nap "cart_proj_inv('proj=utm lon_0=112w ellps=clrk66', 460769.27, 5011648.45)"]
+} {45.2592 -111.5}
+
+Test cart_proj-2.2 {cart_proj_inv Evenden 1st Interim pp24-25} {
+    [nap "cart_proj_inv('proj=poly ellps=clrk66 lon_0=90W no_defs',
+	{0.000 -467100.408  100412.759}, {0.000 3663659.262 8553464.807})"]
+} {  0 -90
+ 33 -95
+ 77 -86}
+
+Test cart_proj-2.3 {cart_proj_inv to_utm} {
+    [nap "cart_proj_inv('proj=utm south zone=55', 273741.297, 5796489.777)"] -f %.8f
+} {-37.95103341 144.42486789}
+
+Test cart_proj-2.4 {cart_proj_inv different ranks} {
+    [nap "cart_proj_inv('+proj=eqc', {{0 1e7 2e7}{3#0}}, {0 5e6 1e7})"] -f %.6f
+} {  0.000000   0.000000
+ 44.915764  89.831528
+ 89.831528 179.663057
+
+  0.000000   0.000000
+ 44.915764   0.000000
+ 89.831528   0.000000}
+
+Test cart_proj-2.5 {cart_proj_inv different ranks} {
+    [nap "cart_proj_inv('+proj=eqc', {0 1e7 2e7}, {{0 5e6 1e7}{3#0}})"] -f %.6f
+} {  0.000000   0.000000
+ 44.915764  89.831528
+ 89.831528 179.663057
+
+  0.000000   0.000000
+  0.000000  89.831528
+  0.000000 179.663057}

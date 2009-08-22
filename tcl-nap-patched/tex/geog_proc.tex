@@ -1,0 +1,140 @@
+%  $Id: geog_proc.tex,v 1.6 2007/11/09 09:24:30 dav480 Exp $ 
+    % Nap Library: Geographic Procedures
+
+\section{Geographic Procedures}
+    \label{geog-proc}
+
+\subsection{Introduction}
+    \label{geog-proc-Introduction}
+
+The following procedures are defined in the files \texttt{geog.tcl} and \texttt{gshhs.tcl}. 
+Note that there are also geographic \emph{functions}, which are described in section \ref{geog}.
+
+\subsection{GSHHS Procedures}
+    \label{geog-proc-gshhs}
+
+These supplement the functions described in section \ref{gshhs-functions}.
+
+\subsubsection{\texttt{dmp\_gshhs}
+	$\mathit{nrecords\_max}$
+	$\mathit{npoints\_max}$
+	$\mathit{out\_file\_name}$
+	$\mathit{resolution}$
+	$\mathit{min\_area}$
+	$\mathit{min\_longitude}$
+	$\mathit{max\_longitude}$
+	$\mathit{min\_latitude}$
+	$\mathit{max\_latitude}$
+	$\mathit{data\_dir}$
+}
+    \label{geog-proc-dmp-gshhs}
+
+This dumps (prints) selected data from a GSHHS file.
+The arguments are as follows:
+\begin{simpleitems}
+    \item $\mathit{nrecords\_max}$
+	Maximum number of records to dump. (Default: $-1=all$).
+    \item $\mathit{npoints\_max}$
+	Maximum number of points (in each record) to dump.
+	If too many points then print first and last $(\mathit{npoints\_max}+1)/2$ points.
+	(Default: $-1=all$).
+	Value of $-2$ means print only record count.
+    \item $\mathit{out\_file\_name}$ (default: \texttt{""} $=$ standard output)
+    \item $\mathit{resolution}$ (default: 25):
+	Required accuracy (km).
+	This determines which data file is used.
+    \item $\mathit{min\_area}$ (default: \texttt{"\{-1 -1 -1 -1\}"}): \\
+	This is a four-element vector specifying the minimum area (square km) of:
+	\begin{bullets}
+	    \item land with sea boundary,
+	    \item lake (including inland sea),
+	    \item island in lake,
+	    \item pond in island in lake.
+	\end{bullets}
+	If the value is scalar or contains less than 4 elements
+	then the final element is repeated to give a 4-element vector.
+	A value of $-1$ is treated as $\mathit{resolution}^2/4$.
+    \item $\mathit{min\_longitude}$ (default: $-180$):
+	Left boundary of region. 
+    \item $\mathit{max\_longitude}$ (default: $\mathit{min\_longitude} + 360$):
+	Right boundary of region.
+    \item $\mathit{min\_latitude}$ (default: $-90$):
+	Bottom boundary of region.
+    \item $\mathit{max\_latitude}$ (default: $90$):
+	Top boundary of region.
+    \item $\mathit{data\_dir}$:
+	GSHHS data directory (see section \ref{gshhs-functions})
+\end{simpleitems}
+
+Example: \\
+\begin{verbatim}
+% dmp_gshhs 1 4
+GSHHS File C:/dav480/tcl/lib/nap6.3/data/gshhs/gshhs_c.b
+
+record 0, 1240 points, level=1, area=79793839.9 km^2
+west=-17.533778 east=190.326000 south=-34.830444 north=77.716250
+start:
+68.993778 69.883722
+180.000000 176.081639
+end:
+68.992917 68.993778
+180.001556 180.000000
+1 records read
+\end{verbatim}
+
+\subsubsection{\texttt{list\_gshhs\_resolutions} $\mathit{data\_dir}$}
+    \label{geog-proc-list-gshhs-resolutions}
+
+Return a sorted list of resolutions (km) corresponding to the GSHHS data files in the
+specified GSHHS data directory, which has the default value described in
+	section \ref{gshhs-functions}.
+
+Example: \\
+\begin{verbatim}
+% list_gshhs_resolutions
+1 5 25
+\end{verbatim}
+
+\subsection{Write \emph{ARC/INFO GRIDASCII} file using \texttt{put\_gridascii}}
+    \label{geog-proc-put-gridascii}
+
+Procedure 
+  \texttt{put\_gridascii} writes a file in ARC/INFO GRIDASCII
+  format. All cells must be squares of the same size. Coordinate
+  variable 0 (usually latitude) can be either ascending or descending.
+
+The procedure is called as follows: \\
+  \texttt{put\_gridascii} $\mathit{expr}$ $\mathit{filename}$ [$\mathit{missing\_value\_string}$]
+  \begin{simpleitems}
+    \item $\mathit{expr}$
+    Nap expression defining a matrix with coordinate variables (normally latitude and longitude)
+    \item $\mathit{filename}$
+    Pathname of the output file
+    \item $\mathit{missing\_value\_string}$
+    String representing missing value in file (Default: \texttt{1e9})
+  \end{simpleitems}
+
+Example: \\
+  \texttt{\% put\_gridascii mat abc.txt -999}
+
+  \subsection{Write \emph{Surfer} file using \texttt{put\_text\_surfer}}
+    \label{geog-proc-put-text-surfer}
+
+Procedure 
+  \texttt{put\_text\_surfer} writes a file in 
+  \emph{Surfer} format. Surfer is a package developed by 
+  \emph{Golden Software}.
+
+The procedure is called as follows: \\
+  \texttt{put\_text\_surfer} $\mathit{expr}$ [$\mathit{filename}$] [$\mathit{format}$]
+  \begin{simpleitems}
+    \item $\mathit{expr}$
+    Nap expression defining a matrix with coordinate variables
+    \item $\mathit{filename}$
+    Pathname of the output file. If none then writes to standard output.
+    \item $\mathit{format}$
+    C format specification of each output element (Default: \texttt{"\%g"})
+  \end{simpleitems}
+
+Example: \\
+  \texttt{\% put\_text\_surfer mat abc.txt \%8.4f}

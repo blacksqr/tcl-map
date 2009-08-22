@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: ooc_meta.html,v 1.7 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>OOC Methods: Metadata</title>
+  </head>
+  <body>
+  <center>
+    <h2>OOC Methods which return Metadata</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#intro">Introduction</a>
+    </li>
+    <li>
+      <a href="#coordinate">Method 
+      <code>coordinate</code></a>
+    </li>
+    <li>
+      <a href="#count">Method 
+      <code>count</code></a>
+    </li>
+    <li>
+      <a href="#datatype">Method 
+      <code>datatype</code></a>
+    </li>
+    <li>
+      <a href="#dimension">Method 
+      <code>dimension</code></a>
+    </li>
+    <li>
+      <a href="#format">Method 
+      <code>format</code></a>
+    </li>
+    <li>
+      <a href="#header">Method 
+      <code>header</code></a>
+    </li>
+    <li>
+      <a href="#label">Method 
+      <code>label</code></a>
+    </li>
+    <li>
+      <a href="#link">Method 
+      <code>link</code></a>
+    </li>
+    <li>
+      <a href="#missing">Method 
+      <code>missing</code></a>
+    </li>
+    <li>
+      <a href="#ooc">Method 
+      <code>ooc</code></a>
+    </li>
+    <li>
+      <a href="#rank">Method 
+      <code>rank</code></a>
+    </li>
+    <li>
+      <a href="#sequence">Method 
+      <code>sequence</code></a>
+    </li>
+    <li>
+      <a href="#shape">Method 
+      <code>shape</code></a>
+    </li>
+    <li>
+      <a href="#slot">Method 
+      <code>slot</code></a>
+    </li>
+    <li>
+      <a href="#step">Method 
+      <code>step</code></a>
+    </li>
+    <li>
+      <a href="#unit">Method 
+      <code>unit</code></a>
+    </li>
+  </ol>
+  <h3>
+    <a name="intro">Introduction</a>
+  </h3>The following code defines vectors &quot;<code>x</code>&quot; and &quot;<code>y</code>&quot; for use in the examples below:
+  <pre>
+% nap &quot;x = 0 .. 2 ... 0.5&quot;
+::NAP::58-58
+% nap &quot;y = x ** 2&quot;
+::NAP::61-61
+% $y val -format %0.3f
+0.000 0.250 1.000 2.250 4.000
+</pre>
+  <h3>
+    <a name="coordinate">Method <code>coordinate</code></a>
+  </h3>
+  <var>ooc_name</var> 
+  <code>coordinate</code> ?
+  <var>dim_name</var>|
+  <var>dim_number</var>? ?
+  <var>dim_name</var>|
+  <var>dim_number</var>? &#8230;
+  <br />
+  <p>This returns the OOC-names of the coordinate variables of selected
+  dimensions. If no dimensions are specified then the effect is the
+  same as:
+  <br />
+  <var>ooc_name</var> 
+  <code>coo</code> 0 1 2 &#8230; rank-1&quot;
+  <br /></p>
+  <p>Example:</p>
+  <pre>
+% $y set coo x
+% $y coo
+::NAP::58-58
+% [$y coo]
+0 0.5 1 1.5 2
+</pre>
+  <h3>
+    <a name="count">Method <code>count</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>count</code> 
+  <code>-keep</code>
+  <br /></p>
+  <p>This returns the reference count.</p>
+  <p>Example (using 
+  <code>x</code> defined in previous example):</p>
+  <pre>
+% $x count
+2
+</pre>
+Note that the reference count is 2 because this NAO is referenced
+by both
+  <ul>
+    <li>Tcl variable 
+    <code>x</code></li>
+    <li>coordinate variable pointer of NAO 
+    <code>::NAP::61-61</code></li>
+  </ul>
+  <h3>
+    <a name="datatype">Method <code>datatype</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>datatype</code>
+  <br /></p>
+  <p>This returns the data-type.</p>
+  <p>Example:</p>
+  <pre>
+% [nap &quot;&#39;hello&#39;&quot;] dat
+c8
+</pre>
+  <h3>
+    <a name="dimension">Method <code>dimension</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>dimension</code> ?
+  <var>dim_number</var>? ?
+  <var>dim_number</var>? &#8230;
+  <br /></p>
+  <p>This returns the dimension names.
+  <br /></p>
+  <p>
+  <var>ooc_name</var> 
+  <code>di</code>
+  <br />is equivalent to:
+  <br />
+  <var>ooc_name</var> 
+  <code>di</code> 0 1 2 &#8230; rank-1&quot;
+  <br /></p>
+  <p>Example (again continuing above example):</p>
+  <pre>
+% $y dim
+x
+</pre>
+  <h3>
+    <a name="format">Method <code>format</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>format</code>
+  <br /></p>
+  <p>This returns the C format for printing the NAO.</p>
+  <p>Example:</p>
+  <pre>
+% $y set format %.4f
+% $y format
+%.4f
+% $y value
+0.0000 0.2500 1.0000 2.2500 4.0000
+</pre>
+  <h3>
+    <a name="header">Method <code>header</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>header</code> 
+  <code>-keep</code>
+  <br /></p>
+  <p>This returns similar information to the following (but using a
+  different format):
+  <br />
+  <var>ooc_name</var> 
+  <code>ooc</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>datatype</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>missing</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>count</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>unit</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>shape</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>dimension</code>
+  <br />
+  <var>ooc_name</var> 
+  <code>coordinate</code>
+  <br /></p>
+  <p>Example (continuing above example):</p>
+  <pre>
+% $y header
+::NAP::61-61  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: x         Coordinate-variable:
+::NAP::58-58
+% 
+</pre>
+  <h3>
+    <a name="label">Method <code>label</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>label</code>
+  <br /></p>
+  <p>This returns the label (title, etc.) of the NAO.</p>
+  <p>Example:</p>
+  <pre>
+% $y set label &quot;areas of squares&quot;
+% $y label
+areas of squares
+</pre>
+  <h3>
+    <a name="link">Method <code>link</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>link</code>
+  <br /></p>
+  <p>This returns the OOC-name of the link NAO.</p>
+  <p>Example:</p>
+  <pre>
+% $y set link [nap 42]
+% [$y link]
+42
+</pre>
+  <h3>
+    <a name="missing">Method <code>missing</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>missing</code>
+  <br /></p>
+  <p>This returns the missing value. This is the value used to indicate
+  null or undefined data.</p>
+  <p>Example:</p>
+  <pre>
+% $y miss
+NaN
+</pre>
+  <h3>
+    <a name="ooc">Method <code>ooc</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>ooc</code> 
+  <code>-keep</code>
+  <br /></p>
+  <p>This returns the OOC-name of the NAO.</p>
+  <p>Example:</p>
+  <pre>
+$y ooc
+::NAP::61-61
+</pre>
+  <h3>
+    <a name="rank">Method <code>rank</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>rank</code>
+  <br /></p>
+  <p>This returns the rank (number of dimensions).</p>
+  <p>Example:</p>
+  <pre>
+% $y rank
+1
+</pre>
+  <h3>
+    <a name="sequence">Method <code>sequence</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>sequence</code> 
+  <code>-keep</code>
+  <br /></p>
+  <p>This returns the sequence number of the NAO. E.g. 42 for 
+  <code>nao.42-9</code>
+  <br />
+  <br />
+  <code>-keep</code>: Do not delete NAO with reference count of 0</p>
+  <p>Example:</p>
+  <pre>
+% $y seq
+61
+</pre>
+  <h3>
+    <a name="shape">Method <code>shape</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>shape</code>
+  <br /></p>
+  <p>This returns the shape, which is a vector of dimension sizes.</p>
+  <p>Example:</p>
+  <pre>
+% $y shape
+5
+</pre>
+  <h3>
+    <a name="slot">Method <code>slot</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>slot</code> 
+  <code>-keep</code>
+  <br /></p>
+  <p>This returns the slot number of the NAO. E.g. 9 for 
+  <code>nao.42-9</code>
+  <br /></p>
+  <p>Example:</p>
+  <pre>
+% $y sl
+61
+</pre>
+  <h3>
+    <a name="step">Method <code>step</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>step</code>
+  <br /></p>
+  <p>This returns a code which indicates whether step sizes of a vector
+  are equal, and if not, their sign. NAP uses this information for
+  efficiency. It indicates whether a vector (not relevant for other
+  ranks) is monotonically ascending/descending, and if so whether it is
+  an arithmetic progression (AP). The result code is one of following
+  strings:</p>
+  <ul>
+    <li>&quot;<code>+-</code>&quot;: at least one positive step and one negative
+    step</li>
+    <li>&quot;<code>&gt;= 0</code>&quot;: all steps &gt;= 0</li>
+    <li>&quot;<code>&lt;= 0</code>&quot;: all steps &lt;= 0</li>
+    <li>&quot;<code>AP</code>&quot;: equal steps (except final one which may be
+    shorter)</li>
+  </ul>
+  <p>Example:</p>
+  <pre>
+% [nap &quot;{3 5 7 7.1}&quot;] step
+AP
+</pre>
+  <h3>
+    <a name="unit">Method <code>unit</code></a>
+  </h3>
+  <p>
+  <var>ooc_name</var> 
+  <code>unit</code>
+  <br /></p>
+  <p>This returns the unit of measure. This may be used in the future
+  to support arithmetic with automatic unit conversion, but at the
+  moment it is just descriptive information.</p>
+  <p>Example:</p>
+  <pre>
+% $y set unit seconds
+% $y unit
+seconds
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: ooc_meta.html,v 1.2
+          2004/10/25 09:01:26 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

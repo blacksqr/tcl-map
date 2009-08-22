@@ -1,0 +1,121 @@
+# date.test --
+# 
+# Copyright (c) 2004, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: date.test,v 1.7 2005/06/16 07:37:06 dav480 Exp $
+
+Test date-1.1 {date to MJD} {[nap "dateTime2mjd{1997 03 21}"]} 50528
+Test date-1.2 {date to MJD} {[nap "dateTime2mjd{1997 03 21 12}"]} 50528.5
+Test date-1.3 {date to MJD} {
+    [nap "dateTime2mjd{1997 03 21 11 59 59.99}"] -f %.10f} 50528.4999998843
+Test date-1.4 {date to MJD} {[nap "dateTime2mjd{2049 03 21}"]} 69521
+Test date-1.5 {date to MJD} {[nap "dateTime2mjd{1995 1 1}"]} 49718
+Test date-1.6 {date to MJD} {[nap "dateTime2mjd{1995 09 27 0 0 0}"]} 49987
+Test date-1.7 {date to MJD} {
+    [nap "dateTime2mjd{1997 08 10 05 03 08}"] -f %.10f} 50670.2105092593
+
+Test date-2.1 {MJD to date} {[nap "mjd2dateTime(50528.5)"]} {1997 3 21 12 0 0}
+Test date-2.2 {MJD to date} {[nap "mjd2dateTime(50529)"]} {1997 3 22 0 0 0}
+Test date-2.3 {MJD to date} {
+    [nap "mjd2dateTime(50528.99999988, 1e-2)"]} {1997 3 21 23 59 59.99}
+Test date-2.4 {MJD to date} {[nap "mjd2dateTime(69521.5)"]} {2049 3 21 12 0 0}
+Test date-2.5 {MJD to date} {[nap "mjd2dateTime(49718)"]} {1995 1 1 0 0 0}
+Test date-2.5 {MJD to date} {[nap "mjd2dateTime(49987)"]} {1995 9 27 0 0 0}
+Test date-2.6 {MJD to date} {[nap "mjd2dateTime(50670.2105092593)"]} {1997 8 10 5 3 8}
+
+Test date-3.1 {Every 10.11 days from 1800 AD to 2100 AD} {
+    nap "mjd = dateTime2mjd{1800 1 1} ..  dateTime2mjd{2100 1 1} ... 10.11"
+    nap "dt = mjd2dateTime(mjd)"
+    nap "mjd2 = dateTime2mjd(dt)"
+    nap "bad = abs(mjd - mjd2) > 1e-8"
+    [nap "sum(bad)"]
+} 0
+
+Test date-3.2 {Every 98.765 days from 1000 AD to 3000 AD} {
+    nap "mjd = dateTime2mjd{1000 1 1} ..  dateTime2mjd{3000 1 1} ... 98.765"
+    nap "dt = mjd2dateTime(mjd)"
+    nap "mjd2 = dateTime2mjd(dt)"
+    nap "bad = abs(mjd - mjd2) > 1e-8"
+    [nap "sum(bad)"]
+} 0
+
+Test date-4.1 {date2jdn} {[nap "date2jdn{1 1 1}"]} 1721426
+Test date-4.2 {date2jdn} {[nap "date2jdn{1858 11 16}"]} 2400000
+Test date-4.3 {date2jdn} {[nap "date2jdn{1997 3 21}"]} 2450529
+Test date-4.4 {date2jdn} {[nap "date2jdn{{1997 3 21}{1997 3 22}}"]} {2450529 2450530}
+
+Test date-5.1 {jdn2date} {[nap "jdn2date(1721426)"]} {1 1 1}
+Test date-5.2 {jdn2date} {[nap "jdn2date(2400000)"]} {1858 11 16}
+Test date-5.3 {jdn2date} {[nap "jdn2date(2450529)"]} {1997 3 21}
+Test date-5.4 {jdn2date} {[nap "jdn2date{2450508 2450509}"]} \
+{1997    2   28
+1997    3    1}
+
+Test date-6.1 {format_mjd} {format_mjd 50528.5} {1997-03-21T12:00:00}
+Test date-6.2 {format_mjd} {format_mjd 50529 "%Y-%m-%d"} {1997-03-22}
+Test date-6.3 {format_mjd} {format_mjd 50670.2105092593} {1997-08-10T05:03:08}
+Test date-6.4 {format_mjd} {format_mjd "{0 0.5} + dateTime2mjd{2004 10 22 16 30 59}"} \
+{2004-10-22T16:30:59
+2004-10-23T04:30:59}
+
+Test date-7.1 {format_jdn} {format_jdn "{0 7} + date2jdn{2004 10 22}"} \
+{2004-10-22
+2004-10-29}
+Test date-7.2 {format_jdn} {format_jdn "{0 7} + date2jdn{2004 10 22}" "%y %m %d"} \
+{04 10 22
+04 10 29}
+
+nap "dim = {31 28 31 30 31 30 31 31 30 31 30 31}"
+
+Test date-8.1 {dateTime2days} {[nap "dateTime2days({2 03 21}, dim)"]} 809
+Test date-8.2 {dateTime2days} {[nap "dateTime2days({2 03 21 12}, dim)"]} 809.5
+Test date-8.3 {dateTime2days} {[nap "dateTime2days({0 1 1 11 59 59.99}, dim)"] -f %.10f} \
+0.4999998843
+
+Test date-9.1 {days2dateTime} {[nap "days2dateTime(809, dim)"]} {2 3 21 0 0 0}
+Test date-9.2 {days2dateTime} {[nap "days2dateTime(809.5, dim)"]} {2 3 21 12 0 0}
+Test date-9.3 {days2dateTime} {[nap "days2dateTime(0.99999988, dim, 1e-2)"]} {0 1 1 23 59 59.99}
+
+Test date-10.1 {Every 98.765 days from year -1000 to 1000} {
+    nap "days = dateTime2days({-1000 1 1}, dim) ..  dateTime2days({1000 1 1}, dim) ... 98.765"
+    nap "dt = days2dateTime(days, dim)"
+    nap "days2 = dateTime2days(dt, dim)"
+    nap "bad = abs(days - days2) > 1e-8"
+    [nap "sum(bad)"]
+} 0
+
+unset mjd dt mjd2 bad dim days days2
+
+Test convert_date-1.1 {date to MJD} {
+    convert_date 1997-03-21T} 50528
+Test convert_date-1.2 {date to MJD} {
+    convert_date 1997-03-21T12} 50528.5
+Test convert_date-1.3 {date to MJD} {
+    convert_date 1997-03-21T11:59:59.99} 50528.4999998843
+Test convert_date-1.4 {date to MJD} {
+    convert_date 49-03-21T} 69521
+Test convert_date-1.5 {date to MJD} {
+    convert_date 19950101} 49718
+Test convert_date-1.6 {date to MJD} {
+    convert_date 1995-09-27T00:00:00} 49987
+Test convert_date-1.7 {date to MJD} {
+    convert_date 1997-08-10T05:03:08} 50670.2105092593
+Test convert_date-1.8 {date to MJD} {
+    convert_date 19001004T0059} 15296.0409722222
+
+Test convert_date-2.1 {MJD to date} {
+    convert_date 50528.5} 1997-03-21T12:00:00
+Test convert_date-2.2 {MJD to date} {
+    convert_date 50529 3} 1997-03-22T00:00:00.000
+Test convert_date-2.3 {MJD to date} {
+    convert_date 50528.99999988 2} 1997-03-21T23:59:59.99
+Test convert_date-2.4 {MJD to date} {
+    convert_date 69521.5 1} 2049-03-21T12:00:00.0
+Test convert_date-2.5 {MJD to date} {
+    convert_date 49718} 1995-01-01T00:00:00
+Test convert_date-2.5 {MJD to date} {
+    convert_date 49987} 1995-09-27T00:00:00
+Test convert_date-2.6 {MJD to date} {
+    convert_date 50670.2105092593} 1997-08-10T05:03:08
+Test convert_date-2.7 {MJD to date} {
+    convert_date 15296.0409722222} 1900-10-04T00:59:00

@@ -1,0 +1,270 @@
+%  $Id: const.tex,v 1.5 2006/09/22 00:37:51 dav480 Exp $ 
+    % Nap Constants
+
+\section{Constants}
+    \label{const}
+
+\subsection{Introduction}
+      \label{const-Introduction}
+
+Nap provides a rich variety of constants. Nap is oriented to
+    numeric data but does provide string constants. The data-type can
+    be specified as a suffix (except for strings and hexadecimal
+    constants). Numeric constants can be scalars (simple numbers) or
+    higher-rank arrays.
+
+\subsection{Integer Scalar Constants}
+      \label{const-Integer-Scalar-Constants}
+
+An integer scalar constant can be specified in decimal or
+    hexadecimal form. The default data-type is 
+    \texttt{i32} (32-bit signed integer) for decimal integer
+    constants. Octal constants are not allowed from version 3, although
+    they were in earlier versions (causing problems with decimal data
+    containing leading 0s).
+    
+
+Hexadecimal integer constants begin with `\texttt{0x}' and are
+    32-bit unsigned integers. A data-type suffix is not allowed for
+    hexadecimal constants because some cases would be ambiguous.
+    
+
+Examples of integer constants are:
+    \begin{verbatim}
+% [nap 14] all
+::NAP::72-72  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Value:
+14
+% [nap 14u8] all
+::NAP::74-74  u8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Value:
+14
+% [nap 0x14] all
+::NAP::80-80  u32  MissingValue: 4294967295  References: 0  Unit: (NULL)
+Value:
+20
+\end{verbatim}
+
+    
+
+The constant `\texttt{\_}' represents an 
+    \texttt{i32} NAO whose value and missing-value are both
+    -2147483648 (the minimum possible 
+    \texttt{i32} value). It provides a convenient way of indicating
+    undefined data. Such values are used mainly within array constants
+    and will be discussed further in that section.
+
+\subsection{Floating-point Scalar Constants}
+      \label{const-Floating-point-Scalar-Constants}
+
+A floating-point scalar constant can represent infinity, NaN or
+    a normal finite value. A finite value is represented by a mantissa,
+    optionally followed by an exponent. There can be a data-type suffix
+    on any floating-point scalar constant. If this suffix is omitted
+    the data-type is 
+    \texttt{f64} (64-bit float).
+    
+
+A mantissa can be written in either decimal or rational form.
+    A \emph{scalar} decimal mantissa must not begin or end with a decimal point.
+    (However this rule is relaxed within array constants as discussed below.)
+    A rational mantissa consists of two integers separated by 
+    `\texttt{r}' and represents their ratio. Here are examples of
+    floating-point constants without exponents:
+    \begin{verbatim}
+% [nap 4.0] all
+::NAP::82-82  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+4
+% [nap 4f32] all
+::NAP::83-83  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+4
+% [nap 2r3] all
+::NAP::85-85  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+0.666667
+\end{verbatim}
+
+    
+
+The letter 
+    \texttt{e} indicates an exponent with base 10. The letter 
+    \texttt{p} indicates an exponent with base $\pi$. Examples of
+    constants with exponents are:
+    \begin{verbatim}
+% [nap 1e4] all
+::NAP::89-89  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+10000
+% [nap 1e]; # Default exponent is 1
+10
+% [nap 1p1]
+3.14159
+% [nap 1p]; # Default exponent is 1
+3.14159
+% [nap 180p-1]; # degrees in a radian
+57.2958
+% [nap 1r3p1f32] all; # pi/3
+::NAP::95-95  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+1.0472
+\end{verbatim}
+
+    
+
+Infinity is represented by 
+    \texttt{1i}. NaN is represented by 
+    \texttt{1n}. Examples are:
+    \begin{verbatim}
+% [nap 1i] all
+::NAP::101-101  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+Inf
+% [nap 1if32] all
+::NAP::102-102  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+Inf
+% [nap 1n] all
+::NAP::104-104  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+_
+% [nap 1nf32] all
+::NAP::105-105  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+_
+\end{verbatim}
+
+\subsection{Numeric Array Constants}
+      \label{const-Numeric-Array-Constants}
+
+Tcl uses nested braces (`\texttt{\{\}}') to represent lists.
+    Nap uses braces in a
+    similar manner to represent n-dimensional constant arrays. The
+    elements of array constants have the same form as scalar
+    constants except that \emph{array} floating point mantissas can begin or end
+    with a decimal point.
+    
+
+A vector (1-dimensional array) constant is enclosed by one level
+    of braces, as in:
+\begin{verbatim}
+% [nap "{2 .8 -7.}"] all
+::NAP::16-16  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 0.8 -7
+\end{verbatim}
+
+Note that `\texttt{.8}' begins with a decimal point
+and `\texttt{-7.}' ends with one.
+    
+
+A matrix (2-dimensional array) constant is enclosed by two
+    levels of braces, as in:
+    \begin{verbatim}
+% [nap "{{1 3 5}{2 4 6}}"] all
+::NAP::120-120  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 5
+2 4 6
+\end{verbatim}
+
+    
+
+We could have written each row on a separate line, as in
+    \begin{verbatim}
+% [nap "{
+    {1 3 5}
+    {2 4 6}
+}"]
+1 3 5
+2 4 6
+\end{verbatim}
+
+    
+
+The following generates a three-dimensional constant:
+    \begin{verbatim}
+% [nap "{{{1 5 0}{2 2 9}}{{3 0 7}{4 4 9}}}"] all
+::NAP::126-126  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 5 0
+2 2 9
+
+3 0 7
+4 4 9
+\end{verbatim}
+
+    
+
+Elements can be preceded by a `\texttt{+}'
+    or `\texttt{-}' sign. Repeated elements and sub-arrays can be
+    specified using `\texttt{\#}' which also has a related meaning as an
+    operator. The following illustrates such repetition counts:
+    \begin{verbatim}
+% [nap "{{7 3#5} 2#{9 1 2#4}}"] all
+::NAP::131-131  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+7 5 5 5
+9 1 4 4
+9 1 4 4
+\end{verbatim}
+
+    
+
+Undefined (missing) elements are represented by `\texttt{\_}', as in:
+    \begin{verbatim}
+% [nap "{1.6 _ 0}"] all
+::NAP::133-133  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.6 _ 0
+\end{verbatim}
+
+    
+
+It is possible to include data-type suffices on individual
+    elements, but it is more convenient to use a data conversion
+    function to obtain the desired data-type. For example:
+    \begin{verbatim}
+% [nap "f32{0 -6 1e9 1p1}"] all
+::NAP::137-137  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 -6 1e+09 3.14159
+\end{verbatim}
+
+\subsection{String Constants}
+      \label{const-String-Constants}
+
+String constants are enclosed by either two apostrophes
+    (`\texttt{'}') or two grave accents
+    (`\texttt{`}'). String constants have the data-type 
+    \texttt{c8} (8-bit character). They are 1-dimensional (vectors)
+    but other ranks can be produced using the function 
+    \texttt{reshape}. A simple string constant is shown by:
+    \begin{verbatim}
+% [nap "'Hello world'"] all
+::NAP::139-139  c8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Dimension 0   Size: 11     Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+Hello world
+\end{verbatim}
+
+    
+
+Adjacent strings are concatenated as in:
+    \begin{verbatim}
+% [nap "`can't` ' go'"]
+can't go
+\end{verbatim}
+
+    % 

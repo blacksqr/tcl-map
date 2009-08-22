@@ -51,11 +51,13 @@ toe::class GIScanvas {
                         -render 0]
         winupdate
 
-        bind $Container <Button-4> "[self namespace]::zoom [expr {1.0 + $Map(zoomfactor)}] %x %y"
-        bind $Container <Button-5> "[self namespace]::zoom [expr {1.0 - $Map(zoomfactor)}] %x %y"
+        bind $Container <Button-4> "[self namespace]::zoom relative [expr {1.0 + $Map(zoomfactor)}] %x %y"
+        bind $Container <Button-5> "[self namespace]::zoom relative [expr {1.0 - $Map(zoomfactor)}] %x %y"
         bind $Container <Motion> "[self namespace]::cursorupdate %x %y"
         bind $Container <Configure> "[self namespace]::winupdate"
     }
+    
+    public method zoomfactor {{val ""}} { if {$val eq ""} { return $Map(zoomfactor) } else { set $Map(zoomfactor) $val } }
 
     public method convert_xy2proj {x y} {
         if {$Map(projected) ne ""} {
@@ -106,18 +108,55 @@ toe::class GIScanvas {
         $Container configure -width $w -height $h
     }
     
-    public method zoom {factor x y} {
-        #XXX
-        $Container configure -xscrollcommand "catch {unset [self namespace]::x}; lappend [self namespace]::x" -yscrollcommand "catch {unset [self namespace]::y}; lappend [self namespace]::y"
+    public method zoom {type {factor 1.0} {x ""} {y ""}} {
+        $Container configure \
+                -xscrollcommand "catch {unset [self namespace]::tempx}; lappend [self namespace]::tempx" \
+                -yscrollcommand "catch {unset [self namespace]::tempy}; lappend [self namespace]::tempy"
         
-        $Container scale root $factor $factor
+        switch -exact -- $type {
+            "relative" {
+                $Container scale root $factor $factor
+            }
+            "absolute" {
+                # TODO: Instead of reseting first, extend tkzinc to support an 'absolute' option like "transform"
+                $Container itemconfigure root -visible 0
+                update
+                $Container treset root
+                $Container scale root $factor $factor
+                $Container itemconfigure root -visible 1
+                update
+            }
+            "best" {
+                zoom absolute 1.0
+                lassign [$Container bbox all] x1 y1 x2 y2
+                set width [expr {$x2 - $x1}]
+                set height [expr {$y2 - $y1}]
+                lassign [grid bbox $Win(frame)] _ _ w h
+                if {[expr {double($width) / $height}] > 1} {
+                    set factor [expr {double($w) / $width}]
+                } else {
+                    set factor [expr {double($h) / $height}]
+                }
+                
+                # TODO: Instead of reseting first, extend tkzinc to support an 'absolute' option like "transform"
+                $Container itemconfigure root -visible 0
+                update
+                $Container treset root
+                $Container scale root $factor $factor
+                $Container itemconfigure root -visible 1
+                update
+            }
+        }
+        
         $Container configure -scrollregion [$Container bbox all]
-        set $Export(zoom) [$Container tget root "scale"]
-        cursorupdate $x $y
+        set factor [lindex [$Container tget root "scale"] 0]
+        set $Export(zoom) [expr {100 * $factor}]
+        set $Export(scale) "XXX"
+        if {$x ne ""} { cursorupdate $x $y }
         
         update
-        .c.map.vbar set {*}[set [self namespace]::y]
-        .c.map.hbar set {*}[set [self namespace]::x]
+        .c.map.vbar set {*}[set [self namespace]::tempy]
+        .c.map.hbar set {*}[set [self namespace]::tempx]
         $Container configure -yscrollcommand ".c.map.vbar set" -xscrollcommand ".c.map.hbar set"
     }
     
@@ -133,7 +172,7 @@ toe::class GIScanvas {
                 
                 if {$val < 0} {set val 0}
                 if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root [expr {$val * $width * -1}] 0 yes ;# XXX
+                $Container translate root [expr {$val * $width * -1}] 0 yes
                 
                 {*}[$Container cget -xscrollcommand] $val [expr {$val + $val2}]
             }
@@ -157,7 +196,7 @@ toe::class GIScanvas {
                 
                 if {$val < 0} {set val 0}
                 if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root 0 [expr {$val * $height * -1}] yes ;# XXX
+                $Container translate root 0 [expr {$val * $height * -1}] yes
                 
                 {*}[$Container cget -yscrollcommand] $val [expr {$val + $val2}]
             }
@@ -279,7 +318,6 @@ toe::class GIScanvas {
         
         # NOTE: We take the projection of the first layer as the projection of the whole dataset XXX
         set proj [[$Dataset GetLayerByIndex 0] GetSpatialRef]
-        puts $proj
         set projProj4 ""
         set geoProj4 ""
         if {$proj ne "NULL"} {
@@ -384,10 +422,10 @@ toe::class GIScanvas {
                         binary scan $data x${shift}Q[expr {$no_of_points * 2}] points
                         incr shift [expr {$no_of_points * 16}] ;# 16 = dimention * sizeof(double) = 2 * 8
                         
-                        $Container add curve map $points -filled true -fillcolor red -tags feature
+                        $Container add curve map $points -filled true -linecolor black -fillcolor gray -tags feature
                     }
                 } elseif {$geotype eq "$::ogr::wkbPolygon25D"} {
-                    # XXX Not tested
+                    # TODO Not tested
                     set data [$geometry ExportToWkb]
                     binary scan $data cuIuIu byte_order geometry_type ring_count
                     set shift 9
@@ -586,7 +624,7 @@ toe::class GIScanvas {
                     incr layer
                 }
                 "Palette" {
-                    # ZZZ 
+                    ZZZ 
                 }
                 "Cyan" - "Magenta" - "Yellow" - "Black" -
                 "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr" {

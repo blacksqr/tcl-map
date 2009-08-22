@@ -1,0 +1,454 @@
+%  $Id: stat.tex,v 1.11 2006/09/11 04:59:26 dav480 Exp $ 
+    % Nap Library: stat.tcl
+
+\section{Statistical Functions}
+    \label{stat}
+
+\subsection{Introduction}
+    \label{stat-Introduction}
+
+These are defined in \texttt{stat.tcl}.
+Note that there are also built-in statistical functions called 
+\texttt{correlation} and \texttt{moving\_correlation}, which are described in section
+  \ref{function-Correlation}.
+The {\em tally} unary operator `\texttt{\#}'
+(see section \ref{op-Tally})
+also has statistical applications.
+
+\subsection{Simple Statistics}
+    \label{stat-Simple-Statistics}
+
+Three examples are provided for each function. The first uses the
+  vector 
+  \texttt{v} which is defined as follows (note the missing
+  values):
+  \begin{verbatim}
+% nap "v = {12 6 _ 7 3 15 _ 10 18 6}"
+\end{verbatim}
+
+The second example produces statistics of each column of a matrix.
+  The third example produces statistics of each row of the same matrix.
+  This matrix is called 
+  \texttt{m} and is defined as follows:
+  \begin{verbatim}
+% nap "m = {
+    {1.5 2.1 1.5 0.2}
+    {6.2 4.9   _ 0.2}
+}"
+\end{verbatim}
+
+\subsubsection{Arithmetic mean: \texttt{am(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-am}
+
+  \begin{verbatim}
+% [nap "am(v)"]
+9.625
+% [nap "am(m)"]
+3.85 3.5 1.5 0.2
+% [nap "am(m,1)"]
+1.325 3.76667
+\end{verbatim}
+
+\subsubsection{Coefficient of variation (with division by $n$):
+\texttt{CV(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-CV}
+
+This is the uncorrected standard deviation (\texttt{sd($x$)}) divided by the arithmetic mean.
+\begin{verbatim}
+% [nap "CV(v)"]
+0.495383
+% [nap "CV(m)"]
+0.61039 0.4 0 0
+% [nap "CV(m,1)"]
+0.523904 0.684226
+\end{verbatim}
+
+\subsubsection{Coefficient of variation (with division by $n-1$):
+\texttt{CV1(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-CV1}
+
+This is the corrected standard deviation (\texttt{sd1($x$)}) divided by the arithmetic mean.
+\begin{verbatim}
+% [nap "CV1(v)"]
+0.529586
+% [nap "CV1(m)"]
+0.863221 0.565685 _ 0
+% [nap "CV1(m,1)"]
+0.604952 0.838002
+\end{verbatim}
+
+\subsubsection{Geometric mean: \texttt{gm(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-gm}
+
+  \begin{verbatim}
+% [nap "gm(v)"]
+8.38752
+% [nap "gm(m)"]
+3.04959 3.2078 1.5 0.2
+% [nap "gm(m,1)"]
+0.985957 1.82476
+\end{verbatim}
+
+\subsubsection{Median: \texttt{median(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-median}
+
+  \begin{verbatim}
+% [nap "median(v)"]
+8.5
+% [nap "median(m)"]
+3.85 3.5 1.5 0.2
+% [nap "median(m,1)"]
+1.5 4.9
+\end{verbatim}
+
+\subsubsection{Mode: \texttt{mode(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-mode}
+
+  \begin{verbatim}
+% [nap "mode(v)"]
+6
+% [nap "mode(m)"]
+3.85 3.5 1.5 0.2
+% [nap "mode(m,1)"]
+1.50625 3.7625
+\end{verbatim}
+
+\subsubsection{Percentiles:
+\texttt{percentile(}$x$\texttt{,} $pc$[\texttt{,} $\mathit{verb\_rank}$[\texttt{,} $nc$]]\texttt{)}}
+    \label{stat-percentile}
+
+  $pc$ = vector of required percentiles
+  \\
+  $nc$ = number of class intervals (default: 256)
+
+The following examples calculate the following percentiles:
+\begin{bullets}
+    \item 0 (minimum)
+    \item 50 (median)
+    \item 100 (maximum)
+\end{bullets}
+\begin{verbatim}
+% [nap "percentile(v, {0 50 100})"]
+3 8.50781 18
+% [nap "percentile(m, {0 50 100})"]
+1.50000 2.10000 1.50000 0.20000
+3.85918 3.50547 1.50000 0.20000
+6.20000 4.90000 1.50000 0.20000
+% [nap "percentile(m, {0 50 100}, 1)"]
+0.20000 0.20000
+1.50254 4.92266
+2.10000 6.20000
+\end{verbatim}
+
+\subsubsection{Root mean square: \texttt{rms(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-rms}
+
+  \begin{verbatim}
+% [nap "rms(v)"]
+10.7413
+% [nap "rms(m)"]
+4.51054 3.76962 1.5 0.2
+% [nap "rms(m,1)"]
+1.49583 4.56399
+\end{verbatim}
+
+\subsubsection{Standard-deviation (with division by $n$):
+\texttt{sd(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-sd}
+
+  \begin{verbatim}
+% [nap "sd(v)"]
+4.76806
+% [nap "sd(m)"]
+2.35 1.4 0 0
+% [nap "sd(m,1)"]
+0.694172 2.57725
+\end{verbatim}
+
+\subsubsection{Standard-deviation (with division by $n-1$):
+\texttt{sd1(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-sd1}
+
+  \begin{verbatim}
+% [nap "sd1(v)"]
+5.09727
+% [nap "sd1(m)"]
+3.3234 1.9799 _ 0
+% [nap "sd1(m,1)"]
+0.801561 3.15647
+\end{verbatim}
+
+\subsubsection{Variance (with division by $n$): \texttt{var(}$x$[\texttt{,}
+$\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-var}
+
+  \begin{verbatim}
+% [nap "var(v)"]
+22.7344
+% [nap "var(m)"]
+5.5225 1.96 0 0
+% [nap "var(m,1)"]
+0.481875 6.64222
+\end{verbatim}
+
+\subsubsection{Variance (with division by $n-1$):
+\texttt{var1(}$x$[\texttt{,} $\mathit{verb\_rank}$]\texttt{)}}
+    \label{stat-var1}
+
+  \begin{verbatim}
+% [nap "var1(v)"]
+25.9821
+% [nap "var1(m)"]
+11.045 3.92 _ 0
+% [nap "var1(m,1)"]
+0.6425 9.96333
+\end{verbatim}
+
+\subsection{Moving Average:
+\texttt{moving\_average(}$x$\texttt{,} $\mathit{shape\_window}$[, $\mathit{step}$]\texttt{)}}
+    \label{stat-moving-average}
+
+Move window of specified shape by specified step (can vary for
+  each dimension). Result is arithmetic mean of 
+  $x$ values in each window. 
+  $x$ can have any rank $>$ 0.
+
+$\mathit{shape\_window}$ is either a scalar or a vector with an
+element for each dimension. If it is a scalar then it is treated as a vector with 
+$\texttt{rank(}x\texttt{)}$
+identical elements.
+
+Similarly, $\mathit{step}$ is either a scalar or a vector with an element for
+each dimension. If it is a scalar then it is treated as a vector with
+$\texttt{rank(}x\texttt{)}$
+identical elements.
+The default value for $\mathit{step}$ is 1.
+If $\mathit{step}$ has the same value as 
+$\mathit{shape\_window}$ then the windows do not overlap. The value $-1$
+is treated like $1$, except that missing values are prepended and
+appended (along this dimension of 
+$x$) to produce a result with the same dimension size as $x$.
+
+The following examples illustrate the application of 
+\texttt{moving\_average} to a vector.
+\begin{verbatim}
+% nap "v = {12 6 _ 7 3 15 _ 10 18 5}"
+% [nap "moving_average(v, 3)"] value
+9 6.5 5 8.33333 9 12.5 14 11
+% [nap "moving_average(v, 3, 3)"] value
+9 8.33333 14
+% [nap "moving_average(v, 3, -1)"] value
+9 9 6.5 5 8.33333 9 12.5 14 11 11.5
+\end{verbatim}
+
+  
+
+The following examples illustrate the application of 
+  \texttt{moving\_average} to a matrix.
+  \begin{verbatim}
+% nap "m = {
+    {1 2 1 4 0 0}
+    {5 4 2 9 2 7}
+    {0 1 1 3 1 4}
+}"
+% [nap "moving_average(m, {3 3})"] value
+1.88889 3.00000 2.55556 3.33333
+% [nap "moving_average(m, {3 3}, {3 3})"] value
+1.88889 3.33333
+% [nap "moving_average(m, 3, 3)"] value
+1.88889 3.33333
+% [nap "moving_average(m, 3, -1)"] value
+3.00000 2.50000 3.66667 3.00000 3.66667 2.25000
+2.16667 1.88889 3.00000 2.55556 3.33333 2.33333
+2.50000 2.16667 3.33333 3.00000 4.33333 3.50000
+% [nap "moving_average(m, {1 3})"] value
+1.333333 2.333333 1.666667 1.333333
+3.666667 5.000000 4.333333 6.000000
+0.666667 1.666667 1.666667 2.666667
+\end{verbatim}
+
+\subsection{Least Squares Regresssion and Curve Fitting}
+    \label{least-squares}
+
+Function \texttt{regression} provides the coefficients of a least squares 
+linear multiple regression equation.
+Function \texttt{fit\_polynomial} provides the coefficients of a least squares polynomial of
+specified order.
+Function \texttt{polynomial} evaluates a polynomial.
+
+\subsubsection{\texttt{regression(}$x$\texttt{,} $y$\texttt{)}}
+    \label{regression}
+
+This function produces an array containing
+the coefficients for the regression of $y$ on $x$.
+In other words it defines an equation for predicting $y$ from $x$.
+
+The arrays $x$ and $y$ can be vectors or a matrices.
+Vectors are treated as matrices with a single column.
+The columns of $x$ correspond to the known variables.
+The columns of $y$ (and the result) correspond to the predicted variables.
+$x$ and $y$ must have the same number of rows.
+Each row corresponds to a case (e.g. person).
+
+If $x$ and $y$ are both vectors (of the same length) then the
+result is the 2-element vector $a$ which defines the simple linear regression equation
+of $Y$ on $X$ given by
+\[ Y = a_0 + a_1 X \]
+
+The following example of such simple linear regression is from page 248 of 
+\emph{Schaum's Outline of Theory and Problems of Statistics}, M.R. Spiegel, 1961.
+The heights of fathers are used to predict the heights of their eldest sons.
+\begin{verbatim}
+% nap "x = {65 63 67 64 68 62 70 66 68 67 69 71}"; # height (inches) of 12 fathers
+::NAP::14-14
+% nap "y = {68 66 68 65 69 66 68 65 71 67 68 70}"; # height (inches) of their sons
+::NAP::16-16
+% [nap "regression(x, y)"]
+35.8248 0.476378
+\end{verbatim}
+Thus the regression line of $Y$ on $X$ is
+\[ Y = 35.8248 + 0.476378 X \]
+
+Consider the case where $x$ is an $m \times n$ matrix and $y$ is an $m$-element vector.
+The sample size (number of cases) is $m$.
+The result is the $(n+1)$-element vector $a$ which defines
+the linear multiple regression equation 
+\[ Y = a_0 + a_1 X_0 + a_2 X_1 + a_3 X_2 + \cdots + a_n X_{n-1} \]
+which predicts a single variable $Y$ from the $n$ variables 
+$X_0, X_1, X_2, \ldots , X_{n-1}$.
+If we are predicting a single case then these variables can be combined into an
+$n$-element vector $X$.
+If we are predicting $M$ cases then $X$ is an $M \times n$ matrix.
+Thus the above equation can be expressed in matrix form as
+\[ Y = (1 \| X) \cdot a \]
+where `$\|$' is the \emph{concatenate} operator 
+(prepending to the matrix $X$ a column of ones 
+which essentially defines a pseudo-variable $X_{-1}$ which is multiplied by $a_0$)
+and `$\cdot$' is the \emph{matrix-multiplication} operator.
+Note that the above equation is valid for vector $X$ provided we then (as in \emph{nap})
+treat `$\cdot$' as the \emph{vector dot (scalar) product} operator.
+
+The following example of multiple linear regression is from page 273 of 
+\emph{Schaum's Outline of Theory and Problems of Statistics}, M.R. Spiegel, 1961.
+The ages and heights of boys are used to predict their weights.
+\begin{verbatim}
+% nap "age    = { 8 10  6 11  8  7 10  9 10  6 12  9}"; # years
+::NAP::37-37
+% nap "height = {57 59 49 62 51 50 55 48 52 42 61 57}"; # inches
+::NAP::39-39
+% nap "weight = {64 71 53 67 55 58 77 57 56 51 76 68}"; # pounds
+::NAP::41-41
+% nap "x = transpose(age /// height)"
+::NAP::44-44
+% [nap "b = regression(x, weight)"]
+3.65122 1.50633 0.85461
+\end{verbatim}
+Thus the least squares regression equation of weight $w$ on age $a$ and height $h$ is
+\[ w = 3.65122 + 1.50633 a + 0.85461 h \]
+
+Let us use this equation to predict the weight of a boy who is 9 years old and 54 inches tall.
+\begin{verbatim}
+% [nap "{1 9 54} . b"]
+63.3571
+\end{verbatim}
+The predicted weight is 63.3571 pounds.
+
+Next let us use this equation to predict the weights of three boys.
+The first is again 9 years old and 54 inches tall.
+The second is 6 years old and 40 inches tall.
+The third is 12 years old and 60 inches tall.
+\begin{verbatim}
+% [nap "{{1 9 54}{1 6 40}{1 12 60}} . b"]
+63.3571 46.8736 73.0038
+\end{verbatim}
+Thus the predicted weights are 
+63.3571, 46.8736 and 73.0038 respectively.
+
+Now consider the case where we are predicting multiple variables from a single variable.
+Using the above example, let us predict both height and weight from age.
+We could use two separate commands as in the following:
+\begin{verbatim}
+% [nap "regression(age, height)"]
+31.5 2.5
+% [nap "regression(age, weight)"]
+30.5714 3.64286
+\end{verbatim}
+Thus the desired regression equations (predicting height $h$ and weight $w$ from age $a$) are
+\begin{eqnarray*}
+h & = & 31.5    + 2.5 a \\
+w & = & 30.5714 + 3.64286 a
+\end{eqnarray*}
+Now we can use these equations to predict the heights and weights of boys aged 6 and 10:
+\begin{verbatim}
+% [nap "31.5 + 2.5 * {6 10}"]
+46.5 56.5
+% [nap "30.5714 + 3.64286 * {6 10}"]
+52.4286 67
+\end{verbatim}
+Thus a boy aged 6 is expected to have a height of 46.5 inches and a weight of 52.4 pounds,
+while a boy aged 10 is expected to have a height of 56.5 inches and a weight of 67 pounds.
+
+The following example shows how we can define and use both equations in a single expression:
+\begin{verbatim}
+% [nap "{{1 6}{1 10}} . regression(age, transpose(height /// weight))"]
+46.5000 52.4286
+56.5000 67.0000
+\end{verbatim}
+
+Here $x$ 
+(the first argument of function $\mathit{regression}$)
+is the vector $\mathit{age}$ and $y$ 
+(the second argument of function $\mathit{regression}$)
+is the matrix consisting of the column vectors
+$\mathit{height}$ and $\mathit{weight}$.
+Let $X$ be the vector containing the values of $x$ for which predictions are required.
+Now the desired predictions are again given by the matrix equation
+\[ Y = (1 \| X) \cdot a \]
+
+In fact this equation is always valid, including the case where both $x$ and $y$ are matrices.
+
+\subsubsection{\texttt{fit\_polynomial(}$x$\texttt{,} $y$\texttt{,} $n$\texttt{)}
+and
+\texttt{polynomial(}$c$\texttt{,} $x$\texttt{)}}
+    \label{polynomial} 
+
+Function 
+\texttt{fit\_polynomial(}$x$\texttt{,} $y$\texttt{,} $n$\texttt{)}
+provides the coefficients of a least squares polynomial of 
+order $n$ (default 1, giving straight line).
+$x$ and $y$ are vectors of the same length.
+
+The following example uses the $\mathit{age}$ and $\mathit{height}$ vectors defined above
+to define the least-squares parabola that predicts $\mathit{height}$ from $\mathit{age}$.
+\begin{verbatim}
+% [nap "c = fit_polynomial(age, height, 2)"]; # Define coefficients of parabola
+28.8273 3.13801 -0.0364315
+\end{verbatim}
+Thus the parabola is
+$28.8273 + 3.13801 a - 0.0364315 a^2$
+
+The following uses this parabola to again estimate height at age 6 and 10.
+\begin{verbatim}
+% nap "a = {6 10}"; # ages in years
+::NAP::56-56
+% [nap "c(0) + c(1) * a + c(2) * a ** 2"]; # predicted height at ages 6 & 10
+46.3439 56.5643
+\end{verbatim}
+Thus the height at age 6 is estimated to be 46.3439 inches rather than 
+the previous linear estimate of 46.5 inches.
+And the height at age 10 is estimated to be 56.5643 inches rather than 
+the previous linear estimate of 56.5 inches.
+
+Function \texttt{polynomial(}$c$\texttt{,} $x$\texttt)}
+evaluates the polynomial defined by the vector of coefficients $c$
+(e.g. as given by function \texttt{fit\_polynomial}).
+$x$ can have any shape.
+The result has the same shape as that of $x$.
+
+The following example uses 
+function \texttt{polynomial} to evaluate this parabola again.
+\begin{verbatim}
+% [nap "polynomial(c, a)"]; # predicted height at ages 6 & 10
+46.3439 56.5643
+\end{verbatim}
+

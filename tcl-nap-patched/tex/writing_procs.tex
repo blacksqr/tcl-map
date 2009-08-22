@@ -1,0 +1,344 @@
+%  $Id: writing_procs.tex,v 1.4 2006/05/04 06:10:39 dav480 Exp $ 
+    % Writing Procedures
+
+\section{Writing Procedures to be called as Commands or Functions}
+    \label{writing-procs}
+
+\subsection{Introduction}
+    \label{writing-procs-Introduction}
+
+One can write a Tcl procedure which defines a new Nap function
+  or replaces a built-in Nap function. Of course it is also possible to
+  write a Tcl procedure which is called in the normal Tcl manner (as a
+  Tcl command) to do something related to Nap.
+  
+
+The following sections include various examples of procedure
+  definition directly from the command-line. Of course in practice one
+  would normally create such code in files, which would be sourced.
+  
+
+Tcl has facilities for automatically defining undefined commands
+  when an attempt is made to execute them. In particular, the array 
+  \texttt{auto\_index} contains the commands to define indexed
+  commands.
+  
+
+Users with small libraries of their own procedures may prefer to
+  simply source the relevant files as part of Tcl startup. The startup
+  files distributed with Nap automatically source any file called 
+  \texttt{my.tcl} in the home directory. This file can contain 
+  \texttt{source} commands to define one's own procedures.
+
+\subsection{Command or Function?}
+    \label{writing-procs-Command-or-Function}
+
+Before writing a procedure to perform some Nap task, one needs
+to decide whether it is to be called as a command or as a function.
+The first question to ask is `Is the sole purpose to define a single NAO?".
+If the answer is `no' then it should be a command.
+If the answer is `yes' then it should probably be
+a function, provided the arguments are not too complex.
+If there are many optional string arguments then a command would probably be better.
+Such a command can be called from within a Nap expression using the Tcl bracket 
+(`\texttt{[ ]}') facility.
+
+Note that multiple result NAOs can be combined into a single NAO using the
+\emph{link} operator (`\texttt{,}') documented in section \ref{op-Link}.
+The caller can separate the parts using function 
+\texttt{open\_box(}$x$\texttt{)}},
+as discussed in section \ref{function-open-box}.
+
+\subsection{Writing a Procedure to be called as a Function}
+    \label{writing-procs-Function}
+
+The following examples comprise a variety of function
+  definitions starting from the simplest imaginable and ending with
+  some sophistication.
+
+\subsubsection{Function \texttt{sind}}
+    \label{writing-procs-sind}
+
+Let's begin with a simple function defined by a simple
+  expression with one argument. How about the sine of an angle in
+  degrees? Let's call it `\texttt{sind}'. The procedure can be defined on one line as
+  follows:
+  \begin{verbatim}
+% proc sind degrees {nap "sin(1r180p * degrees)"}
+\end{verbatim}
+
+Note that `\texttt{1r180p}' is the constant $\pi$/180. Now let's
+  test function `\texttt{sind}':
+  \begin{verbatim}
+% nap "x = 0 .. 180 ... 30"
+::NAP::76-76
+% nap "y = sind x"
+::NAP::83-83
+% [nap "transpose(x /// y)"]
+            0             0
+           30           0.5
+           60     0.8660254
+           90             1
+          120     0.8660254
+          150           0.5
+          180  1.224606e-16
+\end{verbatim}
+
+\subsubsection{Function \texttt{lam}}
+    \label{writing-procs-lam}
+
+Now let's define a function (with two arguments x and y)
+  defined by the above expression
+  \\"\texttt{transpose(x /// y)}'.
+  \\This is the transpose of the 
+  \emph{laminated} arguments, so let's call it `\texttt{lam}'.
+  \begin{verbatim}
+% proc lam {
+    x
+    y
+} {
+    nap "z = x /// y"
+    nap "transpose z"
+}
+\end{verbatim}
+
+There are two lines in the body of this procedure. The result of
+the final line defines the result of the function. Testing:
+  \begin{verbatim}
+% [nap "lam(x,y)"]
+            0             0
+           30           0.5
+           60     0.8660254
+           90             1
+          120     0.8660254
+          150           0.5
+          180  1.224606e-16
+\end{verbatim}
+
+\subsubsection{Function \texttt{get\_bin}}
+    \label{writing-procs-get-bin}
+
+Now let's define a function `\texttt{get\_bin}' for binary input using the `\texttt{nap\_get}' command:
+  \begin{verbatim}
+% proc get_bin {
+    filename
+    {datatype {'f32'}}
+    {swap 0}
+} {
+    # convert all arguments to strings
+    set filename [[nap "filename"]]
+    set datatype [[nap "datatype"]]
+    set swap     [[nap "swap"]]
+    set channel [open $filename]
+    nap "in = [nap_get [lindex {binary swap} $swap] $channel $datatype]"
+    close $channel
+    nap "in"; # Define result
+}
+\end{verbatim}
+
+Note that the arguments `\texttt{datatype}' and `\texttt{swap}' have default values. Also note how all three
+  arguments are converted from Nap expressions to Tcl strings.
+  
+
+Now let's test it. The following uses the OOC 
+  \texttt{binary} method to write six 
+  \texttt{f64} values to the file `\texttt{double.dat}'. Then this file is read using function
+  `\texttt{get\_bin}'.
+  \begin{verbatim}
+% set file [open double.dat w]
+filee1eb10
+% [nap "{1.5 -3 0 2 4 5}"] binary $file
+% close $file
+% nap "x = get_bin('double.dat', 'f64')"
+::NAP::27-27
+% $x all
+::NAP::27-27  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+\end{verbatim}
+
+\subsubsection{Function \texttt{fact}}
+    \label{writing-procs-fact}
+
+Now let's define a factorial function called `\texttt{fact}'. Of course we cannot resist the temptation to
+  use recursion:
+  \begin{verbatim}
+% proc fact n {
+    if {[$n] > 1} {
+        nap "n * fact(n-1)"
+    } else {
+        nap "1"
+    }
+}
+\end{verbatim}
+
+This works fine for scalar arguments:
+  \begin{verbatim}
+% [nap "fact 4"]
+24
+% [nap "fact 1"]
+1
+% [nap "fact 0"]
+1
+\end{verbatim}
+
+But the following shows that it fails for a vector argument!
+  \begin{verbatim}
+% [nap "fact {0 1 4 6}"]
+1
+\end{verbatim}
+
+\subsubsection{Function \texttt{factorial}}
+    \label{writing-procs-factorial}
+
+One can define a proper elemental factorial function as
+  follows:
+  \begin{verbatim}
+% proc factorial n {
+    if {[[nap "max(reshape(n)) > 1"]]} {
+        nap "n > 1 ? n * factorial(n-1) : 1"
+    } else {
+        nap "1"
+    }
+}
+% [nap "factorial {0 1 4 6}"]
+1 1 24 720
+\end{verbatim}
+
+Note the double brackets in the if command. The inner brackets
+produce an OOC-name. The outer brackets execute this OOC to produce the
+string `\texttt{0}' or `\texttt{1}'.
+
+\subsection{How Nap Functions Work}
+    \label{writing-procs-How}
+
+As an example, consider the expression `\texttt{a(b)}', which is of course equivalent to `\texttt{a b}'. Nap checks whether `\texttt{a}' is a Tcl variable. If not, it is assumed to be a
+  function. In this case Nap first looks for a Tcl procedure called
+  `\texttt{::NAP::a}." If this does not exist then Nap looks
+  for a built-in Nap function called `\texttt{a}'. If this does not exist then Nap looks for a Tcl
+  procedure called `\texttt{a}'.
+  
+
+The following example shows that a procedure with the global name
+  `\texttt{sin}' does not override the built-in function with
+  that name, whereas defining it within the Nap namespace `\texttt{::NAP::}' does override:
+  \begin{verbatim}
+% proc sin x {nap "2*x"}
+% [nap "sin 1"]
+0.841471
+% proc ::NAP::sin x {nap "2*x"}
+% [nap "sin 1"]
+2
+\end{verbatim}
+
+  
+
+It is possible to call some procedures as either functions or
+  commands. The following example defines and uses the same function
+  `\texttt{sind}' defined above:
+  \begin{verbatim}
+% proc sind degrees {nap "sin(1r180p * degrees)"}
+% [nap "sind 30"]; # call as function
+0.5
+% nap "s = [sind 30]"; # call as command within NAP
+expression
+::NAP::80-80
+% $s
+0.5
+% [sind 30] all; # call as direct OOC
+::NAP::86-86  f64  MissingValue: NaN  References: 0
+Value:
+0.5
+\end{verbatim}
+
+  
+
+But there is a problem calling procedures as commands if the
+  result is referenced by a variable which is local to the procedure.
+  At the end of the procedure Tcl deletes such local variables. This
+  causes the referenced NAOs to be deleted. For example we could
+  redefine function `\texttt{sind}' as follows:
+  \begin{verbatim}
+% proc sind degrees {
+    nap "result = sin(1r180p * degrees)"
+    nap "result"
+}
+% [nap "sind 30"]
+0.5
+% [sind 30]
+invalid command name "::NAP::32-32"
+\end{verbatim}
+
+  
+
+Note that the call as a function still worked but not the call as
+  a command. Nap operates in a special mode while executing a procedure
+  called as a function. The deletion of NAOs referenced by local
+  variables is delayed until after the result has been saved. This is
+  one advantage of calling procedures as functions rather than
+  commands.
+
+\subsection{Writing a Procedure to be called as a Command}
+    \label{writing-procs-Command}
+
+\subsubsection{Command \texttt{write\_expr}}
+    \label{writing-procs-write-expr}
+
+First let's define a procedure whose Tcl result is empty and
+  of no interest. It is obvious that such a procedure cannot be called
+  as a function. The purpose of the procedure is to write to a text
+  file the result of a Nap expression, which can of course contain
+  variables and therefore must be executed in the caller's
+  namespace. The following defines and tests the procedure:
+  \begin{verbatim}
+% proc write_expr {
+    expr
+    filename
+} {
+    set channel [open $filename w]
+    puts $channel [[uplevel nap \"$expr\"] value]
+    close $channel
+}
+% nap "to = 5"
+::NAP::52-52
+% write_expr "1 .. to /// {0 7}" matrix.txt
+% cat matrix.txt; # display contents of file 'matrix.txt'
+1 2 3 4 5
+0 7 0 7 0
+\end{verbatim}
+
+\subsubsection{Command \texttt{get\_binary}}
+    \label{writing-procs-get-binary}
+
+Next let's define a procedure called `\texttt{get\_binary}' which is intended to be called as a
+  command, but does essentially the same thing as the above function
+  `\texttt{get\_bin}'. This will help us to compare the two
+  techniques in a situation where each has some advantages and some
+  disadvantages. We assume the file `\texttt{double.dat}' still exists. The following example
+  defines and tests procedure `\texttt{get\_binary}':
+  \begin{verbatim}
+% proc get_binary {
+    filename
+    {datatype f32}
+    {swap 0}
+} {
+    set channel [open $filename]
+    nap "in = [nap_get [lindex {binary swap} $swap] $channel $datatype]"
+    close $channel
+    nap "+in"; # Define result as copy of 'in' to prevent premature deletion
+}
+% nap "x = [get_binary double.dat f64]"
+::NAP::63-63
+% $x all
+::NAP::63-63  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+\end{verbatim}
+
+Note that `\texttt{get\_binary}' is simpler to define and simpler to use
+  than `\texttt{get\_bin}'. The main reason for this is the fact that
+  all three arguments are used as strings rather than NAOs. One
+  disadvantage of the command approach is the need to define the result
+  as `\texttt{+in}' rather than simply `\texttt{in}'.

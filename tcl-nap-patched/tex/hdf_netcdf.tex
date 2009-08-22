@@ -1,0 +1,29 @@
+%  $Id: hdf_netcdf.tex,v 1.2 2007/01/01 23:31:26 dav480 Exp $ 
+
+\section{HDF and netCDF File Formats} 
+    \label{hdf-netcdf}
+
+  \href{http://www.hdfgroup.org/}{HDF} and 
+  \href{http://www.unidata.ucar.edu/packages/netcdf/index.html}{netCDF}
+  are similar array-oriented file formats.
+Such files are popular in earth sciences such as meteorology and oceanography.
+They contain data referenced by
+symbol tables containing the names, data-types and dimensions of entities called
+\emph{variables} in netCDF and \emph{scientific data sets (SDSs)} in HDF.
+Each variable (SDS) can also have attributes such as a label, a
+  format, a unit of measure and a missing-value. 
+
+The design of Nap has been strongly influenced by HDF and netCDF.
+Nap stores data in memory structures called \emph{n-dimensional array objects} (\emph{NAOs})
+that have similar attributes to those of HDF SDSs and netCDF variables
+(e.g. label, format, unit of measure, missing-value). 
+Nap has powerful high-level facilities for HDF and netCDF I/O.
+
+Nap does not currently support the new 
+\href{http://www.hdfgroup.org/whatishdf5.html}{HDF5}
+file format.
+Note that
+\href{http://www.unidata.ucar.edu/software/netcdf/netcdf-4/}{netCDF-4} software
+supports this HDF5 file format (as well as the traditional netCDF format)
+and is due for official release in late 2006.
+It is planned to support HDF5 and netCDF-4 in a future version of Nap.

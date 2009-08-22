@@ -1,0 +1,80 @@
+%  $Id: choose_file.tex,v 1.6 2006/09/28 13:59:57 dav480 Exp $ 
+    % choose\_file GUI
+
+\section{choose\_file GUI}
+    \label{choose-file}
+
+  \subsection{Introduction}
+    \label{choose-file-Introduction}
+
+The 
+  \texttt{choose\_file} GUI is used to select and open input files.
+  It contains the following three lines:
+\begin{bullets}
+    \item 
+    \emph{Filename} button and spinbox widget
+    \item 
+    \emph{Directory} button and entry widget
+    \item 
+    \emph{Glob Filter} entry widget
+\end{bullets}
+If you are already in the desired directory then the spinbox may
+  be all you need. The 
+  \emph{file selection dialog} GUI can be used to select both the
+  directory and the file. The 
+  \emph{directory (folder) selection dialog} GUI is useful when the
+  directory contains many files matching the filter.
+  
+The 
+  \texttt{choose\_file} GUI is defined by the file 
+  \texttt{choose\_file.tcl}.
+
+  \subsection{Instructions}
+    \label{choose-file-Instructions}
+
+  \begin{enumerate}
+    \item If any field is too narrow then resize the window by dragging
+    its edge.
+    \item Select an input file using any of the following:
+\begin{bullets}
+      \item Type into any of the three entry fields.
+      \item Press the 
+      \texttt{Filename} button to use the 
+      \emph{file selection dialog} GUI.
+      \item Press the 
+      \texttt{Directory} button to use the 
+      \emph{directory (folder) selection dialog} GUI.
+      \item Click on the spinbox arrows (or press the keyboard up/down
+	  keys) to spin through the files matching the filter.
+\end{bullets}
+    \item Press the \texttt{Open} button to open the file. This can also be done by pressing the 
+	  \texttt{Enter} (a.k.a.  \texttt{Return}) key in the \texttt{Filename} entry field.
+  \end{enumerate}
+
+\subsection{Usage}
+\label{choose-file-Usage}
+
+The following \texttt{choose\_file} command creates a new temporary GUI window,
+accepts input from the user and
+then returns (as the result) the pathname of the specified input file:
+\\
+\texttt{choose\_file} ?$\mathit{parent}$? ?$\mathit{filter}$? ?$\mathit{geometry}$?
+\begin{simpleitems}
+    \item $\mathit{parent}$: Parent window (default: \texttt{"."})
+    \item $\mathit{filter}$: Initial glob filter (default: \texttt{"*"})
+    \item $\mathit{geometry}$: Value as follows (default: \texttt{"NW"}):
+	\begin{simpleitems}
+	    \item \texttt{""}   : Pack in parent 
+		(If parent is \texttt{""} then create toplevel anywhere)
+	    \item \texttt{"NE"} : North-west corner of toplevel at north-east
+		corner of parent (cannot be \texttt{""})
+	    \item \texttt{"NW"} : North-west corner of toplevel at north-west
+		corner of parent (cannot be \texttt{""})
+	    \item \texttt{"SE"} : North-west corner of toplevel at south-east
+		corner of parent (cannot be \texttt{""})
+	    \item \texttt{"SW"} : North-west corner of toplevel at south-west
+		corner of parent (cannot be \texttt{""})
+	    \item other: Normal Tk geometry string.
+		If parent is \texttt{""} then pack in it, else ignore parent.
+	\end{simpleitems}
+\end{simpleitems}

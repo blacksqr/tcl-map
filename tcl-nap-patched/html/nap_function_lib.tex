@@ -1,0 +1,457 @@
+%  $Id: nap_function_lib.tex,v 1.2 2006/03/01 23:13:38 dav480 Exp $ 
+    % NAP Library: nap\_function\_lib.tcl
+    \section{Miscellaneous Functions}
+
+  \subsection{
+    \label{Introduction}Introduction
+  }
+The following functions are defined in the file 
+  \texttt{nap\_function\_lib.tcl}.
+  \subsection{
+    \label{color-wheel} \texttt{color\_wheel(}$n$\texttt{,} $v$\texttt{,} $b$\texttt{)} 
+  }
+Square containing color wheel.
+  \\
+  $n$ is number rows $\backslash$\&amp; columns
+  \\
+  $v$ is desired "value" level
+  \\
+  $b$ is background colour outside circle
+  \par Example:
+  \\
+  \texttt{nap "color\_wheel(100,255,3\#150)"}
+  \\This produces a 
+  \texttt{u8} array with shape 
+  \texttt{\{3 100 100\}} $\backslash$\&amp; values from 0 to 255.
+  \subsection{
+    \label{cv} \texttt{cv(}$main\_nao$[\texttt{,} $dim\_number$]\texttt{)}
+  }
+This is simply an alias for 
+  \texttt{coordinate\_variable}.
+  \subsection{
+    \label{derivative} \texttt{derivative(}$a$[\texttt{,} $dim\_number$]\texttt{)}
+  }
+Estimate derivative along dimension 
+  $dim\_number$ (default is 0) of array 
+  $a$. The result has the same shape as 
+  $a$.
+  \par Example (assuming 
+  \texttt{vector} has dimension ($\backslash$\&amp; coordinate variable) 
+  \texttt{time}:
+  \\
+  \begin{verbatim}
+derivative(vector); # result is derivative with respect to time
+\end{verbatim}
+
+  \par Examples (assuming 
+  \texttt{matrix} has dimensions 
+  \texttt{latitude} $\backslash$\&amp; 
+  \texttt{longitude}):
+  \\
+  \begin{verbatim}
+derivative(matrix, 'latitude'); # result is derivative with
+respect to latitude
+derivative(matrix, 0);          # result is derivative with respect to
+latitude
+derivative(matrix);             # result is derivative with respect to
+latitude
+derivative(matrix,'longitude'); # result is derivative with
+respect to longitude
+derivative(matrix, 1);          # result is derivative with respect to
+longitude
+\end{verbatim}
+
+  \par Based on quadratic through 3 points (provided size of dimension is
+  $>$ 2 -- if only 2 then based on straight line). These always
+  include the point corresponding to the result. For interior points,
+  the other 2 are the closest neighbour on each side. For boundary
+  points, these are the 2 closest neighbours.
+  \par Let D(x) be the derivative of quadratic through points 
+  \texttt{(x0,y0), (x1,y1), (x2,y2)}.
+  \\
+  \begin{verbatim}
+D1 = D(x1) = a0 * y0 + a1 * y1 + a2 * y2
+where the coefficients a0, a1, a2 are defined by:
+        a0 = (x1 - x2) / ((x1 - x0) * (x2 - x0))
+        a1 = 1 / (x1 - x0) - 1 / (x2 - x1)
+        a2 = (x1 - x0) / ((x2 - x0) * (x2 - x1))
+\end{verbatim}
+
+  \subsection{
+    \label{fill-holes} \texttt{fill\_holes(}$x$\texttt{,} [$max\_nloops$]\texttt{)} 
+  }
+
+    $x$
+	is array to be filled.
+    \\
+    $max\_nloops$
+	is maximum number of iterations.
+    \\
+    Replace missing values by estimates based on means of neighbours.
+    If $max\_nloops$ is not specified then \textit{fill\_holes}
+    continues until there are no missing values.
+  \subsection{
+    \label{fuzzy-floor} \texttt{fuzzy\_floor(}$x$[\texttt{,} $eps$]\texttt{)}
+  }
+Like 
+  \texttt{floor()} except allow for rounding error.
+  \\
+  $eps$ is tolerance and defaults to 
+  \texttt{1e-9}.
+  \par Example:
+  \\
+  \texttt{\% [nap "fuzzy\_floor(\{4.998 4.9998\},1e-3)"]
+  \\4 5}
+  \subsection{
+    \label{fuzzy-ceil} \texttt{fuzzy\_ceil(}$x$[\texttt{,} $eps$]\texttt{)}
+  }
+Like 
+  \texttt{ceil()} except allow for rounding error.
+  \\
+  $eps$ is tolerance and defaults to 
+  \texttt{1e-9}.
+  \par Example:
+  \\
+  \texttt{\% [nap "fuzzy\_ceil(\{5.002 5.0002\},1e-3)"]
+  \\6 5}
+  \subsection{
+    \label{gets-matrix} \texttt{gets\_matrix(}$filename$[\texttt{,} $n\_header\_lines$]\texttt{)}
+  }
+Read text file and return NAO matrix whose rows correspond to
+  the lines in the file. Ignore:
+  \begin{itemize}
+    \item first 
+    $n\_header\_lines$ (default 0) lines
+    \item blank lines
+    \item lines whose first non-whitespace character is '
+    \texttt{\#}'
+  \end{itemize}
+  \par Examples:
+  \\
+  \texttt{nap "m1 = gets\_matrix('matrix1.txt')"
+  \\nap "m2 = gets\_matrix('matrix2.txt', 3)"; \#
+  Skip 1st 3 lines}
+  \subsection{
+    \label{head} \texttt{head(}$x$[\texttt{,} $n$]\texttt{)}
+  }
+If 
+  $n$ $\ge$ 0 then result is 1st 
+  $n$ elements of 
+  $x$, cycling if 
+  $n$ $>$ nels(
+  $x$).
+  \\
+  $n$ defaults to 1.
+  \\If 
+  $n$ $<$  0 then result is 1st nels(
+  $x$)+
+  $n$ elements of 
+  $x$ i.e. drop $-$
+  $n$ from end
+  \\
+  \par Examples:
+  \\
+  \begin{verbatim}
+% [nap "head({3 1 9 2 7})"]
+3
+% [nap "head({3 1 9 2 7}, 2)"]
+3 1
+% [nap "head({3 1 9 2 7}, -2)"]
+3 1 9
+\end{verbatim}
+
+  \subsection{
+    \label{hsv2rgb} \texttt{hsv2rgb(}$hsv$\texttt{)} 
+  }
+Convert colour in HSV form to RGB.
+  \\
+  $hsv$ is an array whose leading dimension has size 3.
+  \par Layer 0 along this dimension corresponds to hue as an angle in
+  degrees. Angles of any sign or magnitude are allowed.
+  Red\ =\ 0, yellow\ =\ 60, green\ =\ 120,
+  cyan\ =\ 180, blue\ =\ $-$120,
+  magenta\ =\ $-$60.
+  \par Layer 1 along this dimension corresponds to saturation in range
+  0.0 to 1.0.
+  \par Layer 2 along this dimension corresponds to "value".
+  This has the same range as the RGB values, normally either 0.0 to 1.0
+  or 0 to 255. If you are casting the result to an integer $\backslash$\&amp; want a
+  maximum of 255 then set the maximum to say 255.999. Otherwise you
+  will get few if any 255s.
+  \par The result has the same shape as the argument (hsv).
+  \par See Foley, vanDam, Feiner and Hughes, Computer Graphics 
+  \textit{Principles and Practice}, Second Edition, 1990, ISBN
+  0201121107 page 593.
+  \\
+  \par Example:
+  \\
+  \texttt{\% [nap "hsv2rgb \{180.0 0.5 100.0\}"]
+  \\50 100 100}
+  \subsection{
+    \label{isMissing} \texttt{isMissing(}$x$\texttt{)} 
+  }
+1 if 
+  $x$ missing, 0 if present.
+  \\
+  \par Example:
+  \\
+  \texttt{\% [nap "isMissing \{0 \_ 9\}"]
+  \\0 1 0}
+  \subsection{
+    \label{isPresent} \texttt{isPresent(}$x$\texttt{)} 
+  }
+0 if 
+  $x$ missing, 1 if present.
+  \\
+  \par Example:
+  \\
+  \texttt{\% [nap "isPresent \{0 \_ 9\}"]
+  \\1 0 1}
+  \subsection{
+    \label{magnify-interp} \texttt{magnify\_interp(}$a$\texttt{,} $mag\_factor$\texttt{)}
+  }
+Magnify each dimension of array 
+  $a$ by factor defined by the corresponding element of 
+  $mag\_factor$ if this is a vector. If this is a scalar then
+  every dimension is magnified by the same factor. The new values are
+  estimated using multi-linear interpolation.
+  \par This function can be used to make images larger or smaller.
+  \par Example:
+  \\
+  \texttt{\% [nap "magnify\_interp(\{\{1 2 3\}\{4 5 6\}\}, \{1 3\})"]
+  value
+  \\1.00000 1.33333 1.66667 2.00000 2.33333 2.66667 3.00000
+  \\4.00000 4.33333 4.66667 5.00000 5.33333 5.66667
+  6.00000}
+  \subsection{
+    \label{magnify-nearest}\texttt{magnify\_nearest(}$a$\texttt{,} $mag\_factor$\texttt{)}
+  }
+This function is similar to 
+  \texttt{magnify\_interp} except that the new values are defined by
+  the nearest neighbour rather than interpolation.
+  \par Example:
+  \\
+  \texttt{\% [nap "magnify\_nearest(\{\{1 2 3\}\{4 5 6\}\}, \{1 3\})"]
+  value
+  \\1 1 2 2 2 3 3
+  \\4 4 5 5 5 6 6}
+  \subsection{
+    \label{mixed-base} \texttt{mixed\_base(}$x$\texttt{,} $b$\texttt{)} 
+  }
+Convert scalar value 
+  $x$ to mixed base defined by vector 
+  $b$.
+  \\
+  \par Following example converts 87 inches to yards, feet $\backslash$\&amp; inches:
+  \\
+  \texttt{\% [nap "mixed\_base(87, \{3 12\})"]
+  \\2 1 3}
+  \subsection{
+    \label{nub} \texttt{nub(}$x$\texttt{)} 
+  }
+Result is vector of distinct values in argument (in same order).
+  \subsection{
+    \label{outer} \texttt{outer(} $dyad$\texttt{,} $y$[, $x$]\texttt{)}
+  }
+Tensor outer-product.
+  \par 
+  $dyad$ is name of either
+  \begin{itemize}
+    \item function with two arguments
+    \item binary (dyadic) operator
+    \\
+    $x$ is vector
+    \\
+    $y$ is vector defaulting to 
+    $x$
+    \\Result is cross-product of 
+    $x$ and 
+    $y$, applying 
+    $dyad$ to each combination of 
+    $x$ $\backslash$\&amp; 
+    $y$.
+    \\
+    $x$ $\backslash$\&amp; 
+    $y$ are the coordinate variables of the result.
+    \\
+  \end{itemize}
+  \par Following example produces a multiplication table:
+  \\
+  \begin{verbatim}
+% [nap "outer('*', 1 .. 5)"]
+ 1  2  3  4  5
+ 2  4  6  8 10
+ 3  6  9 12 15
+ 4  8 12 16 20
+ 5 10 15 20 25
+\end{verbatim}
+
+  \subsection{
+    \label{palette-interpolate} \texttt{palette\_interpolate(}$from$\texttt{,} $to$)
+  }
+Define a palette by interpolating around the HSV (hue,
+  saturation, value) colour wheel with both 
+  $S$ (saturation) and 
+  $V$ (value) set to 1. The arguments 
+  $from$ and 
+  $to$ are angles in degrees which specify the range of of 
+  $H$ (hue). Red is 0, green is -240 and blue is 240.
+  \subsection{
+    \label{scattered2grid} \texttt{scattered2grid(}$xyz$\texttt{,} $ycv$\texttt{,} $xcv$\texttt{)} 
+  }
+
+  \par Produce a matrix grid from scattered (
+  $x,y,z$) data using triangulation. Grid points within each
+  triangle are defined by interpolating using a plane through the three
+  vertices of the triangle.
+  \par 
+  $xyz$ is an 
+  $n$×
+  $m$ matrix containing data corresponding to 
+  $n$ points (
+  $x,y,z$). The number of columns (
+  $m$) must be at least 3. Columns 0, 1 and 2 contain x, y and
+  z values respectively. Any further columns are ignored.
+  \par 
+  $ycv$ and 
+  $xcv$ specify the coordinate-variables for the grid.
+  \par The following example defines a grid from the four points (2,2,0),
+  (6,4,0), (2,4,4) and (4,5,3). Note that the missing values in the
+  result correspond to points which are outside of both the triangles
+  produced by the triangulation. You could eliminate these missing
+  values by defining values at all four corners of the grid.
+  \begin{verbatim}
+% nap "z = scattered2grid({{2 2 0}{6 4 0}{2 4 4}{4 5 3}}, 2 .. 5, 2 .. 6)"
+::NAP::1020-1020
+% $z
+0.00    _    _    _    _
+2.00 0.75 0.00    _    _
+4.00 2.50 1.50 0.75 0.00
+   _    _ 3.00    _    _
+% [nap "z(@2, @2)"]; # Check value at x=2, y=2
+0
+% [nap "z(@4, @6)"]; # Check value at x=6, y=4
+0
+% [nap "z(@4, @2)"]; # Check value at x=2, y=4
+4
+% [nap "z(@5, @4)"]; # Check value at x=4, y=5
+3
+\end{verbatim}
+
+  \subsection{
+    \label{scaleAxis} \texttt{scaleAxis(}$xstart$\texttt{,} $xend$[\texttt{,} $nmax$[\texttt{,} $nice$]]\texttt{)}
+  }
+Find suitable values for axis of graph.
+  \\
+  $xstart$: 1st data value
+  \\
+  $xend$: Final data value
+  \\
+  $nmax$: Max. allowable number of elements in result
+  (Default: 10)
+  \\
+  $nice$: Allowable increments (Default: 
+  \texttt{\{1 2 5\}})
+  \\Result is the arithmetic progression which:
+  \begin{itemize}
+    \item is within interval from 
+    $xstart$ to 
+    $xend$
+    \item has same order (ascending/descending) as 
+    $xstart$
+    \texttt{//}
+    $xend$
+    \item has increment equal to element of 
+    $nice$ times a power 
+    \texttt{(-30 .. 30)} of 10
+    \item has at least two elements
+    \item has no more than 
+    $nmax$ elements if possible
+    \item has as many elements as possible. (Ties are resolved by
+    choosing earlier element in 
+    $nice$.)
+  \end{itemize}
+  \par Example:
+  \\
+  \texttt{\% [nap "axis = scaleAxis(-370, 580, 10, \{10 20 25
+  50\})"] value
+  \\-300 -200 -100 0 100 200 300 400 500}
+  \subsection{
+    \label{scaleAxisSpan} \texttt{scaleAxisSpan(}$xstart$\texttt{,} $xend$[\texttt{,} $nmax$[\texttt{,} $nice$]]\texttt{)}
+  }
+Find suitable values for axis of graph.
+  \\
+  $xstart$: 1st data value
+  \\
+  $xend$: Final data value
+  \\
+  $nmax$: Max. allowable number of elements in result
+  (Default: 10)
+  \\
+  $nice$: Allowable increments (Default: 
+  \texttt{\{1 2 5\}})
+  \\Result is the arithmetic progression which:
+  \begin{itemize}
+    \item includes the interval from 
+    $xstart$ to 
+    $xend$
+    \item has same order (ascending/descending) as 
+    $xstart$
+    \texttt{//}
+    $xend$
+    \item has increment equal to element of 
+    $nice$ times a power 
+    \texttt{(-30 .. 30)} of 10
+    \item has at least two elements
+    \item has no more than 
+    $nmax$ elements if possible
+    \item has as many elements as possible. (Ties are resolved by
+    choosing earlier element in 
+    $nice$.)
+  \end{itemize}
+  \par Example:
+  \\
+  \texttt{\% [nap "axis = scaleAxisSpan(-370, 580, 10, \{10 20 25
+  50\})"] value
+  \\-400 -200 0 200 400 600}
+  \subsection{
+    \label{range} \texttt{range(}$a$\texttt{)} 
+  }
+Result is 2-element vector containing minimum and maximum of
+  array 
+  $a$.
+  \\Example:
+  \\
+  \texttt{\% [nap "range \{\{9 -1 -5\}\{2 9 3\}\}"]
+  \\-5 9}
+  \subsection{
+    \label{tail} \texttt{tail(}$x$[\texttt{,} $n$]\texttt{)}
+  }
+If 
+  $n$ $\ge$ 0 then result is final 
+  $n$ elements of 
+  $x$, cycling if 
+  $n$ $>$ nels(
+  $x$).
+  \\
+  $n$ defaults to 1.
+  \\If 
+  $n$ $<$  0 then result is final 
+  \texttt{nels(}
+  $x$
+  \texttt{)+}
+  $n$ elements of 
+  $x$ i.e. drop $-$
+  $n$ from start.
+  \\
+  \par Example:
+  \\
+  \begin{verbatim}
+% [nap "tail({3 1 9 2 7})"]
+7
+% [nap "tail({3 1 9 2 7}, 2)"]
+2 7
+% [nap "tail({3 1 9 2 7}, -2)"]
+9 2 7
+\end{verbatim}
+

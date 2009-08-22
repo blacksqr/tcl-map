@@ -1,0 +1,3028 @@
+# aa_nap.test --
+# 
+# Test command 'nap'
+#
+# Copyright (c) 1999, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: aa_nap.test,v 1.45 2008/04/18 06:54:07 dav480 Exp $
+
+set NAO_PREFIX ::NAP::
+
+proc put_info text {
+    set b [nap_info bytes]
+    # puts "${text}: [llength [list_naos]] NAOs using [lindex $b 0] bytes.\
+	    Other use: [lindex $b 2] bytes"
+}
+
+proc rm_nao_id text {
+    regsub -all -line " *(${::NAO_PREFIX}\[0-9\]*-\[0-9\]*)?$" $text "" var
+    return $var
+}
+
+put_info "before nap-1.1"
+
+Test nap-1.1 {assign scalar u8 constant} {
+    nap {A = 9}
+    $A
+} {9}
+
+Test nap-1.2 {assign scalar int constant} {
+    set i [[nap -999] value]
+} {-999}
+
+Test nap-1.3 {assign scalar real constant} {
+    set r [[nap 1.2e-1] value]
+} {0.12}
+
+nap "tmp = {027 08}"
+Test nap-1.4 {int constant with leading 0 (was octal)} {$tmp all} \
+"[$tmp id]  i32  MissingValue: -2147483648  References: 1
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+27 8"
+
+Test nap-1.5 {hex constant} {
+[nap "{0xf3 0XF3A09 0x80000000 0x80000001 0xffffFFFF 0xffffFFFe 0x7fffFFFF}"] v -f %0.10g
+} {243 997897 2147483648 2147483649 _ 4294967294 2147483647}
+Test nap-1.6 {ratio constant} { [nap "{3r4 -3r2}"] v } {0.75 -1.5}
+Test nap-1.7 {pi constant} { [nap "{1p1+2p1 1r2p1 180p-1}"] value -f %.4f
+} {3.1416 6.2832 1.5708 57.2958}
+Test nap-1.8 {inf constant} { [nap "{1i -0I 9if 1I -1I}"] v
+} {Inf -Inf Inf Inf -Inf}
+Test nap-1.9 {NaN constant} { [nap "{0n 9N 1nf 1n}"] v
+} {_ _ _ _}
+nap "tmp = 255b"; Test nap-1.10 {u8 constant} {$tmp all} \
+"[$tmp id]  u8  MissingValue: (NULL)  References: 1
+Value:
+255"
+nap "tmp = 255s"; Test nap-1.11 {i16 constant} {$tmp all} \
+"[$tmp id]  i16  MissingValue: -32768  References: 1
+Value:
+255"
+nap "tmp = 255"; Test nap-1.12 {i32 constant} {$tmp all} \
+"[$tmp id]  i32  MissingValue: -2147483648  References: 1
+Value:
+255"
+nap "tmp = 255f"; Test nap-1.13 {f32 constant} {$tmp all} \
+"[$tmp id]  f32  MissingValue: NaN  References: 1
+Value:
+255"
+nap "tmp = 1e08"; Test nap-1.14 {f64 constant} {$tmp all} \
+"[$tmp id]  f64  MissingValue: NaN  References: 1
+Value:
+1e+08"
+Test nap-1.15 {i8 constant} {nap "x = -5i8"; list [$x datatype] [$x]} {i8 -5}
+Test nap-1.16 {i16 constant} {nap "x = -5i16"; list [$x datatype] [$x]} {i16 -5}
+Test nap-1.17 {i32 constant} {nap "x = -5i32"; list [$x datatype] [$x]} {i32 -5}
+Test nap-1.18 {u8 constant} {nap "x = 255u8"; list [$x datatype] [$x]} {u8 255}
+Test nap-1.19 {u16 constant} {nap "x = 255u16"; list [$x datatype] [$x]} {u16 255}
+Test nap-1.20 {u32 constant} {nap "x = 255u32"; list [$x datatype] [$x]} {u32 255}
+Test nap-1.21 {f32 constant} {nap "x = 1f32"; list [$x datatype] [$x]} {f32 1}
+Test nap-1.22 {f64 constant} {nap "x = 1f64"; list [$x datatype] [$x]} {f64 1}
+Test nap-1.23 {f32 inf constant} {nap "x = {1if 2if32 3inf32 4inf}"
+    list [$x datatype] [$x]} {f32 {Inf Inf Inf Inf}}
+Test nap-1.24 {f64 inf constant} {nap "x = 0i"; list [$x datatype] [$x]} {f64 Inf}
+Test nap-1.25 {f64 inf constant} {nap "x = 1if64"; list [$x datatype] [$x]} {f64 Inf}
+Test nap-1.26 {f64 inf constant} {nap "x = 3inf64"; list [$x datatype] [$x]} {f64 Inf}
+Test nap-1.27 {f64 inf constant} {nap "x = 4infinity"; list [$x datatype] [$x]} {f64 Inf}
+Test nap-1.28 {i8  cast} {[nap "i8{-129 -128 -127 127 128}"]} {_ _ -127 127 _}
+Test nap-1.29 {u8  cast} {[nap "u8{-1 0 1 255 256}"]} {255 0 1 255 255}
+Test nap-1.30 {i16 cast} {[nap "i16{-32769.0 -32768 -32767 32767 32768}"]} {_ _ -32767 32767 _}
+Test nap-1.31 {u16 cast} {[nap "u16{-1f 0f 1f 65534f 65535f}"]} {_ 0 1 65534 _}
+Test nap-1.32 {i32 cast} {
+    [nap "i32{-2147483649.0 -2147483648.0 -2147483647.0 2147483647.0 2147483648.0}"]
+} {_ _ -2147483647 2147483647 _}
+Test nap-1.33 {u32 cast} {[nap "u32{-1 0 1 4294967294.0 4294967295.0}"]} {_ 0 1 4294967294 _}
+Test nap-1.34 {f32 cast} {[nap "f32{-1.0 0 _}"]} {-1 0 _}
+Test nap-1.35 {f64 cast} {[nap "f64{-1 0 _ 99}"]} {-1 0 _ 99}
+
+Test nap-2.1 {acos} {aeq [expr acos($r)] [[nap acos($r)] v] } 1
+Test nap-2.2 {asin} {aeq [expr asin($r)] [[nap asin($r)] v] } 1
+Test nap-2.3 {atan} {aeq [expr atan($r)] [[nap atan($r)] v] } 1
+Test nap-2.4 {ceil} {aeq [expr ceil($r)] [[nap ceil($r)] v] } 1
+Test nap-2.5 {cos} {aeq [expr cos($r)] [[nap cos($r)] v] } 1
+Test nap-2.6 {cosh} {aeq [expr cosh($r)] [[nap cosh($r)] v] } 1
+Test nap-2.7 {exp} {aeq [expr exp($r)] [[nap exp($r)] v] } 1
+Test nap-2.8 {floor} {aeq [expr floor($r)] [[nap floor($r)] v] } 1
+Test nap-2.9 {log} {aeq [expr log($r)] [[nap log($r)] v] } 1
+Test nap-2.10 {log10} {aeq [expr log10($r)] [[nap log10($r)] v] } 1
+Test nap-2.11 {sin} {aeq [expr sin($r)] [[nap sin($r)] v] } 1
+Test nap-2.12 {sinh} {aeq [expr sinh($r)] [[nap sinh($r)] v] } 1
+Test nap-2.13 {sqrt} {aeq [expr sqrt($r)] [[nap sqrt($r)] v] } 1
+Test nap-2.14 {tan} {aeq [expr tan($r)] [[nap tan($r)] v] } 1
+Test nap-2.15 {abs} {aeq [expr abs($r)] [[nap abs($r)] v] } 1
+Test nap-2.16 {sign} { [nap {sign({5 0 -1})}] v} {1 0 -1}
+Test nap-2.17 {round} {aeq [expr round($r)] [[nap round($r)] v] } 1
+Test nap-2.18 {nint} {aeq [expr round($r)] [[nap nint($r)] v] } 1
+Test nap-2.19 {atan2} {aeq [expr atan2($r,0.5)] [[nap atan2($r,0.5)] v] } 1
+Test nap-2.20 {atan(x,y)} {aeq [expr atan2($r,0.5)] [[nap atan($r,0.5)] v] } 1
+Test nap-2.21 {fmod} {aeq [expr fmod($r,0.5)] [[nap fmod($r,0.5)] v] } 1
+Test nap-2.22 {hypot} {aeq [expr hypot($r,0.5)] [[nap hypot($r,0.5)] v] } 1
+Test nap-2.23 {pow} {aeq [expr pow($r,0.5)] [[nap pow($r,0.5)] v] } 1
+Test nap-2.24 {random({0 0 0})} { [nap random({0 0 0})] v} {0 0 0}
+Test nap-2.25 {random(8)} {aeq [[nap random(8)] v] 4 4 0} 1
+Test nap-2.26 {random(vector)} {
+    aeq [[nap sum(random({1000#10}))] v] 5000 0 0.05} 1
+Test nap-2.27 {fn with naked const arg} {[nap cos 1p1] v} -1
+Test nap-2.28 {fn with naked ID arg} {aeq [expr cosh($r)] [[nap cosh $r] v] } 1
+Test nap-2.29 {fn with naked name arg} {
+    nap "angle = {0 0.5p1 1p1}"
+    eval [nap sin angle] value -f %.8f} {0.00000000 1.00000000 0.00000000}
+
+Test nap-2.30 {fn with alias} {set c cos; [nap c 1p1] v} -1
+Test nap-2.31 {log(x,y)} {[nap log(64,2)]} 6
+
+Test nap-3.1 {unary -scalar} { [nap -1.8] v } {-1.8}
+Test nap-3.2 {unary -vector} { [nap "-({5 0 -1})"] v } {-5 0 1}
+Test nap-3.3 {unary +scalar} { [nap +1.8] v } {1.8}
+Test nap-3.4 {unary +vector} { [nap "+({5 0 -1})"] v } {5 0 -1}
+Test nap-3.5 {unary ~scalar} { [nap ~3b] v } 252
+Test nap-3.6 {unary ~vector} { [nap "~i16({3 0 0x3f})"] v } {-4 -1 -64}
+Test nap-3.7 {unary !vector} { [nap "!{1 0}"] v } {0 1}
+Test nap-3.8 {unary |vector} { [nap "|{7.1 -2.1 0.6 9}"] v } {7.1 2.1 0.6 9}
+Test nap-3.9 {unary ^vector} { [nap "^{7.1 -2.1 0.6 9}"] v } {7 -2 1 9}
+Test nap-3.10 {unary <vector} { [nap "<{7.1 -2.1 0.6 9}"] v } {7 -3 0 9}
+Test nap-3.11 {unary >vector} { [nap ">{7.1 -2.1 0.6 9}"] v } {8 -2 1 9}
+Test nap-3.12 {unary +vector with non-std missing value} {
+    nap "a = {0 3}"
+    $a set miss 0
+    nap "b = +a"
+    $b missing
+} {0}
+Test nap-3.13 {check value} {$b} {_ 3}
+unset a b
+
+Test nap-4.1 {+} {aeq [expr $i+$r] [[nap $i+$r] v] } 1
+Test nap-4.2 {-} {aeq [expr $i-$r] [[nap $i-$r] v] } 1
+Test nap-4.3 {*} {aeq [expr $i*$r] [[nap $i*$r] v] } 1
+Test nap-4.4 {/} {aeq [expr $i/$r] [[nap $i/$r] v] } 1
+Test nap-4.5 {%} {[nap "42%{42 10 0 -10 _}"]} {0 2 0 -8 _}
+Test nap-4.6.1 {% f64} {[nap "4.2%{4.2 0 1 -1 1if64 -1if64 _}"] v} {0 0 0.2 -0.8 4.2 -Inf _}
+Test nap-4.6.2 {% f32} {[nap "(-4.2f32) % f32{-4.2 0 1 -1 1i -1i _}"] v} {0 0 0.8 -0.2 Inf -4.2 _}
+Test nap-4.6.3 {i32(_) % y} {[nap "_ % 1"]} {_}
+Test nap-4.6.4 {f64(_) % y} {[nap "f64(_) % 1f64"]} {_}
+Test nap-4.7 {0?:} {aeq [[nap {0 ? 8 : 9}] v] 9} 1
+Test nap-4.8 {1?:} {aeq [[nap 1?8:9] v] 8} 1
+Test nap-4.9 {>>>} { [nap $r >>> 0.5] v } 0.5
+Test nap-4.10 {<<<} { [nap $r<<<0.5] v } $r
+Test nap-4.11 {<<} { [nap 1 << 3] v } 8
+Test nap-4.12 {>>} { [nap 16 >> 3] v } 2
+Test nap-4.13 {&} { [nap 0xc & 5] v } 4
+Test nap-4.14 {|} { [nap 0xc | 5] v } 13
+Test nap-4.15 {^} { [nap 0xc ^ 5] v } 9
+Test nap-4.16 {<} { [nap  "3.1 < {3.6 3 1nf64}"] v } {1 0 0}
+Test nap-4.17 {<=} { [nap "3.1 <= {3.6 3 3.1 1nf64}"] v } {1 0 1 0}
+Test nap-4.18 {>} { [nap  "{3.1 999 1nf64} > 3.6"] v } {0 1 0}
+Test nap-4.19 {>=} { [nap "3.1 >= {99 3.1 3 1nf64}"] v } {0 1 1 0}
+Test nap-4.20 {==} { [nap "{0 -317 _} == -317"] v } {0 1 0}
+Test nap-4.21 {!=} { [nap "-317 != {-317 17 _}"] v } {0 1 1}
+Test nap-4.22 {&&} { [nap "{0 0 1 1} && {0 1 0 1}"] v } {0 0 0 1}
+Test nap-4.23 {||} { [nap "{0 0 1 1} || {0 1 0 1}"] v } {0 1 1 1}
+Test nap-4.24 {expr with unary -} { [nap "-2/1"] v } {-2}
+Test nap-4.25 {?: with missing values} {
+    [nap "{1 1 0 0 _} ? {2 _ 3 4 5} : {6 7 _ 8 9}"]
+} {2 _ _ 8 _}
+Test nap-4.26 {?: with missing values} {
+    [nap "{1 1 0 0 _} ? u8{2 _ 3 4 5} : {6 7 _ 8 9}"]
+} {2 255 _ 8 _}
+Test nap-4.27 {?: with missing values} {
+    nap "t = {2 2.5 3 4 5}"
+    $t set miss
+    [nap "{1 1 0 0 _} ? t : {6 7 _ 8 9}"]
+} {2 2.5 _ 8 _}
+Test nap-4.28 {f32 divide by 0.0} { [nap "f32{0 9}/0f32"]} {_ Inf}
+Test nap-4.29 {f64 divide by 0.0} { [nap "f64{0 9}/0f64"]} {_ Inf}
+
+Test nap-5.1 {rank of scalar} { [nap 2] rank } {0}
+Test nap-5.2 {rank of vector} { [nap "{5#0}"] rank } {1}
+Test nap-5.3 {rank of matrix} { [nap "{2#{3#0}}"] rank } {2}
+Test nap-5.4 {rank(scalar)} { [nap rank(2)] v } {0}
+Test nap-5.5 {rank(vector)} { [nap "rank({5#0})"] v } {1}
+Test nap-5.6 {rank(matrix)} { [nap "rank({2#{3#0}})"] v } {2}
+Test nap-5.7 {nels(scalar)} { [nap nels(2)] v } {1}
+Test nap-5.8 {nels(vector)} { [nap "nels({5#0})"] v } {5}
+Test nap-5.9 {nels(matrix)} { [nap "nels({2#{3#0}})"] v } {6}
+Test nap-5.10 {ooc nels(matrix)} { [nap "{2#{3#0}}"] nels } {6}
+
+Test nap-6.1 {shape of scalar} { [nap 2] shape } {}
+Test nap-6.2 {shape of vector} { [nap "{5#0}"] shape } {5}
+Test nap-6.3 {shape of matrix} { [nap "{2#{3#0}}"] shape } {2 3}
+Test nap-6.4 {shape(scalar)} { [nap shape(2)] v } {}
+Test nap-6.5 {shape(vector)} { [nap "shape({5#0})"] v } {5}
+Test nap-6.6 {shape(matrix)} { [nap "shape({2#{3#0}})"] v } {2 3}
+Test nap-6.7 {shape(shape(scalar))} { [nap shape(shape(2))] v } {0}
+Test nap-6.8 {shape(shape(vector))} { [nap "shape(shape({5#0}))"] v } {1}
+Test nap-6.9 {shape(shape(matrix))} { [nap "shape(shape({2#{3#0}}))"] v } {2}
+Test nap-6.10 {reshape scalar to vector} { [nap "reshape(2, 3)"] v } {2 2 2}
+Test nap-6.11 {reshape scalar to matrix} { [nap "reshape(5, {2 3})"] v } {5 5 5
+5 5 5}
+Test nap-6.12 {reshape vector to scalar} { [nap "reshape({8 2},{})"] v} {8}
+Test nap-6.13 {reshape vector to vector} {
+    [nap "reshape({8 2},5)"] v} {8 2 8 2 8}
+Test nap-6.13 {reshape vector to matrix} {
+    [nap "reshape({8 2},{2 3})"] v} {8 2 8
+2 8 2}
+Test nap-6.14 {reshape matrix to scalar} {
+    [nap "reshape({{5 2}{9 4}},{})"] v} {5}
+Test nap-6.15 {reshape matrix to vector} {
+    [nap "reshape({{5 2}{9 4}},5)"] v} {5 2 9 4 5}
+Test nap-6.16 {reshape matrix to matrix} { 
+    [nap "reshape({{5 2}{9 4}},{2 3})"] v} {5 2 9
+4 5 2}
+Test nap-6.17 {reshape(matrix)} { 
+    [nap "reshape({{5 2}{9 4}})"]} {5 2 9 4}
+
+nap "a={-1 0#1 3#9}"
+Test nap-8.1 {i32 vector constant} {$a a} \
+"[$a id]  i32  MissingValue: -2147483648  References: 1
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-1 9 9 9"
+
+nap "a={1.3 0#9}"
+Test nap-8.2 {f64 vector constant} {$a a} \
+"[$a id]  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 1      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.3"
+
+nap "a={9b}"
+Test nap-8.3 {u8 vector constant} {$a a} \
+"[$a id]  u8  MissingValue: (NULL)  References: 1
+Dimension 0   Size: 1      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9"
+
+nap "tmp={}"
+Test nap-8.4 {empty vector constant} {$tmp a} \
+"[$tmp id]  i8  MissingValue: -128  References: 1
+Dimension 0   Size: 0      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+"
+
+nap "tmp={_}"
+Test nap-8.5 {vector constant with just missing value} {$tmp a} \
+"[$tmp id]  i32  MissingValue: -2147483648  References: 1
+Dimension 0   Size: 1      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+_"
+
+nap "tmp={9 2 # _ 4#3f 1nf}"
+Test nap-8.6 {f32 vector constant with missing values} {$tmp a -c -1} \
+"[$tmp id]  f32  MissingValue: NaN  References: 1
+Dimension 0   Size: 8      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9 _ _ 3 3 3 3 _"
+
+unset A x angle t tmp
+# keep a
+put_info "nap-8.6 13"
+
+Test nap-9.1 {matrix constant: value} {
+    nap "b = {
+	{1e3 3.2 -5}
+	{-9.1e-1 0 0.8}
+    }"
+    $b
+} {1000.00    3.20   -5.00
+  -0.91    0.00    0.80}
+
+Test nap-9.2 {matrix constant: shape} { $b shape } {2 3}
+
+Test nap-9.3 {matrix constant with repetition count} {
+   [nap "{
+	2#{8 1 0}
+	{3#-5.5}
+    }"]
+} { 8.0  1.0  0.0
+ 8.0  1.0  0.0
+-5.5 -5.5 -5.5}
+
+Test nap-9.4 {empty matrix constant: value} { nap "c = {{}}"; $c  v -f %g} {}
+Test nap-9.5 {empty matrix constant: shape} { $c shape } {1 0}
+Test nap-9.6 {empty matrix constant: value} { nap "c = {2#{}}"; $c  v -f %g} {}
+Test nap-9.7 {empty matrix constant: shape} { $c shape } {2 0}
+Test nap-9.8 {empty matrix constant: value} { nap "c = {0#{5}}"; $c v -f %g} {}
+Test nap-9.9 {empty matrix constant: shape} { $c shape } {0 1}
+
+Test nap-9.10 {invalid matrix constant} { 
+    set status [catch { nap "c = {{1}{3 5}}" } msg]
+    rm_naos0
+    concat $status [regexp "Invalid array constant" $msg]
+} {1 1} 0
+
+Test nap-9.11 {invalid matrix constant} { 
+    set status [catch { nap "c = {{3 5}{1}}" } msg]
+    rm_naos0
+    concat $status [regexp "Invalid array constant" $msg]
+} {1 1} 0
+
+Test nap-9.12 {3D array constant: value} {
+    nap "c = {
+	{
+	    {1 3.2 3#-5}
+	    3#{-1 0 0.8 9 0}
+	}
+	2#{
+	    4#{5 # 8}
+	}
+    }"
+    $c v
+} { 1.0  3.2 -5.0 -5.0 -5.0
+-1.0  0.0  0.8  9.0  0.0
+-1.0  0.0  0.8  9.0  0.0
+-1.0  0.0  0.8  9.0  0.0
+
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0
+
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0
+ 8.0  8.0  8.0  8.0  8.0}
+
+Test nap-9.13 {3D array constant: shape} { $c shape } {3 4 5}
+
+Test nap-10.1 {datatype u8} { [nap 2b] datatype } {u8}
+Test nap-10.2 {datatype i16} { [nap -1s] datatype } {i16}
+Test nap-10.3 {datatype f64} { [nap 2.0] datatype } {f64}
+Test nap-10.4 {datatype i32} { [nap 2] datatype } {i32}
+Test nap-10.5 {datatype f32} { [nap 2f] datatype } {f32}
+
+Test nap-11.1 {function u8} { [nap x=u8(2.0)] datatype} u8
+Test nap-11.2 {function u8} {$x v -f %g} 2
+
+Test nap-11.3 {function i16} { [nap x=i16(2.0)] datatype} i16
+Test nap-11.4 {function i16} {$x v -f %g} 2
+
+test nap-11.5 {function i32} { [nap x=i32(2.0)] datatype} i32
+test nap-11.6 {function i32} {$x v -f %g} 2
+
+Test nap-11.7 {function u32} { [nap x=u32(2.0)] datatype} u32
+Test nap-11.8 {function u32} {$x v -f %g} 2
+
+Test nap-11.9 {function f32} { [nap x=f32(2.0)] datatype} f32
+Test nap-11.10 {function f32} {$x v -f %g} 2
+
+Test nap-11.11 {function f64} { [nap x=f64(b=2.0)] datatype} f64
+Test nap-11.12 {function f64} {$x v -f %g} 2
+Test nap-11.13 {check that same nao} {string compare $x $b} 0
+
+unset x b
+# keep a c
+put_info "nap-11.12 14"
+
+Test nap-12.1 {set coordinate variables} {
+    nap "m = {{2s 4s 0s}{-3s 8s 9s}}"
+    nap "i = i16({4 6})"
+    nap "j = f32({8 9 9.3})"
+    $m set coo i $j
+    [$m coo 1] v -f %g
+} {8 9 9.3}
+
+Test nap-12.2 {check coordinate variable 0} { [$m coo 0] v -f %g } {4 6}
+Test nap-12.3 {check coordinate variable 1} { [$m coo 1] v -f %g } {8 9 9.3}
+Test nap-12.4 {coordinate_variable(m,0)} {
+    [nap coordinate_variable(m,0)] v } {4 6}
+Test nap-12.5 {coordinate_variable(m,1)} {
+    [nap coordinate_variable(m,1)] v } {8 9 9.3}
+
+Test nap-12.6 {set dimension names} {
+    $m set dim lat lon
+    $m dim
+} {lat lon}
+
+Test nap-12.7 {Use dimension name} { [$m coo lon] v } {8 9 9.3}
+Test nap-12.8 {coordinate_variable(m, 'name')} {[nap coordinate_variable(m, 'lat')]} {4 6}
+Test nap-12.9 {coordinate_variable(m)} {
+    [nap coordinate_variable(m)]} {4 6}
+Test nap-12.10 {default coordinate_variable(m,-1)} {
+    [nap "coordinate_variable({{2 4 6}},-1)"]} {0 1 2}
+
+Test nap-12.11 {-ve dim. #} {[$m coo 0] v -f %g } {4 6}
+
+Test nap-12.12 {rm coordinate variables} {
+    $m set coo
+    $m coo
+} {(NULL) (NULL)}
+
+Test nap-12.13 {rm dimension names} {
+    $m set dim
+    $m dim
+} {(NULL) (NULL)}
+
+# keep a, c, i, j, m
+put_info "nap-12.13 17"
+
+Test nap-14.1 {display vector defined above} { $j v } {8 9 9.3}
+Test nap-14.2 {subscript: extract element of vector} { [nap j(1)] v } 9
+Test nap-14.3 {subscript: extract element of vector} { [nap j(0)] v } 8
+Test nap-14.4 {subscript: extract element of vector} { [nap j(2)] v } 9.3
+Test nap-14.5 {display matrix defined above} { $m v -f %g} { 2  4  0
+-3  8  9}
+Test nap-14.6 {subscript: extract element of matrix} { [nap m(1,0)] v } -3
+Test nap-14.7 {subscript: extract element of matrix} { [nap m(0,2)] v } 0
+Test nap-14.8 {subscript: extract element of matrix} { [nap m(1,2)] v } 9
+Test nap-14.9 {subscript: extract element of matrix using ID} {
+    [nap $m (1,1)] v } 8
+Test nap-14.10 {subscript: vector(vector)} { [nap "j({2 0 2})"] v } {9.3 8 9.3}
+Test nap-14.11 {subscript: vector{vector}} { [nap "j{2 0 2}"] v } {9.3 8 9.3}
+Test nap-14.12 {subscript: {vector}{vector}} {
+    [nap "{8 9 9.3}{1 0 1}"] v} {9 8 9}
+Test nap-14.13 {subscript: modulus to keep in bounds} {
+    [nap "j{-1 3 -2 4}"] v} {9.3 8 9 9}
+Test nap-14.14 {subscript: fractional subscript} {
+    [nap "j{1.5 -0.5 0.1 2.5}"] v} {9.15 8.65 8.1 8.65}
+Test nap-14.15 {subscript: vector(matrix)} { [nap j(m)] v} {9.3 9.0 8.0
+8.0 9.3 8.0}
+Test nap-14.16 {subscript: (expr)(scalar)} { [nap (j*2)(1)] v } {18}
+Test nap-14.17 {subscript: (expr)scalar} { [nap (j*2)1] v } {18}
+Test nap-14.18 {subscript: name name} { [nap j m]} {9.3 9.0 8.0
+8.0 9.3 8.0}
+Test nap-14.19 {subscript: (expr)ID} { [nap (j+1)$m]} {10.3 10.0  9.0
+ 9.0 10.3  9.0}
+Test nap-14.20 {subscript: (name{})const} { [nap (j{2 0}){1 0}] v } {8 9.3}
+Test nap-14.21 {subscript:  rank of vector(scalar)} { [nap rank(j(2))] v } 0
+Test nap-14.22 {subscript:  matrix(scalar,)} { [nap m(1,)] v } {-3 8 9}
+Test nap-14.23 {subscript:  matrix(vector,)} { [nap "m({1 0},)"] -f %g 
+} {-3  8  9
+ 2  4  0}
+Test nap-14.24 {subscript:  matrix(vector,vector)} {
+[nap "m({1 0},{2 0})"] -f %g} { 9 -3
+ 0  2}
+Test nap-14.25 {subscript:  matrix(scalar,vector)} {[nap "m(1,{2 1 2 0})"] v} \
+{9 8 9 -3}
+Test nap-14.26 {subscript:  matrix(vector,scalar)} {[nap "m({1 0},1)"] v} {8 4}
+Test nap-14.27 {subscript:  matrix(vector,vector)} { 
+[nap "m({1 0},{2 0})"] rank } 2
+Test nap-14.28 {subscript:  matrix(scalar,vector)} { 
+[nap "m(1,{2 1 2 0})"] rank } 1
+Test nap-14.29 {subscript:  matrix(vector,scalar)} { 
+[nap "m({1 0},1)"] rank } 1
+Test nap-14.30 {subscript:  3D(scalar,scalar,scalar)} { [nap "c(0,3,2)"] v} 0.8
+Test nap-14.31 {subscript:  3D(scalar,scalar,scalar)} { [nap "c(0,3,2)"] rank} 0
+
+Test nap-14.32 {subscript:  3D(vector,vector,vector)} { 
+[nap "c({1 0},{0 3 -1},{2 0 1})"]} \
+{ 8.0  8.0  8.0
+ 8.0  8.0  8.0
+ 8.0  8.0  8.0
+
+-5.0  1.0  3.2
+ 0.8 -1.0  0.0
+ 0.8 -1.0  0.0}
+
+Test nap-14.33 {subscript:  3D(vector,vector,vector)} { 
+[nap "c({1 0},{0 3 -1},{2 0 1})"] rank} 3
+
+Test nap-14.34 {subscript:  3D(vector,scalar,vector)} { 
+[nap "c({1 0}, 2, {0 -1})"] -f %g } \
+{ 8  8
+-1  0}
+Test nap-14.35 {subscript:  3D(vector,scalar,vector)} { 
+[nap "c({1 0}, 2, {0 -1})"] rank} 2
+Test nap-14.36 {subscript: name()} { [nap j()] v } {8 9 9.3}
+Test nap-14.37 {subscript: matrix(,vector)} { [nap "m(,{1 -1})"] v } \
+{4 0
+8 9}
+Test nap-14.38 {subscript: matrix(,vector)} { [nap "m(,{1 -1})"] rank} 2
+
+Test nap-14.39 {subscript: 3D(,,scalar)} { [nap "c(,,-2)"] -f %g } \
+{-5  9  9  9
+ 8  8  8  8
+ 8  8  8  8}
+
+Test nap-14.40 {subscript: 3D(,,scalar)} { [nap "c(,,-2)"] rank } 2
+
+nap "in = +m"
+$in set coo +i +j
+$in set dim lat lon
+
+Test nap-14.41 {subscript: dim names} {[nap "in02=in(,{0 2})"] dim} {lat lon}
+Test nap-14.42 {subscript: coord vars} {[$in02 coo lon] v} {8 9.3}
+Test nap-14.43 {subscript: coord vars} {[$in02 coo lat] v} {4 6}
+Test nap-14.44 {subscript: @@} {
+    [nap in(coordinate_variable(in,0)@@6, coordinate_variable(in,1)@@9.1)] v} 8
+Test nap-14.45 {subscript: @@} {
+    nap "closest = in(coordinate_variable(in,0)@@{6 3}, 
+	    coordinate_variable(in,1) @@ {9.1 10})"
+    $closest v} \
+{8 9
+4 0}
+Test nap-14.46 {subscript: @@ dim names} {$closest dim} {lat lon}
+Test nap-14.47 {subscript: @@ coord vars} {[$closest coo lat] v} {6 3}
+Test nap-14.48 {subscript: @@ coord vars} {[$closest coo lon] v} {9.1 10}
+Test nap-14.49.1 {subscript: @@ vector} {
+    nap "v={4 2 9}"
+    $v set coo [nap "{20 15 10.1}"]
+    [nap "closest = v(coordinate_variable(v,0)@@{15.3 11 14})"] v} \
+{2 9 2}
+Test nap-14.49.2 {check coord var} {[$closest coo] v} {15.3 11 14}
+Test nap-14.50.1 {subscript: @@ vector // scalar} {
+    [nap "closest = v(coordinate_variable(v,0)@@{15.3 11}//1)"] v} \
+{2 9 2}
+Test nap-14.50.2 {check coord var} {[$closest coo] v} {15 10.1 15}
+
+Test nap-14.51 {subscript: matrix with fractional subscripts} {
+[nap "m({0.5 1},{1.5 3})"]} \
+{ 5.25 -0.50
+ 8.50 -3.00}
+
+Test nap-14.52 {subscript: matrix with fractional subscripts} {
+[nap "m(0.25,)"] v} {0.75 5 2.25}
+Test nap-14.53 {subscript: matrix with fractional subscripts} {
+[nap "m(0.25,{1 1.5 2})"] v} {5 3.625 2.25}
+
+Test nap-14.54.1 {subscript: 3D array with fractional subscripts} {
+    [nap "c(0.5,,)"]} \
+{4.5 5.6 1.5 1.5 1.5
+3.5 4.0 4.4 8.5 4.0
+3.5 4.0 4.4 8.5 4.0
+3.5 4.0 4.4 8.5 4.0}
+
+Test nap-14.54.2 {subscript: 3D array with fractional subscripts} {
+    [nap "c(0.5, {0 3.5}, 1.5)"] -f %g} {3.55 3.875}
+Test nap-14.55 {subscript: 3D array with fractional subscripts} {
+    [nap "c(0.1, 0.1, 0.1)"] v} 1.7072
+Test nap-14.56 {subscript: matrix(vector)} {[nap "m({1 2})"] v} 9
+Test nap-14.57 {subscript: matrix(matrix)} {[nap "m({{1 2}{0 1}{0 _}})"] v} {9 4 _}
+Test nap-14.58 {subscript: matrix(3D)} {
+    [nap "m({{{1 2}{_ 0}{0 1}}{{0 0}{1 1}{_ _}}})"] v} {9 _ 4
+2 8 _}
+Test nap-14.59 {subscript: matrix(fractional vector)} {[nap "m({1 1.5})"] v} 8.5
+Test nap-14.60 {subscript: matrix(fractional matrix)} {
+    [nap "m({{0.5 2}{_ 0}{-0.5 2.5}})"] v} {4.5 _ 2}
+Test nap-14.61 {subscript: matrix(fractional 3D)} {
+    [nap "m({{{0.1 2}{0 _}{0 1.75}}{{_ _}{0 0}{1.1 1.5}}})"] v} {0.90    _ 1.00
+   _ 2.00 7.85}
+Test nap-14.62 {subscript: unary @@} {
+    [nap in(@@6, @@9.1)] v} 8
+Test nap-14.63 {subscript: unary @@} {
+    nap "in_closest = in(@@{6 _ 3}, @@ {9.1 10})"
+    $in_closest v} \
+{8 9
+_ _
+4 0}
+Test nap-14.64 {subscript: @@ dim names} {$in_closest dim} {lat lon}
+Test nap-14.65 {subscript: @@ coord vars} {[$in_closest coo lat] v} {6 _ 3}
+Test nap-14.66 {subscript: @@ coord vars} {[$in_closest coo lon] v} {9.1 10}
+
+Test nap-14.67 {subscript: @@ vector} {
+    nap "v={4 2 9}"
+    $v set coo [nap "{20 15 10.1}"]
+    [nap "tmp = v(@@{15.3 _ 11 14})"] v} \
+{2 _ 9 2}
+Test nap-14.67.1 {check cv} {[$tmp coo]} {15.3 _ 11 14}
+Test nap-14.68.1 {subscript: unary @ vector} {
+    [nap "tmp = v(@{15 20 _ 16})"]} \
+{2 4 _ 2.4}
+Test nap-14.68.2 {check cv} {[$tmp coo]} {15 20 _ 16}
+Test nap-14.69.1 {subscript: unary @ vector + offset} {
+    [nap "tmp = v(@{15 20 _ 16} + {1 1 1 -0.3})"]} \
+{9 2 _ 3}
+Test nap-14.69.2 {check cv} {[$tmp coo]} {10.1 15 _ 17.5}
+Test nap-14.70.1 {subscript: unary @ matrix} {
+    [nap "tmp = in(@5, @{9 8.5 8})"]} \
+{6 2.75 -0.5}
+Test nap-14.70.2 {check cv} {[$tmp coo]} {9 8.5 8}
+
+Test nap-14.71 {subscript: vector(ragged matrix)} {
+    [nap "{8 9}(prune {{1n 0 1}{1n 1n 1}{0 1 1n}})"]
+} {_ 8 9
+_ _ 9
+8 9 _}
+Test nap-14.72 {subscript: empty vector with i32 subscript} {
+    [nap "{}(0)"]} _
+Test nap-14.73 {subscript: empty matrix with i32 subscript} {
+    [nap "(reshape(0f, {0 2}))(1,)"]} {_ _}
+Test nap-14.74 {subscript: empty vector with fractional subscript} {
+    [nap "{}{1.5 -99}"]} {_ _}
+Test nap-14.75 {subscript: empty matrix with fractional subscript} {
+    [nap "(reshape(0, {0 0}))({9.9 _ 0},-0.5)"]} {_ _ _}
+
+Test nap-14.76 {subscript: unary @ longitude cv} {
+    nap "lon = {90 180 270}"
+    $lon set unit degrees_east
+    nap "v={0 6 8}"
+    $v set coo lon
+    nap "tmp = v(@(-180 .. 360 ... 90))"
+    $tmp v
+} {6 8 4 0 6 8 4}
+
+Test nap-14.77 {check cv} {[$tmp coo] v} {-180 -90 0 90 180 270 360}
+
+Test nap-14.78 {subscript: unary @ longitude with matrix} {
+    nap "lat = {-30 0}"
+    nap "mat = {{2 4 8}{1 0 3}}"
+    $mat set coo lat lon
+    nap "tmp = mat(, @(0 .. 360 ... 90))"
+    $tmp v
+} {5 2 4 8 5
+2 1 0 3 2}
+
+Test nap-14.79 {check cv} {[$tmp coo 0] a} \
+"[$tmp coo 0]  i32  MissingValue: -2147483648  References: 3
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-30 0"
+
+Test nap-14.80 {check cv} {[$tmp coo 1] a} \
+"[$tmp coo 1]  f32  MissingValue: NaN  References: 1  Unit: degrees_east
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 90 180 270 360"
+
+Test nap-14.81.1 {subscript: unary @ with matrix} {
+    nap "tmp = mat(@{-30 -15 0}, @(0 .. 360 ... 45))"
+    $tmp v
+} {5.00 3.50 2.00 3.00 4.00 6.00 8.00 6.50 5.00
+3.50 2.50 1.50 1.75 2.00 3.75 5.50 4.50 3.50
+2.00 1.50 1.00 0.50 0.00 1.50 3.00 2.50 2.00}
+Test nap-14.81.2 {check cv} {[$tmp coo 0] v} {-30 -15 0}
+Test nap-14.81.3 {check cv} {[$tmp coo 1] v} {0 45 90 135 180 225 270 315 360}
+
+Test nap-14.82 {subscript: unary @@ longitude cv} {
+    nap "tmp = v(@@(-180 .. 360 ... 90))"
+    $tmp v
+} {6 8 8 0 6 8 8}
+
+Test nap-14.83 {check cv} {[$tmp coo] v} {-180 -90 0 90 180 270 360}
+
+Test nap-14.84 {subscript: unary @@ longitude with matrix} {
+    nap "tmp = mat(, @@(0 .. 360 ... 90))"
+    $tmp v
+} {8 2 4 8 8
+3 1 0 3 3}
+
+Test nap-14.85 {check cv} {[$tmp coo 0] a} \
+"[$tmp coo 0]  i32  MissingValue: -2147483648  References: 3
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-30 0"
+
+Test nap-14.86 {check cv} {[$tmp coo 1] a} \
+"[$tmp coo 1]  i32  MissingValue: -2147483648  References: 1  Unit: degrees_east
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 90 180 270 360"
+
+Test nap-14.87.1 {subscript: unary @@ with matrix} {
+    nap "tmp = mat(@@{-30 -15 0}, @@(0 .. 360 ... 45))"
+    $tmp v
+} {8 2 2 2 4 4 8 8 8
+3 1 1 1 0 0 3 3 3
+3 1 1 1 0 0 3 3 3}
+Test nap-14.87.2 {check cv} {[$tmp coo 0] v} {-30 -15 0}
+Test nap-14.87.3 {check cv} {[$tmp coo 1] v} {0 45 90 135 180 225 270 315 360}
+
+Test nap-14.88 {subscript: array()} {[nap "{9 1}()"]} {9 1}
+
+Test nap-14.89 {subscript is missing value} {[nap "{1 4}(i32{_})"]} {_}
+Test nap-14.90 {subscript is missing value} {[nap "{1 4}(f32{_})"]} {_}
+Test nap-14.91 {subscript is missing value} {[nap "{{1 4}{8 2}}(i32{1 _},0)"]} {8 _}
+Test nap-14.92 {subscript is missing value} {[nap "{{1 4}{8 2}}(f32{1 _},0)"]} {8 _}
+
+Test nap-14.93 {subscripted var containing expr} {
+    set v "{3 8}"
+    [nap "v(0)"]
+} {3}
+
+Test nap-14.94 {index: vector(-)} {[nap "{9 1}(-)"]} {1 9}
+Test nap-14.95 {index: matrix with -} {[nap "{{1 4}{8 2}}(-,0)"]} {8 1}
+Test nap-14.96 {index: matrix with -} {[nap "{{1 4}{8 2}}(1f32,-)"]} {2 8}
+Test nap-14.97 {index: matrix with -} {[nap "{{1 4}{8 2}}(-,)"]} {8 2
+1 4}
+Test nap-14.98 {index: matrix with -} {[nap "{{1 4}{8 2}}(,-)"]} {4 1
+2 8}
+Test nap-14.99 {index: matrix with -} {[nap "{{1 4}{8 2}}(-,-)"]} {2 8
+4 1}
+Test nap-14.100 {index: matrix with -} {[nap "{{1 4}{8 2}}(1r2,-)"]} {3 4.5}
+
+Test nap-14.101 {index: matrix with -} {[nap "tmp = mat(-,)"]} {1 0 3
+2 4 8}
+Test nap-14.102 {index: cv} {[nap "cv(tmp,0)"]} {0 -30}
+Test nap-14.103 {index: cv} {[nap "cv(tmp,1)"]} {90 180 270}
+
+Test nap-14.104 {index: matrix with -} {[nap "tmp = mat(,-)"]} {8 4 2
+3 0 1}
+Test nap-14.105 {index: cv} {[nap "cv(tmp,0)"]} {-30 0}
+Test nap-14.106 {index: cv} {[nap "cv(tmp,1)"]} {270 180 90}
+
+Test nap-14.107 {index: matrix with -} {[nap "tmp = mat(-,-)"]} {3 0 1
+8 4 2}
+Test nap-14.108 {index: cv} {[nap "cv(tmp,0)"]} {0 -30}
+Test nap-14.109 {index: cv} {[nap "cv(tmp,1)"]} {270 180 90}
+
+Test nap-14.110 {index: vector(-) with cv} {
+    nap "tmp = {9.2 1.0 7.5}"
+    $tmp set coo lon
+    [nap "tmp = tmp(-)"]
+} {7.5 1 9.2}
+Test nap-14.111 {index: cv} {[nap "cv(tmp)"]} {270 180 90}
+
+Test nap-14.112 {index: 1 dim has cv, other doesn't} {
+    $mat set coo "" lon
+    [nap "tmp = mat({1 0},)"]
+} {1 0 3
+2 4 8}
+Test nap-14.113 {index: cv} {$tmp coo 0} {(NULL)}
+Test nap-14.114 {index: cv} {[$tmp coo 1]} {90 180 270}
+
+Test nap-14.115 {unary @ with shape preserving indexing} {
+    nap "tmp = {6 8}"
+    $tmp set coo "{3 5}"
+    [nap "tmp(@{{3 5}{4 4.5}})"]
+} {6.0 8.0
+7.0 7.5}
+
+Test nap-14.116 {index 3D: scalar and unary @} {
+nap "a3d = reshape(0 .. 99 ... 0.5, {2 3 4})"
+nap "c0 = {2.0 4}"
+nap "c1 = {20 30 40.0}"
+nap "c2 = {200 300 400 500.0}"
+$a3d set coo c0 c1 c2
+[nap "b3d = a3d(0, @{20 30}, @{300 400 500})"]
+} {0.5 1.0 1.5
+2.5 3.0 3.5}
+
+Test nap-14.117 {index: check cv} {[$b3d coo 0]} {20 30}
+Test nap-14.118 {index: check cv} {[$b3d coo 1]} {300 400 500}
+
+unset closest in02 in_closest lat lon mat tmp v a3d c0 c1 c2 b3d
+# keep c in(+2) a i j m
+put_info "nap-14.93 19"
+
+Test nap-15.1 {ap using ..} { [nap 3 .. 5] v } {3 4 5}
+Test nap-15.2 {f64 ap using ..} { [nap -2.7 .. 1] v} {-2.7 -1.7 -0.7 0.3 1}
+Test nap-15.3 {ap using ap(a,z,s)} { [nap ap(-13, 23, 10)] v } {-13 -3 7 17 27}
+Test nap-15.4 {ap using ap(a,z)} { [nap ap(-1.3, 0.7)] v } {-1.3 -0.3 0.7}
+Test nap-15.5 {ap using ap(a)} { [nap ap(3)] v } {1 2 3}
+Test nap-15.5 {ap using ap(a,z,-s)} { [nap ap(7,3,-2)] v } {7 5 3}
+Test nap-15.6 {ap using ap({})} { [nap ap({})] v } {1}
+Test nap-15.7 {ap using ap({a})} { [nap ap({3})] v } {1 2 3}
+Test nap-15.8 {ap using ap({a z})} { [nap ap({-1.4 0.4})] v } {-1.4 -0.4 0.4}
+Test nap-15.9 {ap using ap({a z s})} { [nap ap({-1 -1.4 -0.3})] v } {-1 -1.3 -1.4}
+Test nap-15.10 {ap with step of 0} { [nap ap(0,4,0)] v } {}
+Test nap-15.11 {ap using bigger..smaller} { [nap 3..1] v } {3 2 1}
+Test nap-15.12 {ap using n...a..b} { [nap 5...0..1] v } {0 0.25 0.5 0.75 1}
+Test nap-15.13 {ap using n...a..b} { [nap 2.5 ... 1 .. 7] v } {1 5 7}
+Test nap-15.14 {ap using a..b..d} { [nap -60.4 .. -59.8 ... 0.2]} {-60.4 -60.2 -60 -59.8}
+
+Test nap-16.1 {display vector defined above} { $j v} {8 9 9.3}
+Test nap-16.2 {count(above vector)} { [nap count(j)] v } {3}
+Test nap-16.3 {sum(above vector)} { [nap sum(j)] v } {26.3}
+Test nap-16.4 {prod(above vector)} { [nap prod(j)] v } {669.6}
+Test nap-16.5 {min(above vector)} { [nap min(j)] v } {8}
+Test nap-16.6 {max(above vector)} { [nap max(j)] v } {9.3}
+Test nap-16.7 {display matrix defined above} { $m -f %g} { 2  4  0
+-3  8  9}
+Test nap-16.8 {count(above matrix)} { [nap count(m)] v } {2 2 2}
+Test nap-16.9 {sum(above matrix)} { [nap sum(m)] v } {-1 12 9}
+Test nap-16.10 {prod(above matrix)} { [nap prod(m)] v } {-6 32 0}
+Test nap-16.11 {min(above matrix)} { [nap min(m)] v } {-3 4 0}
+Test nap-16.12 {max(above matrix)} { [nap max(m)] v } {2 8 9}
+Test nap-16.13 {total count(above matrix)} { [nap sum(count(m))] v } {6}
+Test nap-16.14 {total sum(above matrix)} { [nap sum(sum(m))] v } {20}
+Test nap-16.15 {total prod(above matrix)} { [nap prod(prod(m))] v } {0}
+Test nap-16.16 {total min(above matrix)} { [nap min(min(m))] v } {-3}
+Test nap-16.17 {total max(above matrix)} { [nap max(max(m))] v } {9}
+Test nap-16.18 {count(above matrix)} { [nap count(m,1i)] v } {2 2 2}
+Test nap-16.19 {sum(above matrix)} { [nap sum(m,1i)] v } {-1 12 9}
+Test nap-16.20 {prod(above matrix)} { [nap prod(m,1i)] v } {-6 32 0}
+Test nap-16.21 {min(above matrix)} { [nap min(m,1i)] v } {-3 4 0}
+Test nap-16.22 {max(above matrix)} { [nap max(m,1i)] v } {2 8 9}
+Test nap-16.23 {for each row count(above matrix)} { [nap count(m,1)] v } {3 3}
+Test nap-16.24 {for each row sum(above matrix)} { [nap sum(m,1)] v } {6 14}
+Test nap-16.25 {for each row prod(above matrix)} { [nap prod(m,1)] v } {0 -216}
+Test nap-16.26 {for each row min(above matrix)} { [nap min(m,1)] v } {0 -3}
+Test nap-16.27 {for each row max(above matrix)} { [nap max(m,1)] v } {4 9}
+Test nap-16.28 {count empty vector} { [nap "count({})"] v } {0}
+Test nap-16.29 {sum empty vector} { [nap "sum({})"] v } {0}
+Test nap-16.30 {prod empty vector} { [nap "prod({})"] v } {1}
+Test nap-16.31 {min empty vector} { [nap "min({})"] v } {Inf}
+Test nap-16.32 {max empty vector} { [nap "max({})"] v } {-Inf}
+Test nap-16.33 {count vector with NaN} {[nap "count({2 1n -0.5})"]} {2}
+Test nap-16.34 {sum vector with NaN} {[nap "sum({2 1n -0.5})"]} {1.5}
+Test nap-16.35 {prod vector with NaN} {[nap "prod({1N 5 -0.5})"]} {-2.5}
+Test nap-16.36 {min vector with NaN} {[nap "min({1N 5 -0.5})"]} {-0.5}
+Test nap-16.37 {max vector with NaN} {[nap "max({1e3 1N 5 -0.5})"]} {1000}
+Test nap-16.38 {psum scalar with NaN} {[nap "psum(1nf64)"]} {0}
+Test nap-16.39 {psum vector with NaN} {[nap "psum({2 1n -0.5})"]} {2 2 1.5}
+
+Test nap-16.40 {psum matrix} {
+    [nap "psum({
+	{2 _ 1}
+	{0 -1 5}
+	{7 3 2}
+    })"]
+} { 2  2  3
+ 2  1  7
+ 9 11 19}
+
+Test nap-16.41 {psum 3D} {
+    [nap "psum(c)"]
+} {  1.0   4.2  -0.8  -5.8 -10.8
+  0.0   3.2  -1.0   3.0  -2.0
+ -1.0   2.2  -1.2  11.8   6.8
+ -2.0   1.2  -1.4  20.6  15.6
+
+  9.0  20.2  23.2  26.2  29.2
+ 16.0  35.2  47.0  67.0  78.0
+ 23.0  50.2  70.8 107.8 126.8
+ 30.0  65.2  94.6 148.6 175.6
+
+ 17.0  36.2  47.2  58.2  69.2
+ 32.0  67.2  95.0 131.0 158.0
+ 47.0  98.2 142.8 203.8 246.8
+ 62.0 129.2 190.6 276.6 335.6}
+
+Test nap-17.1 {define vector vu with units} {
+    nap "vu = {1.5 -1 7.5}"
+    $vu set unit mm
+    $vu unit
+} mm
+
+Test nap-17.2 {count with units} {[nap "count vu"] unit} "(NULL)"
+Test nap-17.3 {sum with units} {[nap "sum vu"] unit} mm
+Test nap-17.4 {prod with units} {[nap "prod vu"] unit} "(NULL)"
+Test nap-17.5 {min with units} {[nap "min vu"] unit} mm
+Test nap-17.6 {max with units} {[nap "max vu"] unit} mm
+
+unset vu
+# keep in(+2), a, i, j, m
+put_info "nap-17.6  19"
+
+Test nap-18.1 {define 3D array} { [nap "a3d = {
+    {
+	{1 7 4 5}
+	{2 0 6 6}
+	{9 3 5 8}
+    }
+    {
+	{0 0 5 6}
+	{0 3 0 4}
+	{6 5 9 8}
+    }
+}"] v } {1 7 4 5
+2 0 6 6
+9 3 5 8
+
+0 0 5 6
+0 3 0 4
+6 5 9 8}
+
+Test nap-18.2 {count of 3D array} { [nap count(a3d)] v } {2 2 2 2
+2 2 2 2
+2 2 2 2}
+
+Test nap-18.3 {sum of 3D array} { [nap sum(a3d)] -f %g } { 1  7  9 11
+ 2  3  6 10
+15  8 14 16}
+
+Test nap-18.4 {prod of 3D array} { [nap prod(a3d)] -f %g } { 0  0 20 30
+ 0  0  0 24
+54 15 45 64}
+
+Test nap-18.5 {min of 3D array} { [nap min(a3d)] v } {0 0 4 5
+0 0 0 4
+6 3 5 8}
+
+Test nap-18.6 {max of 3D array} { [nap max(a3d)] v } {1 7 5 6
+2 3 6 6
+9 5 9 8}
+
+Test nap-18.7 {rank 1 count of 3D array} { [nap count(a3d,1)] v } {4 4 4
+4 4 4}
+
+Test nap-18.8 {rank 1 sum of 3D array} { [nap sum(a3d,1)] -f %g } {17 14 25
+11  7 28}
+
+Test nap-18.9 {rank 1 prod of 3D array} { [nap prod(a3d,1)] -f %g 
+} { 140    0 1080
+   0    0 2160}
+
+Test nap-18.10 {rank 1 min of 3D array} { [nap min(a3d,1)] v } {1 0 3
+0 0 5}
+
+Test nap-18.11 {rank 1 max of 3D array} { [nap max(a3d,1)] v } {7 6 9
+6 4 9}
+
+Test nap-18.12 {rank 2 count of 3D array} { [nap count(a3d,2)] v } {3 3 3 3
+3 3 3 3}
+
+Test nap-18.13 {rank 2 sum of 3D array} { [nap sum(a3d,2)] -f %g } {12 10 15 19
+ 6  8 14 18}
+
+Test nap-18.14 {rank 2 prod of 3D array} {[nap prod(a3d,2)] -f %g
+} { 18   0 120 240
+  0   0   0 192}
+
+Test nap-18.15 {rank 2 min of 3D array} { [nap min(a3d,2)] v } {1 0 4 5
+0 0 0 4}
+
+Test nap-18.16 {rank 2 max of 3D array} { [nap max(a3d,2)] v } {9 7 6 8
+6 5 9 8}
+
+Test nap-19.1 {display vector defined above} { $j v} {8 9 9.3}
+
+Test nap-19.2 {display vector using "value <FORMAT>"} {
+$j value -f %0.2f} {8.00 9.00 9.30}
+
+Test nap-19.3 {display matrix defined above} { $m -f %g} { 2  4  0
+-3  8  9}
+
+Test nap-19.4 {display matrix using "value <FORMAT>"} {
+$m value -f %4.0f} {   2    4    0
+  -3    8    9}
+
+Test nap-19.5 {display ISO-8859 code} {[nap "c8(176)"]} {°}
+
+Test nap-19.6 {display using format containing ISO-8859 code} {
+[nap "3 .. 4"] -f "%d\xb0"
+} {3° 4°}
+
+# keep a3d in(+2) a i j m
+put_info "nap-19.6  20"
+
+Test nap-20.1 {display ooc} {$m ooc} $m
+Test nap-20.2 {display count} {$m count} 1
+Test nap-20.3 {display count after copying} {nap "mm = m"; $m count} 2
+Test nap-20.4 {display count after unset} {unset mm; $m count} 1
+Test nap-20.5 {display count of coord var} {$j count} 1
+
+Test nap-20.6 {delete command} {
+rename $m {}
+set status [catch $m msg]
+concat $status $msg
+} "1 invalid command name \"$m\""
+
+Test nap-20.7 {display count of coord var} {$j count} 1
+Test nap-20.8 {copy using set & display count} {set save_j $j; $save_j count} 1
+
+Test nap-20.9 {delete using unset} {
+unset j
+set status [catch $save_j msg]
+concat $status $msg
+} "1 invalid command name \"$save_j\""
+
+set save_i $i
+Test nap-20.10 {delete using object method 'set count'} {
+$i set count 0
+set status [catch $i msg]
+concat $status $msg
+} "1 invalid command name \"$save_i\""
+
+unset i m
+# keep a3d in(+2), a (j has been unset)
+put_info "nap-20.10 17"
+
+Test nap-21.1 {use $VAR}   {[nap {$a   ** 0.5}] v} 3
+
+Test nap-22.1 {cat: scalar//scalar} {[nap 2//9.5] v} {2 9.5}
+Test nap-22.2 {cat: scalar//vector} {[nap "5//{4 -9}"] v} {5 4 -9}
+
+Test nap-22.3 {cat: matrix//vector} {[nap "{{0 2}{-1 1}}//{4 -9}"] -f %g} \
+{ 0  2
+-1  1
+ 4 -9}
+
+Test nap-22.4 {cat: matrix//matrix} {[nap "{{0 2}{-1 1}}//{2#{5 6}}"] -f %g} \
+{ 0  2
+-1  1
+ 5  6
+ 5  6}
+
+Test nap-22.5 {cat: vector//vector} {[nap "{-3 5}//{4 -9}"]} {-3 5 4 -9}
+Test nap-22.6 {laminate: vector///vector} {[nap "{-3 5}///{4 -9}"]} \
+{-3  5
+ 4 -9}
+Test nap-22.7 {laminate: matrix///matrix} {[nap "{{0 2}{-1 1}}///{2#{5 6}}"]} \
+{ 0  2
+-1  1
+
+ 5  6
+ 5  6}
+
+Test nap-22.8 {cat: matrix//matrix with CVs} {
+    nap "m = reshape(1, {2 3})"
+    nap "mm = reshape(9, {3 3})"
+    $m set coo "{2 4}" "5..7"
+    $mm set coo "6..9"
+    [nap i = m//mm]
+} {1 1 1
+1 1 1
+9 9 9
+9 9 9
+9 9 9}
+
+Test nap-22.9 {cat: check CV 0} {
+    [$i coo 0]
+} {2 4 6 7 8}
+
+Test nap-22.10 {cat: check CV 1} {
+    [$i coo 1]
+} {5 6 7}
+
+Test nap-22.11 {laminate: matrix//matrix with CVs} {
+    nap "mm = m + 1"
+    [nap i = m///mm]
+} {1 1 1
+1 1 1
+
+2 2 2
+2 2 2}
+
+Test nap-22.12 {laminate: check CV 0} {
+    $i coo 0
+} {(NULL)}
+
+Test nap-22.13 {laminate: check CV 1} {
+    [$i coo 1]
+} {2 4}
+
+Test nap-22.14 {laminate: check CV 2} {
+    [$i coo 2]
+} {5 6 7}
+
+Test nap-22.15 {cat: vector//scalar} {[nap "{4 -9}//5"] v} {4 -9 5}
+
+Test nap-22.16 {cat: scalar//matrix} {[nap "9 // {{0 2}{-1 1}}"]} \
+{ 9  9
+ 0  2
+-1  1}
+
+Test nap-22.17 {cat: matrix//scalar} {[nap "{{0 2}{-1 1}} // 9"]} \
+{ 0  2
+-1  1
+ 9  9}
+
+Test nap-22.18 {cat: vector//scalar} {[nap "{4 -9} // 5.0"] v} {4 -9 5}
+
+Test nap-22.19 {cat: vector///scalar} {[nap "{4 -9} /// 5.0"] v} { 4 -9
+ 5  5}
+
+Test nap-22.20 {cat: matrix///scalar} {[nap "{{0 2}{-1 1}} /// 9"]} \
+{ 0  2
+-1  1
+
+ 9  9
+ 9  9}
+
+Test nap-22.21 {cat: vector//matrix} {[nap "{1 3} // {{4 2 9}{7 2 0}}"] v} {1 3 1
+4 2 9
+7 2 0}
+
+Test nap-22.22 {laminate: vector///matrix} {[nap "{1 3} /// {{4 2 9}{7 2 0}}"] v} {1 3 1
+3 1 3
+
+4 2 9
+7 2 0}
+
+unset i m mm
+# keep a3d in(+2), a
+put_info "nap-22.18 17"
+
+Test nap-23.1 {closest: vector@@scalar} {[nap "{3.6 1 9 0}@@2"] v} 1
+
+Test nap-23.2 {closest: vector@@vector} {
+    nap "v = {-1 4 _ 99}"
+    $v set coo "{3 5 6 9}"
+    nap "z = {3.6 1 9 0}@@v"
+    $z
+} {3 0 _ 2}
+
+Test nap-23.3.1 {check cv} {[nap "coordinate_variable(z,0)"]} {3 5 6 9}
+Test nap-23.3.2 {check link} {[$z link]} {-1 4 _ 99}
+Test nap-23.3.3 {check use as index} {[nap "cv({1 3 5 7}z)"]} {-1 4 _ 99}
+
+Test nap-23.4 {closest: vector@@matrix} {
+    [nap "{6 -1 9 6}@@{{5 6}{-9 8.5}}"] v} {0 0
+1 2}
+
+Test nap-23.5 {match: vector@@@scalar} {
+    [nap "{1.2 1.3 9 0} @@@ 1.3"] v
+} 1
+
+Test nap-23.6.1 {match: vector@@@vector} {
+    [nap "tmp = (0..9) @@@ ((0 .. 4 ... 0.5) // _)"] v
+} {0 _ 1 _ 2 _ 3 _ 4 _}
+Test nap-23.6.2 {check link} {
+    [$tmp link] v
+} {0 0.5 1 1.5 2 2.5 3 3.5 4 _}
+
+Test nap-23.7 {match: vector@@@matrix} {
+    nap "m = {{5 6}{-9 8.5}}"
+    $m set coo "{10 20}" "{0 1}"
+    nap "z = {6 -1 9 6}@@@m"
+    $z
+} {_ 0
+_ _}
+
+Test nap-23.8 {check cv} {
+    [nap "coordinate_variable(z,0)"]
+} {10 20}
+
+Test nap-23.9 {check cv} {
+    [nap "coordinate_variable(z,1)"]
+} {0 1}
+
+Test nap-23.10 {check link} {
+    $z link
+} {(NULL)}
+
+Test nap-23.11 {closest: vector@@vector} {
+    [nap "z = (3 .. 5) @@ {0 2.9 3 3.1 3.9 4 4.1 4.9 5 5.1 9}"] v
+} {0 0 0 0 1 1 1 2 2 2 2}
+
+Test nap-23.12 {check link} {
+    [$z link] v
+} {0 2.9 3 3.1 3.9 4 4.1 4.9 5 5.1 9}
+
+unset m v z tmp
+# keep a3d in(+2), a
+put_info "nap-23.10 17"
+
+Test nap-24.1 {indexOf: vector@scalar} {[nap "{3 5 8 9 13}@4"] v} 0.5
+
+Test nap-24.2 {indexOf: vector@vector} {
+    nap "v = {_ 4 3.9}"
+    $v set coo "{20 9 8}"
+    nap "z = {3.6 3.8 4}@v"
+    $z
+} {_ 2 1.5}
+
+Test nap-24.31 {check cv} {
+    [nap "coordinate_variable(z,0)"]
+} {20 9 8}
+
+Test nap-24.32 {check link} {
+    [$z link] v
+} {_ 4 3.9}
+
+Test nap-24.33 {effect of arith on link} {
+    [nap "-z"] link
+} {(NULL)}
+
+Test nap-24.4 {indexOf: vector@matrix} {[nap "{5 0 -5}@{{5 6}{-1 -10}}"] 
+} { 0.0 -0.2
+ 1.2  3.0}
+
+Test nap-24.5 {indexOf: duplicates} {[nap "{8 8 9 9 9} @ {8 8.5 9}"]} {0.5 1.5 3}
+
+Test nap-24.6 {indexOf: beyond limits} {[nap "{2 4} @ (0 .. 9)"] v
+} {-1 -0.5 0 0.5 1 1.5 2 2.5 3 3.5}
+
+Test nap-24.7 {indexOf: non-monotonic} {
+    [nap "{1 0 2} @ (2 .. -1 ... -0.5)"] value
+} {-1 -0.5 0 0.5 1 _ _}
+
+Test nap-24.8 {indexOf: inifinite ends} {
+    [nap "{-1if 0f 1f 1if} @ {-9 -1 0 0.5 1 2 9}"] value
+} {1 1 1 1.5 2 2 2}
+
+Test nap-24.9 {closest: missing values} {
+    [nap "{1 3 7} @@ {6 0 _}"]
+} {2 0 _}
+
+Test nap-24.10 {closest: missing values} {
+    [nap "{1 3 5} @@ {6 0 _}"]
+} {2 0 _}
+
+Test nap-24.11 {closest: missing values} {
+    [nap "{1 3 -5} @@ {6 0 _}"]
+} {1 0 _}
+
+Test nap-24.12 {closest: missing values} {
+    [nap "{1 _ 4} @@ {4 2 _}"]
+} {2 0 _}
+
+Test nap-24.13 {closest: missing values} {
+    [nap "{1.0 _ 4.0} @@ {4 2 _}"]
+} {2 0 _}
+
+Test nap-24.14 {indexOf: missing values} {
+    [nap "{1 3 7} @ {6 2 _}"]
+} {1.75 0.5 _}
+
+Test nap-24.15 {indexOf: missing values} {
+    [nap "{1 3 5} @ {4 2 _}"]
+} {1.5 0.5 _}
+
+Test nap-24.16 {indexOf: missing values} {
+    [nap "{1 3 -5} @ {4 2 _}"]
+} {_ 0.5 _}
+
+Test nap-24.17 {indexOf: missing values} {
+    [nap "{_ 2 4 _ 6 8} @ (0 .. 9)"] value
+} {_ _ 1 1.5 2 _ 4 4.5 5 5.5}
+
+Test nap-24.18 {indexOf: longitude} {
+    nap "lon = {0 90 180 270 360 450}"
+    $lon set unit degrees_east
+    [nap "lon @ {-45 0 90 360 405 450 495}"] v
+} {3.5 0 1 4 4.5 5 1.5}
+
+Test nap-24.19 {closest: longitude} {
+    [nap "lon @@ {-10 0 80 350 370 440 450 460}"] v
+} {4 0 1 4 4 5 5 1}
+
+Test nap-24.20 {indexOf: matrix@scalar} {
+    nap "mat = {
+	{0.3 0 0.9}
+	{0.5 1 0.8}
+	{0.6 0 0.6}
+	{0.8 2 0.0}
+    }"
+    $mat set coo "1 .. 4" "{10 20 40}"
+    nap "result = mat @ 0.7"
+    $result
+} {2.5 0.7 1.5}
+
+Test nap-24.21 {check CV} {[$result coord] value} {10 20 40}
+
+Test nap-24.22 {indexOf: matrix@matrix} {
+    nap "y = {
+	{0.3 0.3 0.3}
+	{0.4 0.5 0.8}
+    }"
+    $y set coo "{3 5}" "{5 10 15}"
+    nap "result = mat @ y"
+    $result
+} {0.0 0.3 2.5
+0.5 0.5 1.0}
+
+Test nap-24.23 {check CV0} {[$result coord 0] value} {3 5}
+
+Test nap-24.24 {check CV1} {[$result coord 1] value} {5 10 15}
+
+Test nap-24.25 {indexOf: latitude} {
+    nap "lat = {-60 0 30}"
+    $lat set unit degrees_north
+    [nap "lat @ (-90 .. 90 ... 45)"]
+} {0 0.25 1 2 2}
+
+unset mat result v y z
+# keep a3d lon in(+2), a
+put_info "nap-24.19 18"
+
+Test nap-25.1 {copy: vector#vector} {[nap "{1 2 0}#{7 8 9}"] v} {7 8 8}
+Test nap-25.2 {copy: vector#vector} {[nap "{0 3}#{7 8 9}"] v} {8 8 8 9 9 9}
+Test nap-25.3 {copy: vector#matrix} {[nap "{0 3}#{{7 8}{9 9.5}}"]} \
+{9.0 9.5
+9.0 9.5
+9.0 9.5}
+Test nap-25.4 {copy: scalar#scalar} {[nap "0#7"] v} {}
+Test nap-25.5 {copy: scalar#scalar} {[nap "1#7"] v} {7}
+Test nap-25.6 {copy: scalar#scalar} {[nap "4#-2"] v} {-2 -2 -2 -2}
+Test nap-25.7 {copy: scalar#vector} {[nap "2#{9 1}"] v} {9 9 1 1}
+Test nap-25.8 {copy: boxed#matrix} {[nap "({2 3},{0 2})#{{7 8}{9 9.5}}"]
+} {8.0 8.0
+8.0 8.0
+9.5 9.5
+9.5 9.5
+9.5 9.5}
+
+Test nap-25.9 {copy: scalar#matrix} {[nap "2#{{7 8}{9 9.5}}"]} \
+{7.0 8.0
+7.0 8.0
+9.0 9.5
+9.0 9.5}
+
+Test nap-25.10 {copy: boxed#matrix} {
+    [nap "(,{3 2})#{{7 8 2}{9 9.5 0}}"] v
+} {7.0 7.0 7.0 8.0 8.0 2.0 2.0
+9.0 9.0 9.0 9.5 9.5 0.0 0.0}
+
+# keep a3d lon in(+2), a
+put_info "nap-25.10 18"
+
+Test nap-26.1 {transpose(matrix)} {[nap "transpose({{2 4 3}{6 8 1}})"] v} \
+{2 6
+4 8
+3 1}
+Test nap-26.2 {transpose(matrix,vector)} {
+    [nap "transpose({{4.5 3}{6 1}},{1 0})"]} \
+{4.5 6.0
+3.0 1.0}
+Test nap-26.3 {transpose(matrix,scalar)} {
+    [nap "transpose({{4.5 3}{6 1}},1)"]} \
+{4.5 6.0
+3.0 1.0}
+Test nap-26.4 {transpose(vector)} {[nap "transpose({6 8 1})"] v} {6 8 1}
+Test nap-26.5 {transpose(3D array)} {[nap "transpose(a3d)"] v} \
+{1 0
+2 0
+9 6
+
+7 0
+0 3
+3 5
+
+4 5
+6 0
+5 9
+
+5 6
+6 4
+8 8}
+Test nap-26.6 {transpose(3D array,vector)} {[nap "transpose(a3d, {2 0 1})"] v} \
+{1 2 9
+0 0 6
+
+7 0 3
+0 3 5
+
+4 6 5
+5 0 9
+
+5 6 8
+6 4 8}
+Test nap-26.7 {transpose(3D array,scalar)} {[nap "transpose(a3d, 1)"] v} \
+{1 7 4 5
+0 0 5 6
+
+2 0 6 6
+0 3 0 4
+
+9 3 5 8
+6 5 9 8}
+
+put_info "nap-26.7  18"
+
+Test nap-26.8 {transpose(matrix)} {
+    nap "tin=transpose(in, '-1 lat')"
+    $tin
+} { 2 -3
+ 4  8
+ 0  9}
+
+Test nap-26.9  {check coord vars} { [$tin coo lat] v } {4 6}
+Test nap-26.10 {check coord vars} { [$tin coo lon] v } {8 9 9.3}
+Test nap-26.11 {check dim names} {$tin dim} {lon lat}
+
+unset a3d tin in lon
+# keep a
+put_info "nap-26.11 13"
+
+Test nap-27.1  {set unit} {$a set unit metres} {}
+
+Test nap-27.2  {display unit} {$a unit} {metres}
+
+Test nap-27.3  {display all} {$a a} \
+"[$a id]  u8  MissingValue: (NULL)  References: 1  Unit: metres
+Dimension 0   Size: 1      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+9"
+
+Test nap-27.4  {set dim, format, label} {
+    $a set dim one
+    $a set format "value is %d"
+    $a set label "Hello world"
+} {}
+
+Test nap-27.5  {display header} {$a header} \
+"[$a id]  u8  MissingValue: (NULL)  References: 1  Unit: metres  Format: \"value is %d\"
+Hello world
+Dimension 0   Size: 1      Name: one       Coordinate-variable: (NULL)"
+
+Test nap-27.6  {display value using internal format} {$a} {value is 9}
+Test nap-27.7  {display dim name} {$a dim} {one}
+Test nap-27.8  {display format} {$a format} {value is %d}
+Test nap-27.9  {display label} {$a label} {Hello world}
+
+nap b = a,a
+regsub {^.*-} [$a id] {} slot
+
+Test nap-27.10  {display all boxed} {$b all} \
+"[$b id]  boxed  MissingValue: 0  References: 1
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+$slot $slot"
+
+unset b
+# keep a
+put_info "nap-27.4 13"
+
+Test nap-28.1 {invert_grid for vector} {
+    nap "y={3 9 10}"
+    nap "x={0 3 4}"
+    nap "yc={2.5 4 9 20}"
+    $y set coo x
+    $yc set dim Y
+    nap "yi=invert_grid(y,yc)"
+    $yi
+} {0.5 3}
+
+Test nap-28.2 {check cv} {[$yi coo]} {4 9}
+
+Test nap-28.3 {check dimname} {$yi dim} Y
+
+Test nap-28.4 {invert_grid for vector with no cv} {
+    nap "y={1 3 7 9}"
+    nap "yc={2 4 9}"
+    nap "yi=invert_grid(y,yc)"
+    $yi
+} {0.5 1.25 3}
+
+Test nap-28.5 {check cv} {[$yi coo]} {2 4 9}
+
+Test nap-28.6 {invert_grid for matrices with no CVs} {
+    nap "lat = {{10 30}{30 50}}"
+    nap "latc = {20 30 40}"
+    nap "lon = {{50 90}{50 90}}"
+    nap "lonc = {70 80}"
+    nap "yi = invert_grid(lat, latc, lon, lonc)"
+    $yi
+} \
+{0.00 0.50
+   _    _
+
+0.50 0.50
+0.25 0.75
+
+1.00 0.50
+0.75 0.75}
+
+Test nap-28.7 {invert_grid for matrices with CVs} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    nap "latc = {-60 -45 -40 -35 -25}"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = {200 190 180 170 160 130}"
+    nap "yi = invert_grid(lat, latc, lon, lonc)"
+    $yi v
+} \
+{   _    _
+   _    _
+   _    _
+   _    _
+40.0 21.0
+   _    _
+
+   _    _
+40.0  6.0
+42.5  8.5
+45.0 11.0
+47.5 13.5
+55.0 21.0
+
+40.0  1.0
+42.5  3.5
+45.0  6.0
+47.5  8.5
+50.0 11.0
+57.5 18.5
+
+   _    _
+45.0  1.0
+47.5  3.5
+50.0  6.0
+52.5  8.5
+60.0 16.0
+
+   _    _
+   _    _
+   _    _
+55.0  1.0
+57.5  3.5
+   _    _}
+
+Test nap-28.8 {mapping using inverted grid} {
+    nap "z = ({{0 50 100}{0 100 150}{0 150 250}}) (ap(0,2,0.1), ap(0,2,0.1))"
+    nap "line_fine = 40 .. 60"
+    nap "pixel_fine = 1 .. 21"
+    $z set coo line_fine pixel_fine
+    $z set dim line pixel
+    nap "zmap = z(yi)"
+    $zmap
+} \
+{      _       _       _       _ 100.000       _
+      _  25.000  46.875  75.000 100.000 200.000
+  0.000  15.625  37.500  65.625 100.000 203.125
+      _   0.000  21.875  50.000  84.375 200.000
+      _       _       _   0.000  34.375       _}
+
+Test nap-28.9 {invert_grid for matrices with CVs & bowtie effect} {
+    nap "lat = {{3#0}{50 30 10}{10 30 50}{3#60}}"
+    nap "line = {30 40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    $lat set unit degrees_north
+    nap "latc = 0 .. 60 ... 10"
+    nap "lon = {4#{100 120 140}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = 100 .. 140 ... 10"
+    nap "yi = invert_grid(lat, latc, lon, lonc)"
+    $yi v
+} \
+{30.0000  1.0000
+30.0000  6.0000
+30.0000 11.0000
+30.0000 16.0000
+30.0000 21.0000
+
+50.0000  1.0000
+32.5000  6.0000
+33.3333 11.0000
+35.0000 16.0000
+40.0000 21.0000
+
+47.5000  1.0000
+50.0000  6.0000
+36.6667 11.0000
+40.0000 16.0000
+42.5000 21.0000
+
+45.0000  1.0000
+45.0000  6.0000
+40.0000 11.0000
+45.0000 16.0000
+45.0000 21.0000
+
+42.5000  1.0000
+40.0000  6.0000
+53.3333 11.0000
+50.0000 16.0000
+47.5000 21.0000
+
+40.0000  1.0000
+57.5000  6.0000
+56.6667 11.0000
+55.0000 16.0000
+50.0000 21.0000
+
+60.0000  1.0000
+60.0000  6.0000
+60.0000 11.0000
+60.0000 16.0000
+60.0000 21.0000}
+
+Test nap-28.10 {invert_grid with missing values} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    $lat set miss -60
+    nap "latc = {-60 -45 -40 -35 -25}"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = {200 190 180 170 160 130}"
+    nap "yi = invert_grid(lat, latc, lon, lonc)"
+    $yi v
+} \
+{   _    _
+40.0  6.0
+42.5  8.5
+45.0 11.0
+   _    _
+55.0 21.0
+
+40.0  1.0
+42.5  3.5
+45.0  6.0
+47.5  8.5
+50.0 11.0
+57.5 18.5
+
+   _    _
+45.0  1.0
+47.5  3.5
+50.0  6.0
+52.5  8.5
+60.0 16.0
+
+   _    _
+   _    _
+   _    _
+55.0  1.0
+57.5  3.5
+   _    _}
+
+Test nap-28.11 {invert_grid for matrices, result has single-element CVs} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    nap "latc = -40"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = 200"
+    nap "yi = invert_grid(lat, latc, lon, lonc)"
+    $yi v
+} {40  1}
+
+Test nap-28.12 {invert_grid for vector, result has single-element CV} {
+    nap "y={3 9 10}"
+    nap "x={0 3 4}"
+    nap "yc=4"
+    $y set coo x
+    $yc set dim Y
+    nap "yi=invert_grid(y,yc)"
+    $yi
+} {0.5}
+
+Test nap-29.1 {invert_grid_no_trim for vector} {
+    nap "y={3 9 10}"
+    nap "x={0 3 4}"
+    nap "yc={2.5 4 9 20}"
+    $y set coo x
+    $yc set dim Y
+    nap "yi=invert_grid_no_trim(y,yc)"
+    $yi
+} {_ 0.5 3 _}
+
+Test nap-29.2 {check cv} {[$yi coo]} {2.5 4 9 20}
+
+Test nap-29.3 {check dimname} {$yi dim} Y
+
+Test nap-29.4 {invert_grid_no_trim for vector with no cv} {
+    nap "y={1 3 7 9}"
+    nap "yc={2 4 9}"
+    nap "yi=invert_grid_no_trim(y,yc)"
+    $yi
+} {0.5 1.25 3}
+
+Test nap-29.5 {check cv} {[$yi coo]} {2 4 9}
+
+Test nap-29.6 {invert_grid_no_trim for matrices with no CVs} {
+    nap "lat = {{10 30}{30 50}}"
+    nap "latc = {20 30 40}"
+    nap "lon = {{50 90}{50 90}}"
+    nap "lonc = {70 80}"
+    nap "yi = invert_grid_no_trim(lat, latc, lon, lonc)"
+    $yi
+} \
+{0.00 0.50
+   _    _
+
+0.50 0.50
+0.25 0.75
+
+1.00 0.50
+0.75 0.75}
+
+Test nap-29.7 {invert_grid_no_trim for matrices with CVs} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    nap "latc = {-60 -45 -40 -35 -25}"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = {200 190 180 170 160 130}"
+    nap "yi = invert_grid_no_trim(lat, latc, lon, lonc)"
+    $yi v
+} \
+{   _    _
+   _    _
+   _    _
+   _    _
+40.0 21.0
+   _    _
+
+   _    _
+40.0  6.0
+42.5  8.5
+45.0 11.0
+47.5 13.5
+55.0 21.0
+
+40.0  1.0
+42.5  3.5
+45.0  6.0
+47.5  8.5
+50.0 11.0
+57.5 18.5
+
+   _    _
+45.0  1.0
+47.5  3.5
+50.0  6.0
+52.5  8.5
+60.0 16.0
+
+   _    _
+   _    _
+   _    _
+55.0  1.0
+57.5  3.5
+   _    _}
+
+Test nap-29.8 {mapping using inverted grid} {
+    nap "z = ({{0 50 100}{0 100 150}{0 150 250}}) (ap(0,2,0.1), ap(0,2,0.1))"
+    nap "line_fine = 40 .. 60"
+    nap "pixel_fine = 1 .. 21"
+    $z set coo line_fine pixel_fine
+    $z set dim line pixel
+    nap "zmap = z(yi)"
+    $zmap
+} \
+{      _       _       _       _ 100.000       _
+      _  25.000  46.875  75.000 100.000 200.000
+  0.000  15.625  37.500  65.625 100.000 203.125
+      _   0.000  21.875  50.000  84.375 200.000
+      _       _       _   0.000  34.375       _}
+
+Test nap-29.9 {invert_grid_no_trim for matrices with CVs & bowtie effect} {
+    nap "lat = {{3#0}{50 30 10}{10 30 50}{3#60}}"
+    nap "line = {30 40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    $lat set unit degrees_north
+    nap "latc = 0 .. 60 ... 10"
+    nap "lon = {4#{100 120 140}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = 100 .. 140 ... 10"
+    nap "yi = invert_grid_no_trim(lat, latc, lon, lonc)"
+    $yi v
+} \
+{30.0000  1.0000
+30.0000  6.0000
+30.0000 11.0000
+30.0000 16.0000
+30.0000 21.0000
+
+50.0000  1.0000
+32.5000  6.0000
+33.3333 11.0000
+35.0000 16.0000
+40.0000 21.0000
+
+47.5000  1.0000
+50.0000  6.0000
+36.6667 11.0000
+40.0000 16.0000
+42.5000 21.0000
+
+45.0000  1.0000
+45.0000  6.0000
+40.0000 11.0000
+45.0000 16.0000
+45.0000 21.0000
+
+42.5000  1.0000
+40.0000  6.0000
+53.3333 11.0000
+50.0000 16.0000
+47.5000 21.0000
+
+40.0000  1.0000
+57.5000  6.0000
+56.6667 11.0000
+55.0000 16.0000
+50.0000 21.0000
+
+60.0000  1.0000
+60.0000  6.0000
+60.0000 11.0000
+60.0000 16.0000
+60.0000 21.0000}
+
+Test nap-29.10 {invert_grid_no_trim with missing values} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    $lat set miss -60
+    nap "latc = {-60 -45 -40 -35 -25}"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = {200 190 180 170 160 130}"
+    nap "yi = invert_grid_no_trim(lat, latc, lon, lonc)"
+    $yi v
+} \
+{   _    _
+   _    _
+   _    _
+   _    _
+   _    _
+   _    _
+
+   _    _
+40.0  6.0
+42.5  8.5
+45.0 11.0
+   _    _
+55.0 21.0
+
+40.0  1.0
+42.5  3.5
+45.0  6.0
+47.5  8.5
+50.0 11.0
+57.5 18.5
+
+   _    _
+45.0  1.0
+47.5  3.5
+50.0  6.0
+52.5  8.5
+60.0 16.0
+
+   _    _
+   _    _
+   _    _
+55.0  1.0
+57.5  3.5
+   _    _}
+
+Test nap-29.11 {invert_grid_no_trim for matrices, result has single-element CVs} {
+    nap "lat = {{-40 -50 -60}{-30 -40 -50}{-20 -30 -40}}"
+    nap "line = {40 50 60}"
+    nap "pixel = {1 11 21}"
+    $lat set coo line pixel
+    nap "latc = -40"
+    nap "lon = {{200 180 160}{180 160 140}{160 140 120}}"
+    $lon set coo line pixel
+    $lon set unit degrees_east
+    nap "lonc = 200"
+    nap "yi = invert_grid_no_trim(lat, latc, lon, lonc)"
+    $yi v
+} {40  1}
+
+Test nap-29.12 {invert_grid_no_trim for vector, result has single-element CV} {
+    nap "y={3 9 10}"
+    nap "x={0 3 4}"
+    nap "yc=4"
+    $y set coo x
+    $yc set dim Y
+    nap "yi=invert_grid_no_trim(y,yc)"
+    $yi
+} {0.5}
+
+unset slot x y yc yi line pixel line_fine pixel_fine zmap lat latc lon lonc
+
+# keep a z(+2)
+put_info "nap-29.12 16"
+
+Test nap-31.1 {test function "mean" defined using proc} {
+    proc mean x {nap sum(x) / count(x)}
+    [nap "mean({2.5 5 1n 1.5 3})"]} 3
+
+Test nap-31.2 {test factorial function defined using proc} {
+    proc f x {
+	if [[nap "x > 0"]] {
+	    nap "x * f(x-1.0)"
+	} else {
+	    nap "1.0"
+	}
+    }
+    [nap f(4)]} 24
+
+Test nap-31.3 {test function defined using proc with same name as built-in} {
+    proc ::NAP::sum {x y} {
+	nap "x + y"
+    }
+    [nap "sum(3.7, 5)"]
+} 8.7
+
+Test nap-31.4 {rm function defined using proc with same name as built-in} {
+    rename ::NAP::sum ""
+    [nap "sum(3.7, 5)"]
+} 3.7
+
+# keep a z(+2)
+put_info "nap-31.4 16"
+
+Test nap-31.5 {attempt to use non-existent function} {
+    rename f ""
+    set status [catch {nap "f(3)"} msg]
+    concat $status [regexp {Nap_Func: Undefined function f()} $msg]
+} {1 1} 0
+
+put_info "nap-31.5 16"
+
+Test nap-32.1 {tcl var containing expr} {
+    set a "1 + {3 6}"
+    [nap "2 * a"]
+} {8 14}
+
+put_info "nap-32.1 15"
+
+Test nap-33.1 {OOC write} {
+    set f [open float.dat w+]
+    [nap "f32({-1.5 0 2.5 7})"] write $f
+    seek $f 0
+    binary scan [read $f] f* tmp
+    close $f
+    set tmp
+} {-1.5 0.0 2.5 7.0}
+unset f tmp
+
+Test nap-33.2 {nap_get binary} {
+    set channel [open float.dat]
+    [nap_get binary $channel f32]
+} {-1.5 0 2.5 7}
+
+close $channel
+file delete float.dat
+
+Test nap-34.1 {test function 'frequency'} {
+    nap "f = frequency({2 2#0 5 255 5 2 99 2 49 1 4#254 5 3 5}, 256, 0, 1)"
+    [nap (f > 0) # transpose(coordinate_variable(f) /// f // psum(f))]} \
+{  0   2   2
+  1   1   3
+  2   3   6
+  3   1   7
+  5   4  11
+ 49   1  12
+ 99   1  13
+254   4  17
+255   1  18}
+
+Test nap-34.2 {test function 'frequency'} {
+    nap "f = frequency({2.5 5 2.99 2.49 1n 1.5 1i 3 5}, 9, 2.5, 0.5)"
+    [nap (f > 0) # transpose(coordinate_variable(f) /// f // psum(f))]} \
+{2.5 2.0 2.0
+3.0 1.0 3.0
+5.0 2.0 5.0
+6.5 1.0 6.0}
+
+Test nap-35.1 {OOC overlay polyline} {
+    nap "m = f32(reshape(0, {8 8}))"
+    $m dr "{1 3 5} /// {7 1 4}" 1
+    $m -c -1
+} {0 0 0 0 0 0 0 0
+0 0 0 1 0 0 0 0
+0 0 0 1 1 0 0 0
+0 0 1 0 1 0 0 0
+0 0 1 0 0 1 0 0
+0 0 1 0 0 0 0 0
+0 1 0 0 0 0 0 0
+0 1 0 0 0 0 0 0}
+
+Test nap-35.2 {OOC overlay polyfill} {
+    nap "m = f32(reshape(0, {8 8}))"
+    nap "y = {7 1 4}"
+    $y set coo "{1 3 5}"
+    $m fill y 9
+    $m value
+} {0 0 0 0 0 0 0 0
+0 0 0 9 0 0 0 0
+0 0 0 9 9 0 0 0
+0 0 9 9 9 0 0 0
+0 0 9 9 9 9 0 0
+0 0 9 9 9 0 0 0
+0 9 9 0 0 0 0 0
+0 9 0 0 0 0 0 0}
+
+Test nap-35.3 {OOC overlay sub-array (set whole array to NaN)} {
+    $m set v
+    $m -c -1
+} {_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _}
+
+Test nap-35.4 {OOC overlay sub-array (set whole array to 0)} {
+    $m set v 0
+    $m -c -1
+} {0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0}
+
+Test nap-35.5 {OOC overlay sub-array} {
+    nap "tmp1 = 1"
+    nap "tmp2 = 6"
+    nap "tmp3 = {0 2}"
+    nap "tmp4 = {3 4 -1}"
+    $m set v tmp1..tmp2 tmp3,tmp4
+    unset tmp1 tmp2 tmp3 tmp4
+    $m -c -1
+} {0 0 0 1 2 0 0 3
+0 0 0 0 0 0 0 0
+0 0 0 4 5 0 0 6
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0}
+
+Test nap-35.6 {OOC overlay sub-array} {
+    nap "m = reshape(0b, {4 6})"
+    $m set v "9..40" "{3 1},"
+    $m
+} { 0  0  0  0  0  0
+15 16 17 18 19 20
+ 0  0  0  0  0  0
+ 9 10 11 12 13 14}
+
+Test nap-35.7 {OOC overlay sub-array} {
+    $m set v "" ",{3 1}"
+    $m
+} {  0 255   0 255   0   0
+ 15 255  17 255  19  20
+  0 255   0 255   0   0
+  9 255  11 255  13  14}
+
+Test nap-35.8 {OOC overlay sub-array} {
+    $y set value "{9 8}" "{2 1}"
+    $y
+} {7 8 9}
+
+Test nap-35.9 {OOC overlay sub-array with indirect index} {
+    $y set value "{2 4}" "@@{3 1}"
+    $y
+} {4 2 9}
+
+Test nap-35.10 {OOC overlay sub-array} {
+    $m set value "{3 5 7 9}" "{1 3},{2 4}"
+    $m
+} {  0 255   0 255   0   0
+ 15 255   3 255   5  20
+  0 255   0 255   0   0
+  9 255   7 255   9  14}
+
+Test nap-35.11 {OOC overlay sub-array with indirect index} {
+    $m set coo "-1 .. -4" "2 .. 12 ... 2"
+    $m set value "{{13 15}{17 19}}" "@@{-4 -3}, @@{4 10}"
+    $m
+} {  0 255   0 255   0   0
+ 15 255   3 255   5  20
+  0  17   0 255  19   0
+  9  13   7 255  15  14}
+
+unset channel; # not nao
+unset f m y
+# keep z(+2) (a unset above)
+put_info "nap-35.7 15"
+
+Test nap-36.1 {OOC display missing value of u8} {
+    nap "b = {3b 0b 255b}"
+    $b m
+} {(NULL)}
+
+Test nap-36.2 {OOC display missing value of i16} {
+    nap "s = {9b -32768s 0b -99s}"
+    $s m
+} {-32768}
+
+Test nap-36.3 {OOC display missing value of i32} {
+    nap "i = -9"
+    $i m
+} {-2147483648}
+
+Test nap-36.4 {OOC display missing value of u32} {
+    nap "l = u32(999)"
+    $l m
+} {4294967295}
+
+Test nap-36.5 {OOC display missing value of f32} {
+    nap "f = -9f"
+    $f m
+} {NaN}
+
+Test nap-36.6 {OOC display missing value of f64} {
+    nap "d = 3e9"
+    $d m
+} {NaN}
+
+Test nap-36.7 {OOC set missing value of u8} {
+    $b set m 0
+    $b m
+} {0}
+
+Test nap-36.8 {OOC use missing value of u8} {
+    [nap b % 10]
+} {3 _ 5}
+
+Test nap-36.9 {OOC use missing value of i16} {
+    [nap -s]
+} {-9 _ 0 99}
+
+Test nap-36.10 {OOC change missing value of i16} {
+    nap "s = i16{9 0 -99}"
+    $s set m 0
+    [nap -s]
+} {-9 _ 99}
+
+Test nap-36.10 {OOC use missing value of i16} {
+    [nap count s]
+} {2}
+
+Test nap-36.11 {missing value of logical result} {
+    [nap "3.5 > 9"] m
+} {(NULL)}
+
+Test nap-36.12 {bitwise result (no missing value!)} {
+    [nap "(1u32 << 31) | (~ 0x80000000)"] -f %0.0f
+} {4294967295}
+
+Test nap-37.1 {matrix + vector} {
+    [nap "{{0 1 2}{3 4 5}} + {10 20 30}"]
+} {10 21 32
+13 24 35}
+
+unset b d f i l s
+# keep z(+2)
+put_info "nap-37.1  15"
+
+Test nap-38.1 {function prune(a)} {
+    nap "r = prune{{0 1.5 2 -1}{1n 1 4 1n}{4#1n}{1n 1n 9 -9}}"
+    rm_nao_id [$r]
+} {0   start-index: 0
+1   start-index: 1
+2   start-index: 4
+3   start-index: 2}
+
+Test nap-38.2 {function pad(a)} {
+    [nap pad r]
+} { 0.0  1.5  2.0 -1.0
+   _  1.0  4.0    _
+   _    _    _    _
+   _    _  9.0 -9.0}
+
+Test nap-38.3 {function pad(a,p)} {
+    [nap pad(r,-99)]
+} {  0.0   1.5   2.0  -1.0
+-99.0   1.0   4.0 -99.0
+-99.0 -99.0 -99.0 -99.0
+-99.0 -99.0   9.0  -9.0}
+
+put_info "nap-38.3"
+
+Test nap-38.4 {functions prune(a,p)} {
+    nap "a = {{0b 15b 2b -1s}{-99s 1s 4s -99s}{-99s -99s 9b -9s}{4#-99s}}"
+    nap "r = prune(a, -99)"
+    rm_nao_id [$r]
+} {0   start-index: 0
+1   start-index: 1
+2   start-index: 2
+3   start-index: 4}
+
+put_info "nap-38.4"
+
+Test nap-38.5 {check mising value has been restored} {
+    $a miss
+} -32768
+
+Test nap-38.6 {function pad(a)} {
+    [nap pad(r)]
+} { 0 15  2 -1
+ _  1  4  _
+ _  _  9 -9
+ _  _  _  _}
+
+Test nap-38.7 {function prune(a) with 3D a} {
+    nap "r = prune{
+	{
+	    {1n 1n 1n}
+	    {0 1n 1n}
+	}{
+	    {1n 0 -1}
+	    {0 -1 9}
+	}
+    }"
+    rm_nao_id [$r]
+} {0   start-index: 3
+1   start-index: 0
+2   start-index: 1
+3   start-index: 0}
+
+Test nap-38.8 {function pad(a) 3D} {
+    [nap pad(r)]
+} { _  _  _
+ 0  _  _
+
+ _  0 -1
+ 0 -1  9}
+
+Test nap-38.9 {monad(ragged)} { [nap "sum(sum(sum(r)))"] } 7
+
+Test nap-38.10 {ragged + ragged} { [nap "sum(sum(sum(r+r)))"] } 14
+
+Test nap-38.11 {ragged set missing value} {
+    $r set miss -1
+    $r miss
+} -1
+
+Test nap-38.12 {check missing value after pad} {
+    [nap "pad r"] miss
+} -1
+
+unset r
+# keep a z(+2)
+put_info "nap-38.10 16"
+
+Test nap-39.1 {OOC default method} {
+    nap "a = {0 1p1 1n 1i 2r3e-20 1e9 0}"
+    nap "a = a /// -a"
+    $a
+} {           0      3.14159            _          Inf  6.66667e-21        1e+09 ..
+           0     -3.14159            _         -Inf -6.66667e-21       -1e+09 ..}
+
+Test nap-39.2 {OOC value} {
+    $a value -lines 1 -columns 5
+} {          0     3.14159           _         Inf 6.66667e-21 ..
+..}
+
+Test nap-39.3 {OOC value} {
+    $a -columns 5 -miss missing
+} {           0      3.14159      missing          Inf  6.66667e-21 ..
+           0     -3.14159      missing         -Inf -6.66667e-21 ..}
+
+Test nap-39.4 {OOC value} {
+    $a -columns -1 -miss " " -format %10.4g
+} {         0      3.142                   Inf  6.667e-21      1e+09          0
+         0     -3.142                  -Inf -6.667e-21     -1e+09          0}
+
+Test nap-40.1 {standard i16 missing value} {
+    nap "a = i16 {-8 -9 20 -32768 0}"; # Need 'i16' due to bug re -32768
+    $a
+} {-8 -9 20 _ 0}
+
+Test nap-40.2 {arith} {
+    [nap "a + 10"]
+} {2 1 30 _ 10}
+
+Test nap-40.3 {rm missing value} {
+    $a set missing
+    $a
+} {-8 -9 20 -32768 0}
+
+Test nap-40.4 {arith} {
+    [nap "a + 10"]
+} {2 1 30 -32758 10}
+
+Test nap-40.5 {change missing value} {
+    $a set missing -9
+    $a
+} {-8 _ 20 -32768 0}
+
+Test nap-40.6 {arith} {
+    [nap "a + 10"]
+} {2 _ 30 -32758 10}
+
+Test nap-40.7 {change value of ::NAP::standardI16MissingValue} {
+    $::NAP::standardI16MissingValue set value 999
+    nap "b = a + 10b"
+    $b set miss
+    $b
+} {2 999 30 -32758 10}
+
+Test nap-40.8 {Restore ::NAP::standardI16MissingValue to default value} {
+    $::NAP::standardI16MissingValue set value -32768
+    $::NAP::standardI16MissingValue
+} {-32768}
+
+Test nap-40.9 {function missing_value()} {
+    [nap "missing_value(a)"]
+} {-9}
+
+unset a
+# keep b z(+2)
+put_info "nap-40.9 16"
+
+Test nap-41.1 {OOC "step"} {
+    $b step
+} {+-}
+
+Test nap-41.2 {OOC "step"} {
+    nap "b = 1 .. 3"
+    $b step
+} {AP}
+
+Test nap-42.1 {function isnan()} {
+    [nap "isnan({0 1i 1n})"]
+} {0 0 1}
+
+Test nap-43.1 {b=b} {
+    nap "b = b"
+    $b
+} {1 2 3}
+
+Test nap-43.2 {b=b?b:b} {
+    nap "b = b?b:b"
+    $b
+} {1 2 3}
+
+Test nap-44.1 {namespaces} {
+    namespace eval abc ""; # create namespace "abc"
+    nap "::abc::a=42"
+    [nap "::abc::a+1"]
+} {43}
+
+unset b ::abc::a
+
+Test nap-45.1 {string constant} {
+    [nap 'hello world']
+} {hello world}
+
+Test nap-45.2 {'string' `string`} {
+    [nap "'hello '   `world`"]
+} {hello world}
+
+Test nap-45.3 {string subscripting} {
+    [nap "'abc'{2 0 1}"]
+} {cab}
+
+Test nap-45.4 {n # string} {
+    [nap "2 # 'abc'"]
+} {aabbcc}
+
+Test nap-45.5 {char matrix} {
+    [nap "reshape('abc', {3 20})"]
+} {abcabcabcabcabcabcab
+cabcabcabcabcabcabca
+bcabcabcabcabcabcabc}
+
+Test nap-45.6 {char 3D array} {
+    [nap "reshape('abc', {2 2 50})"]
+} {abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcab
+cabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabca
+
+bcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
+abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcab}
+
+Test nap-45.7 {string ASCII values} {
+    [nap "'abc'"] -f %g
+} {97 98 99}
+
+Test nap-45.8 {Multi-line string vector} {
+nap "s = `line 1
+line 2`"
+$s
+} {line 1
+line 2}
+
+Test nap-45.9 {Print numeric value as string} {
+    [nap 64 .. 99] -f %c -c 80
+} {@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abc}
+
+Test nap-45.10 {cast to character} {
+    [nap c8 99]
+} c
+
+Test nap-45.11 {cast from character} {
+    [nap f32 'abc']
+} {97 98 99}
+
+Test nap-45.12 {string == string} {
+    [nap 'abc' == 'bbb']
+} {0 1 0}
+
+Test nap-45.13 {string @ string} {
+    [nap 'abc' @ 'cbva']
+} {2 1 _ 0}
+
+Test nap-45.14 {string @@ string} {
+    [nap 'abc' @@ 'cbva']
+} {2 1 _ 0}
+
+Test nap-45.15 {string @@@ string} {
+    [nap 'abc' @@@ 'cbva']
+} {2 1 _ 0}
+
+Test nap-45.16 {string subscripting with float subscript} {
+    [nap "'abc'{2f 0 1}"]
+} {cab}
+
+Test nap-45.17 {string subscripting with float subscript} {
+    [nap "(reshape('abcd', {2 2}))({1.0 0.0},)"]
+} {cd
+ab}
+
+Test nap-45.18 {{} @@@ scalar} {
+    [nap "{} @@@ 5"]
+} {_}
+
+Test nap-45.19 {single_el_vector @@@ vector} {
+    [nap "{3} @@@ {5 3}"]
+} {_ 0}
+
+Test nap-45.20 {sorted_vector_with_repeats @@@ vector} {
+    [nap "{3#4 5#0 2#-9 -20} @@@ {-9 5 -20 0 4}"]
+} {8 _ 10 3 0}
+
+Test nap-45.21 {string constant containing "} {
+    [nap {'y = "hello world"'}]
+} {y = "hello world"}
+
+# keep s
+
+Test nap-46.1 {set link} {
+    $s set link {'Two lines'}
+    [$s link]
+} {Two lines}
+
+Test nap-47.1 {vector dot product} {
+    [nap "{1 4 2} +* {2 1 3}"]
+} {12}
+
+Test nap-47.2 {matrix product} {
+    [nap "reshape(0..5, {2 3}) +* reshape(0..11, {3 4})"]
+} {20 23 26 29
+56 68 80 92}
+
+Test nap-47.3 {solve f64 linear system with vector RHS} {
+    nap "x = solve_linear({{2 3}{1.5 6}}, {23 36})"
+    list [$x] [$x datatype]
+} {{4 5} f64}
+
+Test nap-47.4 {solve f32 linear system with 2x1 matrix RHS} {
+    nap "x = solve_linear(f32{{2 3}{1.5 6}}, f32{{23}{36}})"
+    list [$x] [$x datatype]
+} {{4
+5} f32}
+
+Test nap-47.5 {solve i32 linear system with 2x2 matrix RHS} {
+    nap "x = solve_linear({{1 3}{2 7}}, {{9 1}{6 3}})"
+    list [$x] [$x datatype]
+} {{ 45  -2
+-12   1} f64}
+
+Test nap-47.6 {solve i16 linear system with 2x2 matrix RHS} {
+    nap "x = solve_linear(i16{{1 3}{2 7}}, i16{{9 1}{6 3}})"
+    list [$x] [$x datatype]
+} {{ 45  -2
+-12   1} f32}
+
+Test nap-47.7 {find inverse matrix} {
+    nap "x = solve_linear({{2 5}{1 3}})"
+    list [$x] [$x datatype]
+} {{ 3 -5
+-1  2} f64}
+
+Test nap-47.8 {solve_linear with overdetermined system} {
+    nap "x = solve_linear({{1 5}{9 2}{6 7}}, {{0 1 2}{3 4 5}{6 7 8}})"
+    list [$x] [$x datatype]
+} {{0.360313 0.428198 0.496084
+0.315124 0.438040 0.560956} f64}
+
+Test nap-47.9 {solve_linear with overdetermined system & vector RHS} {
+    nap "x = solve_linear({{1 5}{9 2}{6 7}}, {0 3 6})"
+    list [$x] [$x datatype] [$x rank]
+} {{0.360313 0.315124} f64 1}
+
+Test nap-47.10 {inner product of vector & matrix} {
+    nap "x = f32{{4 _}{7 2}{1 6}}"
+    $x set coo "{1 3 5}" "{4 7}"
+    nap "x = f32{2 _ 3} +* x"
+    list [$x] [$x datatype] [$x rank] [[$x coo]]
+} {{11 18} f32 1 {4 7}}
+
+unset x
+
+Test nap-48.1 {set label} {
+    $s set label {Two words}
+    $s label
+} {Two words}
+
+Test nap-48.2 {function label()} {
+    [nap "label(s)"]
+} {Two words}
+
+Test nap-49.1 {OOCs sequence & slot} {
+    list "$::NAO_PREFIX[$s sequence]-[$s slot]"
+} [$s id]
+
+Test nap-50.1 {function box()} {
+    nap "s = 'abc'"
+    nap "b = box(s)"
+    list [$b datatype] [expr "[$s slot] == [$b]"] [$s count]
+} {boxed 1 2}
+
+Test nap-50.2 {function open_box()} {
+    [nap "open_box b"]
+} {abc}
+
+Test nap-50.3 {delete b} {
+    unset b
+    $s count
+} {1}
+
+Test nap-50.4 {subscripting boxed nao} {
+    nap "b = 10, s, 20"
+    nap "b1 = b(1)"
+    list [$s count] [[nap "open_box(b1)"]]
+} {3 abc}
+
+unset b b1 s
+# keep z(+2)
+put_info "nap-51.2 15"
+
+Test nap-51.1 {test function 'correlation' with 2 vector args} {
+    nap "x = {65 63 67 64 68  _ 62 70 66 68  _ 67 67 69 71}"
+    nap "y = {68 66 68 65 69  _ 66 68 65 71 67 67  _ 68 70}"
+    [nap "correlation(x,y)"]
+} {0.702652 12}
+
+Test nap-51.2 {test function 'correlation' with single matrix arg} {
+    # From Schaum's 'Statistics' p 274
+    [nap "correlation{
+	{64 57 8}
+	{71 59 10}
+	{53 49 6}
+	{67 62 11}
+	{55 51 8}
+	{58 50 7}
+	{77 55 10}
+	{57 48 9}
+	{56 52 10}
+	{51 42 6}
+	{76 61 12}
+	{68 57 9}
+    }"] -f %6.4f
+} { 1.0000  0.8196  0.7698
+ 0.8196  1.0000  0.7984
+ 0.7698  0.7984  1.0000
+
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000}
+
+Test nap-52.1 {test function 'moving_correlation' with 2 vector args} {
+    [nap "moving_correlation({64 57 71 59 53 49}, {-57 -71 -59 -53})"]
+} { 0.338011 -1.000000 -0.179461
+ 4.000000  4.000000  4.000000}
+
+Test nap-52.2 {test function 'moving_correlation' with 2 matrix args & 2 lag vectors} {
+    nap "x = reshape(0 .. 15, 2#4)"
+    nap "y = x(, 0 .. 11) // (-x(, 0 .. 11))"
+    $y set coord "0 .. 14 ... 2" "-1 .. -12 ... -1"
+    nap "z = moving_correlation(x, y, {0 4}, {0 4 8})"
+    $z
+} { 1  1  1
+-1 -1 -1
+
+16 16 16
+16 16 16}
+
+Test nap-52.3 {check CV1} {[$z coord 1] value} {3 11}
+
+Test nap-52.4 {check CV2} {[$z coord 2] value} {-2.5 -6.5 -10.5}
+
+Test nap-52.5 {check data type of result} {$z datatype} {f32}
+
+Test nap-52.6 {test function 'moving_correlation' with 2 matrix args} {
+    nap "x = {{3.5 1 0}{0.5 -1 2.5}}"
+    nap "y = {{0.5 2 1 1}{1.5 -1 0 0}}"
+    nap "z = moving_correlation(x, y)"
+    $z -f %6.5f
+} {0.13047 0.48946
+
+6.00000 6.00000}
+
+Test nap-52.7 {check CV1} {[$z coord 1] value} {0.5}
+
+Test nap-52.8 {check CV2} {[$z coord 2] value} {1 2}
+
+Test nap-52.9 {check data type of result} {$z datatype} {f64}
+
+unset x y z
+put_info "nap-52.10 12"
+
+Test nap-53.1 {# vector} {
+    [nap "# {2 4 2 0 2}"]
+} {1 0 3 0 1}
+
+Test nap-53.2 {# matrix} {
+    [nap "# transpose{{2 4 2 0 2}{0 -1 3 _ 0}}"]
+} {1 2
+0 0
+3 0
+0 1
+1 0}
+
+Test nap-53.3 {# 3D} {
+    [nap "# {
+	{{1 2}{1 1}}
+	{{0 1}{0 1}}
+	{{2#3}{2#3}}
+    }"]
+} {1 0
+1 0
+
+1 1
+1 2
+
+0 1
+0 0
+
+1 1
+1 1}
+
+Test nap-53.4 {# 2 boxed vectors} {
+    [nap "# ({0 _ 1},{1 0 2})"]
+} {0 1 0
+0 0 1}
+
+Test nap-53.5 {# 1 boxed vector} {
+    [nap "#,{2 4 2 0 2}"]
+} {1 0 3 0 1}
+
+Test nap-53.5 {# 3 boxed vectors} {
+    [nap "# ({0 -1 0 1 1 1},{1 0 1 0 1 0},{1 1 1 0 0 0})"]
+} {0 0
+0 2
+
+2 0
+1 0}
+
+Test nap-54.1 {scalar + vector} {
+    nap "x = {2 4 5 7}"
+    nap "y = {2 -4 _ 9}"
+    $y set coo x
+    [nap "z = 3 + y"]
+} {5 -1 _ 12}
+
+Test nap-54.2 {check cv} {
+    [$z coo]
+} {2 4 5 7}
+
+Test nap-54.3 {matrix + vector} {
+    [nap "z = {
+	{1 1 2 2}
+	{0 5 9 0}
+    }
+    + y"]
+} { 3 -3  _ 11
+ 2  1  _  9}
+
+Test nap-54.4 {check cv} {
+    $z coo 0
+} {(NULL)}
+
+Test nap-54.5 {check cv} {
+    [$z coo 1]
+} {2 4 5 7}
+
+Test nap-55.1 {sort vector} {
+    [nap "sort('hello')"]
+} {ehllo}
+
+Test nap-55.2 {sort matrix} {
+    [nap "sort({{1.2 1.1 9}{-1 7 0}})"]
+} {-1.0  1.1  0.0
+ 1.2  7.0  9.0}
+
+Test nap-55.3 {sort matrix} {
+    [nap "sort({{1.2 1.1 9}{-1 7 0}}, 1)"]
+} { 1.1  1.2  9.0
+-1.0  0.0  7.0}
+
+Test nap-55.4 {sort 3D array} {
+    nap "z = {
+	{
+	    {1 0 9}
+	    {7 2 2}
+	} {
+	    {5 3 8}
+	    {8 1 0}
+	}
+    }"
+    [nap "sort(z, 1)"]
+} {0 1 9
+2 2 7
+
+3 5 8
+0 1 8}
+
+Test nap-55.5 {sort 3D array} {
+    [nap "sort(z, 2)"]
+} {1 0 2
+7 2 9
+
+5 1 0
+8 3 8}
+
+Test nap-55.6 {sort 3D array} {
+    [nap "sort(z, 3)"]
+} {1 0 8
+7 1 0
+
+5 3 9
+8 2 2}
+
+Test nap-56.1 {triangulate} {
+    [nap "triangulate({
+	{0 0 9}
+	{1 0 8}
+	{1 1 7}
+	{1 2 _}
+	{2 2 0}
+	})"]
+} {0 1 2
+0 2 3
+1 2 4
+2 3 4}
+
+Test nap-56.2 {triangulate_edges} {
+    [nap "triangulate_edges({
+	{0 0 9}
+	{1 0 8}
+	{1 1 7}
+	{1 2 _}
+	{2 2 0}
+	})"]
+} {0 1
+0 2
+0 3
+1 4
+1 2
+2 4
+2 3
+3 4}
+
+Test nap-57.1 {inPolygon} {
+    [nap "inPolygon({0 1 1.1 1.5 2 3 3.1 3.5 4},
+	transpose(reshape({5 6}, {9 2})),
+	{{4 7} {1 1} {1 7} {2 5}})"] value
+} {-1  0  1  1  0  0 -1 -1 -1
+-1  0  1  0 -1  0  1  0 -1}
+
+Test nap-58.1 {psum1 scalar with NaN} {[nap "psum1(1nf64)"]} {0}
+Test nap-58.2 {psum1 vector with NaN} {[nap "psum1({2 1n -0.5})"]} {2 2 1.5}
+
+Test nap-58.3 {psum1 matrix} {
+    [nap "psum1({
+	{2 _ 1}
+	{0 -1 5}
+	{7 3 2}
+    })"]
+} { 2  0  1
+ 2 -1  6
+ 9  2  8}
+
+Test nap-58.4 {psum1 matrix} {
+    [nap "psum1({
+	{2 _ 1}
+	{0 -1 5}
+	{7 3 2}
+    }, 1)"]
+} { 2  2  3
+ 0 -1  4
+ 7 10 12}
+
+Test nap-58.5 {psum1 3D} {
+    [nap "psum1(c)"]
+} { 1.0  3.2 -5.0 -5.0 -5.0
+-1.0  0.0  0.8  9.0  0.0
+-1.0  0.0  0.8  9.0  0.0
+-1.0  0.0  0.8  9.0  0.0
+
+ 9.0 11.2  3.0  3.0  3.0
+ 7.0  8.0  8.8 17.0  8.0
+ 7.0  8.0  8.8 17.0  8.0
+ 7.0  8.0  8.8 17.0  8.0
+
+17.0 19.2 11.0 11.0 11.0
+15.0 16.0 16.8 25.0 16.0
+15.0 16.0 16.8 25.0 16.0
+15.0 16.0 16.8 25.0 16.0}
+
+unset c x y z
+put_info "nap-58.5 12"
+
+Test nap-59.1 {nested ?:} {[nap "0?5:0?6:7"]} {7}
+Test nap-59.2 {nested ?:} {[nap "0?5:1?6:7"]} {6}
+Test nap-59.3 {nested ?:} {[nap "1?5:1?6:7"]} {5}
+
+put_info "nap-59.3 12"
+
+Test nap-60.1 {precedence - **} {[nap "-2 ** 64 ** 0.5"]} {-256}
+Test nap-60.2 {precedence - #} {[nap "3 # -2"]} {-2 -2 -2}
+Test nap-60.3 {precedence # . +} {[nap "3 # 2 . {4 5 6} + 1"]} 31
+Test nap-60.4 {precedence *+-%} {[nap "2*3 + 4/2 - 7 % 4"]} 5
+Test nap-60.5 {precedence * <<< >>>} {[nap "2*3 <<< 9 >>> 1"]} 6
+Test nap-60.6 {precedence < >>>} {[nap "2 < 9 >>> 8"]} 1
+Test nap-60.7 {precedence < && ==} {[nap "2 < 9 && 2 == 8"]} 0
+Test nap-60.8 {precedence || &&} {[nap "1 || 0 && 0"]} 1
+Test nap-60.9 {precedence .. +} {[nap "2 .. 1 + 4"]} {2 3 4 5}
+Test nap-60.10 {precedence .. + _} {[nap "2+1 .. 3+4 ... 3-1"]} {3 5 7}
+Test nap-60.11 {precedence ?: ..} {[nap "0 ? 1 .. 2 : 6 .. 4"]} {6 5 4}
+Test nap-60.12 {precedence ?: // ..} {[nap "9 // 0 ? 1 .. 2 : 6 .. 4"]} {9 6 5 4}
+Test nap-60.13 {precedence ?: /// ..} {[nap "9 /// 0 ? 1 .. 2 : 6 .. 4"]} {9 9 9
+6 5 4}
+Test nap-60.14 {precedence function , - } {[nap "atan(1-1,1)"]} 0
+Test nap-60.15 {precedence = +} {nap "a = 3 + b = 2"; $a} 5
+Test nap-60.16 {precedence = +} {$b} 2
+Test nap-60.17 {precedence , ?:} {[nap "open_box((0 ? (,2,3) : (4,5))1)"]} 5
+Test nap-60.18 {precedence , ?:} {[nap "open_box((1 ? (,2,3) : (4,5))1)"]} 2
+
+Test nap-61.1 {unary <=} {[nap "<= 'zonal'"] v} {3 4 2 1 0}
+Test nap-61.2 {unary >=} {[nap ">= {0 _ 9 7 -2 1}"] v} {2 3 5 0 4 1}
+Test nap-61.3 {unary <=} {
+    nap "a = {1.5 -1i 0 _ 9 _ 0 1i -2 1}"
+    [nap "a(<=a)"] v
+} {_ _ -Inf -2 0 0 1 1.5 9 Inf}
+Test nap-61.4 {unary >=} {[nap "a(>=a)"] v} {Inf 9 1.5 1 0 0 -2 -Inf _ _}
+
+Test nap-62.1 {?: dim. names} {
+    nap "a3 = reshape(0, {2 3 4})"
+    nap "m = reshape(4, {3 4})"
+    nap "a = 3 .. 5"
+    nap "b = 11 .. 14"
+    $m set coo a b
+    nap "y = a3 < m ? m : -1"
+    $y dim
+} {(NULL) a b}
+Test nap-62.2 {?: coord. var 0} {$y coo 0} {(NULL)}
+Test nap-62.2 {?: coord. var 1} {[$y coo 1]} {3 4 5}
+Test nap-62.3 {?: coord. var 2} {[$y coo 2]} {11 12 13 14}
+
+unset a b m a3 y
+put_info "nap-62.3 12"
+
+Test nap-63.1 {set datatype c8} {
+    nap "a = reshape(i8(65 .. 70), {2 3})"
+    $a set dat c8
+    $a
+} {ABC
+DEF}
+
+Test nap-63.2 {set datatype} {
+    $a set dat
+    $a
+} {65 66 67
+68 69 70}
+
+Test nap-63.3 {set datatype u32} {
+    $a set dat u32
+    $a dat
+} {u32}
+
+Test nap-63.4 {check shape} {
+    $a shape
+} {1}
+
+Test nap-63.5 {check MV} {
+    $a miss
+} {(NULL)}
+
+Test nap-63.6 {set datatype} {
+    $a set dat
+    $a
+} {65 66 67 68 69 70}
+
+Test nap-64.1 {set shape} {
+    $a set shape "{3 2}"
+    $a
+} {65 66
+67 68
+69 70}
+
+Test nap-64.2 {set shape} {
+    $a set shape "{1 2 2}"
+    $a
+} {65 66
+67 68}
+
+Test nap-64.3 {set shape} {
+    $a set shape "{}"
+    $a
+} {65}
+
+Test nap-64.4 {set shape} {
+    $a set shape
+    $a
+} {65 66 67 68 69 70}
+
+unset a
+put_info "nap-64.3 12"
+
+Test nap-65.1 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{5 9}})"]
+} {3 7
+4 8}
+
+Test nap-65.2 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{3 9}})"]
+} {3 7
+3 8}
+
+Test nap-65.3 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{1 9}})"]
+} {3 7
+2 8}
+
+Test nap-65.4 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{5 5}})"]
+} {3 7
+4 6}
+
+Test nap-65.5 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{3 5}})"]
+} {3 7
+3 6}
+
+Test nap-65.6 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{1 5}})"]
+} {3 7
+2 6}
+
+Test nap-65.7 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{0 0}{1 5}})"]
+} {_ _
+_ _}
+
+Test nap-65.8 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 7}{3.5 7.5}})"]
+} {3.0 7.0
+3.5 7.5}
+
+Test nap-65.9 {clip2d} {
+    [nap "clip2d({{0 -90}{360 90}}, {{360.9 41}{3 41}})"]
+} {360  41
+  3  41}
+
+Test nap-65.10 {clip2d} {
+    [nap "clip2d({{0 -90}{358 90}}, {{357.61 47.5062}{358.187 46.4929}})"]
+} {357.6100  47.5062
+358.0000  46.8213}
+
+Test nap-65.11 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{5 9}{3 7}})"]
+} {4 8
+3 7}
+
+Test nap-65.12 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 9}{3 7}})"]
+} {3 8
+3 7}
+
+Test nap-65.13 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{1 9}{3 7}})"]
+} {2 8
+3 7}
+
+Test nap-65.14 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{5 5}{3 7}})"]
+} {4 6
+3 7}
+
+Test nap-65.15 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3 5}{3 7}})"]
+} {3 6
+3 7}
+
+Test nap-65.16 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{1 5}{3 7}})"]
+} {2 6
+3 7}
+
+Test nap-65.17 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{1 5}{0 0}})"]
+} {_ _
+_ _}
+
+Test nap-65.18 {clip2d} {
+    [nap "clip2d({{2 6}{4 8}}, {{3.5 7.5}{3 7}})"]
+} {3.5 7.5
+3.0 7.0}
+
+Test nap-65.19 {clip2d} {
+    [nap "clip2d({{0 -90}{360 90}}, {{3 41}{360.9 41}})"]
+} {  3  41
+360  41}
+
+Test nap-65.20 {clip2d} {
+    [nap "clip2d({{0 -90}{358 90}}, {{358.187 46.4929}{357.61 47.5062}})"]
+} {358.0000  46.8213
+357.6100  47.5062}
+
+Test nap-65.21 {clip2d} {
+    [nap "clip2d({{0 -90}{358 90}}, {{-359.02 41.0346}{3.20331 41.8912}})"] -f %.5f
+} { 0.00000 41.88362
+ 3.20331 41.89120}
+
+Test nap-65.22 {clip2d} {
+    [nap "clip2d({{0 -90}{358 90}}, {{-359.02 41.0346}{3.20331 41.8912}})"] -f %.5f
+} { 0.00000 41.88362
+ 3.20331 41.89120}
+
+Test nap-65.23 {clip2d with corners of rectangle reversed} {
+    [nap "clip2d({{358 90}{0 -90}}, {{-359.02 41.0346}{3.20331 41.8912}})"] -f %.5f
+} { 0.00000 41.88362
+ 3.20331 41.89120}
+
+Test nap-65.24 {clip2d 3D} {
+    [nap "clip2d({{2 6}{4 8}}, {{{3 7}{5 9}} {{3 7}{3 9}}})"]
+} {3 7
+4 8
+
+3 7
+3 8}
+
+put_info "nap-65.8 12"

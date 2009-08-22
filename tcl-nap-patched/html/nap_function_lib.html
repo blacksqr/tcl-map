@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: nap_function_lib.html,v 1.16 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: nap_function_lib.tcl</title>
+  </head>
+  <body>
+  <center>
+    <h2>Miscellaneous Functions</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#color_wheel">
+        <code>color_wheel(</code>
+        <var>n</var>
+        <code>,</code>
+        <var>v</var>
+        <code>,</code>
+        <var>b</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#cv">
+      <code>cv(</code>
+      <var>main_nao</var>[
+      <code>,</code>
+      <var>dim_number</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#derivative">
+      <code>derivative(</code>
+      <var>a</var>[
+      <code>,</code>
+      <var>dim_number</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#fill_holes">
+        <code>fill_holes(</code>
+        <var>x</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#fuzzy_floor">
+      <code>fuzzy_floor(</code>
+      <var>x</var>[
+      <code>,</code>
+      <var>eps</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#fuzzy_ceil">
+      <code>fuzzy_ceil(</code>
+      <var>x</var>[
+      <code>,</code>
+      <var>eps</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#gets_matrix">
+      <code>gets_matrix(</code>
+      <var>filename</var>[
+      <code>,</code> 
+      <var>n_header_lines</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#head">
+      <code>head(</code>
+      <var>x</var>[
+      <code>,</code>
+      <var>n</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#hsv2rgb">
+        <code>hsv2rgb(</code>
+        <var>hsv</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#isMissing">
+        <code>isMissing(</code>
+        <var>x</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#isPresent">
+        <code>isPresent(</code>
+        <var>x</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#magnify_interp">
+      <code>magnify_interp(</code>
+      <var>a</var>
+      <code>,</code> 
+      <var>mag_factor</var>
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#mixed_base">
+        <code>mixed_base(</code>
+        <var>x</var>
+        <code>,</code>
+        <var>b</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#nub">
+        <code>nub(</code>
+        <var>x</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#outer">
+      <code>outer(</code>
+      <var>dyad</var>
+      <code>,</code> 
+      <var>y</var>[, 
+      <var>x</var>]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#palette_interpolate">
+      <code>palette_interpolate(</code>
+      <var>from</var>
+      <code>,</code> 
+      <var>to</var>)</a>
+    </li>
+    <li>
+      <a href="#scattered2grid">
+        <code>scattered2grid(</code>
+        <var>xyz</var>
+        <code>,</code>
+        <var>ycv</var>
+        <code>,</code>
+        <var>xcv</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#scaleAxis">
+      <code>scaleAxis(</code>
+      <var>xstart</var>
+      <code>,</code>
+      <var>xend</var>[
+      <code>,</code>
+      <var>nmax</var>[
+      <code>,</code>
+      <var>nice</var>]]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#scaleAxisSpan">
+      <code>scaleAxisSpan(</code>
+      <var>xstart</var>
+      <code>,</code>
+      <var>xend</var>[
+      <code>,</code>
+      <var>nmax</var>[
+      <code>,</code>
+      <var>nice</var>]]
+      <code>)</code></a>
+    </li>
+    <li>
+      <a href="#range">
+        <code>range(</code>
+        <var>a</var>
+        <code>)</code>
+      </a>
+    </li>
+    <li>
+      <a href="#tail">
+      <code>tail(</code>
+      <var>x</var>[
+      <code>,</code>
+      <var>n</var>]
+      <code>)</code></a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The following functions are defined in the file 
+  <code>nap_function_lib.tcl</code>.
+  <h3>
+    <a name="color_wheel"> <code>color_wheel(</code> <var>n</var> <code>,</code> <var>v</var> <code>,</code> <var>b</var> <code>)</code> </a>
+  </h3>Square containing color wheel.
+  <br />
+  <var>n</var> is number rows &amp; columns
+  <br />
+  <var>v</var> is desired &quot;value&quot; level
+  <br />
+  <var>b</var> is background colour outside circle
+  <p>Example:
+  <br />
+  <code>nap &quot;color_wheel(100,255,3#150)&quot;</code>
+  <br />This produces a 
+  <code>u8</code> array with shape 
+  <code>{3 100 100}</code> &amp; values from 0 to 255.</p>
+  <h3>
+    <a name="cv"> <code>cv(</code> <var>main_nao</var>[ <code>,</code> <var>dim_number</var>] <code>)</code></a>
+  </h3>This is simply an alias for 
+  <code>coordinate_variable</code>.
+  <h3>
+    <a name="derivative"> <code>derivative(</code> <var>a</var>[ <code>,</code> <var>dim_number</var>] <code>)</code></a>
+  </h3>Estimate derivative along dimension 
+  <var>dim_number</var> (default is 0) of array 
+  <var>a</var>. The result has the same shape as 
+  <var>a</var>.
+  <p>Example (assuming 
+  <code>vector</code> has dimension (&amp; coordinate variable) 
+  <code>time</code>:
+  <br /></p>
+  <pre>
+derivative(vector); # result is derivative with respect to time
+</pre>
+  <p>Examples (assuming 
+  <code>matrix</code> has dimensions 
+  <code>latitude</code> &amp; 
+  <code>longitude</code>):
+  <br /></p>
+  <pre>
+derivative(matrix, &#39;latitude&#39;); # result is derivative with
+respect to latitude
+derivative(matrix, 0);          # result is derivative with respect to
+latitude
+derivative(matrix);             # result is derivative with respect to
+latitude
+derivative(matrix,&#39;longitude&#39;); # result is derivative with
+respect to longitude
+derivative(matrix, 1);          # result is derivative with respect to
+longitude
+</pre>
+  <p>Based on quadratic through 3 points (provided size of dimension is
+  &gt; 2 -- if only 2 then based on straight line). These always
+  include the point corresponding to the result. For interior points,
+  the other 2 are the closest neighbour on each side. For boundary
+  points, these are the 2 closest neighbours.</p>
+  <p>Let D(x) be the derivative of quadratic through points 
+  <code>(x0,y0), (x1,y1), (x2,y2)</code>.
+  <br /></p>
+  <pre>
+D1 = D(x1) = a0 * y0 + a1 * y1 + a2 * y2
+where the coefficients a0, a1, a2 are defined by:
+        a0 = (x1 - x2) / ((x1 - x0) * (x2 - x0))
+        a1 = 1 / (x1 - x0) - 1 / (x2 - x1)
+        a2 = (x1 - x0) / ((x2 - x0) * (x2 - x1))
+</pre>
+  <h3>
+    <a name="fill_holes"> <code>fill_holes(</code><var>x</var><code>,</code> [<var>max_nloops</var>]<code>)</code> </a>
+  </h3>
+    <var>x</var>
+	is array to be filled.
+    <br />
+    <var>max_nloops</var>
+	is maximum number of iterations.
+    <br />
+    Replace missing values by estimates based on means of neighbours.
+    If <var>max_nloops</var> is not specified then <em>fill_holes</em>
+    continues until there are no missing values.
+
+  <h3>
+    <a name="fuzzy_floor"> <code>fuzzy_floor(</code> <var>x</var>[ <code>,</code> <var>eps</var>] <code>)</code></a>
+  </h3>Like 
+  <code>floor()</code> except allow for rounding error.
+  <br />
+  <var>eps</var> is tolerance and defaults to 
+  <code>1e-9</code>.
+  <p>Example:
+  <br />
+  <code>% [nap &quot;fuzzy_floor({4.998 4.9998},1e-3)&quot;]
+  <br />4 5</code></p>
+  <h3>
+    <a name="fuzzy_ceil"> <code>fuzzy_ceil(</code> <var>x</var>[ <code>,</code> <var>eps</var>] <code>)</code></a>
+  </h3>Like 
+  <code>ceil()</code> except allow for rounding error.
+  <br />
+  <var>eps</var> is tolerance and defaults to 
+  <code>1e-9</code>.
+  <p>Example:
+  <br />
+  <code>% [nap &quot;fuzzy_ceil({5.002 5.0002},1e-3)&quot;]
+  <br />6 5</code></p>
+  <h3>
+    <a name="gets_matrix"> <code>gets_matrix(</code> <var>filename</var>[ <code>,</code> <var>n_header_lines</var>] <code>)</code></a>
+  </h3>Read text file and return NAO matrix whose rows correspond to
+  the lines in the file. Ignore:
+  <ul>
+    <li>first 
+    <var>n_header_lines</var> (default 0) lines</li>
+    <li>blank lines</li>
+    <li>lines whose first non-whitespace character is &#39;
+    <code>#</code>&#39;</li>
+  </ul>
+  <br />
+  <p>Examples:
+  <br />
+  <code>nap &quot;m1 = gets_matrix(&#39;matrix1.txt&#39;)&quot;
+  <br />nap &quot;m2 = gets_matrix(&#39;matrix2.txt&#39;, 3)&quot;; #
+  Skip 1st 3 lines</code></p>
+  <h3>
+    <a name="head"> <code>head(</code> <var>x</var>[ <code>,</code> <var>n</var>] <code>)</code></a>
+  </h3>If 
+  <var>n</var> &#8805; 0 then result is 1st 
+  <var>n</var> elements of 
+  <var>x</var>, cycling if 
+  <var>n</var> &gt; nels(
+  <var>x</var>).
+  <br />
+  <var>n</var> defaults to 1.
+  <br />If 
+  <var>n</var> &lt;  0 then result is 1st nels(
+  <var>x</var>)+
+  <var>n</var> elements of 
+  <var>x</var> i.e. drop &#8722;
+  <var>n</var> from end
+  <br />
+  <p>Examples:
+  <br /></p>
+  <pre>
+% [nap &quot;head({3 1 9 2 7})&quot;]
+3
+% [nap &quot;head({3 1 9 2 7}, 2)&quot;]
+3 1
+% [nap &quot;head({3 1 9 2 7}, -2)&quot;]
+3 1 9
+</pre>
+  <h3>
+    <a name="hsv2rgb"> <code>hsv2rgb(</code> <var>hsv</var> <code>)</code> </a>
+  </h3>Convert colour in HSV form to RGB.
+  <br />
+  <var>hsv</var> is an array whose leading dimension has size 3.
+  <p>Layer 0 along this dimension corresponds to hue as an angle in
+  degrees. Angles of any sign or magnitude are allowed.
+  Red&#160;=&#160;0, yellow&#160;=&#160;60, green&#160;=&#160;120,
+  cyan&#160;=&#160;180, blue&#160;=&#160;&#8722;120,
+  magenta&#160;=&#160;&#8722;60.</p>
+  <p>Layer 1 along this dimension corresponds to saturation in range
+  0.0 to 1.0.</p>
+  <p>Layer 2 along this dimension corresponds to &quot;value&quot;.
+  This has the same range as the RGB values, normally either 0.0 to 1.0
+  or 0 to 255. If you are casting the result to an integer &amp; want a
+  maximum of 255 then set the maximum to say 255.999. Otherwise you
+  will get few if any 255s.</p>
+  <p>The result has the same shape as the argument (hsv).</p>
+  <p>See Foley, vanDam, Feiner and Hughes, Computer Graphics 
+  <em>Principles and Practice</em>, Second Edition, 1990, ISBN
+  0201121107 page 593.
+  <br /></p>
+  <p>Example:
+  <br />
+  <code>% [nap &quot;hsv2rgb {180.0 0.5 100.0}&quot;]
+  <br />50 100 100</code></p>
+  <h3>
+    <a name="isMissing"> <code>isMissing(</code> <var>x</var> <code>)</code> </a>
+  </h3>1 if 
+  <var>x</var> missing, 0 if present.
+  <br />
+  <p>Example:
+  <br />
+  <code>% [nap &quot;isMissing {0 _ 9}&quot;]
+  <br />0 1 0</code></p>
+  <h3>
+    <a name="isPresent"> <code>isPresent(</code> <var>x</var> <code>)</code> </a>
+  </h3>0 if 
+  <var>x</var> missing, 1 if present.
+  <br />
+  <p>Example:
+  <br />
+  <code>% [nap &quot;isPresent {0 _ 9}&quot;]
+  <br />1 0 1</code></p>
+  <h3>
+    <a name="magnify_interp"> <code>magnify_interp(</code> <var>a</var> <code>,</code> <var>mag_factor</var> <code>)</code></a>
+  </h3>Magnify each dimension of array 
+  <var>a</var> by factor defined by the corresponding element of 
+  <var>mag_factor</var> if this is a vector. If this is a scalar then
+  every dimension is magnified by the same factor. The new values are
+  estimated using multi-linear interpolation.
+  <p>This function can be used to make images larger or smaller.</p>
+  <p>Example:
+  <br />
+  <code>% [nap &quot;magnify_interp({{1 2 3}{4 5 6}}, {1 3})&quot;]
+  value
+  <br />1.00000 1.33333 1.66667 2.00000 2.33333 2.66667 3.00000
+  <br />4.00000 4.33333 4.66667 5.00000 5.33333 5.66667
+  6.00000</code></p>
+  <h3>
+    <a name="magnify_nearest"> <code>magnify_nearest(</code> <var>a</var> <code>,</code> <var>mag_factor</var> <code>)</code></a>
+  </h3>This function is similar to 
+  <code>magnify_interp</code> except that the new values are defined by
+  the nearest neighbour rather than interpolation.
+  <p>Example:
+  <br />
+  <code>% [nap &quot;magnify_nearest({{1 2 3}{4 5 6}}, {1 3})&quot;]
+  value
+  <br />1 1 2 2 2 3 3
+  <br />4 4 5 5 5 6 6</code></p>
+  <h3>
+    <a name="mixed_base"> <code>mixed_base(</code> <var>x</var> <code>,</code> <var>b</var> <code>)</code> </a>
+  </h3>Convert scalar value 
+  <var>x</var> to mixed base defined by vector 
+  <var>b</var>.
+  <br />
+  <p>Following example converts 87 inches to yards, feet &amp; inches:
+  <br />
+  <code>% [nap &quot;mixed_base(87, {3 12})&quot;]
+  <br />2 1 3</code></p>
+  <h3>
+    <a name="nub"> <code>nub(</code> <var>x</var> <code>)</code> </a>
+  </h3>Result is vector of distinct values in argument (in same order).
+  <h3>
+    <a name="outer"> <code>outer(</code> <var>dyad</var> <code>,</code> <var>y</var>[, <var>x</var>] <code>)</code></a>
+  </h3>Tensor outer-product.
+  <p>
+  <var>dyad</var> is name of either</p>
+  <ul>
+    <li>function with two arguments</li>
+    <li>binary (dyadic) operator
+    <br />
+    <var>x</var> is vector
+    <br />
+    <var>y</var> is vector defaulting to 
+    <var>x</var>
+    <br />Result is cross-product of 
+    <var>x</var> and 
+    <var>y</var>, applying 
+    <var>dyad</var> to each combination of 
+    <var>x</var> &amp; 
+    <var>y</var>.
+    <br />
+    <var>x</var> &amp; 
+    <var>y</var> are the coordinate variables of the result.
+    <br /></li>
+  </ul>
+  <p>Following example produces a multiplication table:
+  <br /></p>
+  <pre>
+% [nap &quot;outer(&#39;*&#39;, 1 .. 5)&quot;]
+ 1  2  3  4  5
+ 2  4  6  8 10
+ 3  6  9 12 15
+ 4  8 12 16 20
+ 5 10 15 20 25
+</pre>
+  <h3>
+    <a name="palette_interpolate"> <code>palette_interpolate(</code> <var>from</var> <code>,</code> <var>to</var>)</a>
+  </h3>Define a palette by interpolating around the HSV (hue,
+  saturation, value) colour wheel with both 
+  <var>S</var> (saturation) and 
+  <var>V</var> (value) set to 1. The arguments 
+  <var>from</var> and 
+  <var>to</var> are angles in degrees which specify the range of of 
+  <var>H</var> (hue). Red is 0, green is -240 and blue is 240.
+  <h3>
+    <a name="scattered2grid"> <code>scattered2grid(</code> <var>xyz</var> <code>,</code> <var>ycv</var> <code>,</code> <var>xcv</var> <code>)</code> </a>
+  </h3>
+  <p>Produce a matrix grid from scattered (
+  <var>x,y,z</var>) data using triangulation. Grid points within each
+  triangle are defined by interpolating using a plane through the three
+  vertices of the triangle.</p>
+  <p>
+  <var>xyz</var> is an 
+  <var>n</var>×
+  <var>m</var> matrix containing data corresponding to 
+  <var>n</var> points (
+  <var>x,y,z</var>). The number of columns (
+  <var>m</var>) must be at least 3. Columns 0, 1 and 2 contain x, y and
+  z values respectively. Any further columns are ignored.</p>
+  <p>
+  <var>ycv</var> and 
+  <var>xcv</var> specify the coordinate-variables for the grid.</p>
+  <p>The following example defines a grid from the four points (2,2,0),
+  (6,4,0), (2,4,4) and (4,5,3). Note that the missing values in the
+  result correspond to points which are outside of both the triangles
+  produced by the triangulation. You could eliminate these missing
+  values by defining values at all four corners of the grid.</p>
+  <pre>
+% nap &quot;z = scattered2grid({{2 2 0}{6 4 0}{2 4 4}{4 5 3}}, 2 .. 5, 2 .. 6)&quot;
+::NAP::1020-1020
+% $z
+0.00    _    _    _    _
+2.00 0.75 0.00    _    _
+4.00 2.50 1.50 0.75 0.00
+   _    _ 3.00    _    _
+% [nap &quot;z(@2, @2)&quot;]; # Check value at x=2, y=2
+0
+% [nap &quot;z(@4, @6)&quot;]; # Check value at x=6, y=4
+0
+% [nap &quot;z(@4, @2)&quot;]; # Check value at x=2, y=4
+4
+% [nap &quot;z(@5, @4)&quot;]; # Check value at x=4, y=5
+3
+</pre>
+  <h3>
+    <a name="scaleAxis"> <code>scaleAxis(</code> <var>xstart</var> <code>,</code> <var>xend</var>[ <code>,</code> <var>nmax</var>[ <code>,</code> <var>nice</var>]] <code>)</code></a>
+  </h3>Find suitable values for axis of graph.
+  <br />
+  <var>xstart</var>: 1st data value
+  <br />
+  <var>xend</var>: Final data value
+  <br />
+  <var>nmax</var>: Max. allowable number of elements in result
+  (Default: 10)
+  <br />
+  <var>nice</var>: Allowable increments (Default: 
+  <code>{1 2 5}</code>)
+  <br />Result is the arithmetic progression which:
+  <ul>
+    <li>is within interval from 
+    <var>xstart</var> to 
+    <var>xend</var></li>
+    <li>has same order (ascending/descending) as 
+    <var>xstart</var>
+    <code>//</code>
+    <var>xend</var></li>
+    <li>has increment equal to element of 
+    <var>nice</var> times a power 
+    <code>(-30 .. 30)</code> of 10</li>
+    <li>has at least two elements</li>
+    <li>has no more than 
+    <var>nmax</var> elements if possible</li>
+    <li>has as many elements as possible. (Ties are resolved by
+    choosing earlier element in 
+    <var>nice</var>.)</li>
+  </ul>
+  <p>Example:
+  <br />
+  <code>% [nap &quot;axis = scaleAxis(-370, 580, 10, {10 20 25
+  50})&quot;] value
+  <br />-300 -200 -100 0 100 200 300 400 500</code></p>
+  <h3>
+    <a name="scaleAxisSpan"> <code>scaleAxisSpan(</code> <var>xstart</var> <code>,</code> <var>xend</var>[ <code>,</code> <var>nmax</var>[ <code>,</code> <var>nice</var>]] <code>)</code></a>
+  </h3>Find suitable values for axis of graph.
+  <br />
+  <var>xstart</var>: 1st data value
+  <br />
+  <var>xend</var>: Final data value
+  <br />
+  <var>nmax</var>: Max. allowable number of elements in result
+  (Default: 10)
+  <br />
+  <var>nice</var>: Allowable increments (Default: 
+  <code>{1 2 5}</code>)
+  <br />Result is the arithmetic progression which:
+  <ul>
+    <li>includes the interval from 
+    <var>xstart</var> to 
+    <var>xend</var></li>
+    <li>has same order (ascending/descending) as 
+    <var>xstart</var>
+    <code>//</code>
+    <var>xend</var></li>
+    <li>has increment equal to element of 
+    <var>nice</var> times a power 
+    <code>(-30 .. 30)</code> of 10</li>
+    <li>has at least two elements</li>
+    <li>has no more than 
+    <var>nmax</var> elements if possible</li>
+    <li>has as many elements as possible. (Ties are resolved by
+    choosing earlier element in 
+    <var>nice</var>.)</li>
+  </ul>
+  <p>Example:
+  <br />
+  <code>% [nap &quot;axis = scaleAxisSpan(-370, 580, 10, {10 20 25
+  50})&quot;] value
+  <br />-400 -200 0 200 400 600</code></p>
+  <h3>
+    <a name="range"> <code>range(</code> <var>a</var> <code>)</code> </a>
+  </h3>Result is 2-element vector containing minimum and maximum of
+  array 
+  <var>a</var>.
+  <br />Example:
+  <br />
+  <code>% [nap &quot;range {{9 -1 -5}{2 9 3}}&quot;]
+  <br />-5 9</code>
+  <h3>
+    <a name="tail"> <code>tail(</code> <var>x</var>[ <code>,</code> <var>n</var>] <code>)</code></a>
+  </h3>If 
+  <var>n</var> &#8805; 0 then result is final 
+  <var>n</var> elements of 
+  <var>x</var>, cycling if 
+  <var>n</var> &gt; nels(
+  <var>x</var>).
+  <br />
+  <var>n</var> defaults to 1.
+  <br />If 
+  <var>n</var> &lt;  0 then result is final 
+  <code>nels(</code>
+  <var>x</var>
+  <code>)+</code>
+  <var>n</var> elements of 
+  <var>x</var> i.e. drop &#8722;
+  <var>n</var> from start.
+  <br />
+  <p>Example:
+  <br /></p>
+  <pre>
+% [nap &quot;tail({3 1 9 2 7})&quot;]
+7
+% [nap &quot;tail({3 1 9 2 7}, 2)&quot;]
+2 7
+% [nap &quot;tail({3 1 9 2 7}, -2)&quot;]
+9 2 7
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: nap_function_lib.html,v 1.12
+          2005/08/04 05:34:43 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

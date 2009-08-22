@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: nap_get.html,v 1.18 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>nap_get</title>
+  </head>
+  <body>
+  <center>
+    <h2>Reading Files using 
+    <code>nap_get</code> Command</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Reading_Binary_Data">Reading Binary Data</a>
+    </li>
+    <li>
+      <a href="#Reading_netCDF_Data">Reading netCDF Data</a>
+    </li>
+    <li>
+      <a href="#Reading_HDF_Data">Reading HDF Data</a>
+    </li>
+    <li>
+      <a href="#Listing_Names">Listing Names of Variables/SDSs and
+      Attributes in HDF and netCDF Files</a>
+    </li>
+    <li>
+      <a href="#Metadata">Reading Metadata from HDF and netCDF
+      Files</a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>
+  <p>The 
+  <code>nap_get</code> command creates a NAO containing data read from
+  a file. The first argument specifies the type of file, which can be 
+  <code>binary</code>, 
+  <code>hdf</code>, 
+  <code>netcdf</code> or 
+  <code>swap</code>.</p>
+  <p>
+  <a href="http://hdf.ncsa.uiuc.edu">HDF</a> and 
+  <a href="http://www.unidata.ucar.edu/packages/netcdf/index.html">netCDF</a>
+  are similar array-oriented file formats which are popular in earth
+  sciences such as meteorology and oceanography. (The new HDF5 format
+  is not currently supported.) Such files contain data referenced by
+  symbol tables containing the names, data-types and dimensions of
+  variables. Each variable can also have attributes such as a label, a
+  format, a unit of measure and a missing-value. Note the similarity
+  between these attributes and those in a NAO.</p>
+  <p>The 
+  <code>netcdf</code> option also supports (but only on the Linux Intel
+  386 platform at the time of writing) access to remote data provided
+  by an 
+  <a href="http://www.opendap.org/">OPeNDAP (a.k.a. DODS)</a> server.
+  In this case the 
+  <var>filename</var> is a URL rather than the pathname of a local
+  file. There is an OPeNDAP example at the end of 
+  <a href="#Reading_netCDF_Data">Reading netCDF Data</a>.</p>
+  <h3>
+    <a name="Reading_Binary_Data">Reading Binary Data</a>
+  </h3>
+  <p>Binary data is read using the command
+  <br />
+  <code>nap_get binary</code> 
+  <var>channel</var> [
+  <var>datatype</var> [
+  <var>shape</var>]]
+  <br />where 
+  <var>datatype</var> defaults to 
+  <code>u8</code> and 
+  <var>shape</var> defaults to a vector corresponding to the file
+  size.</p>
+  <p>The command
+  <br />
+  <code>nap_get swap</code> 
+  <var>channel</var> [
+  <var>datatype</var> [
+  <var>shape</var>]]
+  <br />is similar, except that bytes are swapped. This enables reading
+  of data written on a machine with opposite byte-order within
+  words.</p>
+  <p>The following example first writes six 32-bit floating-point
+  values to a file using the OOC 
+  <code>binary</code> method. It then reads them back into a NAO named
+  &quot;<code>in</code>&quot; using &quot;<code>nap_get binary</code>&quot;:</p>
+  <pre>
+% set file [open float.dat w]
+filee15170
+% [nap &quot;f32{1.5 -3 0 2 4 5}&quot;] binary $file
+% close $file
+% set file [open float.dat]
+filee15170
+% nap &quot;in = [nap_get binary $file f32]&quot;
+::NAP::22-22
+% close $file
+% $in all
+::NAP::22-22  f32  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+</pre>
+Note that no shape was specified, giving a 6-element vector. The
+following example reads the file again, this time specifying a shape of
+
+  <code>{2 3}</code>. The NAO is displayed but not saved.
+  <pre>
+% set file [open float.dat]
+file6
+% [nap_get binary $file f32 &quot;{2 3}&quot;] all
+::NAP::32-32  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 1.5 -3.0  0.0
+ 2.0  4.0  5.0
+% close $file
+</pre>
+  <h3>
+    <a name="Reading_netCDF_Data">Reading netCDF Data</a>
+  </h3>
+  <p>NetCDF data is read using the command
+  <br />
+  <code>nap_get netcdf</code> 
+  <var>filename name</var> [
+  <var>index</var> [
+  <var>raw</var>]]
+  <br /></p>
+  <p>
+  <var>filename</var> is the:</p>
+  <ul>
+    <li>pathname of a local file</li>
+    <li>URL of a remote 
+    <a href="http://www.opendap.org/">OPeNDAP (a.k.a. DODS)</a>
+    server</li>
+  </ul>
+  <p>
+  <var>name</var> is the name of a variable or attribute and has the
+  form:</p>
+  <ul>
+    <li>
+    <var>varname</var> for a variable</li>
+    <li>
+    <var>varname</var>
+    <code>:</code>
+    <var>attribute</var> for an attribute of a variable</li>
+    <li>
+    <code>:</code>
+    <var>attribute</var> for a global attribute
+    <br /></li>
+  </ul>
+  <p>A single-element attribute gives a scalar. Other attributes give
+  vectors. Neither 
+  <var>index</var> nor 
+  <var>raw</var> can be specified for attributes.</p>
+  <p>A variable with no 
+  <var>index</var> gives the entire variable. If 
+  <var>index</var> is specified then it selects using 
+  <a href="indexing.html#Cross_product_index">cross-product</a>
+  indexing.</p>
+  <p>If 
+  <var>raw</var> is 1 then the result contains raw data read from the
+  file. If 
+  <var>raw</var> is 0 (default) then this data is transformed using the
+  attributes 
+  <code>scale_factor</code>, 
+  <code>add_offset</code>, 
+  <code>_FillValue</code>, 
+  <code>valid_min</code>, 
+  <code>valid_max</code> and 
+  <code>valid_range</code> if any of these are present.</p>
+  <p>The following example first creates a netCDF file using the netCDF
+  utility 
+  <code>ncgen</code>. There is one variable called 
+  <code>vec</code>. It is a 3-element 32-bit integer vector with
+  elements 6, -9 and 4. The data is read into a NAO called 
+  <code>v</code> using 
+  <code>nap_get netcdf</code>.</p>
+  <pre>
+% exec ncgen -b &lt;&lt; {
+    netcdf int {
+        dimensions:
+            n = 3 ;
+        variables:
+            int vec(n) ;
+        data:
+            vec = 6, -9, 4 ;
+    }
+}
+% nap &quot;v = [nap_get netcdf int.nc vec]&quot;
+::NAP::52-52
+% $v all
+::NAP::52-52  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 3      Name: n         Coordinate-variable: (NULL)
+Value:
+6 -9 4
+</pre>
+  <p>Now let&#39;s specify the index 
+  <code>{0 2}</code> to select the first and third elements:</p>
+  <pre>
+% [nap_get netcdf int.nc vec &quot;{0 2}&quot;] all
+::NAP::58-58  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 4
+</pre>
+  <p>The following shows the different effects of a single-element
+  vector index and a scalar index with the same value:</p>
+  <pre>
+% [nap_get netcdf int.nc vec &quot;{1}&quot;] all
+::NAP::65-65  i32  MissingValue: -2147483648  References: 0
+Dimension 0   Size: 1      Name: n         Coordinate-variable:
+::NAP::69-69
+Value:
+-9
+% [nap_get netcdf int.nc vec &quot;1&quot;] all
+::NAP::83-83  i32  MissingValue: -2147483648  References: 0
+Value:
+-9
+</pre>
+  <p>The following is an 
+  <a href="http://www.opendap.org/">OPeNDAP (a.k.a. DODS)</a> example.
+  It displays the altitude of the south pole.</p>
+  <pre>
+% set url
+http://www.marine.csiro.au/dods/nph-dods/dods-data/climatology-netcdf/etopo5.nc
+% [nap_get netcdf $url height &quot;@@-90, 0&quot;]
+2810
+</pre>
+  <h3>
+    <a name="Reading_HDF_Data">Reading HDF Data</a>
+  </h3>
+  <p>HDF data is read using the command
+  <br />
+  <code>nap_get hdf</code> 
+  <var>filename name</var> [
+  <var>index</var> [
+  <var>raw</var>]]
+  <br /></p>
+  <p>
+  <var>filename</var> is the pathname of a local file.</p>
+  <p>
+  <var>name</var> is the name of an SDS or attribute and has the
+  form:</p>
+  <ul>
+    <li>
+    <var>sdsname</var> for a SDS</li>
+    <li>
+    <var>sdsname</var>
+    <code>:</code>
+    <var>attribute</var> for an attribute of a SDS</li>
+    <li>
+    <code>:</code>
+    <var>attribute</var> for a global attribute
+    <br /></li>
+  </ul>
+  <p>A single-element attribute gives a scalar. Other attributes give
+  vectors. Neither 
+  <var>index</var> nor 
+  <var>raw</var> can be specified for attributes.</p>
+  <p>An SDS with no 
+  <var>index</var> gives the entire SDS. If 
+  <var>index</var> is specified then it selects using 
+  <a href="indexing.html#Cross_product_index">cross-product</a>
+  indexing.</p>
+  <p>If 
+  <var>raw</var> is 1 then the result contains raw data read from the
+  file. If 
+  <var>raw</var> is 0 (default) then this data is transformed using the
+  attributes 
+  <code>scale_factor</code>, 
+  <code>add_offset</code>, 
+  <code>_FillValue</code>, 
+  <code>valid_min</code>, 
+  <code>valid_max</code> and 
+  <code>valid_range</code> if any of these are present.</p>
+  <p>The following example writes data to an HDF file using the OOC 
+  <code>hdf</code> method. Then 
+  <code>nap_get hdf</code> is used with various index values (including
+  default) to read the data back into temporary NAOs (which are deleted
+  after being displayed):</p>
+  <pre>
+% [nap &quot;f64{{1 0 9}{3 2 -1}}&quot;] hdf mat.hdf mat64
+% [nap_get hdf mat.hdf mat64] all; # default index giving whole SDS
+::NAP::47-47  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: fakeDim1  Coordinate-variable: (NULL)
+Value:
+ 1  0  9
+ 3  2 -1
+% [nap_get hdf mat.hdf mat64 &quot;1,0&quot;] all; # select element
+giving scalar
+::NAP::78-78  f64  MissingValue: NaN  References: 0
+Value:
+3
+% [nap_get hdf mat.hdf mat64 &quot;{1},0&quot;] all; # select element
+giving vector
+::NAP::102-102  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 1      Name: fakeDim0  Coordinate-variable:
+::NAP::92-92
+Value:
+3
+% [nap_get hdf mat.hdf mat64 &quot;0,&quot;] all; # select row
+::NAP::123-123  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 3      Name: fakeDim1  Coordinate-variable: (NULL)
+Value:
+1 0 9
+% [nap_get hdf mat.hdf mat64 &quot;,2&quot;] all; # select column
+::NAP::147-147  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Value:
+9 -1
+% [nap_get hdf mat.hdf mat64 &quot;,{0 2}&quot;] all; # select
+sub-matrix
+::NAP::154-154  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: fakeDim0  Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: fakeDim1  Coordinate-variable:
+::NAP::161-161
+Value:
+ 1  9
+ 3 -1
+</pre>
+  <h3>
+    <a name="Listing_Names">Listing Names of Variables/SDSs and Attributes in HDF and netCDF Files</a>
+  </h3>One can list the names of variables/SDSs and attributes matching
+  a regular expression 
+  <var>RE</var> using the command
+  <br />
+  <code>nap_get hdf -list</code> 
+  <var>filename</var> [
+  <var>RE</var>]
+  <br />or
+  <br />
+  <code>nap_get netcdf -list</code> 
+  <var>filename</var> [
+  <var>RE</var>]
+  <br />All variables/SDSs and attributes are listed if 
+  <var>RE</var> is omitted. For example, using the HDF file created
+  above:
+  <pre>
+% nap_get hdf -list mat.hdf
+mat64
+mat64:_FillValue
+</pre>
+  <p>Some useful regular expressions are</p>
+  <table border="1">
+    <tr>
+      <th>Regular Expression</th>
+      <th>Select all:</th>
+    </tr>
+    <tr>
+      <td>
+        <code>^[^:]*$</code>
+      </td>
+      <td>variables</td>
+    </tr>
+    <tr>
+      <td>
+        <code>:</code>
+      </td>
+      <td>attributes</td>
+    </tr>
+    <tr>
+      <td>
+        <code>^:</code>
+      </td>
+      <td>global attributes</td>
+    </tr>
+    <tr>
+      <td>
+        <code>.:</code>
+      </td>
+      <td>non-global attributes</td>
+    </tr>
+  </table>
+  <p>Thus we can restrict the above list to SDSs only using:</p>
+  <pre>
+% nap_get hdf -list mat.hdf {^[^:]*$}
+mat64
+</pre>
+  <h3>
+    <a name="Metadata">Reading Metadata from HDF and netCDF Files</a>
+  </h3>
+  <p>The command
+  <br />
+  <code>nap_get hdf -datatype</code> 
+  <var>filename sdsname</var>
+  <br />or
+  <br />
+  <code>nap_get netcdf -datatype</code> 
+  <var>filename varname</var>
+  <br />returns the data-type of a specified variable/SDS in the
+  specified file.</p>
+  <p>The command
+  <br />
+  <code>nap_get hdf -rank</code> 
+  <var>filename sdsname</var>
+  <br />or
+  <br />
+  <code>nap_get netcdf -rank</code> 
+  <var>filename varname</var>
+  <br />returns the rank (number of dimensions) of a specified
+  variable/SDS in the specified file.</p>
+  <p>The command
+  <br />
+  <code>nap_get hdf -shape</code> 
+  <var>filename sdsname</var>
+  <br />or
+  <br />
+  <code>nap_get netcdf -shape</code> 
+  <var>filename varname</var>
+  <br />returns the shape (dimension sizes) of a specified variable/SDS
+  in the specified file.</p>
+  <p>The command
+  <br />
+  <code>nap_get hdf -dimension</code> 
+  <var>filename sdsname</var>
+  <br />or
+  <br />
+  <code>nap_get netcdf -dimension</code> 
+  <var>filename varname</var>
+  <br />returns the dimension names of a specified variable/SDS in the
+  specified file.</p>
+  <p>The command
+  <br />
+  <code>nap_get hdf -coordinate</code> 
+  <var>filename sdsname dim_name</var>|
+  <var>dim_number</var>
+  <br />or
+  <br />
+  <code>nap_get netcdf -coordinate</code> 
+  <var>filename varname dim_name</var>|
+  <var>dim_number</var>
+  <br />returns the coordinate variable NAO corresponding to the
+  specified dimension of the specified variable/SDS in the specified
+  file.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: nap_get.html,v 1.13
+          2005/08/01 04:48:59 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

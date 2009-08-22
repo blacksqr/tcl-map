@@ -1,0 +1,148 @@
+%  $Id: nao_ooc.tex,v 1.7 2006/09/20 08:48:49 dav480 Exp $ 
+    % NAOs, OOCs and Nap command
+
+\section{NAOs, OOCs and \texttt{nap} command}
+
+  The standard Tcl 
+  \texttt{expr} command produces a single (scalar) number. For
+  example:
+  \begin{verbatim}
+% expr "2 * 3.5"
+7.0
+\end{verbatim}
+
+Note that the Tcl result of this command is simply the text
+`\texttt{7.0}'.
+  
+
+However the 
+  \texttt{nap} command often produces an array containing millions
+  of numbers. It is not practical to store, process and display
+  millions of numbers as text. It is far better to store and process
+  them in binary form. The binary values are stored in a memory object
+  called an 
+  \emph{N-dimensional Array Object (NAO)}, which also includes other
+  information such as the number of elements and the data-type. Nap is
+  designed to efficiently handle large arrays, but let us begin
+  demonstrating it on the above simple scalar expression:
+  \begin{verbatim}
+% nap "2 * 3.5"
+::NAP::16-16
+\end{verbatim}
+
+What is this strange Tcl result `\texttt{::NAP::16-16}'? It is the ID of the NAO result and
+  also the name of the command that is used to examine the NAO and make
+  changes to it. Such a command is called an 
+  \emph{Object-Oriented Command (OOC)}. The ID is called the 
+  \emph{OOC-name}. Continuing the above example, let's execute
+  the OOC by typing its name `\texttt{::NAP::16-16}':
+  \begin{verbatim}
+% ::NAP::16-16
+7
+\end{verbatim}
+
+This displays the value in the NAO.
+  
+
+However the following attempt to repeat the command fails because
+  the NAO and its associated OOC were automatically deleted at the end
+  of the first execution of the OOC. Nap detected the fact that this
+  NAO was not referenced by anything and it was therefore treated as 
+  \emph{use once and then discard}.
+  \begin{verbatim}
+% ::NAP::16-16
+invalid command name "::NAP::16-16"
+\end{verbatim}
+
+  
+
+Tcl syntax allows a command to include another command within
+  square brackets 
+  \texttt{[]}. First the bracketed command is executed and its Tcl
+  result replaces it. Then the modified whole command is executed. So
+  the above commands can be simplified by enclosing the 
+  \texttt{nap} command in brackets as follows:
+  \begin{verbatim}
+% [nap "2 * 3.5"]
+7
+\end{verbatim}
+
+  
+
+Nap expressions can contain the assignment operator `\texttt{=}' with a Tcl variable name on its left and any
+  expression on its right. For example:
+  \begin{verbatim}
+% nap "result = 2 * 3.5"
+::NAP::24-24
+\end{verbatim}
+
+The following shows that this sets the Tcl variable 
+  \texttt{result} to the string value `\texttt{::NAP::24-24}'.
+  \begin{verbatim}
+% set result
+::NAP::24-24
+\end{verbatim}
+
+Tcl syntax replaces `\texttt{\$}
+  $name$' by the contents of variable 
+  $name$. So in our example `\texttt{\$result}' is replaced by `\texttt{::NAP::24-24}', as shown in the following:
+  \begin{verbatim}
+% $result
+7
+\end{verbatim}
+
+The fact that this NAO is referenced by something (the variable
+`\texttt{result}') means that it is not deleted after it
+  executes. So we can repeat the command:
+  \begin{verbatim}
+% $result
+7
+\end{verbatim}
+
+We can also use variable names within Nap expressions. For
+example:
+  \begin{verbatim}
+% [nap "result + 4"]
+11
+\end{verbatim}
+
+Note that no `\texttt{\$}' is needed before a variable name in a Nap expression.
+Variables can also contain numeric strings, as in:
+  \begin{verbatim}
+% set offset 8.2
+8.2
+% [nap "result + offset"]
+15.2
+\end{verbatim}
+
+  
+
+An OOC can have arguments. The following example demonstrates the
+  argument 
+  \texttt{all}, which requests additional information about the
+  NAO.
+  \begin{verbatim}
+% $result all
+::NAP::24-24  f64  MissingValue: NaN  References: 1
+Value:
+7
+\end{verbatim}
+
+  
+
+The following additional information is provided:
+  \begin{bullets}
+    \item 
+    \emph{OOC-name} 
+    \texttt{::NAP::24-24}
+    \item 
+    \emph{Data-type} 
+    \texttt{f64} (64-bit floating-point)
+    \item 
+    \emph{Missing-value} 
+    \texttt{NaN} (special value for missing data)
+    \item 
+    \emph{Reference-count} The value is 
+    \texttt{1} because there is one variable (\texttt{result}) pointing to this NAO.
+    If it were 0 the NAO would be deleted.
+  \end{bullets}

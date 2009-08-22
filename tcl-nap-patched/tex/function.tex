@@ -1,0 +1,1429 @@
+%  $Id: function.tex,v 1.20 2007/11/08 08:47:02 dav480 Exp $ 
+    % Nap Built-in Functions
+
+\section{Built-in Functions}
+    \label{function}
+
+\subsection{Elemental Functions}
+    \label{function-Elemental}
+
+An \emph{elemental function} is a function with the following properties:
+\begin{enumerate}
+    \item Its result has the same shape as its argument(s).
+    \item Each element of the result is defined by applying the
+	function to the corresponding element of the argument.
+\end{enumerate}
+
+\subsubsection{Mathematical Elemental Functions}
+\label{Mathematical-Elemental-Functions}
+
+The following table is similar to \textbf{Table 5.3} in Ousterhout's \emph{Tcl and the Tk Toolkit}:
+
+\begin{tabular}{|l|l|l|}
+    \hline 
+      \textbf{Nap Function} & \textbf{Formula} & \textbf{Description}
+    \\
+      \hline 
+      \hline 
+        \texttt{abs(}$x$\texttt{)} & $|x|$ & Absolute value of $x$
+      \\
+      \hline 
+        \texttt{acos(}$x$\texttt{)} & $\arccos x$ & Arc cosine of $x$, in the range 0 to $\pi$
+      \\
+      \hline 
+        \texttt{asin(}$x$\texttt{)} & $\arcsin x$ & Arc sine of $x$, in the range -$\pi$/2 to $\pi$/2
+      \\
+      \hline 
+        \texttt{atan(}$x$\texttt{)} & $\arctan x$ & Arc tangent of $x$, in the range -$\pi$/2 to $\pi$/2
+      \\
+      \hline 
+    \texttt{atan(}$y$\texttt{,}$x$\texttt{)} & $\arctan(y/x)$ & Arc tangent of $y/x$, in the range $-\pi$ to $\pi$
+      \\
+      \hline 
+        \texttt{atan2(}$y$\texttt{,}$x$\texttt{)} & $\arctan(y/x)$ & Alias for \texttt{atan}
+      \\
+      \hline 
+        \texttt{ceil(}$x$\texttt{)} & $\lceil x\rceil$ & Smallest integer not less than $x$
+      \\
+      \hline 
+        \texttt{cos(}$x$\texttt{)} & $\cos x$ & Cosine of $x$ ($x$ in radians)
+      \\
+      \hline 
+        \texttt{cosh(}$x$\texttt{)} & $\cosh x$ & Hyperbolic cosine of $x$
+      \\
+      \hline 
+        \texttt{exp(}$x$\texttt{)} & $e^x$ & $e$ is base of natural logarithms
+      \\
+      \hline 
+        \texttt{floor(}$x$\texttt{)} & $\lfloor x\rfloor$ & Largest integer not greater than $x$
+      \\
+      \hline 
+        \texttt{fmod(}$x$\texttt{,}$y$\texttt{)} & $x \bmod y$ & Remainder after dividing $x$ by $y$
+      \\
+      \hline 
+        \texttt{hypot(}$x$\texttt{,}$y$\texttt{)} & $\sqrt{x^2+y^2}$ & Length of hypotenuse
+      \\
+      \hline 
+        \texttt{isnan(}$x$\texttt{)} & & 1 if $x$ is NaN, 0 otherwise
+      \\
+      \hline 
+        \texttt{log(}$x$\texttt{)} & $\log_e x$ & Natural (base $e$) logarithm
+      \\
+      \hline 
+        \texttt{log(}$x$,$y$\texttt{)} & $\log_y x$ & Logarithm with base $y$
+      \\
+      \hline 
+        \texttt{log10(}$x$\texttt{)} & $\log_{10} x$ & Common (base 10) logarithm 
+      \\
+      \hline 
+        \texttt{nint(}$x$\texttt{)} & & Nearest integer to $x$
+      \\
+      \hline 
+        \texttt{pow(}$x$\texttt{,}$y$\texttt{)} & $x^y$ & $x$ raised to power $y$
+      \\
+      \hline 
+        \texttt{random(}$x$\texttt{)} & & Random number $r$ such that \texttt{0} $\le$ $r$ $<$ $x$
+      \\
+      \hline 
+        \texttt{round(}$x$\texttt{)} & & Alias for \texttt{nint}
+      \\
+      \hline 
+        \texttt{sign(}$x$\texttt{)} & $(x>0)-(x<0)$ & $-1$ if $x<0$, 0 if $x=0$, 1 if $x>0$
+      \\
+      \hline 
+        \texttt{sin(}$x$\texttt{)} & $\sin x$ & Sine of $x$ ($x$ in radians)
+      \\
+      \hline 
+        \texttt{sinh(}$x$\texttt{)} & $\sinh x$ & Hyperbolic sine of $x$
+      \\
+      \hline 
+        \texttt{sqrt(}$x$\texttt{)} & $\sqrt x$ & Square root
+      \\
+      \hline 
+        \texttt{tan(}$x$\texttt{)} & $\tan x$ & Tangent of $x$ ($x$ in radians)
+      \\
+      \hline 
+        \texttt{tanh(}$x$\texttt{)} & $\tanh x$ & Hyperbolic tangent of $x$
+      \\
+  \hline
+\end{tabular}
+
+\subsubsection{Data-type Conversion Functions}
+\label{Data-type-Conversion-Functions}
+
+The data-type conversion functions are also elemental.
+These are
+\texttt{c8(}$x$\texttt{)},
+\texttt{f32(}$x$\texttt{)},
+\texttt{f64(}$x$\texttt{)},
+\texttt{i8(}$x$\texttt{)},
+\texttt{i16(}$x$\texttt{)},
+\texttt{i32(}$x$\texttt{)},
+\texttt{u8(}$x$\texttt{)},
+\texttt{u16(}$x$\texttt{)} and
+\texttt{u32(}$x$\texttt{)}.
+
+Here are some examples of their use:
+  \begin{verbatim}
+% [nap "f32(97 .. 102)"] all; # convert from i32 to f32
+::NAP::43-43  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+97 98 99 100 101 102
+% [nap "u8('abcdef')"]; # Display ASCII codes for 'abcdef'
+97 98 99 100 101 102
+% [nap "c8(97 .. 102)"]; # Reverse this process
+abcdef
+\end{verbatim}
+
+\subsection{Reduction Functions}
+\label{function-Reduction}
+
+A \textit{reduction} or \textit{insert} function is one which has the effect of inserting a
+binary operator between the \textit{cells} of its argument or
+sub-arrays of it.
+Such functions are termed \textit{reductions} because the result has a rank which is one less
+than the argument.
+
+The \textit{cells} of an array of rank $r$ are the sub-arrays of rank $r-1$.
+Thus the cells of a vector are its elements,
+while the cells of a matrix are its rows.
+
+The Nap reduction functions are listed in the following table:
+
+\begin{tabular}{|l|c|l|}
+\hline 
+\textbf{Function} & \textbf{Operator} & \textbf{Result}
+\\
+\hline 
+\hline 
+\texttt{max(}$x$[ \texttt{,} $r$]\texttt{)} & \texttt{>>>} & Maximum of rank-$r$ sub-arrays of $x$
+\\
+\hline 
+\texttt{min(}$x$[ \texttt{,} $r$]\texttt{)} & \texttt{<<<} & Minimum of rank-$r$ sub-arrays of $x$
+\\
+\hline 
+\texttt{prod(}$x$[ \texttt{,} $r$]\texttt{)} & \texttt{*} & Product of rank-$r$ sub-arrays of $x$
+\\
+\hline 
+\texttt{sum(}$x$[ \texttt{,} $r$]\texttt{)} & \texttt{+} & Sum of rank-$r$ sub-arrays of $x$
+\\
+\hline
+\end{tabular}
+
+The optional second argument $r$ of reduction functions is called the \textit{verb-rank} (as in J).
+It is used to specify the rank of the sub-arrays of $x$ (if its rank exceeds 1)
+to which the reduction process is to be applied.
+If $r$ is not specified then it defaults to the rank of $x$ and the reduction is applied just
+once to $x$ as a whole.
+For example, if $x$ is a matrix then 
+\texttt{sum(}$x$\texttt{)} gives the sum of each column, while
+\texttt{sum(}$x$\texttt{,1)} gives the sum of each row.
+
+If the argument is a vector then its elements are the cells and the result is a scalar.
+For example if $x$ is a vector then the operator `$+$' is inserted between its elements giving
+the scalar result
+\[ \texttt{sum(}x\texttt{)} = x_0 + x_1 + x_2 + \ldots = \sum x \]
+
+The following shows the application of each of the four functions to a vector:
+\begin{verbatim}
+% [nap "max({0.5 2 -1 8})"]
+8
+% [nap "min({0.5 2 -1 8})"]
+-1
+% [nap "prod({0.5 2 -1 8})"]
+-8
+% [nap "sum({0.5 2 -1 8})"]
+9.5
+\end{verbatim}
+
+Consider the application of function \texttt{sum()} to a matrix (rank 2) argument $x$.
+The result is a vector (rank 1).
+
+If $r$ is not specified then the reduction is applied once to the entire argument.
+The cells of a matrix are its rows, so the result is
+\[ \mathit{row}_0 + \mathit{row}_1 + \mathit{row}_2 + \ldots \]
+which gives the sum of each column.
+
+If $r=1$ then the reduction is applied to each rank-1 sub-array (row) of $x$ and the results
+are concatenated giving
+\[ \sum \mathit{row}_0 \ \sum \mathit{row}_1 \ \sum \mathit{row}_2 \ \ldots \]
+which gives the sum of each row.
+
+This is demonstrated by:
+\begin{verbatim}
+% nap "mat = {
+{2 5 0}
+{6 7 1}
+}"
+::NAP::49-49
+% [nap "sum mat"]
+8 12 1
+% [nap "sum(mat,1)"]
+7 14
+% [nap "sum(sum(mat))"]
+21
+\end{verbatim}
+
+The following example produces sums of a \emph{3-dimensional} array:
+\begin{verbatim}
+% [nap "a3d = reshape(0 .. 23, {2 3 4})"]
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23
+% [nap "sum(a3d)"]
+12 14 16 18
+20 22 24 26
+28 30 32 34
+% [nap "sum(a3d,1)"]
+ 6 22 38
+54 70 86
+% [nap "sum(a3d,2)"]
+12 15 18 21
+48 51 54 57
+\end{verbatim}
+
+The following example shows how to test for
+`\emph{any true}'
+and
+`\emph{all true}'.
+\begin{verbatim}
+% [nap "bool = {{0 0 1}{0 1 1}{0 0 1}}"]
+0 0 1
+0 1 1
+0 0 1
+% [nap "prod(bool) == 1"]; # column all 1s?
+0 0 1
+% [nap "sum(bool) > 0"]; # column contains any 1?
+0 1 1
+\end{verbatim}
+
+\emph{Missing values} in an argument are ignored by the reduction functions
+and thus do not produce missing values in the result.
+Note that the corresponding binary operations
+(`\texttt{>>>}', `\texttt{<<<}', `\texttt{*}' and `\texttt{+}')
+\emph{do} produce a missing value if either operand is missing.
+The following example applies the four reduction functions to a vector
+with a missing value:
+\begin{verbatim}
+% [nap "max({-3 _ 5 1})"]
+5
+% [nap "min({-3 _ 5 1})"]
+-3
+% [nap "prod({-3 _ 5 1})"]
+-15
+% [nap "sum({-3 _ 5 1})"]
+3
+\end{verbatim}
+
+If there are no non-missing elements then the result is the
+\emph{identity element} of the operation.
+The following shows this for each of the four reduction functions:
+\begin{verbatim}
+% [nap "max(f64{_})"]
+-Inf
+% [nap "min(f64{_})"]
+Inf
+% [nap "prod(f64{_})"]
+1
+% [nap "sum(f64{_})"]
+0
+\end{verbatim}
+
+\subsection{Function \texttt{count(}$x$[ \texttt{,} $r$]\texttt{)}}
+\label{function-count}
+
+Function \texttt{count(}$x$[ \texttt{,} $r$]\texttt{)}
+gives the number of non-missing elements in rank-$r$ sub-arrays of $x$.
+It is similar to the reduction functions in many respects.
+
+However unlike them, it \emph{is} useful to specify the verb-rank $r=0$.
+This means that each (rank 0) element is processed separately.
+This gives 1 if the element is present and 0 if it is missing.
+The result has the same shape as the argument.
+Let's name this `is-present' mask `$p$', so
+\[ p = \texttt{count(}x\texttt{,0)} \]
+
+The result of
+$\texttt{count(}x\texttt{)}$
+($r$ absent)
+is defined as
+$\texttt{sum(}p\texttt{)}$.
+
+If $r>0$ then
+$\texttt{count(}p\texttt{,}r\texttt{)}$
+is defined as
+$\texttt{sum(}p\texttt{,}r\texttt{)}$.
+
+An example with a vector argument is:
+\begin{verbatim}
+% nap "vec = {4 _ 2 -9 _ 6}"
+::NAP::51-14
+% [nap "count(vec, 0)"]
+1 0 1 1 0 1
+% [nap "count vec"]
+4
+\end{verbatim}
+
+An example with a matrix argument is:
+\begin{verbatim}
+% [nap "mat = {{0 _ _ 4}{_ _ 5 2}}"]
+0 _ _ 4
+_ _ 5 2
+% [nap "count(mat, 0)"]
+1 0 0 1
+0 0 1 1
+% [nap "count mat"]
+1 0 1 2
+% [nap "count(mat, 1)"]
+2 2
+\end{verbatim}
+
+Note that many simple statistics can be calculated using the reduction
+functions and \texttt{count()}.
+For example we can calculate arithmetic means of the above vector and
+matrix as follows:
+
+\begin{verbatim}
+% [nap "sum(vec) / count(vec)"]
+0.75
+% [nap "sum(mat) / count(mat)"]; # mean of each column
+0 _ 5 3
+% [nap "sum(mat,1) / count(mat,1)"]; # mean of each row
+2 3.5
+\end{verbatim}
+
+\subsection{Scan Functions}
+\label{function-Scan}
+
+A \emph{scan} function produces a result with the same shape as its argument.
+Each element of the result is a reduction over part of the argument.
+
+Nap has two scan functions 
+\texttt{psum(}$x$\texttt{)}
+and
+\texttt{psum1(}$x$[ \texttt{,} $r$]\texttt{)}.
+Both produce a result consisting of partial-sums.
+\texttt{psum(}$x$ \texttt{)} produces \emph{multi-directional}
+partial-sums of $x$.
+\texttt{psum1(}$x$[ \texttt{,} $r$]\texttt{)} produces
+\emph{uni-directional} partial-sums of rank-$r$ sub-arrays of $x$.
+
+If $x$ is a vector then these two functions give the same result.
+Let $r$ be this result.
+Each element of $r$ is defined by
+\[r_I = \sum_{i=0}^I x_i\]
+
+For example:
+  \begin{verbatim}
+% nap "x = {2 7 1 3 8 2 5 0 2 5}"
+::NAP::14-14
+% [nap "psum(x)"] value
+2 9 10 13 21 23 28 28 30 35
+% [nap "psum1(x)"] value
+2 9 10 13 21 23 28 28 30 35
+\end{verbatim}
+
+  \par Missing values are treated as zeros. E.g.
+  \begin{verbatim}
+% [nap "psum{5 -9 _ 6 4}"]
+5 -4 -4 2 6
+\end{verbatim}
+
+  \par The following example shows how partial sums can be used to
+  calculate a 3-point moving-average in an efficient manner:
+  \begin{verbatim}
+% nap "ps = 0 // psum(x)"
+::NAP::25-25
+% $ps value
+0 2 9 10 13 21 23 28 28 30 35
+% [nap "(ps(3 .. 10) - ps(0 .. 7)) / 3.0"] value
+3.33333 3.66667 4 4.33333 5 2.33333 2.33333 2.33333
+\end{verbatim}
+
+  \par Missing values can be handled as follows:
+  \begin{verbatim}
+% nap "x = f64{2 7 1 _ 3 8 2 5 _ 0 2 5}"
+::NAP::187-187
+% nap "ps = 0 // psum(x)"
+::NAP::192-192
+% $ps value
+0 2 9 10 10 13 21 23 28 28 28 30 35
+% nap "psc = 0 // psum(isPresent x)"; # psum of counts
+::NAP::203-203
+% $psc value
+0 1 2 3 3 4 5 6 7 7 8 9 10
+% nap "i = 0 .. 9"
+::NAP::209-209
+% [nap "(ps(i+3) - ps(i)) / (psc(i+3) - psc(i))"] value
+3.33333 4 2 5.5 4.33333 5 3.5 2.5 1 2.33333
+\end{verbatim}
+
+The library function \texttt{moving-average}
+(see section \ref{stat-moving-average})
+generalises this moving-average technique to any rank.
+
+If the rank of $x$ exceeds 1 then 
+\texttt{psum(}$x$\texttt{)}
+and 
+\texttt{psum1(}$x$[\texttt{,}$r$]\texttt{)}
+give different results.
+Function \texttt{psum1} sums in a single direction defined by the
+verb-rank in the same manner as the reduction functions.
+If $x$ is a matrix and $r$ is the result 
+\texttt{psum(}$x$\texttt{)},
+then each element of $r$ is defined by
+\[r_{IJ} = \sum_{i=0}^I \sum_{j=0}^J x_{ij}\]
+
+The following example uses the matrix \texttt{mat} defined above:
+  \begin{verbatim}
+% $mat
+2 5 0
+6 7 1
+% [nap "psum1(mat)"]
+ 2  5  0
+ 8 12  1
+% [nap "psum1(mat, 1)"]
+2 7 7
+6 7 1
+% [nap "psum(mat)"]
+ 2  7  7
+ 8 20 21
+\end{verbatim}
+
+  \par Other similar 
+  \textit{scan} functions can be defined for partial products and so
+  on. However Nap currently has only 
+  \texttt{psum} and 
+  \texttt{psum1}.
+
+\subsection{Metadata Functions}
+    \label{function-Metadata}
+
+Metadata functions return information (other than data values)
+  from a NAO. The same information can be obtained using an OOC, but
+  these functions are more convenient within expressions.
+
+\begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Function} & \textbf{Result}
+    \\
+      \hline 
+      \hline 
+        \texttt{coordinate\_variable(}$x$[,$d$]\texttt{)} & Coordinate variable of dimension $d$ (default 0)
+      \\
+      \hline 
+        \texttt{label(}$x$\texttt{)} & Descriptive title
+      \\
+      \hline 
+        \texttt{missing\_value(}$x$\texttt{)} & Value indicating null or undefined data
+      \\
+      \hline 
+        \texttt{nels(}$x$\texttt{)} 
+	    & Number of elements $= \texttt{prod(shape(}x\texttt{))}$
+      \\
+      \hline 
+        \texttt{rank(}$x$\texttt{)} 
+	    & Number of dimensions $= \texttt{nels(shape(}x\texttt{))}$
+      \\
+      \hline 
+        \texttt{shape(}$x$\texttt{)} & Vector of dimension sizes
+      \\
+  \hline
+\end{tabular}
+
+\subsection{Functions which change shape or order}
+    \label{function-change-shape-or-order}
+
+\begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Function} & \textbf{Result}
+    \\
+      \hline 
+      \hline 
+        \texttt{sort(}$x$[\texttt{,}$r$]\texttt{)} & Sort rank-$r$ sub-arrays of $x$ into ascending order over most significant dimension
+      \\
+      \hline 
+        \texttt{reshape(}$x$\texttt{)} & Spread the elements of $x$ into a vector with shape \texttt{nels(}$x$\texttt{)}
+      \\
+      \hline 
+        \texttt{reshape(}$x$,$s$\texttt{)} & Reshape the elements of $x$ into an array with shape $s$
+      \\
+      \hline 
+        \texttt{transpose(}$x$\texttt{)} & Reverse the order of dimensions of $x$
+      \\
+      \hline 
+        \texttt{transpose(}$x$,$p$\texttt{)} & Permute the dimensions of $x$ to the order specified by $p$
+      \\
+  \hline
+\end{tabular}
+
+  \par Here are some examples of the use of these functions:
+  \begin{verbatim}
+% [nap "sort {6.3 0.5 9 -2.1 0}"]
+-2.1 0 0.5 6.3 9
+% [nap "sort({{3 0 2}{1 9 1}})"]; # sort each column
+1 0 1
+3 9 2
+% [nap "sort({{3 0 2}{1 9 1}}, 1)"]; # sort each row
+0 2 3
+1 1 9
+% [nap "reshape {{1 3 7}{0 9 2}}"] all
+::NAP::217-217  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 7 0 9 2
+% [nap "reshape({6.3 0.5 9 -2.1 0}, {2 4})"] all
+::NAP::224-224  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 6.3  0.5  9.0 -2.1
+ 0.0  6.3  0.5  9.0
+% [nap "transpose {{1 3 7}{0 9 2}}"] all
+::NAP::228-228  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 0
+3 9
+7 2
+% [nap "a3d = reshape(0 .. 23, {2 3 4})"]
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23
+% [nap "transpose a3d"]
+ 0 12
+ 4 16
+ 8 20
+
+ 1 13
+ 5 17
+ 9 21
+
+ 2 14
+ 6 18
+10 22
+
+ 3 15
+ 7 19
+11 23
+% [nap "transpose(a3d, {0 2 1})"]
+ 0  4  8
+ 1  5  9
+ 2  6 10
+ 3  7 11
+
+12 16 20
+13 17 21
+14 18 22
+15 19 23
+\end{verbatim}
+
+\subsection{Linear-algebra Functions}
+    \label{function-Linear-algebra}
+
+The function 
+\texttt{solve\_linear(}$A$[,$B$])
+solves a system of linear equations defined by matrix $A$ and right-hand-sides $B$. 
+$B$ can be either a vector or a matrix (representing multiple right-hand sides).
+If $B$ is omitted then the result is the matrix inverse.
+
+If the system is \textit{over-determined} (more equations than unknowns) then the
+result is the solution of the \textit{linear least-squares problem}.
+This solution minimizes the sum of the squares of the differences between the left and right-hand
+sides.
+
+Let's solve the following system of two linear equations:
+\begin{eqnarray*}
+3 x - 4 y & = & 20 \\
+-5 x + 8 y & = & -36
+\end{eqnarray*}
+This can be done as follows:
+\begin{verbatim}
+% nap "A = {
+{3 -4}
+{-5 8}
+}"
+::NAP::14-14
+% nap "B = {20 -36}"
+::NAP::17-17
+% nap "x = solve_linear(A, B)"
+::NAP::20-20
+% $x a
+::NAP::20-20  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 -2
+\end{verbatim}
+
+  \par We can check the result using matrix multiplication:
+  \begin{verbatim}
+% [nap "A . x"]
+20 -36
+\end{verbatim}
+
+\subsection{Correlation}
+    \label{function-Correlation}
+
+  \par The functions 
+  \texttt{correlation} and 
+  \texttt{moving\_correlation} both calculate Pearson product-moment
+  correlations. Function 
+  \texttt{correlation} calculates correlations between variables
+  defined by the dimensions of its (one or two) arguments. Function 
+  \texttt{moving\_correlation} calculates pattern (spacial)
+  correlations between a (vector or matrix) window variable and
+  variables defined by moving a window of the same shape around a
+  larger array of the same rank.
+  \par Both functions handle missing values by omitting cases where one
+  or both values are missing. The result consists of two layers. Layer
+  0 contains the correlation values themselves. Layer 1 contains the
+  corresponding number of (non-missing) cases (sample size 
+  $n$) used to calculate these values.
+  \par Both functions produce an 
+  \texttt{f64} result if any of the data is 
+  \texttt{f64}, but otherwise the result is 
+  \texttt{f32}.
+
+\subsubsection{Function \texttt{correlation(}$x$[,$y$]\texttt{)}}
+    \label{function-function-correlation}
+
+  \par If 
+  $y$ is not specified then it defaults to 
+  $x$.
+  \par The 1st (most significant) dimensions of 
+  $x$ and 
+  $y$ must have the same size, since this corresponds to the
+  number of cases. (For time-series this dimension is time.) The
+  remaining dimensions (if any) of 
+  $x$ and 
+  $y$ are essentially merged into column dimensions, but do
+  appear in the result.
+  \par For example, let 
+  $x$ be an $80\times 3$ matrix and 
+  $y$ a $80\times 5$ matrix. The command
+  \begin{verbatim}
+nap "r = correlation(x, y)"
+\end{verbatim}
+
+produces a $2\times 3\times 5$ array 
+  $r$. 
+  $r_{0ij}$
+  is the correlation between column 
+  $i$ of 
+  $x$ and column 
+  $j$ of 
+  $y$. 
+  $r_{1ij}$
+  is the number of cases ($n$) used to calculate 
+  $r_{0ij}$.
+  \par A simple example is:
+  \begin{verbatim}
+% [nap "correlation({1 3 _ 6 6}, {6 6 4 2 3})"]
+-0.924138 4
+\end{verbatim}
+
+Element 2 (base 0) of 
+  $x$ is missing, so element 2 from 
+  $y$ is not used and the sample size is 4 (as shown in the
+  second element of the result). The correlation between
+  \{1\ 3\ 6\ 6\} and \{6\ 6\ 2\ 3\} is calculated
+  to be -0.924138.
+  \par The following example is from Table 15.2 (page 274) of 
+  \emph{Schaum's Outline of Theory and Problems of
+  Statistics}, M.R. Spiegel, 1961:
+  \begin{verbatim}
+% [nap "correlation{
+        {64 57 8}
+        {71 59 10}
+        {53 49 6}
+        {67 62 11}
+        {55 51 8}
+        {58 50 7}
+        {77 55 10}
+        {57 48 9}
+        {56 52 10}
+        {51 42 6}
+        {76 61 12}
+        {68 57 9}
+}"] -f %6.4f
+ 1.0000  0.8196  0.7698
+ 0.8196  1.0000  0.7984
+ 0.7698  0.7984  1.0000
+
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000
+12.0000 12.0000 12.0000
+\end{verbatim}
+
+Layer 0 of the result is the correlation matrix.
+  \\The correlation between columns 0 and 1 is 0.8196.
+  \\The correlation between columns 0 and 2 is 0.7698.
+  \\The correlation between columns 1 and 2 is 0.7984.
+  \\There is no missing data, so all values in layer 1 are 12.
+
+\subsubsection{Function \texttt{moving\_correlation(}$x$,$y$,[$lag_0$[,$lag_1$]]\texttt{)}}
+    \label{function-moving-correlation}
+
+The ranks of $x$ and $y$ must be the same.
+(The current version supports ranks 1 and 2 only.)
+
+If $x$ and $y$ have the same shape then the result contains a single
+correlation, calculated by treating the elements of each array as two lists of values.
+
+If $x$ and $y$ have different shapes then the smaller of $x$ and 
+$y$ is a window (\textit{chip}) array which is moved around in the other array,
+producing a correlation for each position.
+\\
+$lag_0$ is vector of row lags (default: all possible)
+\\
+$lag_1$ is vector of column lags (default: all possible)
+
+\subsection{Geometry}
+    \label{function-Geometry}
+
+\subsubsection{Testing whether points are in polygon}
+    \label{function-inPolygon}
+
+  \par Function 
+  \texttt{inPolygon(}$x$\texttt{,} $y$\texttt{,} $p$\texttt{)} 
+  tests whether the points defined by 
+  $x$ and 
+  $y$ are inside the polygon defined by 
+  $p$. The result is
+\begin{bullets}
+    \item -1 if ($x$, $y$) is outside the polygon.
+    \item 0 if ($x$, $y$) is exactly on an edge (boundary) of the polygon.
+    \item 1 if ($x$, $y$) is inside the polygon.
+\end{bullets}
+
+The algorithm is an extension of W. Randolph Franklin's 
+  \href{http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html}
+  {\texttt{PNPOLY}}. 
+  \texttt{PNPOLY} classifies points into only two categories, 
+  \textit{inside} and 
+  \textit{outside}. Points exactly on an edge can be classified either
+  way. The modified algorithm in 
+  \texttt{inPolygon} does detect edge points.
+  \par The ranks of 
+  $x$ and 
+  $y$ can differ provided their trailing dimensions match. The
+  shape of the result is that of the one of higher rank. If an element
+  of 
+  $x$ or 
+  $y$ is missing then the corresponding element of the result
+  is missing.
+  \par The argument 
+  $p$ is an 
+  $n\times  m$ matrix defining the 
+  $n$ vertices ($x$, $y$) of the polygon. There must be at least one vertex. The
+  number of columns ($m$) must be at least 2. Column 0 contains 
+  $x$. Column 1 contains 
+  $y$. Any other columns are ignored.
+  \par The following example tests whether the points (1,2), (2,2),
+  (3,2), (4,2), (5,2), (6,2) are in the triangle with vertices (0,0),
+  (5,0), (5,5):
+  \begin{verbatim}
+% [nap "inPolygon(1 .. 6, 2, {{0 0}{5 0}{5 5}})"]
+-1 0 1 1 0 -1
+\end{verbatim}
+
+\subsubsection{Clip 2D line segments by Rectangular Window}
+    \label{function-clip2d}
+
+Function
+\texttt{clip2d}
+gives that part of a line segment visible through an upright rectangular window.
+It uses the Liang-Barsky parametric line-clipping algorithm.
+The code is based (after discovering and fixing several bugs) on that in
+\begin{quote}
+Foley, J.D., van Dam, A., Feiner, S.K. and Hughes, J.F.,
+\emph{Computer Graphics Principles and Practice, 2nd ed. in C},
+pp 122-3.
+\end{quote}
+
+The function is called by 
+\\
+\texttt{clip2d(}$\mathit{window, line}$\texttt{)} 
+
+The argument $\mathit{window}$ specifies opposite corners of the window.
+It is a $2 \times 2$ matrix (or a 4-element vector) containing these two points,
+with their $x$ coordinates in column 0
+and their $y$ coordinates in column 1.
+
+The argument $\mathit{line}$ specifies the end points of the full line segments.
+It can be a $2 \times 2$ matrix containing the two end points of a line segment,
+with their $x$ coordinates in column 0
+and their $y$ coordinates in column 1.
+It can also be an $n \times 2 \times 2$ array containing $n$ line segments.
+In fact any rank is legal but the number of elements must be a multiple of 4.
+
+The result gives the end points of the visible line segment
+and has the same shape as $\mathit{line}$.
+If no part of a line segment is visible through the window then the corresponding
+values of the result are missing (NaN).
+
+The following example clips three line segments:
+\begin{verbatim}
+% [nap "window = {{2 6}{4 8}}"]
+2 6
+4 8
+% [nap "lines = {{{3 7}{5 9}} {{0 0}{4 1}} {{4 5}{1 8}}}"]
+3 7
+5 9
+
+0 0
+4 1
+
+4 5
+1 8
+% [nap "clip2d(window, lines)"]
+3 7
+4 8
+
+_ _
+_ _
+
+3 6
+2 7
+\end{verbatim}
+
+\subsubsection{Triangulation}
+    \label{function-Triangulation}
+
+  \par 
+  \textit{Triangulation} is the process of joining scattered ($x$, $y$) points (called 
+  \textit{sites}) to form triangles. One important use of triangulation
+  is interpolation of 
+  \mbox{($x$, $y$, $z$)} data. Function 
+  {\texttt{scattered2grid}} 
+  (section \ref{nap-function-lib-scattered2grid})
+    interpolates by defining a plane for each triangle produced by triangulation.
+  \par The 
+  \href{http://www.ics.uci.edu/$\sim$eppstein/gina/delaunay.html}{Delaunay triangulation} is the optimal triangulation in various senses. For
+  example, it maximises the minimum angle. Delaunay triangulation is
+  closely related to 
+  \href{http://www.ics.uci.edu/$\sim$eppstein/gina/voronoi.html}{Voronoi Diagrams} which consist of polygons around each site. The points
+  within each polygon are those which are closer to this site than to
+  any other site. A good survey of Delaunay triangulation and Voronoi
+  diagrams is given by
+  \begin{quote}Franz Aurenhammer, 
+  \href{http://portal.acm.org/citation.cfm?doid=116873.116880}{\emph{Voronoi diagrams -- a survey of a fundamental geometric data structure}}, ACM Computing Surveys, Volume 23, Issue 3 (September 1991),
+  pp345-405, 1991\end{quote}
+
+Function \texttt{triangulate} gives the triangles defined by Delaunay triangulation.
+
+Function \texttt{triangulate\_edges} gives the edges defined by the same Delaunay triangulation.
+
+The code of both functions is based on a
+  program written by 
+  \href{http://goanna.cs.rmit.edu.au/$\sim$gl/}{Geoff Leach},
+  Department of Computer Science, RMIT, Melbourne, Australia. This
+  program implements a very efficient Delaunay triangulation algorithm
+  that is O($n \log n$) time and O($n$) space. This worst-case optimal divide-and-conquer
+  algorithm is described in
+\begin{quote}
+  Guibas, L. and Stolfi, J., 
+  \href{http://portal.acm.org/citation.cfm?id=808751&dl=ACM&coll=portal}
+  {\emph
+  {Primitives for the manipulation of general subdivisions and the computation of Voronoi diagrams}
+  }, Proceedings of the fifteenth annual ACM symposium on theory of computing, pp221-234, 1983.
+\end{quote}
+
+  \begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Function} & \textbf{Result}
+    \\
+      \hline 
+      \hline 
+\texttt{triangulate(}$sites$\texttt{)} & $t\times 3$ matrix of site indices defining $t$ triangles
+      \\
+      \hline 
+\texttt{triangulate\_edges(}$sites$\texttt{)} & $e\times 2$ matrix of site indices defining $e$ edges
+      \\
+  \hline
+\end{tabular}
+
+The argument $sites$ is an $n\times m$ matrix defining the 
+  $n$ points ($x$,$y$). The number of columns ($m$) must be at least 2. Column 0 contains 
+  $x$. Column 1 contains 
+  $y$. Any other columns are ignored. The row number is called
+  the 
+  \textit{site index} and ranges from 0 to 
+  $n$-1.
+  \par The following example triangulates the sites (0,0), (2,1), (0,1)
+  and (1,2). These have site indices 0, 1, 2 and 3 respectively.
+  Function 
+  \texttt{triangulate} gives the site indices of the vertices of
+  each of two triangles. Function 
+  \texttt{triangulate\_edges} gives the site indices of the vertices
+  of each of the five edges of these same two triangles.
+  \begin{verbatim}
+% [nap "triangulate({{0 0}{2 1}{0 1}{1 2}})"]
+0 1 2
+1 2 3
+% [nap "triangulate_edges({{0 0}{2 1}{0 1}{1 2}})"]
+0 2
+0 1
+1 3
+1 2
+2 3
+\end{verbatim}
+
+\subsection{Grid Functions}
+    \label{function-Grid}
+    \label{function-Grid-Functions}
+
+There are currently just two closely related grid functions, 
+  \texttt{invert\_grid} and 
+  \texttt{invert\_grid\_no\_trim}. These can be applied to
+  \begin{bullets}
+    \item one-dimensional data to define a piecewise-linear mapping as
+    the inverse of a given piecewise-linear mapping.
+    \item two-dimensional data to define a piecewise-bilinear mapping as
+    the inverse of a given piecewise-bilinear mapping.
+  \end{bullets}
+
+There is only a minor difference between these two functions.
+  Function 
+  \texttt{invert\_grid} suppresses edges (rows and columns in 2D
+  case) containing nothing except missing values. Function 
+  \texttt{invert\_grid\_no\_trim} does no such trimming.
+  \par In the 1D case we have a piecewise-linear mapping from 
+  $x$ to 
+  $y$, and we want a piecewise-linear mapping from 
+  $y$ to 
+  $x$.
+The functions are called by
+  \\
+  \texttt{invert\_grid(}$y\texttt{,}ycv$\texttt{)}
+  \\or
+  \\
+  \texttt{invert\_grid\_no\_trim(}$y\texttt{,}ycv$\texttt{)}
+  \\where 
+  $y$ is the known mapping (and has a coordinate variable corresponding to $x$)
+  \\and 
+  $ycv$ is the desired new $y$ coordinate variable.
+
+The following example starts with a mapping from 
+  $x$ to 
+  $y$ defined by the two lines joining the three points
+  (0,\ 0), (2,\ 1) and (5,\ 4). The difference between 
+  \texttt{invert\_grid} and 
+  \texttt{invert\_grid\_no\_trim} is shown by attempting to
+  extrapolate to $y=-1$ with both these functions.
+Both produce the inverse mapping from $y$ to 
+  $x$ defined by the four lines joining the five points
+  (0,0), (2,1), (3,2), (4,3) and (5,4).
+Function \texttt{invert\_grid\_no\_trim} generates the requested point for $y=-1$ (with 
+$x$ missing) whereas \texttt{invert\_grid} suppresses this point.
+  \begin{verbatim}
+% nap "y = {0 1 4}"
+::NAP::56-56
+% $y set coo "{0 2 5}"
+% [nap "coordinate_variable(y) /// y"]
+0 2 5
+0 1 4
+% [nap "ycv = -1 .. 4"] value
+-1 0 1 2 3 4
+% nap "x = invert_grid(y,ycv)"
+::NAP::75-75
+% $x all
+::NAP::75-75  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::76-76
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: ::NAP::72-72
+Value:
+0 2 3 4 5
+% [nap "coordinate_variable(x) /// x"]
+0 1 2 3 4
+0 2 3 4 5
+% nap "xnt = invert_grid_no_trim(y,ycv)"
+::NAP::86-86
+% $xnt all
+::NAP::86-86  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::87-87
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: ::NAP::83-83
+Value:
+_ 0 2 3 4 5
+% [nap "coordinate_variable(xnt) /// xnt"]
+-1  0  1  2  3  4
+ _  0  2  3  4  5
+\end{verbatim}
+
+In the 2D case, the functions are called by
+\\
+\texttt{invert\_grid(}$y\texttt{,}ycv$\texttt{,}$x,xcv$\texttt{)},
+\\or
+\\
+\texttt{invert\_grid\_no\_trim(}$y\texttt{,}ycv$\texttt{,}$x,xcv$\texttt{)},
+  \\where matrix 
+  $y$ defines a mapping from 
+  $ij$ space to 
+  $y$.
+  \\matrix 
+  $x$ defines a mapping from 
+  $ij$ space to 
+  $x$.
+  \\The result is a 3D array whose
+  \begin{bullets}
+    \item Dimension 0 has the specified coordinate-variable $ycv$
+    \item Dimension 1 has the specified coordinate-variable $xcv$.
+    \item Dimension 2 is of size 2, corresponding to the $i$ and $j$ mappings.
+	We can think of the result as two matrices defining mappings from $xy$ space to 
+	$i$ and $j$ respectively.
+  \end{bullets}
+
+The following 2D example shows how a satellite image can be mapped
+  to latitude/longitude space (i.e. a 
+  \textit{Cylindrical Equidistant} map projection). Note that the terms
+  \textit{line} and 
+  \textit{pixel} refer to the row and column of a raw satellite image
+  respectively. We are interested in an input region bounded by line
+  40, line 50, pixel 1 and pixel 21. Assume we know the latitude and
+  longitude on a $3\times 3$ grid corresponding to lines 40, 50, 60 and pixels
+  1, 11, 21. The following defines and displays an inverse grid for
+  latitudes 40$^{\circ}$S, 30$^{\circ}$S, 25$^{\circ}$S and longitudes 150$^{\circ}$E, 160$^{\circ}$E, 170$^{\circ}$E,
+  180$^{\circ}$E:
+  \begin{verbatim}
+nap "line = {40 50 60}"
+nap "pixel = {1 11 21}"
+nap "lat_grid = {{-40 -50 _}{-30 -40 -50}{-20 -30 -40}}"
+$lat_grid set coo line pixel
+nap "lon_grid = {{200 180 _}{180 160 140}{160 140 120}}"
+$lon_grid set coo line pixel
+nap "lat_cv = {-40 -30 -25}"
+$lat_cv set unit degrees_north
+nap "lon_cv = 150 .. 180 ... 10"
+$lon_cv set unit degrees_east
+nap "ig = invert_grid(lat_grid, lat_cv, lon_grid, lon_cv)"
+$ig all
+\end{verbatim}
+
+This displays the following inverse grid:
+  \begin{verbatim}
+::NAP::46-46  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Link: ::NAP::47-47
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: ::NAP::36-36
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: ::NAP::39-39
+Dimension 2   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+52.5 13.5
+50.0 11.0
+47.5  8.5
+45.0  6.0
+
+57.5  8.5
+55.0  6.0
+52.5  3.5
+50.0  1.0
+
+60.0  6.0
+57.5  3.5
+55.0  1.0
+   _    _
+\end{verbatim}
+
+The following displays the coordinate variables of this inverse
+grid 
+  \texttt{ig}:
+  \begin{verbatim}
+% [$ig coo 0] all
+::NAP::36-36  f32  MissingValue: NaN  References: 1  Unit: degrees_north
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-40 -30 -25
+% [$ig coo 1] all
+::NAP::39-39  f32  MissingValue: NaN  References: 1  Unit: degrees_east
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+150 160 170 180
+\end{verbatim}
+
+The first row of 
+  \texttt{ig} is
+  \begin{verbatim}
+52.5 13.5
+\end{verbatim}
+
+Let us use these values as indirect indices of the original
+latitude and longitude grids:
+  \begin{verbatim}
+% [nap "lat_grid(@52.5, @13.5)"]
+-40
+% [nap "lon_grid(@52.5, @13.5)"]
+150
+\end{verbatim}
+
+Note that these results correspond to the initial values of the
+coordinate variables of 
+  \texttt{ig}.
+  \par Now let us define a small extract from a raw satellite image:
+  \begin{verbatim}
+nap "raw = {
+{99 91 91 90}
+{95 95 92 91}
+{90 89 88 88}
+}"
+nap "line = 50 .. 52"
+nap "pixel = 1 .. 4"
+$raw set coo line pixel
+\end{verbatim}
+
+  \par The latitudes and longitudes at these points are given by
+  \begin{verbatim}
+% [nap "lat_grid(@line, @pixel)"]
+-30 -31 -32 -33
+-29 -30 -31 -32
+-28 -29 -30 -31
+% [nap "lon_grid(@line, @pixel)"]
+180 178 176 174
+178 176 174 172
+176 174 172 170
+\end{verbatim}
+
+  \par We can map this image to a 
+  \textit{Cylindrical Equidistant} projection as follows:
+  \begin{verbatim}
+% nap "latitude = f32(-29 .. -33)"
+::NAP::135-135
+% nap "longitude = f32(170 .. 180)"
+::NAP::142-142
+% nap "cyl_eq = raw(@ig(@latitude, @longitude, ))"
+::NAP::166-166
+% $cyl_eq all -f %.1f -col 11
+::NAP::166-166  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: ::NAP::152-152
+Dimension 1   Size: 11     Name: (NULL)    Coordinate-variable: ::NAP::153-153
+Value:
+91.0    _    _    _    _    _    _    _    _    _    _
+89.2 88.7 88.0 89.4 91.0 92.9 95.0 94.5 95.0 96.5 99.0
+88.0 88.8 89.8 90.8 92.0 92.3 92.2 91.8 91.0 92.1 92.2
+91.0 91.1 91.0 91.0 91.0 91.0 91.0 90.3 89.8 89.3 89.0
+95.0 94.7 93.8 92.2 90.0 89.7 89.2 88.7 88.0 89.4 91.0
+% [$cyl_eq coo 0] all
+::NAP::152-152  f32  MissingValue: NaN  References: 1  Unit: degrees_north
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-29 -30 -31 -32 -33
+% [$cyl_eq coo 1] all -col 11
+::NAP::153-153  f32  MissingValue: NaN  References: 1  Unit: degrees_east
+Dimension 0   Size: 11     Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+170 171 172 173 174 175 176 177 178 179 180
+\end{verbatim}
+
+\subsection{Cartographic Projection Functions}
+\label{function-Cart-Proj}
+
+There are two built-in cartographic (map) projection functions corresponding to forward
+and inverse projections:
+\begin{bullets}
+    \item \texttt{cart\_proj\_fwd(}$\mathit{proj\_spec, lat, lon}$\texttt{)} 
+    \item \texttt{cart\_proj\_inv(}$\mathit{proj\_spec, x, y}$\texttt{)} 
+\end{bullets}
+
+These are based on the 
+PROJ.4 Cartographic Projections library originally written by Gerald Evenden, then of the 
+U.S. Geological Survey.
+This software is written in C.
+It supports over a hundred projections, which can be tailored using various parameters.
+The primary PROJ.4 home page is
+\href{http://www.remotesensing.org/proj}{http://www.remotesensing.org/proj}.
+There is a mirror at
+\href{http://proj.maptools.org}{http://proj.maptools.org}. 
+Note the links to documentation, which is essential to use these Nap functions.
+
+Note the PROJ.4 Tcl library functions in \ref{geog-Cartographic}.
+
+\subsubsection{Function \texttt{cart\_proj\_fwd(}$\mathit{proj\_spec, lat, lon}$\texttt{)}}
+\label{function-cart-proj-fwd}
+
+\begin{simpleitems}
+    \item $\mathit{proj\_spec}$: \texttt{c8} NAO containing a PROJ.4 projection specification.
+    \item $\mathit{lat}$: latitudes.
+    \item $\mathit{lon}$: longitudes.
+\end{simpleitems}
+
+$\mathit{lon}$ and $\mathit{lat}$ can have any ranks and these can differ.
+The sizes of their trailing dimensions must match.
+If $\mathit{lon}$ or $\mathit{lat}$ has no unit then this defaults to degrees.
+
+The result contains eastings and northings in metres.
+It's rank is
+$1 + (\texttt{rank}(\mathit{lat}) \texttt{ >>> } \texttt{rank}(\mathit{lon}))$.
+The new least significant dimension has size 2.
+Eastings are in column 0.  Northings are in column 1.
+
+The following example converts 
+latitude $10.5^{\circ}$S,
+longitude $97^{\circ}$E,
+to the Mercator Projection.
+The resulting easting is $10797990.61$.
+The resulting northing is $-1167671.00$.
+\begin{verbatim}
+% [nap "cart_proj_fwd('proj=merc', -10.5, 97)"] -f %.2f
+10797990.61 -1167671.00
+\end{verbatim}
+
+The following example converts 
+six points to the Universal Transverse Mercator (UTM) projection for zone 55 in the
+Southern Hemisphere.
+Note that the latitude argument has rank 1, while the longitude argument has rank 2.
+\begin{verbatim}
+% nap "spec = 'proj=utm south zone=55'"
+::NAP::141-141
+% nap "latitude = {-39 -38 -35}"
+::NAP::143-143
+% [nap "longitude = {{149 145 144}{143 148 142}}"]
+149 145 144
+143 148 142
+% [nap "xy = cart_proj_fwd(spec, latitude, longitude)"] -f %.3f
+ 673190.900 5681320.708
+ 324396.629 5792297.633
+ 226201.904 6122843.308
+
+ 153573.959 5675606.444
+ 587798.418 5793713.242
+  43542.271 6115516.008
+\end{verbatim}
+
+\subsubsection{Function \texttt{cart\_proj\_inv(}$\mathit{proj\_spec, x, y}$\texttt{)}}
+\label{function-cart-proj-inv}
+
+\begin{simpleitems}
+    \item $\mathit{proj\_spec}$: \texttt{c8} NAO containing a PROJ.4 projection specification.
+    \item $\mathit{x}$: eastings (metres).
+    \item $\mathit{y}$: northings (metres).
+\end{simpleitems}
+
+$\mathit{x}$ and $\mathit{y}$ can have any ranks and these can differ.
+The sizes of their trailing dimensions must match.
+
+The result contains latitudes and longitudes in degrees.
+It's rank is
+$1 + (\texttt{rank}(\mathit{x}) \texttt{ >>> } \texttt{rank}(\mathit{y}))$.
+The new least significant dimension has size 2.
+Latitudes are in column 0.  Longitudes are in column 1.
+
+The following example is the inverse of the first example in section 
+\ref{function-cart-proj-fwd}.
+\begin{verbatim}
+% [nap "cart_proj_inv('proj=merc', 10797990.61, -1167671)"]
+-10.5 97
+\end{verbatim}
+
+The following example is the inverse of the second example in section 
+\ref{function-cart-proj-fwd}.
+\begin{verbatim}
+% [nap "cart_proj_inv(spec, xy(,,0), xy(,,1))"]
+-39 149
+-38 145
+-35 144
+
+-39 143
+-38 148
+-35 142
+\end{verbatim}
+
+\subsection{Functions related to Special Data-types}
+    \label{function-Special-Data-types}
+
+  \begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Function} & \textbf{Result}
+    \\
+      \hline 
+      \hline 
+        \texttt{open\_box(}$x$\texttt{)} & NAO pointed to by boxed NAO $x$
+      \\
+      \hline 
+        \texttt{pad(}$x$\texttt{)} & Normal NAO corresponding to ragged NAO $x$
+      \\
+      \hline 
+        \texttt{prune(}$x$\texttt{)} & Ragged NAO corresponding to normal NAO $x$
+      \\
+  \hline
+\end{tabular}
+
+\subsubsection{Function \texttt{open\_box(}$x$\texttt{)}}
+    \label{function-open-box}
+
+The following example illustrates the use of the function 
+  \texttt{open\_box}, which allows one to extract NAOs from a
+  structure created with the operator `\texttt{,}'.
+  \begin{verbatim}
+% nap "pointers = {4 5} , 'hello' , 9"
+::NAP::9776-9776
+% $pointers
+9772 9773 9775
+% [nap "open_box(pointers(0))"] all
+::NAP::9772-9772  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+4 5
+% [nap "open_box(pointers(1))"] all
+::NAP::9773-9773  c8  MissingValue: (NULL)  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+hello
+% [nap "open_box(pointers(2))"] all
+::NAP::9775-9775  i32  MissingValue: -2147483648  References: 1  Unit: (NULL)
+Value:
+9
+\end{verbatim}
+
+\subsubsection{Functions \texttt{prune(}$x$\texttt{)} and \texttt{pad(}$x$\texttt{)}}
+    \label{functions-prune-pad}
+
+The following example illustrates the use of functions 
+  \texttt{prune} and its inverse 
+  \texttt{pad}. Function 
+  \texttt{prune} creates a 
+  \texttt{ragged} array. This suppresses missing values at the
+  start and end of the least significant dimension (column in this
+  matrix case). In this matrix case it creates a separate NAO for each
+  row and stores an index (slot number) to these in the result.
+  \begin{verbatim}
+% nap "data = {{0 1.5 2 -1}{_ 1 4 1n}{4#_}{2#_ 9 -9}}"
+::NAP::9736-9736
+% $data
+ 0.0  1.5  2.0 -1.0
+   _  1.0  4.0    _
+   _    _    _    _
+   _    _  9.0 -9.0
+% nap "compressed_data = prune(data)"
+::NAP::9738-9738
+% $compressed_data all
+::NAP::9738-9738  ragged  MissingValue: 0  References: 1  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+
+0   start-index: 0   ::NAP::9740-9740
+1   start-index: 1   ::NAP::9741-9741
+2   start-index: 4   ::NAP::9742-9742
+3   start-index: 2   ::NAP::9743-9743
+% ::NAP::9743-9743
+9 -9
+% [nap "pad(compressed_data)"] all
+::NAP::9745-9745  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 0.0  1.5  2.0 -1.0
+   _  1.0  4.0    _
+   _    _    _    _
+   _    _  9.0 -9.0
+\end{verbatim}
+
+\subsection{Morphological Functions}
+    \label{function-Morphological}
+
+  \par The basic concepts are explained in the MATLAB documentation on 
+  \href{http://www.mathworks.com/access/helpdesk/help/toolbox/images/morph.html}
+  {Morphological Operations}
+  at
+  \href{http://www.mathworks.com} {http://www.mathworks.com}.
+
+  \begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Function} & \textbf{Result}
+    \\
+      \hline 
+      \hline 
+        \texttt{dilate(}$x$,$se$[,$seo$]) & Binary dilation of $x$
+      \\
+      \hline 
+        \texttt{erode(}$x$,$se$[,$seo$]) & Binary erosion of $x$
+      \\
+      \hline 
+        \texttt{moving\_range(}$x$,$s$\texttt{)} & Range (max-min) of moving shape-$s$ window around matrix $x$
+      \\
+  \hline
+\end{tabular}
+
+  \subsubsection{Morphological Binary Dilation and Erosion}
+    \label{function-Dilation-and-Erosion}
+
+  $x$ is an $n\times m$ non-negative matrix that is being dilated or eroded.
+  \\
+  $se$ is the morphological structure element, an $a\times b$ matrix, where $a<n$ and $b<m$.
+  \\
+  $seo$ is the origin of the structure element indexed from 0 at the top left corner.
+
+\subsubsection{Moving Range}
+    \label{function-Moving-Range}
+
+  \par Move a window over the matrix 
+  $x$ and find the maximum difference between values in the
+  moving window. The result is placed in the element nearest the centre
+  of the moving window.

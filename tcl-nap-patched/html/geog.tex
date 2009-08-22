@@ -1,0 +1,389 @@
+%  $Id: geog.tex,v 1.2 2006/03/02 01:44:59 dav480 Exp $ 
+    % NAP Library: Geographic
+    \section{Geographic Functions}
+
+  \subsection{
+    \label{Introduction}Introduction
+  }
+The following functions are defined in the files 
+  \texttt{geog.tcl} and 
+  \texttt{land.tcl}. Note that 
+  \texttt{geog.tcl} also defines 
+  \href{geog-proc.html}{Geographic Procedures}.
+  \subsection{
+    \label{Wind}Divergence and Vorticity of Wind
+  }
+Functions 
+  \texttt{div\_wind(}$u$\texttt{,} $v$\texttt{)}
+and 
+  \texttt{vorticity\_wind(}$u$\texttt{,} $v$\texttt{)}
+give the divergence (second$^{-1}$) and vorticity (second$^{-1}$)
+  of a 2D wind, where
+  \\
+  $u$ is matrix containing zonal (x-component i.e. from west
+  to east) wind in metres/sec.
+  \\
+  $v$ is matrix containing meridional (y-component i.e. from
+  south to north) wind in metres/sec.
+  \\Coordinate variables of 
+  $u$ and 
+  $v$ are latitude ($^{\circ}$N) and longitude ($^{\circ}$E).
+  \par Let 
+  $\theta$ be latitude in radians, 
+  $\phi$ be longitude in radians, 
+  $r$ be radius of earth in metres.
+
+  The divergence of a 2D wind is defined as
+\[
+  \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y}
+\]
+Function \texttt{div\_wind} uses the equivalent formula
+\[
+  \frac{\frac{\partial u}{\partial \phi} + \frac{\partial(v \cos \theta)}{\partial \theta})}
+  {r cos \theta}
+\]
+  The vorticity of a 2D wind is defined as
+\[
+  \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}
+\]
+  Function 
+  \texttt{vorticity\_wind} uses the equivalent formula
+\[
+  \frac{\frac{\partial v}{\partial \phi} - \frac{\partial(u \cos \theta)}{\partial \theta})}
+  {r cos \theta}
+\]
+
+  \subsection{
+    \label{latlon}Things related to Latitude and Longitude
+  }
+
+  \subsubsection{
+    \label{area-on-globe} \texttt{area\_on\_globe(}$latitude$\texttt{,} $longitude$\texttt{)}
+  }
+Given latitude and longitude vectors, this function calculates a
+  matrix whose values are fractions of the Earth's surface area
+  corresponding to cells defined by the functions 
+  \ref{merid-bounds} \texttt{merid-bounds(} $longitude$ \texttt{)} and 
+  \ref{zone-bounds} \texttt{zone-bounds(} $latitude$ \texttt{)} .
+  \par Example:
+  \begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "area = area_on_globe(lats, lons)"] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+  \subsubsection{
+    \label{fix-longitude} \texttt{fix\_longitude(}$longitude$\texttt{)}
+  }
+Adjust elements of longitude vector by adding or subtracting
+  multiple of 360 to ensure:
+  \\$-$180 $\le$ 
+  $x$ 
+  $_{0}$ $<$ 180
+  \\0 $\le$ 
+  $x$ 
+  $_{i+1}$$-$ 
+  $x$ 
+  $_{i}$ $<$ 360
+  \\Also ensure unit is 
+  \texttt{degrees\_east}.
+  \subsubsection{
+    \label{merid-bounds} \texttt{merid\_bounds(}$longitude$\texttt{)}
+  }
+This function defines reasonable boundary longitudes from a
+  vector giving the central longitudes of each cell. The range of
+  longitudes should not exceed 360$^{\circ}$ but may be much smaller.
+  \par The result is a vector with one more element than the argument.
+  The midpoints between adjacent argument values define all the
+  elements of the result except the first and final ones.
+  \par The first and final values are defined as follows. Trial outer
+  cells are added with the same width as their adjacent cell. If these
+  outer cells overlap (due to global wrap-around) then both outer
+  boundaries are set to the value (plus an integer multiple of 360$^{\circ}$)
+  midway between the first and final values of the argument.
+  \par Examples:
+  \begin{verbatim}
+% [nap "merid_bounds {-180 -90 0 30 90 180}"] value; #
+global-range
+-180 -135 -45 15 60 135 180
+% [nap "merid_bounds {10 30 40 50 60}"] value; # local-range
+0 20 35 45 55 65
+\end{verbatim}
+
+  \subsubsection{
+    \label{merid-wt} \texttt{merid\_wt(}$longitude$\texttt{)}
+  }
+Calculate normalised (so sum of weights is 1) meridional weights
+  from longitudes. These weights are proportional to the widths of the
+  cells defined by the above function 
+  \ref{merid-bounds} \texttt{merid-bounds(} $longitude$ \texttt{)} .
+  \par Examples:
+  \begin{verbatim}
+% [nap "merid_wt {-180 -90 0 30 90 180}"] value; #
+global-range
+0.125 0.25 0.166667 0.125 0.208333 0.125
+% [nap "merid_wt {10 30 40 50 60}"] value; # local-range
+0.307692 0.230769 0.153846 0.153846 0.153846
+\end{verbatim}
+
+  \subsubsection{
+    \label{zone-bounds} \texttt{zone\_bounds(}$latitude$\texttt{)}
+  }
+This function defines reasonable boundary latitudes from a
+  vector giving the central latitudes of each cell.
+  \par The result is a vector with one more element than the argument. If
+  the argument is an arithmetic progression (AP) then the midpoints
+  between adjacent argument values define all the elements of the
+  result except the first and final ones, otherwise each of these
+  boundaries separates two equal 
+  \textit{surface areas} between adjacent argument values. The two
+  outer boundaries are defined using steps (in latititude or area)
+  equal to their adjacent step, with the obvious limit in magnitude of
+  90$^{\circ}$.
+  \par Examples:
+  \begin{verbatim}
+% [nap "zone_bounds(-80 .. 80 ... 40)"] value; # global-range
+AP
+-90 -60 -20 20 60 90
+% [nap "zone_bounds(90 .. -90 ... -30)"] value; #
+global-range AP
+90 75 45 15 -15 -45 -75 -90
+% [nap "zone_bounds{-80 -40 -10 10 40 80}"] value; #
+global-range non-AP
+-90 -54.4687 -24.0929 0 24.0929 54.4687 90
+% [nap "zone_bounds(10 .. 60 ... 10)"] value; # local-range
+AP
+5 15 25 35 45 55 65
+\end{verbatim}
+
+  \subsubsection{
+    \label{zone-wt} \texttt{zone\_wt(}$latitude$\texttt{)}
+  }
+Calculate normalised (so sum weights of is 1) zonal weights from
+  latitudes. These weights are proportional to the surface areas of the
+  cells (of longitude width 360$^{\circ}$) defined by the above function 
+  \ref{zone-bounds} \texttt{zone-bounds(} $latitude$ \texttt{)} . If the Earth's radius is 
+  $R$ then the area between two latitudes 
+  $L_1$ and 
+  $L_2$ is 
+  $2\pi R^2(\sin{L_1} - \sin{L_2})$.
+  \par Examples:
+  \begin{verbatim}
+% [nap "zone_wt(-80 .. 80 ... 40)"] value; # global-range AP
+0.0669873 0.262003 0.34202 0.262003 0.0669873
+% [nap "zone_wt(90 .. -90 ... -30)"] value; # global-range AP
+0.0170371 0.12941 0.224144 0.258819 0.224144 0.12941 0.0170371
+% [nap "zone_wt{-80 -40 -10 10 40 80}"] value; # global-range
+non-AP
+0.0931011 0.20279 0.204109 0.204109 0.20279 0.0931011
+% [nap "zone_wt(10 .. 60 ... 10)"] value; # local-range AP
+0.209562 0.199962 0.184286 0.16301 0.136782 0.106398
+\end{verbatim}
+
+  \subsection{
+    \label{land}Land, Sea and Coast
+  }
+The functions 
+  \texttt{is\_land}, 
+  \texttt{is\_coast} and 
+  \texttt{fraction\_land} are based on the 
+  \href{land-flag.html}{ \texttt{nap-land-flag} } command. This uses data which has an accuracy of 0.01$^{\circ}$.
+  \par These three functions take an optional argument 
+  $data\_dir$, which specifies the directory containing the 
+  \texttt{nap\_land\_flag} data files. This argument is not needed
+  when the standard data directory is used.
+  \subsubsection{
+    \label{is-land} \texttt{is\_land(}$latitude$\texttt{,} $longitude$[\texttt{,} $data\_dir$]\texttt{)}
+  }
+Produce a land/sea mask in the form of an 
+  \texttt{i8} (8-bit signed integer) matrix with 1 for land and 0
+  for sea.
+  \par The arguments 
+  $latitude$ and 
+  $longitude$ can be scalars, vectors or matrices. If they are
+  either both vectors, or one is a vector and the other is a scalar,
+  then they are used as the coordinate variables of the matrix result.
+  Otherwise the result has the same shape and coordinate variables as
+  the one of higher rank.
+  \par Note that each element of the result corresponds to just the
+  single point defined by its latitude and longitude. It is often
+  better to test multiple points, which can be done using function 
+  \ref{fraction-land} \texttt{fraction-land(} $latitude$ \texttt{,} $longitude$[\texttt{,} $nlat$ \texttt{,} $nlon$ \texttt{,} $data-dir$] \texttt{)}.
+  \par The following example produces a matrix with 
+  \texttt{0} for sea and 
+  \texttt{1} for land:
+  \begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "isLand = is_land(lats, lons)"] value
+0 0 0 0 0 0 0 0 0
+0 0 1 0 1 1 1 1 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+The following shows how this can be used to mask out (make
+missing) the sea points in the matrix named 
+  \texttt{area} defined in the the above example of 
+  \ref{area-on-globe} \texttt{area-on-globe(} $latitude$ \texttt{,} $longitude$ \texttt{)}:
+  \begin{verbatim}
+% [nap "isLand ? area : _"] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+The following masks out the land points:
+  \begin{verbatim}
+% [nap "isLand ? _ : area"] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313      _ 0.0313      _      _      _      _ 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+     _      _      _      _      _      _      _      _      _
+\end{verbatim}
+
+The following alternative method defines a mask consisting of
+zeros and missing values. Masking is done by adding this mask.
+  \begin{verbatim}
+% [nap "mask = {_ 0}(isLand)"] value
+_ _ _ _ _ _ _ _ _
+_ _ 0 _ 0 0 0 0 _
+_ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _
+0 0 0 0 0 0 0 0 0
+% [nap "area + mask"] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+\end{verbatim}
+
+  \subsubsection{
+    \label{is-coast} \texttt{is\_coast(}$latitude$\texttt{,} $longitude$[\texttt{,} $nlat$\texttt{,} $nlon$\texttt{,} $data\_dir$]\texttt{)}
+  }
+This function produces an 
+  \texttt{i8} (8-bit signed integer) matrix with 1 for coast and 0
+  otherwise.
+  \par Cells are defined around each latitude and longitude using the
+  functions 
+  \ref{zone-bounds} \texttt{zone-bounds(} $latitude$ \texttt{)} and \ref{merid-bounds} \texttt{merid-bounds(} $longitude$ \texttt{)} . Each cell is divided into 
+  $nlat$ rows and 
+  $nlon$ columns. A cell is considered land if more than half
+  its 
+  $nlat$ × 
+  $nlon$ points are classified as land by function 
+  \texttt{is\_land}.
+  \par The result is 1 if a cell is land and has at least one adjacent
+  sea cell to the north, south, east or west. The coordinate variables
+  of the result are copies of the vector arguments 
+  $latitude$ and 
+  $longitude$.
+  \par The optional argument 
+  $nlat$ defaults to 8.
+  \\The optional argument 
+  $nlon$ defaults to 
+  $nlat$.
+  \\If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes. (A single point is often
+  adequate for coastline overlays on maps, etc.)
+  \subsubsection{
+    \label{fraction-land} \texttt{fraction\_land(}$latitude$\texttt{,} $longitude$[\texttt{,} $nlat$\texttt{,} $nlon$\texttt{,} $data-dir$]\texttt{)}
+  }
+This function produces an 
+  \texttt{f32} (f32-bit floating-point) matrix containing the
+  estimated proportion of land in each cell.
+  \par Cells are defined around each latitude and longitude using the
+  functions 
+  \ref{zone-bounds} \texttt{zone-bounds(} $latitude$ \texttt{)} and 
+  \ref{merid-bounds} \texttt{merid-bounds(} $longitude$ \texttt{)} . Each cell is divided into 
+  $nlat$ rows and 
+  $nlon$ columns. The result is defined by the proportion of
+  the 
+  $nlat$ × 
+  $nlon$ points which are classified as land by function 
+  \texttt{is\_land}.
+  \par The coordinate variables of the result are copies of the vector
+  arguments 
+  $latitude$ and 
+  $longitude$.
+  \par The optional argument 
+  $nlat$ defaults to 8.
+  \\The optional argument 
+  $nlon$ defaults to 
+  $nlat$.
+  \\If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes.
+  \\The minimum resolution is 0.01$^{\circ}$ even if the specified 
+  $nlat$ or 
+  $nlon$ would give less. The value of 
+  $nlat$ or 
+  $nlon$ is automatically reduced if its specified value would
+  give a resolution less than 0.01$^{\circ}$.
+  \par The following example produces a similar (but much more accurate)
+  land/sea mask to that produced in the above example for 
+  \ref{is-land} \texttt{is-land(} $latitude$ \texttt{,} $longitude$[\texttt{,} $data-dir$] \texttt{)}:
+  \begin{verbatim}
+% [nap "lats = 90 .. -90 ... -45"]
+90 45 0 -45 -90
+% [nap "lons = -180 .. 180 ... 45"] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap "fraction_land(lats, lons)"] value -format %0.2f
+0.05 0.14 0.28 0.55 0.08 0.17 0.34 0.19 0.11
+0.06 0.39 0.67 0.13 0.52 0.88 1.00 0.50 0.17
+0.00 0.00 0.22 0.38 0.47 0.45 0.17 0.23 0.00
+0.00 0.00 0.09 0.13 0.03 0.05 0.00 0.25 0.02
+0.25 0.59 0.69 0.47 0.81 0.95 0.95 0.98 0.47
+% [nap "fraction_land(lats, lons) > 0.5f32"] value
+0 0 0 1 0 0 0 0 0
+0 0 1 0 1 1 1 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 1 1 0 1 1 1 1 0
+\end{verbatim}
+
+  \subsection{
+    \label{Reading}Reading Geographic Files
+  }
+
+  \subsubsection{
+    \label{acof2boxed} \texttt{acof2boxed(} $filename$ \texttt{)}
+  }
+Read ascii cof (.acof) coastline file and return boxed nao.
+  \par Example:
+  \\
+  \texttt{nap "in = acof2boxed('abc.acof')"}
+  \subsubsection{
+    \label{get-gridascii} \texttt{get\_gridascii(}$filename$[\texttt{,} $unit$]\texttt{)}
+  }
+Read a file in ARC/INFO GRIDASCII format.
+  \par The optional argument 
+  $unit$ specifies the unit of x and y. If this argument is
+  omitted then:
+  \\Dimension 
+  $x$ is longitude and has unit 
+  \texttt{"degrees\_east"}.
+  \\Dimension 
+  $y$ is latitude and has unit 
+  \texttt{"degrees\_north"}.
+  \par Examples:
+  \\
+  \begin{verbatim}
+% nap "in = get_gridascii('abc.gridascii')"; # x is
+longitude, y is latitude
+% nap "in = get_gridascii('abc.gridascii', 'metres')"
+\end{verbatim}
+

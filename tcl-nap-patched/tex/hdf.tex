@@ -1,0 +1,77 @@
+%  $Id: hdf.tex,v 1.6 2006/09/28 14:00:47 dav480 Exp $ 
+    % HDF/netCDF Browser
+
+  \begin{enumerate}
+    \item Use the \texttt{choose-file} GUI
+    to open an input file.
+    Instructions can be displayed by
+    pressing this GUI's own 
+    \texttt{help} button. Opening the file should result in the
+    display of a 
+    \emph{file structure tree}.
+    \item Use this tree as follows to select either a variable/SDS or an
+    attribute. (The default selection is a variable/SDS with the
+    maximum number of elements.)
+\begin{bullets}
+      \item Click on a variable/SDS to select it and display the spatial sampling widget.
+      \item Click on a ' \texttt{+}' to display attribute names.
+      \item Click on an attribute to select it and display its value.
+\end{bullets}
+    \item The spatial sampling widget allows you to select part of a
+    variable/SDS. (The entire variable/SDS is selected by default.)
+    \\Each dimension is represented by a row containing one or two
+    lines. The first line represents subscript values. If a coordinate
+    variable exists then it is represented on a second line.
+    \\Change a subscript using any of the following:
+\begin{bullets}
+      \item Drag the slider along the scale widget. This is convenient
+      for coarse adjustment.
+      \item Click on the spinbox arrows or scale troughs.
+      \item Press the keyboard up/down keys.
+      \item Use the keyboard to enter numbers. Fractional subscript
+      values can be used to produce magnification.
+      \item On an image, drag the mouse to define a bounding box.
+      \item Press the 
+      \texttt{Dimension} button to restore all defaults.
+      \item Press the 
+      \texttt{From}, 
+      \texttt{To} or 
+      \texttt{Step} column heading button to restore defaults in a
+      column.
+      \item Press the row heading buttons to toggle a row between
+      defaults and saved values.
+\end{bullets}
+    The values selected along a dimension are defined as follows:
+\begin{bullets}
+      \item If $\mathit{step} > 0$ then $\mathit{from}$, $\mathit{to}$ and 
+	  $\mathit{step}$ define an arithmetic progression.
+      \item If $\mathit{step} = 0$ and expression is blank then use single value $\mathit{from}$.
+      \item If $\mathit{step} = 0$ and expression is not blank then use this expression.
+\end{bullets}
+    \item The following buttons along the bottom are used to select an
+    action:
+    \\
+    \texttt{Range}: Display minimum and maximum value.
+    \\
+    \texttt{Text}: Display start of data as text.
+    \\
+    \texttt{Graph}: Use \texttt{plot\_nao} to display data as XY graph(s).
+    \\
+    \texttt{Image}: Use \texttt{plot\_nao} to display data as 2D image(s).
+    \\
+    \texttt{Animate}: Animate window-sequence produced by 
+    \texttt{Graph} or 
+    \texttt{Image}.
+    \\
+    \texttt{NAO}: Create Numeric Array Object.
+    \\
+    \texttt{Re-read}: Force a read (e.g. after rewriting the file).
+    
+
+Select 
+    \texttt{Raw} mode if you want the following attributes to be
+    ignored:
+    \\
+    \texttt{scale\_factor, add\_offset, valid\_min, valid\_max,
+    valid\_range}.
+  \end{enumerate}

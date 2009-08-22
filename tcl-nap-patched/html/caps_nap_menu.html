@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: caps_nap_menu.html,v 1.7 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>CAPS/NAP Menu</title>
+  </head>
+  <body>
+  <center>
+    <h2>CAPS/NAP Menu</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Browse">Browse</a>
+      <ul>
+        <li>
+          <a href="#Variables">
+            <em>Tcl Variables</em>
+          </a>
+        </li>
+        <li>
+          <a href="#AVHRR_ATSR">
+          <em>AVHRR</em> and 
+          <em>ATSR</em> Satellite Files</a>
+        </li>
+        <li>
+          <a href="#CIF">
+          <em>CIF</em> Files</a>
+        </li>
+        <li>
+          <a href="#HDF_netCDF">
+          <em>HDF</em> and 
+          <em>netCDF</em> Files</a>
+        </li>
+        <li>
+          <a href="#Image">
+          <em>Image</em> Files</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Command">Command</a>
+      <ul>
+        <li>
+          <a href="#History"> <code>history</code> </a>
+        </li>
+        <li>
+          <a href="#Exit"> <code>exit</code> </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Help">Help</a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The distributed 
+  <code>wish</code> startup file &quot;<code>wishrc.tcl</code>&quot;
+    (which is copied to file &quot;<code>.wishrc</code>&quot; on unix systems)
+    ends with the command
+  &quot;<code>caps_nap_menu</code>&quot;, which displays a GUI menu
+  consisting of three buttons labelled 
+  <em>Browse</em>, 
+  <em>Command</em> and 
+  <em>Help</em>. This command &quot;<code>caps_nap_menu</code>&quot; is defined by the file
+    &quot;<code>caps_nap_menu.tcl</code>&quot;. Each of these three buttons is
+  used to display a sub-menu detailed in the following sections.
+  <h3>
+    <a name="Browse">Browse</a>
+  </h3>The 
+  <em>Browse</em> menu provides access to browsers for Tcl variables
+  and a variety of files. These file browsers typically provide
+  facilities to select data from a file and
+  <ul>
+    <li>Display it as text.</li>
+    <li>Plot it (as a graph or image) using 
+    <code>plot_nao</code>.</li>
+    <li>Print it.</li>
+    <li>Convert it to a NAO.</li>
+  </ul>Detailed help is available within each browser.
+  <dl>
+    <dt>
+      <a name="Variables"> <em>Tcl Variables</em> </a>
+    </dt>
+    <dd>This facility for browsing 
+    <em>Tcl variables</em> is defined by the file 
+    <code>browse_var.tcl</code>. It can be used to display the names
+    and values of all tcl variables (including arrays), but has
+    particular facilities for those referencing NAOs. The menu buttons
+    have the following functions:
+    <dl>
+      <dt>
+        <em>namespace</em>
+      </dt>
+      <dd>Use tree widget to set the namespace.</dd>
+      <dt>
+        <em>list</em>
+      </dt>
+      <dd>List tcl variables in the namespace matching the glob
+      pattern. Display a line for each matching tcl variable. This line
+      contains the variable&#39;s name and value provided there is
+      room. Otherwise the line is truncated. You can click on a line to
+      display:
+      <ul>
+        <li>full value of an ordinary tcl variable or array whose line
+        is truncated as above</li>
+        <li>a NAO as either text or graph/image as specified by the
+        radio-button</li>
+      </ul></dd>
+      <dt>
+        <em>help</em>
+      </dt>
+      <dd>Display 
+      <em>Help on Tcl Variable Browser</em>.</dd>
+      <dt>
+        <em>cancel</em>
+      </dt>
+      <dd>Remove 
+      <em>Tcl Variable Browser</em> widget.</dd>
+    </dl></dd>
+    <dt>
+      <a name="AVHRR_ATSR"> <em>AVHRR</em> and <em>ATSR</em> Satellite Files</a>
+    </dt>
+    <dd>This item is only available if the CAPS package is loaded.</dd>
+    <dt>
+      <a name="CIF"> <em>CIF</em> Files</a>
+    </dt>
+    <dd>CIF files originated at Melbourne University. Their use has
+    been largely replaced by netCDF but some data still exists in this
+    format. This facility for browsing 
+    <em>CIF</em> files is defined by the file 
+    <code>browse_cif.tcl</code>.</dd>
+    <dt>
+      <a name="HDF_netCDF"> <em>HDF</em> and <em>netCDF</em> Files</a>
+    </dt>
+    <dd>HDF and netCDF are two similar common file formats used for
+    data in the form of arrays and grids, especially in the earth
+    sciences such as Meteorology and Oceanography. This facility for
+    browsing 
+    <em>HDF</em> and 
+    <em>netCDF</em> files is defined by the file 
+    <code>hdf.tcl</code>. This is a powerful tool which allows one to
+    select a variable/SDS or attribute from a displayed tree, then (for
+    variable/SDS) select a region within it.</dd>
+    <dt>
+      <a name="Image"> <em>Image</em> Files</a>
+    </dt>
+    <dd>This facility for 
+    <em>viewing image files</em> is defined by the file 
+    <code>vif.tcl</code>. Standard Tk supports the PPM, PGM and GIF
+    formats. If the package 
+    <code>Img</code> is installed then it will be used, giving support
+    for BMP, XBM, XPM, PNG, JPEG and TIFF as well. The ActiveTcl
+    distribution of Tcl/Tk includes 
+    <code>Img</code>.</dd>
+  </dl>
+  <h3>
+    <a name="Command">Command</a>
+  </h3>The 
+  <em>Command</em> menu allows the following common Tcl commands to be
+  executed with a mouse click:
+  <dl>
+    <dt>
+      <a name="History"> <code>history</code> </a>
+    </dt>
+    <dd>Display command history. This differs from the command-line 
+    <code>history</code> command in that it uses a scrolled window.
+    Note that 
+    <code>tkcon</code> also provides:
+    <ul>
+      <li>
+      <em>History</em> entry in main menu</li>
+      <li>
+      <em>History</em> entry within 
+      <em>File</em>/ 
+      <em>Save</em></li>
+    </ul></dd>
+    <dt>
+      <a name="Exit"> <code>exit</code> </a>
+    </dt>
+    <dd>Quit.</dd>
+  </dl>
+  <h3>
+    <a name="Help">Help</a>
+  </h3>The 
+  <em>Help</em> menu provides access to local and Web documentation on:
+  <ul>
+    <li>CAPS/NAP Menu</li>
+    <li>Tcl/Tk</li>
+    <li>NAP</li>
+    <li>CAPS</li>
+  </ul>Note that the Web versions may be more recent than the installed
+  local documentation.
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: caps_nap_menu.html,v 1.3
+          2004/11/12 04:39:34 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

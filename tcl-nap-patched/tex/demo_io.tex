@@ -1,0 +1,217 @@
+%  $Id: demo_io.tex,v 1.4 2006/09/20 08:48:49 dav480 Exp $ 
+    % Input/Output
+
+\section{Input/Output}
+
+\subsection{ASCII input/output}
+
+    \begin{verbatim}
+% # Create some data to write out
+% nap "mat = {
+{1.3 -2.9 6.8}
+{0.9  5.2 8.1}
+}"
+::NAP::13-13
+% nap "latitude = {-40 -30}"
+::NAP::15-15
+% nap "longitude = 130 .. 150 ... 10"
+::NAP::23-23
+% $latitude set unit degrees_north
+% $longitude set unit degrees_east
+% $mat set unit degC
+% $mat set coo latitude longitude
+% plot_nao mat -type z
+.win1
+% 
+% # Write to ASCII file 'demo.txt'
+% set f [open demo.txt w]
+file4
+% puts $f [$mat value]
+% close $f
+% gets_file demo.txt
+ 1.3 -2.9  6.8
+ 0.9  5.2  8.1
+
+% # Read matrix from ASCII file
+% nap "in = gets_matrix('demo.txt')"
+::NAP::4622-4622
+% $in a
+::NAP::4622-4622  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+ 1.3 -2.9  6.8
+ 0.9  5.2  8.1
+% 
+% # Reading data which does not form matrix
+% nap "in = {[gets_file demo.txt]}"
+::NAP::4629-4629
+% $in a
+::NAP::4629-4629  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.3 -2.9 6.8 0.9 5.2 8.1
+\end{verbatim}
+
+\subsection{netCDF input/output}
+
+    \begin{verbatim}
+% # Create some data to write out (same as in ascii.txt)
+% nap "mat = {
+{1.3 -2.9 6.8}
+{0.9  5.2 8.1}
+}"
+::NAP::13-13
+% nap "latitude = {-40 -30}"
+::NAP::15-15
+% nap "longitude = 130 .. 150 ... 10"
+::NAP::23-23
+% $latitude set unit degrees_north
+% $longitude set unit degrees_east
+% $mat set unit degC
+% $mat set coo latitude longitude
+% plot_nao mat
+.win0
+% plot_nao mat -type z
+.win1
+% 
+; # netCDF output to new file written with single command
+% $mat netcdf demo.nc temperature
+::NAP::4641-4641
+;
+; # Following will fail if you don't have ncdump installed.
+; # You can install it under windows by unzipping file 
+; # /sol/home/dav480/tcl_nap/install/windows/netcdf-3.5.0.win32bin.ZIP
+; # into say C:\Program Files\netcdf
+; # You need to include the bin (e.g. C:\Program Files\netcdf\bin) in 
+; # environment variable PATH (which you set using Control Panel: system: advanced).
+; 
+% ncdump demo.nc
+netcdf demo {
+dimensions:
+        latitude = 2 ;
+        longitude = 3 ;
+variables:
+        int latitude(latitude) ;
+                latitude:units = "degrees_north" ;
+        int longitude(longitude) ;
+                longitude:units = "degrees_east" ;
+        double temperature(latitude, longitude) ;
+                temperature:_FillValue = nan ;
+                temperature:units = "degC" ;
+data:
+
+ latitude = -40, -30 ;
+
+ longitude = 130, 140, 150 ;
+
+ temperature =
+  1.3, -2.9, 6.8,
+  0.9, 5.2, 8.1 ;
+}
+;
+# netCDF input of whole variable
+% nap "in = [nap_get netcdf demo.nc temperature]"
+::NAP::14406-4855
+% $in a
+::NAP::14406-4855  f64  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 2      Name: latitude  Coordinate-variable: ::NAP::14408-5607
+Dimension 1   Size: 3      Name: longitude  Coordinate-variable: ::NAP::14409-5114
+Value:
+ 1.3 -2.9  6.8
+ 0.9  5.2  8.1
+% [nap cv(in,0)] a
+::NAP::14408-5607  i32  MissingValue: -2147483648  References: 1  Unit: degrees_north
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-40 -30
+% [nap cv(in,1)] a
+::NAP::14409-5114  i32  MissingValue: -2147483648  References: 1  Unit: degrees_east
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+130 140 150
+;
+% # Change row 0 in variable 'temperature' of file 'demo.nc' 
+% [nap "{-8 0 -1}"] netcdf -index "0, 0 .. 2" demo.nc temperature
+% exec ncdump demo.nc
+netcdf demo {
+dimensions:
+        latitude = 2 ;
+        longitude = 3 ;
+variables:
+        int latitude(latitude) ;
+                latitude:units = "degrees_north" ;
+        int longitude(longitude) ;
+                longitude:units = "degrees_east" ;
+        double temperature(latitude, longitude) ;
+                temperature:_FillValue = nan ;
+                temperature:units = "degC" ;
+data:
+
+ latitude = -40, -30 ;
+
+ longitude = 130, 140, 150 ;
+
+ temperature =
+  -8, 0, -1,
+  0.9, 5.2, 8.1 ;
+}
+% 
+% # Read columns 0 and 2 from variable 'temperature' of file 'demo.nc'
+% nap "in = [nap_get netcdf demo.nc temperature ",{0 2}"]"
+::NAP::14436-4716
+% $in a
+::NAP::14436-4716  f64  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 2      Name: latitude  Coordinate-variable: ::NAP::14441-4715
+Dimension 1   Size: 2      Name: longitude  Coordinate-variable: ::NAP::14444-6978
+Value:
+-8.0 -1.0
+ 0.9  8.1
+\end{verbatim}
+
+\subsection{CIF Input/output}
+
+    \begin{verbatim}
+% # Create some data to write out (same as in ascii.txt)
+% nap "mat = {
+{1.3 -2.9 6.8}
+{0.9  5.2 8.1}
+}"
+::NAP::13-13
+% nap "latitude = {-40 -30}"
+::NAP::15-15
+% nap "longitude = 130 .. 150 ... 10"
+::NAP::23-23
+% $latitude set unit degrees_north
+% $longitude set unit degrees_east
+% $mat set unit degC
+% $mat set coo latitude longitude
+% plot_nao mat
+.win0
+% plot_nao mat -type z
+.win1
+% 
+; # Write to CIF
+% 
+% $mat a
+::NAP::13-13  f64  MissingValue: NaN  References: 1  Unit: degC
+Dimension 0   Size: 2      Name: latitude  Coordinate-variable: ::NAP::15-15
+Dimension 1   Size: 3      Name: longitude  Coordinate-variable: ::NAP::1925-1925
+Value:
+ 1.3 -2.9  6.8
+ 0.9  5.2  8.1
+% put_cif mat demo.cif; # Write CIF
+% # You can use GUI CIF browser to check this new file 'demo.cif'
+% 
+% # Read from CIF
+% nap "in = [get_cif demo.cif]"
+::NAP::17738-5075
+% $in a
+::NAP::17738-5075  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: latitude  Coordinate-variable: ::NAP::17597-9999
+Dimension 1   Size: 3      Name: longitude  Coordinate-variable: ::NAP::17669-9608
+Value:
+ 1.3 -2.9  6.8
+ 0.9  5.2  8.1
+\end{verbatim}
+

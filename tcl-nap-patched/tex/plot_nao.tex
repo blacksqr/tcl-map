@@ -1,0 +1,324 @@
+%  $Id: plot_nao.tex,v 1.9 2006/09/19 00:35:10 dav480 Exp $ 
+    % Nap plot\_nao
+
+\section{Visualisation using procedure \texttt{plot\_nao}}
+    \label{plot-nao}
+
+\subsection{Introduction}
+    \label{plot-nao-Introduction}
+
+A NAO can be visualised using procedure 
+  \texttt{plot\_nao}, which can represent it by:
+\begin{bullets}
+    \item xy graphs (1D and 2D NAOs)
+    \item bar-charts and histograms (1D and 2D NAOs)
+    \item color-coded z-images and maps (2D NAOs)
+    \item RGB z-images and maps (3D NAOs with three layers for red, green
+    and blue)
+    \item tiled images (multiple color-coded z-images on a page) (3D
+    NAOs)
+\end{bullets}
+If there are additional dimensions then it is possible to
+  generate multiple frames which can be animated. See examples.
+  
+The right mouse button displays a menu. The left mouse button
+  saves (x,y,z) values (z-images only) which can be written to a
+  file.
+  
+The Tcl code is in the files 
+  \texttt{plot\_nao.tcl} and 
+  \texttt{plot\_nao\_procs.tcl}.
+
+\subsection{Usage}
+    \label{plot-nao-Usage}
+
+  \texttt{plot\_nao} 
+  \emph{expression ?options?}
+
+\subsubsection{Options}
+    \label{plot-nao-Options}
+
+Most options can be set using either the above 
+  \emph{command-line} or the 
+  \emph{options menu}.
+Command-line options are as follows:
+\begin{simpleitems}
+  \item
+  \texttt{-barwidth} 
+  \emph{float}: (bar chart only) width of bars in x-coordinate units
+  (Default: 1.0)
+  \item
+  \texttt{-buttonCommand} 
+  \emph{script}: executed when button pressed with z-plots 
+    (Default: 
+  \\
+\texttt{"lappend\ Plot\_nao::\$\{window\_id\}::save\ [set\ Plot\_nao::\$\{window\_id\}::xyz]"})
+  \item
+  \texttt{-colors} 
+  \emph{list}: Colors of xy graphs or bars. (Default: 
+  \texttt{black red green blue yellow orange purple grey aquamarine
+  beige})
+  \item
+  \texttt{-columns} 
+  \emph{int}: (tiled-plot only) number of columns of tiles on page
+  \item
+  \texttt{-dash} 
+  \emph{list}: Dash patterns of xy-graph lines. (Default: 
+  \texttt{""} i.e. all full lines) Each element is 
+  \texttt{""} for full line, 
+  \texttt{" "} for no line, or standard Tk dash pattern
+  (See entry for \emph{canvas} in Tk manual).
+  \item
+  \texttt{-discrete} 0 or 1: 1 = Discrete colors between major z
+  tick marks. (Default: 0)
+  \item
+  \texttt{-filename} 
+  \emph{name with extension} 
+  \texttt{.ps, .gif, .jpeg,} 
+  \emph{etc.:} File produced by 
+  \texttt{-print} (Default: Print rather than writing a file)
+  \item
+  \texttt{-fill} 0 or 1: 1 = Scale PostScript to fill page.
+  (Default: 0)
+  \item
+  \texttt{-font\_standard} 
+  \emph{font}: Main font. (Default: 
+  \texttt{"courier 10"})
+  \item
+  \texttt{-font\_title} 
+  \emph{font}: Font for title. (Default: 
+  \texttt{"courier 16"})
+  \item
+  \texttt{-gap\_height} 
+  \emph{int}: height (pixels) of horizontal white gaps (Default: 20)
+  \item
+  \texttt{-gap\_width} 
+  \emph{int}: width (pixels) of vertical white gaps (Default: 20)
+  \item
+  \texttt{-geometry} 
+  \emph{string}: If specified then use to create new toplevel window.
+  \\
+  (E.g. \texttt{"-geometry\ +0+0"} for top left corner)
+  \item
+  \texttt{-height} 
+  \emph{int}: Desired height (screen units). Not used for tiled-plot.
+\begin{bullets}
+  \item  Type \texttt{xy/bar}: Height of whole window (Default: automatic)
+  \item  Type \texttt{z}: Image height (can be `$\mathit{min}$ $\mathit{max}$' for range)
+    (Default: NAO dim if within limits)
+\end{bullets}
+  \item
+  \texttt{-key} 
+  \emph{int}: width (pixels) of key. No key if 0 or blank. (Default: 30)
+  \item
+  \texttt{-labels} 
+  \emph{list}: Labels of tiles or xy-graphs
+  \item
+  \texttt{-menu} 0 or 1: 0 = Start with menu bar at top hidden.
+  (Default: 1)
+  \item
+  \texttt{-orientation P, L} 
+  \emph{or} 
+  \texttt{A:} P = portrait, L = landscape, A = automatic (Default:
+  A)
+  \item
+  \texttt{-overlay C, L, S, N} 
+  or $\texttt{"E}~\mathit{expression}\texttt{"}$: Define overlay. C = coast, L = land, S =
+  sea, N = none, E = $\mathit{expr}$ (Default: N)
+  \item
+  \texttt{-oversize\_prompt} 0 or 1: 1 = prompt if image is larger
+  than screen. (Default: 1)
+  \item
+  \texttt{-ovpal}~$\mathit{expression}$:
+    Overlay palette in same form as main palette
+  (Default: \texttt{black white red green blue})
+  \item
+  \texttt{-palette} $\mathit{expression}$:
+  Main palette defining color map for 2D image. This
+  is matrix with 3 or 4 columns and up to 256 rows. If there are 4
+  columns then the first gives color indices in range 0 to 255. Values
+  can be whole numbers in range 0 to 255 or fractional values from 0.0
+  to 1.0. 
+  \texttt{""} = black-to-white. (Default: blue-to-red)
+  \item
+  \texttt{-paperheight} 
+  \emph{distance}: E.g. 
+  \texttt{11i} = 11 inch (Default: 
+  \texttt{297m} = 297 mm (A4))
+  \item
+  \texttt{-paperwidth} 
+  \emph{distance}: E.g. 
+  \texttt{8.5i} = 8.5 inch (Default: 
+  \texttt{210m} = 210 mm (A4))
+  \item
+  \texttt{-parent} 
+  \emph{string}: parent window (Default: 
+  \texttt{""} i.e. create toplevel window)
+  \item
+  \texttt{-print} 0 or 1: 1 = automatic print/write (for batch
+  processing) (Default: 0)
+  \item
+  \texttt{-printer} 
+  \emph{string}: name (Default: 
+  \texttt{env(PRINTER)} if defined, else any printer)
+  \item
+  \texttt{-range} $\mathit{expression}$:
+  defines scaling (Default: auto scaling)
+  \item
+  \texttt{-rank} 1, 2 or 3: rank of sub-arrays to be displayed
+  (Default: 
+  \texttt{3 <<< rank}$(\mathit{data})$ )
+  \item
+  \texttt{-scaling} 0 or 1: 0 = Start with scaling widget hidden.
+  (Default: 1)
+  \item
+  \texttt{-symbols} 
+  \emph{list}: Symbol drawn at each point of xy-graph. Can be 
+  \texttt{plus, square, circle, cross, splus, scross, triangle} or
+  single character (e.g. 
+  \texttt{"*"} ) (Default: 
+  \texttt{""} i.e. none)
+  \item
+  \texttt{-title} 
+  \emph{string}: title (Default: NAO label (if any) else $\mathit{expression}$
+  \item
+  \texttt{-type} 
+  \emph{string} plot-type (\texttt{bar, tile, xy} or \texttt{z} )
+	\\
+	If rank is 1 then default type is \texttt{"xy"}
+	\\
+	If rank is 2 and n\_rows $<$= 8 then default type is \texttt{"xy"}
+	\\
+	If rank is 2 and n\_rows $>$ 8 then default type is \texttt{"z"}
+	\\
+	If rank is 3 then default type is \texttt{"z"}
+  \item
+  \texttt{-width} 
+  \emph{int}: Desired width (screen units). Not used for tiled-plot.
+\begin{bullets}
+  \item  Type \texttt{xy/bar}: Width of whole window (Default: automatic)
+  \item  Type \texttt{z}: Image width (can be `$\mathit{min}$ $\mathit{max}$' for range)
+    (Default: NAO dim if within limits)
+\end{bullets}
+  \item
+  \texttt{-xaxis} 0 or 1: Draw x-axis? 0 = no, 1 = yes. (Default: 1)
+  \item
+  \texttt{-xflip} 0 or 1: Flip left-right? 0 = no, 1 = yes.  (Default: 0)
+  \item
+  \texttt{-xlabel} \emph{string}: x-axis label (Default: name of last (final) dimension)
+  \item
+  \texttt{-xproc} \emph{string}: name of procedure to format x-axis tick values (Default: none)
+  \item
+  \texttt{-xticks} $\mathit{expression}$:
+  Major tick marks of x-axis (Default: automatic)
+  \item
+  \texttt{-yaxis} 0 or 1: Draw y-axis? 0 = no, 1 = yes. (Default:
+  1)
+  \item
+  \texttt{-yflip 0, 1, ascending or geog}: Flip upside down?  (Default: \texttt{geog})
+    \\
+    0 = no,
+    \\
+    1 = yes, 
+    \\
+    \texttt{ascending} = `if y ascending', 
+    \\
+    \texttt{geog} = `if ascending and (y\_dim\_name = \texttt{latitude} or y\_unit = 
+	  \texttt{degrees\_north} (or equivalent))' 
+  \item
+  \texttt{-ylabel} 
+  \emph{string}: y-axis label (Default: name of 2nd-last dimension)
+  \item
+  \texttt{-yproc} 
+  \emph{string}: name of procedure to format y-axis tick values
+  (Default: none)
+  \item
+  \texttt{-yticks} $\mathit{expression}$:
+  Major tick marks of y-axis (Default: automatic)
+  \item
+  \texttt{-zlabels} 
+  \emph{list}: z-axis labels of values 0, 1, 2, $\ldots$ (Default: none)
+  \item
+  \texttt{-zticks} $\mathit{expression}$:
+  Major tick marks of z-axis (Default:
+  automatic)
+\end{simpleitems}
+
+\subsection{Examples}
+    \label{plot-nao-Examples}
+
+You can cut and paste the following examples into tkcon or wish.
+
+\subsubsection{x-y graphs and bar-charts}
+    \label{plot-nao-xy}
+
+  \begin{verbatim}
+nap "sales = {
+    {2 5 1 3 5 7 9 1 2 9 1 0}
+    {9 2 5 5 3 9 2 0 8 8 3 8}
+}"
+nap "month = 1 .. 12"
+$sales set coord "" month
+$sales set label "Car sales"
+plot_nao sales -labels "Joe Mary" -xtick "1..12" -dash {{} .} -symbols "plus cross"
+proc format_x x {lindex {{} Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec} $x}
+plot_nao sales -labels "Joe Mary" -xtick "1..12" -type bar -xproc format_x
+\end{verbatim}
+
+\subsubsection{Scattergram}
+    \label{plot-nao-scattergram}
+
+  \begin{verbatim}
+nap "x = {1.1 3.2 2.0 5.9 7.7 4.5 6.3}"
+nap "y = {5.0 4.1 9.9 3.7 1.2 2.1 4.5}"
+$y set coo x
+plot_nao y -symbols plus -dash " "
+\end{verbatim}
+
+\subsubsection{Color-coded z-images}
+    \label{plot-nao-z2}
+
+These examples define and use the 2D NAO 
+  \texttt{z}.
+  \begin{verbatim}
+nap "n = 200"
+nap "x = n ... 0.0 .. 10.0"
+nap "y = x(-)"
+nap "z = sin(x) * sin(reshape(n#y, 2#n))"
+$z set coo y x
+plot_nao z
+plot_nao z -zticks "-1 .. 1 ... 0.2" -discrete 1; # discrete colors
+plot_nao "nint(z+1)" -zlabels {{zero (0)} {one (1)} {two}}; # labelled values 0, 1, 2
+\end{verbatim}
+
+\subsubsection{RGB z-images, tiles and animation}
+    \label{plot-nao-z3}
+
+These examples define and use the 3D NAO 
+  \texttt{z3d}. This is defined using 
+  \texttt{z} defined above.
+  \begin{verbatim}
+nap "z3d = z /// z*z // z**3 // z**4"
+plot_nao z3d; # layer 0 = red, layer 1 = green, layer 2 = blue, layer 3 is ignored
+plot_nao z3d -type tile -labels {z {z * z} z**3 z**4} -title "powers of z"
+set frames [plot_nao z3d -rank 2]; # create four 2D frames
+animate $frames; # animate these frames
+\end{verbatim}
+
+\subsubsection{Printing and writing files}
+    \label{plot-nao-print}
+
+Note that the 
+  \texttt{-print\ 1} option can be used to print and write
+  automatically in batch mode operation. It may be necessary to specify
+  `\texttt{-geometry\ +0+0}' to ensure the window is
+  entirely visible.
+  \begin{verbatim}
+nap "x = 200 ... 0 .. 4p"
+nap "y = sin x"
+$y set coo x
+plot_nao y -print 1; # Print on default printer
+plot_nao y -print 1 -geometry +0+0 -filename sin.ps; # write postscript file sin.ps
+plot_nao y -print 1 -geometry +0+0 -filename sin.jpeg; # write JPEG image file sin.jpeg
+\end{verbatim}
+

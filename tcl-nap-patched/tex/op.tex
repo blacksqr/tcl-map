@@ -1,0 +1,1049 @@
+%  $Id: op.tex,v 1.10 2006/09/22 06:28:17 dav480 Exp $ 
+    % Nap Operators
+
+\section{Operators}
+
+\subsection{Operators and Precedence}
+    \label{op-Precedence}
+  
+ The following table is essentially a superset of 
+  \textbf{Table 5.2} in Ousterhout's 1994 classic 
+  \emph{Tcl and the Tk Toolkit}. As there, groups of operators
+  between horizontal lines have the same precedence; higher groups have
+  higher precedence.
+  
+ Operators are left-associative unless specified otherwise. For
+  example, 
+  \texttt{**} is right-associative, as shown by:
+  \begin{verbatim}
+% [nap "10 ** 2 ** 3"]
+1e+08
+\end{verbatim}
+  
+ The nature of operands is indicated as follows:
+  \\
+  $a$ and 
+  $b$ represent general arrays.
+  \\
+  $x$, 
+  $y$ and 
+  $z$ represent scalars.
+  \\
+  $u$ and 
+  $v$ represent vectors.
+  \\
+  $A$ and 
+  $B$ represent matrices.
+  \\
+  $i$ represents an integer scalar subscript
+  \\
+  $s$ represents a real (possibly fractional) scalar subscript
+  \\
+  $n$ represents a name, which may include namespaces.
+  \\
+  $p$ represents a boxed vector of pointers to arrays 
+  $a_0$, 
+  $a_1$, 
+  $a_2$, 
+  $\ldots$
+  
+\begin{tabular}{|l|l|}
+    \hline 
+      \textbf{Syntax} & 
+      \textbf{Result}
+    \\
+    \hline 
+    \hline 
+        $a$
+        \texttt{**}
+        $b$
+       & 
+      $a^b$. Right-associative
+    \\
+    \hline
+        \texttt{+}
+        $a$
+       & 
+      New copy of 
+      $a$
+    \\
+        \texttt{-}
+        $a$
+       & 
+      Negative of 
+      $a$
+    \\
+        \texttt{!}
+        $a$
+       & 
+      Logical NOT: 1 if 
+      $a$ is zero, else 0
+    \\
+        \texttt{|}
+        $a$
+       & 
+      $|a|$ (Absolute value of $a$)
+    \\
+        \texttt{\^}
+        $a$
+       & 
+      Nearest integer to $a$
+    \\
+        \texttt{$<$}
+        $a$
+       & 
+      $\lfloor a \rfloor$ (Largest integer not greater than $a$)
+    \\
+        \texttt{$>$}
+        $a$
+       & 
+      $\lceil a \rceil$ (Smallest integer not less than $a$)
+    \\
+        \verb!~!
+        $a$
+       & 
+      Bit-wise complement of 
+      $a$
+    \\
+        \texttt{\#}
+        $a$
+       & 
+      Frequencies of values 0, 1, 2, $\ldots$
+    \\
+        \texttt{@}
+        $a$
+       & 
+      Indirect subscript
+    \\
+        \texttt{@@}
+        $a$
+       & 
+      Indirect subscript
+    \\
+        \texttt{$<$=}
+        $u$
+       & 
+      Permutation vector $v$ such that $u_v$ is in ascending order
+    \\
+        \texttt{$>$=}
+        $u$
+       & 
+      Permutation vector $v$ such that $u_v$ is in descending order
+    \\
+    \hline
+        $v$
+        \texttt{@}
+        $b$
+       & 
+      Real (possibly fractional) $s$ for which $v_s=b$
+    \\
+        $v$ \texttt{@@} $b$
+       & 
+      Integer $i$ for which $|v_i-b|$ is least
+    \\
+        $v$
+        \texttt{@@@}
+        $b$
+       & 
+      Smallest integer $i$ for which $v_i=b$
+    \\
+    \hline
+        $u$
+        \texttt{\#}
+        $v$
+       & 
+      $u$ copies of 
+      $v$
+    \\
+        $p$
+        \texttt{\#}
+        $b$
+       & 
+      Cross-product replication
+    \\
+    \hline
+        $u$
+        \texttt{.}
+        $v$
+       & 
+      ($u$ and $v$ vectors) Scalar (dot) product
+    \\
+        $A$
+        \texttt{.}
+        $B$
+       & 
+      ($A$ and $B$ matrices) Matrix product
+    \\
+    \hline
+        $a$
+        \texttt{*}
+        $b$
+       & 
+      $a \times b$
+    \\
+        $a$
+        \texttt{/}
+        $b$
+       & 
+      $a \div b$
+    \\
+        $a$
+        \texttt{\%}
+        $b$
+       & 
+      $a \bmod b$ (Remainder after dividing $a$ by $b$)
+    \\
+    \hline
+        $a$
+        \texttt{+}
+        $b$
+       & 
+      $a+b$
+    \\
+        $a$
+        \texttt{-}
+        $b$
+       & 
+      $a-b$
+    \\
+    \hline
+        $a$
+        \texttt{$<$$<$}
+        $b$
+       & 
+      Left-shift 
+      $a$ by 
+      $b$ bits
+    \\
+        $a$
+        \texttt{$>$$>$}
+        $b$
+       & 
+      Right-shift 
+      $a$ by 
+      $b$ bits
+    \\
+    \hline
+        $a$
+        \texttt{$<$$<$$<$}
+        $b$
+       & 
+      Lesser of 
+      $a$ and 
+      $b$
+    \\
+        $a$
+        \texttt{$>$$>$$>$}
+        $b$
+       & 
+      Greater of 
+      $a$ and 
+      $b$
+    \\
+    \hline
+        $a$
+        \texttt{$<$}
+        $b$
+       & 
+      1 if 
+      $a$ $<$ 
+      $b$, else 0
+    \\
+        $a$
+        \texttt{$>$}
+        $b$
+       & 
+      1 if 
+      $a$ $>$ 
+      $b$, else 0
+    \\
+        $a$
+        \texttt{$<$=}
+        $b$
+       & 
+      1 if 
+      $a \le b$, else 0
+    \\
+        $a$
+        \texttt{$>$=}
+        $b$
+       & 
+      1 if 
+      $a \ge b$, else 0
+    \\
+    \hline
+        $a$
+        \texttt{==}
+        $b$
+       & 
+      1 if 
+      $a = b$, else 0
+    \\
+        $a$
+        \texttt{!=}
+        $b$
+       & 
+      1 if 
+      $a \neq b$, else 0
+    \\
+    \hline
+        $a$
+        \texttt{\&}
+        $b$
+       & 
+      Bit-wise AND of 
+      $a$ and 
+      $b$
+    \\
+    \hline
+        $a$
+        \texttt{\^}
+        $b$
+       & 
+      Bit-wise exclusive OR of 
+      $a$ and 
+      $b$
+    \\
+    \hline
+        $a$
+        \texttt{|}
+        $b$
+       & 
+      Bit-wise (inclusive) OR of 
+      $a$ and 
+      $b$
+    \\
+    \hline
+        $a$
+        \texttt{\&\&}
+        $b$
+       & 
+      Logical AND: 1 if 
+      $a$ $\neq$ 0 and 
+      $b$ $\neq$ 0, else 0
+    \\
+    \hline
+        $a$
+        \texttt{||}
+        $b$
+       & 
+      Logical (inclusive) OR: 1 if 
+      $a$ $\neq$ 0 or 
+      $b$ $\neq$ 0, else 0
+    \\
+    \hline
+        $x$
+        \texttt{..}
+        $y$
+       & 
+      Arithmetic Progression from 
+      $x$ to 
+      $y$ in steps of 
+      \texttt{+1} or 
+      \texttt{-1}
+    \\
+        $x$
+        \texttt{..}
+        $y$
+        \texttt{...}
+        $z$
+       & 
+      Arithmetic Progression from 
+      $x$ to 
+      $y$ in steps of 
+      $z$
+    \\
+        $x$
+        \texttt{...}
+        $y$
+        \texttt{..}
+        $z$
+       & 
+      Arithmetic Progression from 
+      $y$ to 
+      $z$ with 
+      $x$ elements
+    \\
+    \hline
+        $a$
+        \texttt{?}
+        $b$
+        \texttt{:}
+        $c$
+       & 
+      Choice: if 
+      $a$ $\neq$ 0 then 
+      $b$, else 
+      $c$
+    \\
+    \hline
+        $a$
+        \texttt{//}
+        $b$
+       & 
+      Concatenate along existing dimension
+    \\
+        $a$
+        \texttt{///}
+        $b$
+       & 
+      Concatenate along new dimension
+    \\
+    \hline
+      [$a$]\texttt{,}[$b$]
+	& 
+      Boxed vector pointing to $a$ and $b$ (unless already boxed)
+    \\
+	& 
+      (If $a$ or $b$ is already boxed then concatenate it)
+    \\
+    \hline
+        $n$ \texttt{=} $a$
+       & 
+      Result is $a$. Right-associative. Side Effect: Set $n$ to OOC-name of $a$
+    \\
+    \hline
+\end{tabular}
+
+\subsection{Assignment Operator `\texttt{=}'}
+    \label{op-Assignment}
+  
+The `\texttt{nap}' command (unlike `\texttt{expr}')
+allows the assignment operator `\texttt{=}'.
+
+The left-hand operand must be a name, as defined in section \ref{syntax-Names}.
+This is used as the name of a Tcl variable (which may or may not already exist)
+whose (string) value is set to the OOC-name of the right-hand operand.
+
+The assignment operator has a result like any other operator.
+This result is the value of the right-hand operand.
+This is shown in the following:
+  \begin{verbatim}
+% nap "a = (b = 6) + 2"
+::NAP::15-15
+% $b
+6
+% $a
+8
+\end{verbatim}
+  
+The assignment operator has the lowest precedence and is
+right-associative, allowing expressions such as:
+  \begin{verbatim}
+% nap "a = 3 + b = {1.5 0}"
+::NAP::16-16
+% $b
+1.5 0
+% $a
+4.5 3
+\end{verbatim}
+
+\subsection{Link Operator `\texttt{,}'}
+    \label{op-Link}
+  
+ The link operator `\texttt{,}' produces a boxed vector pointing to the
+  operands. A common use of `\texttt{,}' is to pass multiple arguments to a function. For
+  example the logarithm function 
+  \texttt{log} takes an optional second argument specifying 
+  $base$, as in:
+  \begin{verbatim}
+% [nap "log(32, 2)"]
+5
+\end{verbatim}
+
+  
+ The operator `\texttt{,}' is also used in 
+  \textit{cross-product indexing}, as discussed in section 
+  \ref{indexing-Cross-product-index}.
+  
+ The left-hand operand of `\texttt{,}' generates one boxed vector and the right-hand
+  operand generates another. These two boxed vectors are concatenated
+  to form the result, which is also a boxed vector. If the data-type of
+  an operand is not boxed then it generates a single-element boxed
+  vector pointing to it. If an operand is a boxed vector then it
+  generates a copy of itself. If an operand is a boxed scalar then it
+  is treated as a boxed vector with a single element. If an operand is
+  absent (NULL) then it generates a single-element (whose value is 0,
+  the missing-value) boxed vector.
+
+\subsection{Arithmetic Progression Operators `\texttt{..}' and `\texttt{...}'}
+    \label{op-AP}
+  
+The operator `\texttt{..}' generates an \emph{arithmetic progression}
+(AP).
+If both
+  operands are simple numeric scalars then the step size is $+1$ or
+  $-1$, the left-hand operand specifies the first value and the
+  right-hand operand specifies the final value. For example:
+  \begin{verbatim}
+% [nap "3 .. 6"]
+3 4 5 6
+% [nap "6 .. 3"]
+6 5 4 3
+% [nap "1.8 .. -1.2"]
+1.8 0.8 -0.2 -1.2
+\end{verbatim}
+
+If the difference between the operands is not an integral
+multiple of the step size then the final step is smaller than the
+preceding steps. This is shown by:
+  \begin{verbatim}
+% [nap "2.3 .. 5.9"]
+2.3 3.3 4.3 5.3 5.9
+\end{verbatim}
+
+  
+ The right-hand operand can be a boxed two-element vector pointing
+  to the final value and the step size. Such a boxed operand is usually
+  generated using the operator `\texttt{...}', as in:
+  \begin{verbatim}
+% [nap "3 .. 9 ... 2"]
+3 5 7 9
+% [nap "0 .. -1.6 ... -0.5"]
+0 -0.5 -1 -1.5 -1.6
+\end{verbatim}
+
+  
+ The left-hand operand can be a boxed two-element vector pointing
+  to the number of elements and the first value. Such a boxed operand
+  is also usually generated using the operator `\texttt{...}', as in:
+  \begin{verbatim}
+% [nap "5 ... 1 .. 7"]
+1 2.5 4 5.5 7
+\end{verbatim}
+
+It is not legal for both operands to be boxed. It is legal to
+specify a non-integral number of elements, as in:
+  \begin{verbatim}
+% [nap "3.5 ... 2 .. 12"]
+2 6 10 12
+\end{verbatim}
+
+Note that 3.5 elements means 2.5 steps. There are two full steps
+of 4, followed by a half step of 2. When the left-hand operand is boxed
+the step size is calculated using
+  $(\mathit{final}-\mathit{first})/(n-1)$,
+where $n$ is the number of elements.
+  
+ The data-type of the result depends on the data-types of 
+  $\mathit{first}$, 
+  $\mathit{final}$ and 
+  $\mathit{step}$. For example:
+  \begin{verbatim}
+% [nap "1 .. 7.0 ... 2"] all
+::NAP::262-262  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 5 7
+\end{verbatim}
+
+\subsection{Concatenation Operators `\texttt{//}' and `\texttt{///}'}
+    \label{op-Concatenation}
+  
+ The following example illustrates the difference between `\texttt{//}' and `\texttt{///}' with vector operands:
+  \begin{verbatim}
+% [nap "{5 2} // {9 8}"]
+5 2 9 8
+% [nap "{5 2} /// {9 8}"]
+5 2
+9 8
+\end{verbatim}
+
+  
+ The following example illustrates the difference between `\texttt{//}' and `\texttt{///}' with matrix operands:
+  \begin{verbatim}
+% [nap "{{6 2 1}{0 9 4}} // {{7 2 7}{3 3 8}}"] all
+::NAP::29-29  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 2 1
+0 9 4
+7 2 7
+3 3 8
+% [nap "{{6 2 1}{0 9 4}} /// {{7 2 7}{3 3 8}}"] all
+::NAP::35-35  i32  MissingValue: -2147483648  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 2 1
+0 9 4
+
+7 2 7
+3 3 8
+\end{verbatim}
+
+  
+ Note that `\texttt{//}' concatenates along the most significant
+  existing dimension, whereas `\texttt{///}' concatenates along a new dimension. This new
+  dimension is of size 2 and is more significant that the existing
+  dimensions.
+  
+ The above examples had operands with identical shapes and
+  data-types. It is obviously desirable to allow the operands of `\texttt{//}' to have different sized leading (most
+  significant) dimensions. Nap does allow this, as shown by:
+  \begin{verbatim}
+% [nap "'Hello' // ' world.'"]
+Hello world.
+% [nap "{{6 2 1}{0 9 4}} // {{7 2 7}}"]
+6 2 1
+0 9 4
+7 2 7
+\end{verbatim}
+
+  
+ In fact, both operators allow any combination of shapes. Operands
+  of `\texttt{///}' are reshaped to the same shape. Operands of
+  `\texttt{//}' are reshaped so all dimensions except the
+  leading one have the same size. The following examples illustrate
+  this reshaping process (with data-type conversion when required):
+  \begin{verbatim}
+% [nap "{{6 2 1}{0 9 4}} // {7 2 7}"]
+6 2 1
+0 9 4
+7 2 7
+% [nap "{{6 2 1}{0 9 4}} // 3.0"] all
+::NAP::142-142  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 2 1
+0 9 4
+3 3 3
+% [nap "{{6 2 1}{0 9 4}} /// 3.0"] all
+::NAP::148-148  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+6 2 1
+0 9 4
+
+3 3 3
+3 3 3
+\end{verbatim}
+
+\subsection{Inverse Indexing Operators `\texttt{@}', `\texttt{@@}' and `\texttt{@@@}'}
+    \label{op-Inverse-Indexing}
+
+  These three operators all take an optional vector left-hand
+  operand. (The `\texttt{@}' operator also allows the left-hand operand to
+  have a rank greater than 1.) The result is a subscript of this
+  vector.
+The left-hand operand defaults to the coordinate-variable of
+  the dimension
+(only relevant to 
+{\em indirect indexing}, which is discussed in section \ref{indexing-indirect-indexing}).
+  
+ The right-hand operand is attached to the result using its {\em link slot}
+  (see section \ref{nao}).
+This enables the right-hand operand to be automatically used as
+  a coordinate variable if the result is directly used as an index.
+  Note that the results of operators/functions do not normally retain
+  any links in their operands/arguments, so this only applies to 
+  \textit{direct} use. (The right-hand operand would not be an
+  appropriate coordinate variable if there were further arithmetic
+  prior to indexing.)
+
+\subsubsection{Interpolated Subscript `\texttt{@}'}
+    \label{op-Interpolated-Subscript}
+
+The result of `$v \texttt{@} b$' is a real
+(possibly fractional) \texttt{f32} subscript value $s$ such that 
+$v_s = b$.
+
+If $v$ is strictly monotonic (sorted without duplicates) then there is
+only one value of $s$ for which $v_s = b$.
+This unique value is obviously the result.
+
+If $v$ is monotonic with duplicates then there can be several duplicate
+elements exactly matching $b$.
+In this case the result is the mean of the subscripts of such matching elements.
+
+If $v$ is not monotonic then the result is the smallest real
+(possibly fractional) \texttt{f32} subscript value $s$ such that 
+$v_s = b$.
+
+Let us begin with some strictly monotonic examples:
+  \begin{verbatim}
+% [nap "{1.5 3.4 3.6 4} @ 3.5"]
+1.5
+% [nap "{1.5 3.4 3.6 4} @ 3.7"]
+2.25
+\end{verbatim}
+  
+ Note that 3.5 is halfway between 3.4 (subscript 1) and 3.6
+  (subscript 2), so the first result is 1.5. Similarly, 3.7 is
+  quarter-way between 3.6 (subscript 2) and 4 (subscript 3), so the
+  second result is 2.25.
+  
+ Combining these two examples into one:
+  \begin{verbatim}
+% [nap "{1.5 3.4 3.6 4} @ {3.5 3.7}"]
+1.5 2.25
+\end{verbatim}
+  
+ We can check this result by using it as an index:
+  \begin{verbatim}
+% [nap "{1.5 3.4 3.6 4}({1.5 2.25})"]
+3.5 3.7
+\end{verbatim}
+
+ The following example shows how extrapolation is used to define
+  the result when the right-hand operand is outside the range of the
+  left-hand operand:
+  \begin{verbatim}
+% [nap "{-1 0 2} @ {-2 5}"]
+-1 3.5
+\end{verbatim}
+  
+ Such extrapolation can be prevented by adding end points with
+  missing or infinite values, as in:
+  \begin{verbatim}
+% [nap "{_ -1 0 2 _} @ {-2 -1 2 5}"]
+_ 1 3 _
+% [nap "{-1i -1 0 2 1i} @ {-2 -1 2 5}"]
+1 1 3 3
+\end{verbatim}
+
+ The effect of other missing values is shown by:
+  \begin{verbatim}
+% [nap "{_ 2 4 _ 6 8 _} @ (1 .. 9)"] value
+_ 1 1.5 2 _ 4 4.5 5 _
+\end{verbatim}
+
+Now let us consider an example where the left operand
+is monotonic with duplicates and there are multiple exact matches.
+Note how the result is defined as the mean of the matching subscripts.
+  \begin{verbatim}
+% [nap "{1.3 6.5 6.5 7.1} @ 6.5"]
+1.5
+\end{verbatim}
+
+Next let us consider an example where the left operand
+is not monotonic (sorted) at all.
+Note how the result is defined by the first match, which need not be exact.
+  \begin{verbatim}
+% [nap "{2 4 5 3} @ (1 .. 6)"]
+-0.5 0 0.5 1 2 _
+\end{verbatim}
+
+ The left-hand operand can have a rank greater than 1. In this case
+  the search takes place over the most significant dimension (0) of the
+  left-hand operand. The following example searches down each column
+  for the value 
+  \texttt{0.7}.
+  \begin{verbatim}
+% nap "mat = {
+    {0.3 0.1 0.9}
+    {0.5 0.5 0.8}
+    {0.6 0.1 0.6}
+    {0.8 0.0   _}
+}'
+::NAP::157-157
+% [nap "mat @ 0.7"]
+2.5 _ 1.5
+\end{verbatim}
+
+  
+ Thus this combines the effect of the following three commands.
+  \begin{verbatim}
+% [nap "{0.3 0.5 0.6 0.8} @ 0.7"]
+2.5
+% [nap "{0.1 0.5 0.1 0.0} @ 0.7"]
+_
+% [nap "{0.9 0.8 0.6 _} @ 0.7"]
+1.5
+\end{verbatim}
+
+  
+ The right-hand operand can have any rank, but trailing dimensions
+  (excluding dimension 0 of the left-hand operand) must match. The
+  following example has a right-hand operand with the same number (3)
+  of columns as 
+  \texttt{mat}.
+  \begin{verbatim}
+% [nap "mat @ {{0.7 0.7 0.7}{0.4 0.5 0.8}}"]
+2.5   _ 1.5
+0.5 1.0 1.0
+\end{verbatim}
+
+  
+ The following 3D array contains ocean temperature data for 4
+  depths, 2 latitudes and 3 longitudes. Note that some (shallower)
+  points have missing values at the deepest level. For each (latitude,
+  longitude) point, we want to find the depth (subscript) corresponding
+  to a temperature of 10 degrees. The missing value in the result
+  corresponds to an oceanic column whose minimum temperature is 12.
+  \begin{verbatim}
+% nap "temperature = {
+    {{11 12 13}{11 11 12}}
+    {{ 9  9 13}{11  8 10}}
+    {{ 8 10 12}{ 9  8 10}}
+    {{ 6  2  _}{ 5  _  _}}
+}'
+% [nap "temperature @ 10"]
+0.500000 0.666667        _
+1.500000 0.333333 1.000000
+\end{verbatim}
+
+\subsubsection{Subscript of Closest `\texttt{@@}'}
+    \label{op-Subscript-of-Closest}
+  
+The result of 
+`$v \texttt{@@} b$'
+is the \texttt{i32} subscript $s$ for which 
+$|v_s - b|$
+is least.
+For example:
+  \begin{verbatim}
+% [nap "{1.5 3.4 0 2.4 -1 0} @@ {2 -99}"]
+3 4
+\end{verbatim}
+
+Element 3 has the value 2.4, which is the closest to 2. Element 4
+has the value -1, which is the closest to -99.
+  
+ The following example shows how the right-hand operand becomes the
+  coordinate variable if the result is used directly as an index, but
+  not if there is further arithmetic.
+  \begin{verbatim}
+% nap "coarse = {4 8 7}"
+::NAP::14-14
+% nap "time = {2 3 5}"
+::NAP::16-16
+% $coarse set coo time
+% [nap "fine = coarse(time@@(2.4 .. 4.6 ... 0.2))"] value
+4 8 8 8 8 8 8 8 8 7 7 7
+% [$fine coo] value; # Display coordinate variable
+2.4 2.6 2.8 3 3.2 3.4 3.6 3.8 4 4.2 4.4 4.6
+% [nap "fine = coarse(time@@(2.4 .. 4.6 ... 0.2)+1)"] value;
+# Do further arithmetic
+8 7 7 7 7 7 7 7 7 4 4 4
+% [$fine coo] value; # Display coordinate variable
+3 5 5 5 5 5 5 5 5 2 2 2
+\end{verbatim}
+
+\subsubsection{Subscript of Match `\texttt{@@@}'}
+    \label{op-Subscript-of-Match}
+  
+The result of 
+`$v \texttt{@@@} b$'
+is the smallest \texttt{i32} subscript $i$ for which 
+$v_i = b$.
+For example:
+  \begin{verbatim}
+% [nap "{3 2 9 2 0 3} @@@ {0 3 2}"]
+4 0 1
+\end{verbatim}
+
+  
+ Element 4 is the only 0, element 0 is the first 3 and element 1 is
+  the first 2.
+  
+ The following example shows that this operator can be used with
+  character data:
+  \begin{verbatim}
+% [nap 'hello world' @@@ 'wol']
+6 4 2
+\end{verbatim}
+
+\subsection{Tally Unary Operator `\texttt{\#}'}
+    \label{op-Tally}
+  
+ Unary `\texttt{\#}' produces a frequency table. It tallies the
+  number of 0s, 1s, 2s, $\ldots$, as in the following:
+  \begin{verbatim}
+% [nap "#{2 5 4 5 2 -3 0 2}"]
+1 0 3 0 1 2
+\end{verbatim}
+
+  
+ There is one zero, no ones, three twos, no threes, one four and
+  two fives. Note that the negative value (\texttt{-3}) is ignored.
+  
+ If the operand has more than 1 dimension then the result has the
+  same shape, except that the size of the first dimension is changed to
+  $m$+1, where 
+  $m$ is the maximum value. Each element of the result is a
+  frequency tallied over the first dimension. For example:
+  \begin{verbatim}
+% [nap "{{2 5 4 5}{2 -3 0 2}}"]
+ 2  5  4  5
+ 2 -3  0  2
+% [nap "#{{2 5 4 5}{2 -3 0 2}}"]
+0 0 1 0
+0 0 0 0
+2 0 0 1
+0 0 0 0
+0 0 1 0
+0 1 0 1
+\end{verbatim}
+
+  
+ If the operand is boxed and points to 
+  $n$ arrays (which each have the same number of elements)
+  then the result is the 
+  $n$-dimensional array of joint frequencies. For example:
+  \begin{verbatim}
+% [nap "#({2 1 1 0 1},{1 1 3 2 1})"]
+0 0 1 0
+0 2 0 1
+0 1 0 0
+\end{verbatim}
+
+  
+ The boxed operand defines the five pairs (2,1), (1,1), (1,3),
+  (0,2) and (1,1). The above result gives the frequencies of these
+  pairs.
+
+\subsection{Replicate Binary Operator `\texttt{\#}'}
+    \label{op-Replicate}
+ 
+  \texttt{\#} can appear within array constants, as in:
+  \begin{verbatim}
+% [nap "{7 3#8 0}"]
+7 8 8 8 0
+\end{verbatim}
+
+  
+ The 
+  \texttt{\#} operator has a related meaning, as shown by:
+  \begin{verbatim}
+% [nap "3#8"]
+8 8 8
+% [nap "{4 1 0 2} # {7 12 9 8}"] value
+7 7 7 7 12 8 8
+\end{verbatim}
+
+  
+ Each element of the left-hand operand defines the number of
+  replications of the corresponding element of the right-hand operand.
+  The operands can be vectors or scalars. The result is a vector.
+  
+ Note that one can use this operator to select from a vector those
+  elements which satisfy some condition. The following example selects
+  the even elements:
+  \begin{verbatim}
+% nap "x = {9 1 0 2 3 -8 0}"
+::NAP::286-286
+% [nap "(x % 2 == 0) # x"]
+0 2 -8 0
+\end{verbatim}
+
+  
+ This works because the left-hand operand is:
+  \begin{verbatim}
+% [nap "(x % 2 == 0)"] value
+0 0 1 1 0 1 1
+\end{verbatim}
+  
+If the right-hand operand $b$ is multidimensional then the left-hand operand must be a
+boxed vector pointing to vectors corresponding to the dimensions of $b$.
+For example:
+  \begin{verbatim}
+% nap "mat = reshape(1 .. 12, {3 4})"
+::NAP::316-316
+% $mat
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+% [nap "({2 0 1},{3 2 0 1}) # mat"]
+ 1  1  1  2  2  4
+ 1  1  1  2  2  4
+ 9  9  9 10 10 12
+\end{verbatim}
+
+  
+ This is equivalent to using the following cross-product index:
+  \begin{verbatim}
+% [nap "mat({0 0 2},{0 0 0 1 1 3})"]
+ 1  1  1  2  2  4
+ 1  1  1  2  2  4
+ 9  9  9 10 10 12
+\end{verbatim}
+
+\subsection{Remainder Operator `\texttt{\%}'}
+    \label{op-Remainder}
+
+The value of the remainder 
+  $r$ = 
+  $a$ 
+  \texttt{\%} 
+  $b$ is defined for all real 
+  $a$ and 
+  $b$ so that:
+  \\if 
+  $b$ $>$ 0 then 0 $\le$ 
+  $r$ $<$ 
+  $b$
+  \\if 
+  $b$ = 0 then 
+  $r$ = 0
+  \\if 
+  $b$ $<$ 0 then 
+  $b$ $<$ 
+  $r$ $\le$ 0
+  \\if 
+  $a$ $\ge$ 0 and b = $\infty$ then 
+  $r$ = 
+  $a$
+  \\if 
+  $a$ $\le$ 0 and b = $-$$\infty$ then 
+  $r$ = 
+  $a$
+  \\if 
+  $a$ $<$ 0 and b = $\infty$ then 
+  $r$ = $\infty$
+  \\if 
+  $a$ $>$ 0 and b = $-$$\infty$ then 
+  $r$ = $-$$\infty$.
+  \\Thus:
+  \begin{verbatim}
+% [nap "0.7 % {0.3 0 -0.3}"]
+0.1 0 -0.2
+% [nap "{7 0 -7} % 1if32"]
+7 0 Inf
+% [nap "{7 0 -7} % -1if32"]
+-Inf 0 -7
+\end{verbatim}
+
+\subsection{Unary Sorting Operators `\texttt{$<$=}' and `\texttt{$>$=}'}
+    \label{op-Sorting}
+
+These operators are applied to vectors to produce the
+  permutation vector which (when applied as its index) sorts the
+  argument into ascending or descending order.
+  
+Thus 
+`$u = v\texttt{(<=} v\texttt{)}$'
+  is sorted into ascending order, so that 
+  $u_0 \le u_1 \le u_2 \le \ldots$
+  \\
+  and 
+`$u = v\texttt{(>=} v\texttt{)}$'
+  is sorted into descending order, so that 
+  $u_0 \ge u_1 \ge u_2 \ge \ldots$
+  
+ The floating-point value 
+  \textit{NaN} is treated as less than $-\infty$.
+  The current
+  version treats other missing values as having their numeric value.
+  (This may change in future versions.)
+  
+ The following examples illustrate these two operators and the related 
+function \texttt{sort()}
+(see section \ref{function-change-shape-or-order}):
+  \begin{verbatim}
+% [nap "x = {1.5 -1i 0 _ 9 _ 0 1i -2 1}"] value
+1.5 -Inf 0 _ 9 _ 0 Inf -2 1
+% [nap "pv = <= x"] value; # permutation vector
+3 5 1 8 6 2 9 0 4 7
+% [nap "x(pv)"] value; # ascending order
+_ _ -Inf -2 0 0 1 1.5 9 Inf
+% [nap "sort(x)"] value; # same result
+_ _ -Inf -2 0 0 1 1.5 9 Inf
+% [nap "x(>= x)"] value; # descending order
+Inf 9 1.5 1 0 0 -2 -Inf _ _
+\end{verbatim}

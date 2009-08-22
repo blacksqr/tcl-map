@@ -1,0 +1,52 @@
+%  $Id: term.tex,v 1.1 2006/02/27 03:06:43 dav480 Exp $ 
+    % NAP Terminology
+      \section{Terminology}
+
+    \subsection{Arrays}
+
+    \begin{description}
+      \item[scalar]
+      array with 0 dimensions i.e. a simple number, character,
+      etc.
+      \item[vector]
+      array with 1 dimension.
+      \item[matrix]
+      array with 2 dimensions.
+      \item[dimension-size]
+      number of values along a dimension.
+      \item[shape]
+      vector of dimension-sizes of array.
+      \item[rank]
+      number of dimensions (a.k.a. dimensionality) i.e. shape of
+      shape.
+      \item[row]
+      final (least-significant) dimension
+      \item[dimension-name]
+      name given to dimension e.g. "latitude".
+      \item[coordinate-variable (CV)]
+      vector (usually sorted) associated with a dimension of the
+      same size. CVs are often used to map an array's dimensions to
+      physical dimensions such as length and time, thus locating the
+      array elements in physical space and time.
+    \end{description}
+    \subsection{Special Numeric Values}
+
+    \begin{description}
+      \item[missing-value (MV)]
+      numeric value of data which is abnormal in some way such as:
+	  \begin{itemize}
+	    \item not applicable (e.g. land point for ocean data)
+	    \item not available (e.g. instrument failure or delay in
+	    obtaining data)
+	    \item result of some illegal operation such as dividing 0 by 0
+	    \item undefined for some other reason 
+	  \end{itemize}
+      \item[infinity ($\infty$)]
+      floating-point value representing a value which is too
+          large (or small in the case of $-\infty$) to
+          represent. This can result from operations such as dividing
+          by 0.
+      \item[NaN (not-a-number)]
+      floating-point value resulting from an illegal operation
+          such as dividing 0 by 0.
+    \end{description}

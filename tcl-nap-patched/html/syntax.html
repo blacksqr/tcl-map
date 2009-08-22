@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: syntax.html,v 1.8 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Syntax of NAP Expressions</title>
+  </head>
+  <body>
+    <center>
+      <h2>Syntax of NAP Expressions</h2>
+    </center>
+  <h3>Table of Contents</h3>
+    <ol>
+      <li>
+        <a href="#Introduction">Introduction</a>
+      </li>
+      <li>
+        <a href="#Substitution">Substitution</a>
+      </li>
+      <li>
+        <a href="#Namespaces">Namespaces</a>
+      </li>
+      <li>
+        <a href="#Functions">Functions</a>
+      </li>
+      <li>
+        <a href="#Indexing">Indexing</a>
+      </li>
+      <li>
+        <a href="#Parenthesising">Parenthesising Function Arguments and
+        Indices</a>
+      </li>
+  </ol>
+    <h3>
+      <a name="Introduction">Introduction</a>
+    </h3>
+    <p>The standard Tcl command&#160; &quot;<code>expr</code>&quot; is based on C conventions for operators and
+    functions. NAP expressions use similar conventions and can include
+    any of the following tokens separated by white-space
+    characters:</p>
+    <ul>
+      <li>Operands
+      <ul>
+        <li>OOC-names</li>
+        <li>names of Tcl variables (may include namespaces)</li>
+        <li>constants
+        <ul>
+          <li>numeric scalar</li>
+          <li>numeric array</li>
+          <li>string</li>
+        </ul></li>
+      </ul></li>
+      <li>Operators (including assignment operator &quot;<code>=</code>&quot;)</li>
+      <li>Parentheses (&quot;<code>()</code>&quot;)</li>
+      <li>Function names
+      <ul>
+        <li>built-in functions</li>
+        <li>names (may include namespaces) of Tcl procedures defining
+        NAP functions</li>
+      </ul></li>
+      <li>Tcl substitution characters (&quot;<code>[]$</code>&quot;)</li>
+    </ul>
+    <h3>
+      <a name="Substitution">Substitution</a>
+    </h3>
+    <p>Like &quot;<code>expr</code>&quot;, nap does the Tcl substitution defined by
+    any brackets and dollars (&quot;<code>[]$</code>&quot;) remaining after normal command parsing.</p>
+    <p>However, unlike &quot;<code>expr</code>&quot;, nap also substitutes for Tcl variable
+    names that are not preceded by a &quot;<code>$</code>&quot; (except where the name is the left operand of
+    the assignment operator &quot;<code>=</code>&quot;). The value of the Tcl name is treated as a
+    NAP expression, which is evaluated and the OOC-name of the result
+    replaces the name. This substitution is repeated (up to eight
+    times) until a single OOC-name is generated. The expressions in the
+    following example include:</p>
+    <ul>
+      <li>Tcl variable 
+      <code>length</code> containing the string &quot;<code>3.5</code>&quot;</li>
+      <li>Tcl variable 
+      <code>breadth</code> defined by NAP to contain &quot;<code>::NAP::13-13</code>&quot;</li>
+      <li>NAP constants 
+      <code>2</code> and 
+      <code>10</code></li>
+      <li>Tcl variable 
+      <code>area</code> containing the string &quot;<code>length * breadth</code>&quot;</li>
+    </ul>
+    <pre>
+% set length 3.5
+3.5
+% nap &quot;breadth = 2&quot;
+::NAP::13-13
+% [nap &quot;2 * (length + breadth)&quot;]
+11
+% set area &quot;length * breadth&quot;
+length * breadth
+% [nap &quot;10 * area&quot;]
+70
+</pre>
+    <p>Each constant is replaced by the OOC-name of a NAO representing
+    its value. After substitution, the expression consists of
+    OOC-names, operators, function names and parentheses.</p>
+    <p>Similarly one can use a Tcl variable as a generic function, as
+    in:</p>
+    <pre>
+% set f sqrt
+sqrt
+% [nap &quot;f 9&quot;]
+3
+</pre>
+    <h3>
+      <a name="Namespaces">Namespaces</a>
+    </h3>
+    <p>NAP allows names which include namespaces, as in:</p>
+    <pre>
+% namespace eval ::mySpace {}; # create namespace &quot;mySpace&quot;
+% nap &quot;::mySpace::x = 8&quot;
+::NAP::13-13
+% [nap &quot;3 + ::mySpace::x&quot;]
+11
+</pre>
+    <h3>
+      <a name="Functions">Functions</a>
+    </h3>
+    <p>Function arguments can be enclosed by parentheses (as required
+    by many other languages), but these parentheses are not required by
+    the syntax. A name (which cannot be a Tcl variable name or it would
+    have been substituted) followed by an operand (now an OOC-name) is
+    treated as a function name. Thus the following two commands are
+    equivalent:</p>
+    <pre>
+% [nap &quot;sin(3.14)&quot;]
+0.00159265
+% [nap &quot;sin 3.14&quot;]
+0.00159265
+</pre>
+    <p>Multiple arguments are separated by commas in the usual way. For
+    example:</p>
+    <pre>
+% [nap &quot;hypot(3,4)&quot;]
+5
+</pre>
+    <p>A comma is treated as a low-precedence operator which produces a
+    
+    <em>boxed</em> array. The parentheses 
+    <em>are</em> needed to force the comma to be executed before the
+    function. The fact that comma is just another operator is shown
+    by:</p>
+    <pre>
+% nap &quot;both = 3,4&quot;
+::NAP::33-33
+% $both all
+::NAP::33-33  boxed  MissingValue: 0  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+31 32
+% [nap &quot;hypot both&quot;]
+5
+</pre>
+    <h3>
+      <a name="Indexing">Indexing</a>
+    </h3>
+    <p>Tcl array indices are enclosed by parentheses (&quot;<code>()</code>&quot;), while C uses brackets (&quot;<code>[]</code>&quot;). NAP requires neither, since indexing is
+    simply implied by adjacent operands (now OOC-names). Thus the
+    following two commands (which give elements 1, 0, 2 and 0 of the
+    vector 
+    <code>{5 7 6}</code>) are equivalent:</p>
+    <pre>
+% [nap &quot;{5 7 6}({1 0 2 0})&quot;]
+7 5 6 5
+% [nap &quot;{5 7 6}{1 0 2 0}&quot;]
+7 5 6 5
+</pre>
+    <h3>
+      <a name="Parenthesising">Parenthesising Function Arguments and Indices</a>
+    </h3>
+    <p>As explained above, there is no syntactic need for parentheses
+    around single function arguments and array indices. However, since
+    most other computer languages do require such parentheses, it may
+    aid human readability to include them.</p>
+    <p>Multiple function arguments and cross-product-indexing are both
+    defined using a 
+    <em>boxed</em> argument. A boxed argument is normally produced
+    using the comma operator. The comma operator has low precedence, so
+    parentheses 
+    <em>are</em> normally needed for multiple function arguments and
+    cross-product-indexing. The following example shows how an element
+    of a matrix can be extracted using either 
+    <em>full</em> or 
+    <em>cross-product</em> indexing:</p>
+    <pre>
+% nap &quot;matrix = {
+{2 3 4}
+{5 6 7}
+}&quot;
+::NAP::30-30
+% [nap &quot;matrix{0 2}&quot;]; # Full index
+4
+% [nap &quot;matrix(0,2)&quot;]; # Cross-product index
+4
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2002-2004, CSIRO
+            Australia. &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: syntax.html,v 1.3
+            2004/10/28 05:26:55 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

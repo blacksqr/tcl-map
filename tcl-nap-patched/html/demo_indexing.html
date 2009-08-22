@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_indexing.html,v 1.4 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Indexing</title>
+  </head>
+  <body>
+    <center>
+      <h2>Indexing</h2>
+    </center>
+    <h3>Indexing of vectors</h3>
+    <pre>
+% nap &quot;temperature = {20 21 20.6}&quot;; # temperatures at time
+1000, 1200, 1400
+::NAP::134-134
+% nap &quot;time = {10 12 14}&quot;
+::NAP::136-136
+% $temperature set coo time
+% $temperature a
+::NAP::134-134  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 3      Name: time      Coordinate-variable:
+::NAP::136-136
+Value:
+20 21 20.6
+% [nap &quot;temperature(0)&quot;]
+20
+% [nap &quot;temperature(1)&quot;]
+21
+% [nap &quot;temperature(2)&quot;]
+20.6
+% [nap &quot;temperature(3)&quot;]
+20
+% [nap &quot;temperature(-1)&quot;]
+20.6
+% [nap &quot;temperature(-2)&quot;]
+21
+% [nap &quot;temperature(0.5)&quot;]
+20.5
+% [nap &quot;temperature(1.5)&quot;]
+20.8
+% [nap &quot;temperature({1 0 2 -1})&quot;]
+21 20 20.6 20.6
+% [nap &quot;temperature{1 0 2 -1}&quot;]
+21 20 20.6 20.6
+% [nap &quot;temperature(0 .. 2 ... 0.5)&quot;]
+20 20.5 21 20.8 20.6
+</pre>
+    <h3>Inverse indexing of vectors (position of specified value)</h3>
+    <pre>
+% [nap &quot;{2 5 7 2 5} @@@ {7 2 4 5}&quot;]; # @@@ is &#39;match&#39;
+(1st to match exactly)
+2 0 _ 1
+% $time
+10 12 14
+% [nap &quot;time @ 14&quot;]; # Find position (index) of value 14 in
+time
+2
+% [nap &quot;time @ 11&quot;]; # @ is &#39;interpolate&#39;
+0.5
+% [nap &quot;time @@ 13.1&quot;]; # @@ is &#39;nearest&#39;
+2
+% [nap &quot;time @ {14 11 10 11.5}&quot;]
+2 0.5 0 0.75
+</pre>
+    <h3>Indirect indexing (via coordinate variable)</h3>
+    <pre>
+% [nap &quot;temperature(time @ 14)&quot;]
+20.6
+% [nap &quot;temperature(     @ 14)&quot;]; # Left operand of @
+defaults to coordinate variable
+20.6
+% [nap &quot;temperature(@ 11)&quot;]
+20.5
+% [nap &quot;temperature(time @@ 13.1)&quot;]
+20.6
+% [nap &quot;temperature(@@ 13.1)&quot;]
+20.6
+% [nap &quot;temperature(time@{14 11 10 11.5})&quot;]
+20.6 20.5 20 20.75
+% [nap &quot;temperature(@{14 11 10 11.5})&quot;]
+20.6 20.5 20 20.75
+</pre>
+    <h3>Shape-preserving indexing</h3>
+    <pre>
+% [nap &quot;temperature(0.5)&quot;] a; # (a = all) Both index &amp;
+result are scalars
+::NAP::51955-9298  f32  MissingValue: NaN  References: 0
+Value:
+20.5
+% [nap &quot;temperature({0.5 0 -1})&quot;] a; # Both index &amp;
+result are 3-element vectors
+::NAP::51961-9977  f32  MissingValue: NaN  References: 0
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+20.5 20 20.6
+% [nap &quot;temperature({{0 0.5 -1}{1 0 3}})&quot;] a; # Both index
+&amp; result are 2*3 matrices
+::NAP::51967-9298  f32  MissingValue: NaN  References: 0
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+20.0 20.5 20.6
+21.0 20.0 20.0
+</pre>
+    <h3>Indexing of Matrices</h3>
+    <pre>
+% # Define matrix m with coordinate variables
+% nap &quot;m = {
+{6.1 1 -2 9}
+{2#3 0 1.2}
+}&quot;
+::NAP::46-46
+% $m set coo &quot;{10 20}&quot; &quot;50 .. 80 ... 10&quot;
+% $m a
+::NAP::46-46  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable:
+::NAP::48-48
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable:
+::NAP::56-56
+Value:
+ 6.1  1.0 -2.0  9.0
+ 3.0  3.0  0.0  1.2
+% [nap &quot;coordinate_variable(m, 0)&quot;] a
+::NAP::48-48  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+10 20
+% [nap &quot;cv(m, 1)&quot;] a; # can abbreviate
+&#39;coordinate_variable&#39; to &#39;cv&#39;
+::NAP::56-56  i32  MissingValue: -2147483648  References: 1  Unit:
+(NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+50 60 70 80
+</pre>
+    <h3>Cross-product indexing to extract single element (scalar)</h3>
+    <pre>
+% [nap m(0,0)]
+6.1
+% [nap m(1,2)]
+0
+% [nap m(1,-1)]
+1.2
+% [nap &quot;m(@20, @70)&quot;]; # Indirect indexing via coordinate
+variables
+0
+% [nap &quot;m(@20, @75)&quot;]; # Interpolate -- 0.5 * (0 + 1.2)
+0.6
+% [nap &quot;m(0, @75)&quot;];   # Interpolate -- 0.5 * (-2 + 9)
+3.5
+% [nap &quot;m(@15, @75)&quot;]; # Interpolate -- 0.5 * (0.6 + 3.5)
+2.05
+% [nap &quot;m(@@16, @@74)&quot;]; # Nearest
+0
+</pre>
+    <h3>Cross-product indexing to extract multiple elements</h3>
+    <pre>
+% [nap &quot;m(0, {2 0 -1})&quot;]
+-2 6.1 9
+% [nap &quot;m({1 0}, {2 0 -1})&quot;]
+ 0.0  3.0  1.2
+-2.0  6.1  9.0
+% [nap &quot;m(2, 0 .. 2)&quot;]
+6.1 1 -2
+% [nap &quot;m(1,)&quot;];
+3 3 0 1.2
+% [nap &quot;m(1, -)&quot;]; # niladic &#39;-&#39; means
+&#39;reverse&#39;
+1.2 0 3 3
+% [nap &quot;m(-, -)&quot;];
+ 1.2  0.0  3.0  3.0
+ 9.0 -2.0  1.0  6.1
+</pre>
+    <h3>Full indexing to extract single element</h3>
+    <pre>
+% [nap &quot;m({0 0})&quot;]
+6.1
+% [nap &quot;m({1 2})&quot;]
+0
+% [nap &quot;m{1 -1}&quot;]; # parentheses redundant
+1.2
+</pre>
+    <h3>Full indexing to form a new array from randomly selected
+    elements of an existing array</h3>
+    <pre>
+% [nap &quot;m({{0 0}{1 1}})&quot;]; # diagonal elements
+6.1 3
+% [nap &quot;m{{0 0}{1 2}{1 -1}}&quot;]
+6.1 0 1.2
+% [nap &quot;m({
+{{1 0}{2 1}{0 0}}
+{{0 0}{1 3}{0 3}}
+})&quot;]
+3.0 1.0 6.1
+6.1 1.2 9.0
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: demo_indexing.html,v 1.2
+            2005/03/15 00:33:05 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

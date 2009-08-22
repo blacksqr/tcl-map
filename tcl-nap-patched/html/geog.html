@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: geog.html,v 1.14 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: Geographic</title>
+  </head>
+  <body>
+  <center>
+    <h2>Geographic Functions</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Wind">Divergence and Vorticity of Wind</a>
+      <ul>
+        <li>
+          <a href="#wind">
+          <code>div_wind(</code> 
+          <var>u</var> 
+          <code>,</code> 
+          <var>v</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#wind">
+          <code>vorticity_wind(</code> 
+          <var>u</var> 
+          <code>,</code> 
+          <var>v</var> 
+          <code>)</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#latlon">Things related to Latitude and Longitude</a>
+      <ul>
+        <li>
+          <a href="#area_on_globe">
+          <code>area_on_globe(</code> 
+          <var>latitude</var> 
+          <code>,</code> 
+          <var>longitude</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#fix_longitude">
+          <code>fix_longitude(</code> 
+          <var>longitude</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#merid_bounds">
+          <code>merid_bounds(</code> 
+          <var>longitude</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#merid_wt">
+          <code>merid_wt(</code> 
+          <var>longitude</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#zone_bounds">
+          <code>zone_bounds(</code> 
+          <var>latitude</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#zone_wt">
+          <code>zone_wt(</code> 
+          <var>latitude</var> 
+          <code>)</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#land">Land, Sea and Coast</a>
+      <ul>
+        <li>
+          <a href="#is_land">
+          <code>is_land(</code> 
+          <var>latitude</var> 
+          <code>,</code> 
+          <var>longitude</var>[ 
+          <code>,</code> 
+          <var>data_dir</var>] 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#is_coast">
+          <code>is_coast(</code> 
+          <var>latitude</var> 
+          <code>,</code> 
+          <var>longitude</var>[ 
+          <code>,</code> 
+          <var>nlat</var> 
+          <code>,</code> 
+          <var>nlon</var> 
+          <code>,</code> 
+          <var>data_dir</var>] 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#fraction_land">
+          <code>fraction_land(</code> 
+          <var>latitude</var> 
+          <code>,</code> 
+          <var>longitude</var>[ 
+          <code>,</code> 
+          <var>nlat</var> 
+          <code>,</code> 
+          <var>nlon</var> 
+          <code>,</code> 
+          <var>data_dir</var>] 
+          <code>)</code></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#Reading">Reading Geographic Files</a>
+      <ul>
+        <li>
+          <a href="#acof2boxed">
+          <code>acof2boxed(</code> 
+          <var>filename</var> 
+          <code>)</code></a>
+        </li>
+        <li>
+          <a href="#get_gridascii">
+          <code>get_gridascii(</code> 
+          <var>filename</var>[ 
+          <code>,</code> 
+          <var>unit</var>] 
+          <code>)</code></a>
+        </li>
+      </ul>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>The following functions are defined in the files 
+  <code>geog.tcl</code> and 
+  <code>land.tcl</code>. Note that 
+  <code>geog.tcl</code> also defines 
+  <a href="geog_proc.html">Geographic Procedures</a>.
+  <h3>
+    <a name="Wind">Divergence and Vorticity of Wind</a>
+  </h3>Functions 
+  <code>div_wind(</code> 
+  <var>u</var> 
+  <code>,</code> 
+  <var>v</var> 
+  <code>)</code> and 
+  <code>vorticity_wind(</code> 
+  <var>u</var> 
+  <code>,</code> 
+  <var>v</var> 
+  <code>)</code> gives the divergence (/second) and vorticity (/second)
+  of a 2D wind, where
+  <br />
+  <var>u</var> is matrix containing zonal (x-component i.e. from west
+  to east) wind in metres/sec.
+  <br />
+  <var>v</var> is matrix containing meridional (y-component i.e. from
+  south to north) wind in metres/sec.
+  <br />Coordinate variables of 
+  <var>u</var> and 
+  <var>v</var> are latitude (°N) and longitude (°E).
+  <p>Let 
+  <font face="Symbol">q</font> be latitude in radians, 
+  <font face="Symbol">j</font> be longitude in radians, 
+  <var>r</var> be radius of earth in metres.</p>
+  <p>The divergence of a 2D wind is defined as
+  <br />
+  <font face="Symbol">¶</font> 
+  <var>u</var>/ 
+  <font face="Symbol">¶</font> 
+  <var>x</var> + 
+  <font face="Symbol">¶</font> 
+  <var>v</var>/ 
+  <font face="Symbol">¶</font> 
+  <var>y</var>
+  <br />Function 
+  <code>div_wind</code> uses the equivalent formula
+  <br />( 
+  <font face="Symbol">¶</font> 
+  <var>u</var>/ 
+  <font face="Symbol">¶</font> 
+  <font face="Symbol">j</font> + 
+  <font face="Symbol">¶</font>( 
+  <var>v</var> cos 
+  <font face="Symbol">q</font>)/ 
+  <font face="Symbol">¶</font> 
+  <font face="Symbol">q</font>) / ( 
+  <var>r</var> cos 
+  <font face="Symbol">q</font>)</p>
+  <p>The vorticity of a 2D wind is defined as
+  <br />
+  <font face="Symbol">¶</font> 
+  <var>v</var>/ 
+  <font face="Symbol">¶</font> 
+  <var>x</var> - 
+  <font face="Symbol">¶</font> 
+  <var>u</var>/ 
+  <font face="Symbol">¶</font> 
+  <var>y</var>
+  <br />Function 
+  <code>vorticity_wind</code> uses the equivalent formula
+  <br />( 
+  <font face="Symbol">¶</font> 
+  <var>v</var>/ 
+  <font face="Symbol">¶</font> 
+  <font face="Symbol">j</font> - 
+  <font face="Symbol">¶</font>( 
+  <var>u</var> cos 
+  <font face="Symbol">q</font>)/ 
+  <font face="Symbol">¶</font> 
+  <font face="Symbol">q</font>) / ( 
+  <var>r</var> cos 
+  <font face="Symbol">q</font>)</p>
+  <h3>
+    <a name="latlon">Things related to Latitude and Longitude</a>
+  </h3>
+  <h4>
+    <a name="area_on_globe"> <code>area_on_globe(</code> <var>latitude</var> <code>,</code> <var>longitude</var> <code>)</code></a>
+  </h4>Given latitude and longitude vectors, this function calculates a
+  matrix whose values are fractions of the Earth&#39;s surface area
+  corresponding to cells defined by the functions 
+  <a href="#merid_bounds"> <code>merid_bounds(</code> <var>longitude</var> <code>)</code></a> and 
+  <a href="#zone_bounds"> <code>zone_bounds(</code> <var>latitude</var> <code>)</code></a> .
+  <p>Example:</p>
+  <pre>
+% [nap &quot;lats = 90 .. -90 ... -45&quot;]
+90 45 0 -45 -90
+% [nap &quot;lons = -180 .. 180 ... 45&quot;] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap &quot;area = area_on_globe(lats, lons)&quot;] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+</pre>
+  <h4>
+    <a name="fix_longitude"> <code>fix_longitude(</code> <var>longitude</var> <code>)</code></a>
+  </h4>Adjust elements of longitude vector by adding or subtracting
+  multiple of 360 to ensure:
+  <br />&#8722;180 &#8804; 
+  <var>x</var> 
+  <sub>0</sub> &lt; 180
+  <br />0 &#8804; 
+  <var>x</var> 
+  <sub>i+1</sub>&#8722; 
+  <var>x</var> 
+  <sub>i</sub> &lt; 360
+  <br />Also ensure unit is 
+  <code>degrees_east</code>.
+  <h4>
+    <a name="merid_bounds"> <code>merid_bounds(</code> <var>longitude</var> <code>)</code></a>
+  </h4>This function defines reasonable boundary longitudes from a
+  vector giving the central longitudes of each cell. The range of
+  longitudes should not exceed 360° but may be much smaller.
+  <p>The result is a vector with one more element than the argument.
+  The midpoints between adjacent argument values define all the
+  elements of the result except the first and final ones.</p>
+  <p>The first and final values are defined as follows. Trial outer
+  cells are added with the same width as their adjacent cell. If these
+  outer cells overlap (due to global wrap-around) then both outer
+  boundaries are set to the value (plus an integer multiple of 360°)
+  midway between the first and final values of the argument.</p>
+  <p>Examples:</p>
+  <pre>
+% [nap &quot;merid_bounds {-180 -90 0 30 90 180}&quot;] value; #
+global-range
+-180 -135 -45 15 60 135 180
+% [nap &quot;merid_bounds {10 30 40 50 60}&quot;] value; # local-range
+0 20 35 45 55 65
+</pre>
+  <h4>
+    <a name="merid_wt"> <code>merid_wt(</code> <var>longitude</var> <code>)</code></a>
+  </h4>Calculate normalised (so sum of weights is 1) meridional weights
+  from longitudes. These weights are proportional to the widths of the
+  cells defined by the above function 
+  <a href="#merid_bounds"> <code>merid_bounds(</code> <var>longitude</var> <code>)</code></a> .
+  <p>Examples:</p>
+  <pre>
+% [nap &quot;merid_wt {-180 -90 0 30 90 180}&quot;] value; #
+global-range
+0.125 0.25 0.166667 0.125 0.208333 0.125
+% [nap &quot;merid_wt {10 30 40 50 60}&quot;] value; # local-range
+0.307692 0.230769 0.153846 0.153846 0.153846
+</pre>
+  <h4>
+    <a name="zone_bounds"> <code>zone_bounds(</code> <var>latitude</var> <code>)</code></a>
+  </h4>This function defines reasonable boundary latitudes from a
+  vector giving the central latitudes of each cell.
+  <p>The result is a vector with one more element than the argument. If
+  the argument is an arithmetic progression (AP) then the midpoints
+  between adjacent argument values define all the elements of the
+  result except the first and final ones, otherwise each of these
+  boundaries separates two equal 
+  <em>surface areas</em> between adjacent argument values. The two
+  outer boundaries are defined using steps (in latititude or area)
+  equal to their adjacent step, with the obvious limit in magnitude of
+  90°.</p>
+  <p>Examples:</p>
+  <pre>
+% [nap &quot;zone_bounds(-80 .. 80 ... 40)&quot;] value; # global-range
+AP
+-90 -60 -20 20 60 90
+% [nap &quot;zone_bounds(90 .. -90 ... -30)&quot;] value; #
+global-range AP
+90 75 45 15 -15 -45 -75 -90
+% [nap &quot;zone_bounds{-80 -40 -10 10 40 80}&quot;] value; #
+global-range non-AP
+-90 -54.4687 -24.0929 0 24.0929 54.4687 90
+% [nap &quot;zone_bounds(10 .. 60 ... 10)&quot;] value; # local-range
+AP
+5 15 25 35 45 55 65
+</pre>
+  <h4>
+    <a name="zone_wt"> <code>zone_wt(</code> <var>latitude</var> <code>)</code></a>
+  </h4>Calculate normalised (so sum weights of is 1) zonal weights from
+  latitudes. These weights are proportional to the surface areas of the
+  cells (of longitude width 360°) defined by the above function 
+  <a href="#zone_bounds"> <code>zone_bounds(</code> <var>latitude</var> <code>)</code></a> . If the Earth&#39;s radius is 
+  <var>R</var> then the area between two latitudes 
+  <var>L</var> 
+  <sub>1</sub> and 
+  <var>L</var> 
+  <sub>2</sub> is 2 
+  <var>&#960;R</var>²(sin 
+  <var>L</var> 
+  <sub>1</sub> - sin 
+  <var>L</var> 
+  <sub>2</sub>).
+  <p>Examples:</p>
+  <pre>
+% [nap &quot;zone_wt(-80 .. 80 ... 40)&quot;] value; # global-range AP
+0.0669873 0.262003 0.34202 0.262003 0.0669873
+% [nap &quot;zone_wt(90 .. -90 ... -30)&quot;] value; # global-range AP
+0.0170371 0.12941 0.224144 0.258819 0.224144 0.12941 0.0170371
+% [nap &quot;zone_wt{-80 -40 -10 10 40 80}&quot;] value; # global-range
+non-AP
+0.0931011 0.20279 0.204109 0.204109 0.20279 0.0931011
+% [nap &quot;zone_wt(10 .. 60 ... 10)&quot;] value; # local-range AP
+0.209562 0.199962 0.184286 0.16301 0.136782 0.106398
+</pre>
+  <h3>
+    <a name="land">Land, Sea and Coast</a>
+  </h3>The functions 
+  <code>is_land</code>, 
+  <code>is_coast</code> and 
+  <code>fraction_land</code> are based on the 
+  <a href="land_flag.html"> <code>nap_land_flag</code> </a> command. This uses data which has an accuracy of 0.01°.
+  <p>These three functions take an optional argument 
+  <var>data_dir</var>, which specifies the directory containing the 
+  <code>nap_land_flag</code> data files. This argument is not needed
+  when the standard data directory is used.</p>
+  <h4>
+    <a name="is_land"> <code>is_land(</code> <var>latitude</var> <code>,</code> <var>longitude</var>[ <code>,</code> <var>data_dir</var>] <code>)</code></a>
+  </h4>Produce a land/sea mask in the form of an 
+  <code>i8</code> (8-bit signed integer) matrix with 1 for land and 0
+  for sea.
+  <p>The arguments 
+  <var>latitude</var> and 
+  <var>longitude</var> can be scalars, vectors or matrices. If they are
+  either both vectors, or one is a vector and the other is a scalar,
+  then they are used as the coordinate variables of the matrix result.
+  Otherwise the result has the same shape and coordinate variables as
+  the one of higher rank.</p>
+  <p>Note that each element of the result corresponds to just the
+  single point defined by its latitude and longitude. It is often
+  better to test multiple points, which can be done using function 
+  <a href="#fraction_land"> <code>fraction_land(</code> <var>latitude</var> <code>,</code> <var>longitude</var>[ <code>,</code> <var>nlat</var> <code>,</code> <var>nlon</var> <code>,</code> <var>data_dir</var>] <code>)</code></a>.</p>
+  <p>The following example produces a matrix with 
+  <code>0</code> for sea and 
+  <code>1</code> for land:</p>
+  <pre>
+% [nap &quot;lats = 90 .. -90 ... -45&quot;]
+90 45 0 -45 -90
+% [nap &quot;lons = -180 .. 180 ... 45&quot;] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap &quot;isLand = is_land(lats, lons)&quot;] value
+0 0 0 0 0 0 0 0 0
+0 0 1 0 1 1 1 1 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1 1
+</pre>
+The following shows how this can be used to mask out (make
+missing) the sea points in the matrix named 
+  <code>area</code> defined in the the above example of 
+  <a href="#area_on_globe"> <code>area_on_globe(</code> <var>latitude</var> <code>,</code> <var>longitude</var> <code>)</code></a>:
+  <pre>
+% [nap &quot;isLand ? area : _&quot;] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+</pre>
+The following masks out the land points:
+  <pre>
+% [nap &quot;isLand ? _ : area&quot;] value -format %.4f
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+0.0156 0.0313      _ 0.0313      _      _      _      _ 0.0156
+0.0221 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0442 0.0221
+0.0156 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0313 0.0156
+     _      _      _      _      _      _      _      _      _
+</pre>
+The following alternative method defines a mask consisting of
+zeros and missing values. Masking is done by adding this mask.
+  <pre>
+% [nap &quot;mask = {_ 0}(isLand)&quot;] value
+_ _ _ _ _ _ _ _ _
+_ _ 0 _ 0 0 0 0 _
+_ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _
+0 0 0 0 0 0 0 0 0
+% [nap &quot;area + mask&quot;] value -format %.4f
+     _      _      _      _      _      _      _      _      _
+     _      _ 0.0313      _ 0.0313 0.0313 0.0313 0.0313      _
+     _      _      _      _      _      _      _      _      _
+     _      _      _      _      _      _      _      _      _
+0.0046 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0092 0.0046
+</pre>
+  <h4>
+    <a name="is_coast"> <code>is_coast(</code> <var>latitude</var> <code>,</code> <var>longitude</var>[ <code>,</code> <var>nlat</var> <code>,</code> <var>nlon</var> <code>,</code> <var>data_dir</var>] <code>)</code></a>
+  </h4>This function produces an 
+  <code>i8</code> (8-bit signed integer) matrix with 1 for coast and 0
+  otherwise.
+  <p>Cells are defined around each latitude and longitude using the
+  functions 
+  <a href="#zone_bounds"> <code>zone_bounds(</code> <var>latitude</var> <code>)</code></a> and <a href="#merid_bounds"> <code>merid_bounds(</code> <var>longitude</var> <code>)</code></a> . Each cell is divided into 
+  <var>nlat</var> rows and 
+  <var>nlon</var> columns. A cell is considered land if more than half
+  its 
+  <var>nlat</var> × 
+  <var>nlon</var> points are classified as land by function 
+  <code>is_land</code>.</p>
+  <p>The result is 1 if a cell is land and has at least one adjacent
+  sea cell to the north, south, east or west. The coordinate variables
+  of the result are copies of the vector arguments 
+  <var>latitude</var> and 
+  <var>longitude</var>.</p>
+  <p>The optional argument 
+  <var>nlat</var> defaults to 8.
+  <br />The optional argument 
+  <var>nlon</var> defaults to 
+  <var>nlat</var>.
+  <br />If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes. (A single point is often
+  adequate for coastline overlays on maps, etc.)</p>
+  <h4>
+    <a name="fraction_land"> <code>fraction_land(</code> <var>latitude</var> <code>,</code> <var>longitude</var>[ <code>,</code> <var>nlat</var> <code>,</code> <var>nlon</var> <code>,</code> <var>data_dir</var>] <code>)</code></a>
+  </h4>This function produces an 
+  <code>f32</code> (f32-bit floating-point) matrix containing the
+  estimated proportion of land in each cell.
+  <p>Cells are defined around each latitude and longitude using the
+  functions 
+  <a href="#zone_bounds"> <code>zone_bounds(</code> <var>latitude</var> <code>)</code></a> and 
+  <a href="#merid_bounds"> <code>merid_bounds(</code> <var>longitude</var> <code>)</code></a> . Each cell is divided into 
+  <var>nlat</var> rows and 
+  <var>nlon</var> columns. The result is defined by the proportion of
+  the 
+  <var>nlat</var> × 
+  <var>nlon</var> points which are classified as land by function 
+  <code>is_land</code>.</p>
+  <p>The coordinate variables of the result are copies of the vector
+  arguments 
+  <var>latitude</var> and 
+  <var>longitude</var>.</p>
+  <p>The optional argument 
+  <var>nlat</var> defaults to 8.
+  <br />The optional argument 
+  <var>nlon</var> defaults to 
+  <var>nlat</var>.
+  <br />If both these arguments are omitted then each cell contains 64
+  points, which is enough for most purposes.
+  <br />The minimum resolution is 0.01° even if the specified 
+  <var>nlat</var> or 
+  <var>nlon</var> would give less. The value of 
+  <var>nlat</var> or 
+  <var>nlon</var> is automatically reduced if its specified value would
+  give a resolution less than 0.01°.</p>
+  <p>The following example produces a similar (but much more accurate)
+  land/sea mask to that produced in the above example for 
+  <a href="#is_land"> <code>is_land(</code> <var>latitude</var> <code>,</code> <var>longitude</var>[ <code>,</code> <var>data_dir</var>] <code>)</code></a>:</p>
+  <pre>
+% [nap &quot;lats = 90 .. -90 ... -45&quot;]
+90 45 0 -45 -90
+% [nap &quot;lons = -180 .. 180 ... 45&quot;] value
+-180 -135 -90 -45 0 45 90 135 180
+% [nap &quot;fraction_land(lats, lons)&quot;] value -format %0.2f
+0.05 0.14 0.28 0.55 0.08 0.17 0.34 0.19 0.11
+0.06 0.39 0.67 0.13 0.52 0.88 1.00 0.50 0.17
+0.00 0.00 0.22 0.38 0.47 0.45 0.17 0.23 0.00
+0.00 0.00 0.09 0.13 0.03 0.05 0.00 0.25 0.02
+0.25 0.59 0.69 0.47 0.81 0.95 0.95 0.98 0.47
+% [nap &quot;fraction_land(lats, lons) &gt; 0.5f32&quot;] value
+0 0 0 1 0 0 0 0 0
+0 0 1 0 1 1 1 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 1 1 0 1 1 1 1 0
+</pre>
+  <h3>
+    <a name="Reading">Reading Geographic Files</a>
+  </h3>
+  <h4>
+    <a name="acof2boxed"> <code>acof2boxed(</code> <var>filename</var> <code>)</code></a>
+  </h4>Read ascii cof (.acof) coastline file and return boxed nao.
+  <p>Example:
+  <br />
+  <code>nap &quot;in = acof2boxed(&#39;abc.acof&#39;)&quot;</code></p>
+  <h4>
+    <a name="get_gridascii"> <code>get_gridascii(</code> <var>filename</var>[ <code>,</code> <var>unit</var>] <code>)</code></a>
+  </h4>Read a file in ARC/INFO GRIDASCII format.
+  <p>The optional argument 
+  <var>unit</var> specifies the unit of x and y. If this argument is
+  omitted then:
+  <br />Dimension 
+  <var>x</var> is longitude and has unit 
+  <code>&quot;degrees_east&quot;</code>.
+  <br />Dimension 
+  <var>y</var> is latitude and has unit 
+  <code>&quot;degrees_north&quot;</code>.</p>
+  <p>Examples:
+  <br /></p>
+  <pre>
+% nap &quot;in = get_gridascii(&#39;abc.gridascii&#39;)&quot;; # x is
+longitude, y is latitude
+% nap &quot;in = get_gridascii(&#39;abc.gridascii&#39;, &#39;metres&#39;)&quot;
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: geog.html,v 1.10 2005/10/03
+          08:28:01 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

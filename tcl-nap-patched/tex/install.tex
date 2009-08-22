@@ -1,0 +1,313 @@
+%  $Id: install.tex,v 1.9 2006/09/20 08:48:49 dav480 Exp $ 
+    % Installing Tcl/Tk and NAP
+
+\section{Installing Tcl/Tk and Nap}
+
+\subsection{Introduction}
+    \label{install-Introduction}
+
+  \emph{Tcl/Tk} and 
+  \emph{Nap} are available without charge in both binary (compiled)
+  and source-code form. The following instructions explain how to
+  install Tcl/Tk and then Nap. The Nap installer for Linux on the
+  (64-bit) Intel IA64 installs the total system since this platform is
+  not supported by ActiveState.
+
+\subsection{Installing Tcl/Tk}
+    \label{install-Installing-Tcl-Tk}
+
+  \href{http://aspn.activestate.com/ASPN//}{ActiveState Corporation} provides free binary distributions of 
+  \emph{Tcl/Tk} with many extensions. There are versions for Windows,
+  Linux (on Intel 386), SunOS (Solaris) and HP-UX. HTML documentation
+  is also available. These can all be downloaded from 
+  \href{http://aspn.activestate.com/ASPN/Tcl/Downloads/}{ActiveState Tcl Downloads}.
+  
+ Read the 
+  \href{http://aspn.activestate.com/ASPN/docs/ActiveTcl/at.install.html}{ installation instructions}. Note that these explain how to
+  uninstall any existing version of Tcl/Tk, which should be done before
+  installing the new one. (If this method of uninstalling fails then it
+  is usually best to delete the whole 
+  \emph{tcl root directory}.)
+  
+ The 
+  \emph{tcl root directory} is the directory in which Tcl is
+  installed. Tcl extensions (e.g. Nap) are usually also installed in
+  it. Note that it is denoted below by the variable 
+  $tcl\_root$. A typical value for Windows is 
+  \texttt{C:$\backslash$Program\ Files$\backslash$Tcl}. Typical values for Unix
+  (including Linux) are 
+  \verb!~/tcl! (personal installation) and 
+  \verb!/usr/local/tcl! (system installation).
+  
+ Unix users should include 
+  $tcl\_root$\texttt{/bin} in the list defined by the standard environment
+  variable 
+  \texttt{PATH}. If there are problems with dynamic loading then
+  try including 
+  $tcl\_root$\texttt{/lib} in the list defined by the standard environment
+  variable 
+  \texttt{LD\_LIBRARY\_PATH}.
+  
+ The following three executables will be installed in 
+  $tcl\_root$\texttt{/bin}:
+  \begin{description}
+    \item[\texttt{tclsh}]
+    This provides a bare-bones command-line 
+    \emph{Tcl shell} without Tk. (Tk provides GUI facilities.) It is
+    useful for non-interactive applications such as 
+\begin{bullets}
+    \item Unix shell scripts using Tcl
+    \item automatically run (e.g.  \texttt{cron}) jobs using Tcl
+\end{bullets}
+    \item[\texttt{wish}]
+    This 
+    \emph{window shell} provides a full Tcl shell including Tk.
+    \item[\texttt{tkcon}]
+    This provides all the facilities of 
+    \texttt{wish}, but in a better console. It is recommended as
+    the normal way of running Tcl.
+  \end{description}
+  
+ Each executable will execute a startup script file with the name
+  listed in the following table, if this file is found in the home
+  directory:
+
+\begin{tabular}{|l||l|l|l|}
+    \hline 
+      \textbf{Operating System} & 
+      \textbf{tclsh} & 
+      \textbf{wish} & 
+      \textbf{tkcon}
+    \\
+    \hline 
+    \hline 
+        \textbf{Windows}
+       & 
+        \texttt{tclshrc.tcl}
+       & 
+        \texttt{wishrc.tcl}
+       & 
+        \texttt{tkcon.cfg}
+    \\
+    \hline 
+        \textbf{Unix}
+       & 
+        \texttt{.tclshrc}
+       & 
+        \texttt{.wishrc}
+       & 
+        \texttt{.tkconrc}
+    \\
+  \hline
+\end{tabular}
+  
+ If you are unsure of which directory is 
+  \emph{home}, then enter the following two commands: 
+  \texttt{
+  \\cd
+  \\pwd}
+
+\subsection{Tcl/Tk Documentation}
+    \label{install-tcl-doc}
+
+The Caps/Nap Menu
+  \emph{help} menu includes the remote web 
+  \href{http://aspn.activestate.com/ASPN/Tcl/Reference/}{Tcl Documentation}.
+
+  The above installation process for Windows installs this
+  documentation in the form of the compiled HTML help file 
+  \texttt{ActiveTclHelp.chm}. Under Windows, the above help menu
+  does include this local copy of the documentation.
+  
+ The standard installation for Unix installs 
+  \texttt{man} pages in the directory 
+  $tcl\_root$\texttt{/man}. If you want to use these then include this
+  directory in 
+  \texttt{MANPATH}.
+  
+ It is also possible to create a local copy of this documentation
+  in HTML form.
+Under Unix, this allows the Caps/Nap Menu
+  (see section \ref{caps-nap-menu})
+ to provide a local
+  copy of the Tcl Documentation (similar to that for Windows). To do
+  this, download the the HTML documentation into the directory 
+  $tcl\_root$\texttt{/doc}. Then unpack the tar file and create a symbolic
+  link 
+  $tcl\_root$\texttt{/doc/html} pointing to the root directory of the unpacked
+  files.
+  
+ For example, if the Tcl root directory is 
+  \verb!~/tcl! then download the version 8.4.9 file 
+  \\
+  \texttt{ActiveTcl8.4.9.0.121397-html.tar.gz} into the directory 
+  \verb!~/tcl/doc/!.
+  \\
+Change to this directory and then unpack the file using a command such as
+  \\
+  \texttt{gtar zxf ActiveTcl8.4.9.0.121397-html.tar.gz}
+  \\or
+  \\
+  \texttt{gunzip $<$ gtar zxf ActiveTcl8.4.9.0.121397-html.tar.gz | tar xf -}
+  \\Then create the symbolic link using
+  \\
+  \texttt{ln -s ActiveTcl8.4.9.0.121397-html html}
+
+\subsection{Installing Nap}
+    \label{install-Installing-nap}
+
+  \emph{Nap installers} are available for:
+\begin{bullets}
+    \item Linux on Intel 386
+    \item Linux on IA64
+    \item SunOS
+    \item Windows
+\end{bullets}
+  
+ The 
+  \emph{Mac OS X} and 
+  \emph{Darwin} platforms are supported via the 
+  \href{http://fink.sourceforge.net}{Fink} project, which has a 
+  \href{http://fink.sourceforge.net/pdb/package.php/nap}{nap}
+  page.
+  
+ It is hoped to support HP-UX in the near future. The SGI Irix
+  platform is no longer supported.
+  
+ Note that the Linux IA64 installer installs a total tcl system as
+  well as Nap. This platform does not have an uninstaller, so it is
+  suggested you install into a completely new directory rather than
+  over an existing installation. 
+For example, if your installation directory is 
+\verb!~/tcl! you could do the following:
+  \begin{verbatim}
+mv ~/tcl ~/tcl_old
+mkdir ~/tcl
+\end{verbatim}
+  
+ The above installers can be downloaded from the page selected by clicking
+ `Files for Downloading'  on
+  \href{http://tcl-nap.sourceforge.net/}
+  {http://tcl-nap.sourceforge.net/}.
+They are in the form of 
+  \emph{starpacks}, which are self-contained binary executables which
+  contain the files to be installed. Starpacks are themselves based on
+  Tcl and are described in 
+  \href{http://www.equi4.com/papers/skpaper1.html}{ \emph{Beyond TclKit - Starkits, Starpacks and other *stuff} }.
+  
+ Then you simply execute the installer. It will first prompt you
+  for the directory in which to install Nap, which is usually the 
+  \emph{Tcl root directory}. Then it will check for existing Nap
+  files and offer to delete them (strongly recommended) if any are
+  found.
+  
+ Finally it will offer to install three 
+  \emph{standard Nap startup script files} (with the names in the
+  above table) in your home directory. It is recommended that you
+  install these unless you have alternative startup files. Such
+  alternative files can include the following commands to facilitate
+  use of Nap: 
+  \texttt{
+  \\package require nap
+  \\namespace import ::NAP::*}
+  \\If there will be other users then copy the three startup files
+  to their home directories.
+  
+ The script files 
+  \verb!~/my_tkcon.cfg! and 
+  \verb!~/my.tcl! will be sourced if they exist. You can create 
+  \verb!~/my_tkcon.cfg! to tailor the tkcon console to your
+  personal requirements. You can create 
+  \verb!~/my.tcl! to tailor other aspects of the Tcl system to
+  your personal requirements. See section
+  \ref{scripts-Sample-Startup-Scripts}
+for examples.
+  
+ These scripts and the standard Nap startup scripts are
+  interrelated. The script 
+  \texttt{tkcon.cfg} (\texttt{.tkconrc}) sources 
+  \verb!~/my_tkcon.cfg! and initialises tkcon to source 
+  \texttt{wishrc.tcl} (\texttt{.wishrc}). The script 
+  \texttt{wishrc.tcl} (\texttt{.wishrc}) in turn sources 
+  \texttt{tclshrc.tcl} (\texttt{.tclshrc}), which sources 
+  \verb!~/my.tcl!.
+  
+ On Unix systems it is possible to install Nap in a directory
+  (which we will denote by 
+  $nap\_root$) other than the 
+  \emph{Tcl root directory}. If 
+  $nap\_root$\ $\neq$\  
+  $tcl\_root$ then 
+  $nap\_root$\texttt{/lib} must be included in the lists defined by:
+\begin{bullets}
+    \item the standard Tcl variable 
+    \texttt{auto\_path}
+    \item the standard environment variable 
+    \texttt{LD\_LIBRARY\_PATH}.
+\end{bullets}
+For example, assume Nap is installed in 
+  \verb!~/alt!. 
+The following two commands are included in 
+  \texttt{tclshrc.tcl} or 
+  \texttt{.tclshrc}:
+\begin{verbatim}
+lappend auto_path ~/alt/lib
+set env(LD_LIBRARY_PATH) ":~/alt/lib:$env(LD_LIBRARY_PATH)"
+\end{verbatim}
+
+\subsection{Nap User's Guide}
+    \label{install-nap-doc}
+
+The above installation process installs a copy of the Nap User's Guide
+as file
+\\
+$nap\_root$\texttt{/lib/nap?.?/nap\_users\_guide.pdf}
+(where \texttt{?.?} is the version number).
+The Caps/Nap Menu (see section \ref{caps-nap-menu})
+\emph{help} menu includes this local copy as well as the remote web copy at
+\href{http://tcl-nap.sourceforge.net/nap\_users\_guide.pdf}
+{http://tcl-nap.sourceforge.net/nap\_users\_guide.pdf}.
+
+\subsection{Nap Source Code}
+    \label{install-source}
+
+Source code for Nap is maintained using CVS and can be accessed
+  by:
+\begin{bullets}
+    \item 
+      \href{http://tcl-nap.cvs.sourceforge.net/tcl-nap/}{Browsing CVS Source Repository}
+    \item 
+      \href{http://sourceforge.net/cvs/?group_id=55616}{Using
+	a CVS client to access CVS Source Repository}
+    \item Downloading tar file from 
+    \href{http://sourceforge.net/project/showfiles.php?group_id=55616}{Tcl-Nap Files}.
+\end{bullets}
+
+\subsection{Related Packages}
+    \label{install-Related-Packages}
+
+Nap now provides the functionality previously provided by the
+  (now obsolete) separate packages 
+  \emph{convert\_date}, 
+  \emph{inform} and 
+  \emph{land\_flag}. 
+However 
+\href{http://www.eoc.csiro.au/cats/caps/}{Caps}
+is still separate.
+  
+ The Windows Nap distribution now includes the 
+  \href{http://lbayuk.home.mindspring.com/ezprint/}{ \emph{ezprint} }
+	utility, which provides access to printers. No such separate
+  printing package is needed for Unix. Previous versions of Nap used
+  the 
+  \emph{printer} package to provide access to printers on all
+  platforms.
+  
+ Previous versions of Nap provided an interface to the vector
+  facility in the package 
+  \href{http://sourceforge.net/projects/blt/}{BLT}. This allowed
+  use of the BLT 
+  \emph{graph} command, which was used at that time by the Nap
+  procedure 
+  \emph{plot\_nao}. Nap no longer provides an interface to BLT or uses
+  it in any way.

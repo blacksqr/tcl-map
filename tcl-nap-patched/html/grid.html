@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: grid.html,v 1.8 2006/02/07 06:35:09 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Grids</title>
+  </head>
+  <body>
+  <center>
+    <h2>Grids</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Dims">Dimensions, Coordinate variables and Mappings</a>
+    </li>
+    <li>
+      <a href="#Dif">Difference between Grids and Scattered Data</a>
+    </li>
+    <li>
+      <a href="#Missing">Missing Data</a>
+    </li>
+    <li>
+      <a href="#Scattered">Processing Scattered Data</a>
+    </li>
+  </ol>
+  <h3>
+    <a name="Dims">Dimensions, Coordinate variables and Mappings</a>
+  </h3>Traditional array-processors, such as APL, are based on a
+  data-model which has discrete dimensions whose corresponding
+  subscripts take integer values. NAP handles such traditional arrays
+  in the traditional manner. However NAP is based on a more general
+  data-model which also allows non-integer subscript values. These
+  values represent distances along dimensions which often correspond to
+  the physical dimensions of spacio-temporal spaces, which are of
+  course continuous.
+  <p>If desired, a dimension can have an associated variable called the
+  
+  <em>coordinate variable (CV)</em>. This is a vector which defines a
+  piecewise-linear mapping from subscript to physical dimension.</p>
+  <p>CVs are convenient when each array dimension maps to a single
+  physical dimension. However, the relationship between array
+  dimensions and physical dimensions may be more complex. Consider the
+  example of a satellite image with dimensions 
+  <em>line</em> (row) and 
+  <em>pixel</em> (column). The physical dimension 
+  <em>latitude</em> depends on both array dimensions ( 
+  <em>line</em> and 
+  <em>pixel</em>). There is a matrix (with the same 
+  <em>line</em> and 
+  <em>pixel</em> dimensions as the image) giving the latitude at each
+  point. There is another similar longitude matrix. These two matrices
+  define piecewise-bilinear mappings from line/pixel space to
+  latitude/longitude space. The task of warping the image to
+  latitude/longitude space is essentially that of defining mappings
+  from latitude/longitude space to line/pixel space i.e. the inverses
+  of the given mappings. This can be done using the NAP functions 
+  <a href="function.html#Grid"> <code>invert_grid</code> and <code>invert_grid_no_trim</code></a>.</p>
+  <h3>
+    <a name="Dif">Difference between Grids and Scattered Data</a>
+  </h3>
+  <p>Data in a continuous space with two or more dimensions can be
+  either 
+  <em>gridded</em> or 
+  <em>scattered</em>. NAP&#39;s data-model (with continuous subscripts,
+  coordinate variables, etc.) facilitates the processing of gridded
+  data.</p>
+  <p>Let us consider the case of two dimensions i.e. matrices.
+  Two-dimensional 
+  <em>gridded</em> data is aligned in rows and columns, whereas 
+  <em>scattered</em> data is not. The following examples are intended
+  to illustrate the difference between 
+  <em>scattered</em> and 
+  <em>gridded</em> 2D data.</p>
+  <h4>Example of Scattered 2D Data (Not a Grid)</h4>
+  <p>Note that the data are not aligned in rows and columns.</p>
+  <table frame="box" rules="none" width="50%">
+    <tr align="center">
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%">&#8226;</td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+      <td width="10%"></td>
+    </tr>
+    <tr align="center">
+      <td>&#8226;</td>
+      <td colspan="5"></td>
+      <td>&#8226;</td>
+      <td colspan="3"></td>
+    </tr>
+    <tr align="center">
+      <td colspan="4"></td>
+      <td>&#8226;</td>
+      <td colspan="5"></td>
+    </tr>
+    <tr align="center">
+      <td colspan="3"></td>
+      <td>&#8226;</td>
+      <td colspan="6"></td>
+    </tr>
+    <tr align="center">
+      <td colspan="2"></td>
+      <td>&#8226;</td>
+      <td colspan="7"></td>
+    </tr>
+    <tr align="center">
+      <td colspan="8"></td>
+      <td>&#8226;</td>
+      <td colspan="1"></td>
+    </tr>
+    <tr align="center">
+      <td colspan="5"></td>
+      <td>&#8226;</td>
+      <td colspan="4"></td>
+    </tr>
+  </table>
+  <h4>
+    <a name="ex2dgrid">Example of 2D Grid</a>
+  </h4>
+  <p>The following example has the grid in black. The blue point is not
+  on the grid and has non-integer subscript values (2.1, 1.6). The
+  coordinate variables are latitude and longitude.</p>
+  <table border="1" nowrap="nowrap" rules="groups">
+    <colgroup span="3" align="right"></colgroup>
+    <colgroup span="6"></colgroup>
+    <thead>
+      <tr align="center">
+        <td height="8%"></td>
+        <td></td>
+        <td>column</td>
+        <td width="12%">0</td>
+        <td width="13%">1</td>
+        <td width="12%">
+          <font color="blue">1.6</font>
+        </td>
+        <td width="8%">2</td>
+        <td width="9%">3</td>
+        <td width="12%">4</td>
+      </tr>
+      <tr align="center">
+        <td colspan="2"></td>
+        <td>longitude</td>
+        <td>30°E</td>
+        <td>40°E</td>
+        <td>
+          <font color="blue">52°E</font>
+        </td>
+        <td>60°E</td>
+        <td>65°E</td>
+        <td>75°E</td>
+      </tr>
+      <tr>
+        <td height="8%">row</td>
+        <td align="right">latitude</td>
+        <td></td>
+        <td colspan="6"></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr align="center">
+        <td align="left" height="7%">0</td>
+        <td align="right">30°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">1</td>
+        <td align="right">25°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="13%">2</td>
+        <td align="right">10°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">
+          <font color="blue">2.1</font>
+        </td>
+        <td align="right">
+          <font color="blue">8°N</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <font color="blue">&#8226;</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="26%">3</td>
+        <td align="right">10°S</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>
+    <a name="Missing">Missing Data</a>
+  </h3>The NAP data model allows any element of an array to have a
+  value which is a 
+  <em>missing-value</em>. Such elements are considered null or missing
+  and are treated specially in operations such as arithmetic. Thus
+  adding a missing value to anything produces a missing value.
+  <p>The following example is similar to that above. However four grid
+  points are missing. These are shown in red.</p>
+  <table border="1" nowrap="nowrap" rules="groups">
+    <colgroup span="3" align="right"></colgroup>
+    <colgroup span="6"></colgroup>
+    <thead>
+      <tr align="center">
+        <td height="8%"></td>
+        <td></td>
+        <td>column</td>
+        <td width="12%">0</td>
+        <td width="13%">1</td>
+        <td width="12%">
+          <font color="blue">1.6</font>
+        </td>
+        <td width="8%">2</td>
+        <td width="9%">3</td>
+        <td width="12%">4</td>
+      </tr>
+      <tr align="center">
+        <td colspan="2"></td>
+        <td>longitude</td>
+        <td>30°E</td>
+        <td>40°E</td>
+        <td>
+          <font color="blue">52°E</font>
+        </td>
+        <td>60°E</td>
+        <td>65°E</td>
+        <td>75°E</td>
+      </tr>
+      <tr>
+        <td height="8%">row</td>
+        <td align="right">latitude</td>
+        <td></td>
+        <td colspan="6"></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr align="center">
+        <td align="left" height="7%">0</td>
+        <td align="right">30°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>
+          <font color="red">&#8226;</font>
+        </td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">1</td>
+        <td align="right">25°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="13%">2</td>
+        <td align="right">10°N</td>
+        <td></td>
+        <td>
+          <font color="red">&#8226;</font>
+        </td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>
+          <font color="red">&#8226;</font>
+        </td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">
+          <font color="blue">2.1</font>
+        </td>
+        <td align="right">
+          <font color="blue">8°N</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <font color="blue">&#8226;</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="26%">3</td>
+        <td align="right">10°S</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>
+          <font color="red">&#8226;</font>
+        </td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The missing points are treated as if they did not exist, as shown
+  in the following:</p>
+  <table border="1" nowrap="nowrap" rules="groups">
+    <colgroup span="3" align="right"></colgroup>
+    <colgroup span="6"></colgroup>
+    <thead>
+      <tr align="center">
+        <td height="8%"></td>
+        <td></td>
+        <td>column</td>
+        <td width="12%">0</td>
+        <td width="13%">1</td>
+        <td width="12%">
+          <font color="blue">1.6</font>
+        </td>
+        <td width="8%">2</td>
+        <td width="9%">3</td>
+        <td width="12%">4</td>
+      </tr>
+      <tr align="center">
+        <td colspan="2"></td>
+        <td>longitude</td>
+        <td>30°E</td>
+        <td>40°E</td>
+        <td>
+          <font color="blue">52°E</font>
+        </td>
+        <td>60°E</td>
+        <td>65°E</td>
+        <td>75°E</td>
+      </tr>
+      <tr>
+        <td height="8%">row</td>
+        <td align="right">latitude</td>
+        <td></td>
+        <td colspan="6"></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr align="center">
+        <td align="left" height="7%">0</td>
+        <td align="right">30°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">1</td>
+        <td align="right">25°N</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="13%">2</td>
+        <td align="right">10°N</td>
+        <td></td>
+        <td></td>
+        <td>&#8226;</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="15%">
+          <font color="blue">2.1</font>
+        </td>
+        <td align="right">
+          <font color="blue">8°N</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <font color="blue">&#8226;</font>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr align="center">
+        <td align="left" height="26%">3</td>
+        <td align="right">10°S</td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+        <td></td>
+        <td></td>
+        <td>&#8226;</td>
+        <td>&#8226;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>It would be possible to represent scattered data by a grid with
+  many missing points. In the extreme, each scattered point would have
+  its own row and its own column. There would be only one non-missing
+  point in each row. There would be only one non-missing point in each
+  column. Of course this would be very inefficient for a matrix of
+  significant size.</p>
+  <h3>
+    <a name="Scattered">Processing Scattered Data</a>
+  </h3>
+  <p>Function 
+  <a href="nap_function_lib.html#scattered2grid"> <code>scattered2grid</code> </a> interpolates scattered data onto a grid.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">© 2002, CSIRO Australia. Author:
+          Harvey.Davies@CSIRO.AU
+          <br />CVS Version Details: $Id: grid.html,v 1.5 2004/11/08
+          04:33:41 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

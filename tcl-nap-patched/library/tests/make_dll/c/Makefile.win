@@ -1,0 +1,21 @@
+CC = cl
+OBJ_EXT = obj
+DLL_EXT = dll
+DLL_PREFIX =
+
+MAKE_DLL = make_dll pprod {n i32 in} {x f32} {y f32 inout}
+
+test: out.txt
+	echo '2 3 9 4.5' | diff -b - out.txt
+
+out.txt: $(DLL_PREFIX)pprod.$(DLL_EXT) in.tcl
+	tclsh < in.tcl
+
+$(DLL_PREFIX)pprod.$(DLL_EXT): pprod.$(OBJ_EXT)
+	echo 'source ../../../make_dll.tcl; $(MAKE_DLL)' | tclsh
+
+pprod.$(OBJ_EXT): pprod.c 
+	$(CC) -c $(CFLAGS) pprod.c
+
+clean:
+	rm -f *.o *.so core pprod_i.c out.txt *.obj *.dll *.lib *.exp

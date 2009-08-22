@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: const.html,v 1.15 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Constants</title>
+  </head>
+  <body>
+      <h2>Constants</h2>
+  <h3>Table of Contents</h3>
+    <ol>
+      <li>
+        <a href="#Introduction">Introduction</a>
+      </li>
+      <li>
+        <a href="#Integer_Scalar_Constants">Integer Scalar
+        Constants</a>
+      </li>
+      <li>
+        <a href="#Floating_point_Scalar_Constants">Floating-point
+        Scalar Constants</a>
+      </li>
+      <li>
+        <a href="#Numeric_Array_Constants">Numeric Array Constants</a>
+      </li>
+      <li>
+        <a href="#String_Constants">String Constants</a>
+      </li>
+  </ol>
+    <h3>
+      <a name="Introduction">Introduction</a>
+    </h3>
+    <p>Nap provides a rich variety of constants. Nap is oriented to
+    numeric data but does provide string constants. The data-type can
+    be specified as a suffix (except for strings and hexadecimal
+    constants). Numeric constants can be scalars (simple numbers) or
+    higher-rank arrays.</p>
+    <h3>
+      <a name="Integer_Scalar_Constants">Integer Scalar Constants</a>
+    </h3>
+    <p>An integer scalar constant can be specified in decimal or
+    hexadecimal form. The default data-type is 
+    <code>i32</code> (32-bit signed integer) for decimal integer
+    constants. Octal constants are not allowed from version 3, although
+    they were in earlier versions (causing problems with decimal data
+    containing leading 0s).</p>
+    <p>Hexadecimal integer constants begin with &quot;<code>0x</code>&quot; and are
+    32-bit unsigned integers. A data-type suffix is not allowed for
+    hexadecimal constants because some cases would be ambiguous.</p>
+    <p>Examples of integer constants are:</p>
+    <pre>
+% [nap 14] all
+::NAP::72-72  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Value:
+14
+% [nap 14u8] all
+::NAP::74-74  u8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Value:
+14
+% [nap 0x14] all
+::NAP::80-80  u32  MissingValue: 4294967295  References: 0  Unit:
+(NULL)
+Value:
+20
+</pre>
+    <p>The constant &quot;<code>_</code>&quot; represents an 
+    <code>i32</code> NAO whose value and missing-value are both
+    -2147483648 (the minimum possible 
+    <code>i32</code> value). It provides a convenient way of indicating
+    undefined data. Such values are used mainly within array constants
+    and will be discussed further in that section.</p>
+    <h3>
+      <a name="Floating_point_Scalar_Constants">Floating-point Scalar Constants</a>
+    </h3>
+    <p>A floating-point scalar constant can represent infinity, NaN or
+    a normal finite value. A finite value is represented by a mantissa,
+    optionally followed by an exponent. There can be a data-type suffix
+    on any floating-point scalar constant. If this suffix is omitted
+    the data-type is 
+    <code>f64</code> (64-bit float).</p>
+    <p>A mantissa can be written in either decimal or rational form.
+    A <em>scalar</em> decimal mantissa must not begin or end with a decimal point.
+    (However this rule is relaxed within array constants as discussed below.)
+    A rational mantissa consists of two integers separated by 
+    &quot;<code>r</code>&quot; and represents their ratio. Here are examples of
+    floating-point constants without exponents:</p>
+    <pre>
+% [nap 4.0] all
+::NAP::82-82  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+4
+% [nap 4f32] all
+::NAP::83-83  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+4
+% [nap 2r3] all
+::NAP::85-85  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+0.666667
+</pre>
+    <p>The letter 
+    <code>e</code> indicates an exponent with base 10. The letter 
+    <code>p</code> indicates an exponent with base &#960;. Examples of
+    constants with exponents are:</p>
+    <pre>
+% [nap 1e4] all
+::NAP::89-89  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+10000
+% [nap 1e]; # Default exponent is 1
+10
+% [nap 1p1]
+3.14159
+% [nap 1p]; # Default exponent is 1
+3.14159
+% [nap 180p-1]; # degrees in a radian
+57.2958
+% [nap 1r3p1f32] all; # pi/3
+::NAP::95-95  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+1.0472
+</pre>
+    <p>Infinity is represented by 
+    <code>1i</code>. NaN is represented by 
+    <code>1n</code>. Examples are:</p>
+    <pre>
+% [nap 1i] all
+::NAP::101-101  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+Inf
+% [nap 1if32] all
+::NAP::102-102  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+Inf
+% [nap 1n] all
+::NAP::104-104  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+_
+% [nap 1nf32] all
+::NAP::105-105  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Value:
+_
+</pre>
+    <h3>
+      <a name="Numeric_Array_Constants">Numeric Array Constants</a>
+    </h3>
+    <p>Tcl uses nested braces (&quot;<code>{}</code>&quot;) to represent lists.
+    Nap uses braces in a
+    similar manner to represent n-dimensional constant arrays. The
+    elements of array constants have the same form as scalar
+    constants except that <em>array</em> floating point mantissas can begin or end
+    with a decimal point.
+    </p>
+    <p>A vector (1-dimensional array) constant is enclosed by one level
+    of braces, as in:</p>
+<pre>
+% [nap "{2 .8 -7.}"] all
+::NAP::16-16  f64  MissingValue: NaN  References: 0
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2 0.8 -7
+</pre>
+Note that &quot;.8&quot; begins with a decimal point and
+&quot;-7.&quot; ends with one.
+    <p>A matrix (2-dimensional array) constant is enclosed by two
+    levels of braces, as in:</p>
+    <pre>
+% [nap &quot;{{1 3 5}{2 4 6}}&quot;] all
+::NAP::120-120  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 3 5
+2 4 6
+</pre>
+    <p>We could have written each row on a separate line, as in</p>
+    <pre>
+% [nap &quot;{
+    {1 3 5}
+    {2 4 6}
+}&quot;]
+1 3 5
+2 4 6
+</pre>
+    <p>The following generates a three-dimensional constant:</p>
+    <pre>
+% [nap &quot;{{{1 5 0}{2 2 9}}{{3 0 7}{4 4 9}}}&quot;] all
+::NAP::126-126  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 2      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 2   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 5 0
+2 2 9
+
+3 0 7
+4 4 9
+</pre>
+    <p>Elements can be preceded by a &quot;<code>+</code>&quot;
+    or &quot;<code>-</code>&quot; sign. Repeated elements and sub-arrays can be
+    specified using &quot;<code>#</code>&quot; which also has a related meaning as an
+    operator. The following illustrates such repetition counts:</p>
+    <pre>
+% [nap &quot;{{7 3#5} 2#{9 1 2#4}}&quot;] all
+::NAP::131-131  i32  MissingValue: -2147483648  References: 0  Unit:
+(NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Dimension 1   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+7 5 5 5
+9 1 4 4
+9 1 4 4
+</pre>
+    <p>Undefined (missing) elements are represented by &quot;<code>_</code>&quot;, as in:</p>
+    <pre>
+% [nap &quot;{1.6 _ 0}&quot;] all
+::NAP::133-133  f64  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 3      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.6 _ 0
+</pre>
+    <p>It is possible to include data-type suffices on individual
+    elements, but it is more convenient to use a data conversion
+    function to obtain the desired data-type. For example:</p>
+    <pre>
+% [nap &quot;f32{0 -6 1e9 1p1}&quot;] all
+::NAP::137-137  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 4      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 -6 1e+09 3.14159
+</pre>
+    <h3>
+      <a name="String_Constants">String Constants</a>
+    </h3>
+    <p>String constants are enclosed by either two apostrophes
+    (&quot;<code>&#39;</code>&quot;) or two grave accents
+    (&quot;<code>`</code>&quot;). String constants have the data-type 
+    <code>c8</code> (8-bit character). They are 1-dimensional (vectors)
+    but other ranks can be produced using the function 
+    <code>reshape</code>. A simple string constant is shown by:</p>
+    <pre>
+% [nap &quot;&#39;Hello world&#39;&quot;] all
+::NAP::139-139  c8  MissingValue: (NULL)  References: 0  Unit: (NULL)
+Dimension 0   Size: 11     Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+Hello world
+</pre>
+    <p>Adjacent strings are concatenated as in:</p>
+    <pre>
+% [nap &quot;`can&#39;t` &#39; go&#39;&quot;]
+can&#39;t go
+</pre>
+
+    <!--
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: const.html,v 1.9
+            2004/07/19 02:47:31 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+    -->
+  </body>
+</html>

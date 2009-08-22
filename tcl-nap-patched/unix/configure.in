@@ -1,0 +1,70 @@
+dnl	configure.in --
+dnl
+dnl	Copyright (c) 1999, CSIRO Australia
+dnl	Author: Harvey Davies, CSIRO Atmospheric Research
+dnl	$Id: configure.in,v 1.99 2007/12/10 03:05:12 dav480 Exp $
+dnl
+dnl	This file is an input file used by the GNU "autoconf" program to
+dnl	generate the file "configure", which is run to configure the
+dnl	Makefile in this directory.
+
+AC_REVISION($Revision: 1.99 $)
+AC_INIT(../generic)
+
+#------------------------------------------------------------------------------
+# Define m4 macro 'm4default_prefix' as default value for prefix (& exec_prefix)
+#------------------------------------------------------------------------------
+
+builtin(define, m4default_prefix, ../..)
+
+#------------------------------------------------------------------------------
+# Package name and version numbers.
+# PATCHLEVEL is:
+#        a1, a2, ... for alpha releases
+#        b1, b2, ... for beta releases
+#        .0, .1, ... for official releases
+#------------------------------------------------------------------------------
+
+PACKAGE=nap
+
+MAJOR_VERSION=6
+MINOR_VERSION=4
+PATCHLEVEL=.1
+
+#------------------------------------------------------------------------------
+# HDF version numbers
+#
+# Examples for version 4.1r2
+#	HDF_VERSION = 4.1r2
+#	HDF_999_VERSION  = 412
+#------------------------------------------------------------------------------
+
+HDF_MAJOR_VERSION=4
+HDF_MINOR_VERSION=2
+HDF_PATCHLEVEL=1
+HDF_VERSION="$HDF_MAJOR_VERSION.${HDF_MINOR_VERSION}r$HDF_PATCHLEVEL"
+HDF_999_VERSION="$HDF_MAJOR_VERSION$HDF_MINOR_VERSION$HDF_PATCHLEVEL"
+
+#------------------------------------------------------------------------------
+# Other version numbers
+#------------------------------------------------------------------------------
+
+TCL_MAJOR_VERSION=8
+TCL_MINOR_VERSION=5
+TK_MAJOR_VERSION=$TCL_MAJOR_VERSION
+TK_MINOR_VERSION=$TCL_MINOR_VERSION
+NAP_VERSION=$MAJOR_VERSION.$MINOR_VERSION
+EZPRINT_VERSION=1.0
+LAND_FLAG_VERSION=1.1
+
+#------------------------------------------------------------------------------
+# Program 'autoconf' sources file ../../configure.m4
+#------------------------------------------------------------------------------
+
+builtin(include, configure.m4)
+
+#------------------------------------------------------------------------------
+# Finally, substitute all of the various values into the output files.
+#------------------------------------------------------------------------------
+
+AC_OUTPUT(Makefile pkgIndex.tcl ../tex/nap_version.tex)

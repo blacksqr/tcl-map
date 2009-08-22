@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: bin_io.html,v 1.9 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>NAP Library: bin_io.tcl</title>
+  </head>
+  <body>
+  <center>
+    <h2>Binary Input/Output Procedures</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Simple_Binary_Files">Reading and Writing Simple Binary
+      Files</a>
+      <ol>
+        <li>
+          <a href="#get_nao">Procedure 
+          <code>get_nao</code> [ 
+          <var>fileName</var> [ 
+          <var>dataType</var> [ 
+          <var>shape</var>]]]</a>
+        </li>
+        <li>
+          <a href="#put_nao">Procedure 
+          <code>put_nao</code> [ 
+          <var>napExpr</var> [ 
+          <var>fileName</var>]]</a>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <a href="#Fortran_Unformatted_Files">Reading and Writing Fortran Unformatted Files</a>
+      <ol>
+        <li>
+          <a href="#get_bin">Procedure <code>get_bin</code> <var>dataType</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+        </li>
+        <li>
+          <a href="#put_bin">Procedure <code>put_bin</code> <var>napExpr</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+        </li>
+        <li>
+          <a href="#Example">Example</a>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <a href="#cif">Reading and Writing <code>cif</code> Files</a>
+      <ol>
+        <li>
+          <a href="#get_cif">Procedure <code>get_cif</code> [ <var>options</var>] <var>pattern</var> [ <var>pattern</var> ...]</a>
+        </li>
+        <li>
+          <a href="#put_cif">Procedure <code>put_cif</code> <var>napExpr</var> [ <var>fileName</var> [ <var>mode</var>]]</a>
+        </li>
+        <li>
+          <a href="#get_cif1">Procedure <code>get_cif1</code> [ <var>options</var>] <var>fileId</var></a>
+        </li>
+        <li>
+          <a href="#put_cif1">Procedure <code>put_cif1</code> <var>napExpr</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <a href="#hdf_netcdf">Writing HDF and netCDF files</a> <ol> <li> <a href="#put16">Procedure <code>put16</code> <var>napExpr fileName variableName</var></a>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <a href="#Miscellaneous_Procedures">Miscellaneous Procedures</a>
+      <ol>
+        <li>
+          <a href="#size_of">Procedure <code>size_of</code> <var>dataType</var></a>
+        </li>
+      </ol>
+    </li>
+  </ol>
+    <a name="Introduction">
+  <h3>
+Introduction</a>
+  </h3>
+    The following procedures are defined in the file 
+  <code>bin_io.tcl</code>.
+    <a name="Simple_Binary_Files">
+  <h3>
+    Reading and Writing Simple Binary Files</a>
+  </h3>
+    A simple binary file is a file containing nothing except data of
+  a single data type.
+    <a name="get_nao">
+  <h4>
+    Procedure <code>get_nao</code> [ <var>fileName</var> [ <var>dataType</var> [ <var>shape</var>]]]</a>
+  </h4>
+  Read NAO from binary file.
+  <br />
+  <var>filename</var>: file name (default: 
+  <code>&quot;&quot;</code> which is treated as 
+  <code>stdin</code>)
+  <br />
+  <var>dataType</var>: 
+  <code>c8</code>, 
+  <code>u8</code>, 
+  <code>u16</code>, 
+  <code>u32</code>, 
+  <code>i8</code>, 
+  <code>i16</code>, 
+  <code>i32</code>, 
+  <code>f32</code> or 
+  <code>f64</code>
+  <br />
+  <var>shape</var>: shape of result (Default: number of elements until
+  end)
+    <a name="put_nao">
+  <h4>
+    Procedure <code>put_nao</code> [ <var>napExpr</var> [ <var>fileName</var>]]</a>
+  </h4>
+  Write NAO to binary file.
+  <br />
+  <var>napExpr</var>: NAP expression to be evaluated in caller
+  namespace
+  <br />
+  <var>fileName</var>: file name (default: 
+  <code>stdout</code>)
+    <a name="Fortran_Unformatted_Files">
+  <h3>
+    Reading and Writing Fortran Unformatted Files</a>
+  </h3>
+  Fortran unformatted files are files consisting of binary records
+  preceded and followed by 32-bit byte-counts.
+    <a name="get_bin">
+  <h4>
+    Procedure <code>get_bin</code> <var>dataType</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+  </h4>
+  Read next Fortran binary (unformatted) record.
+  <br />
+  <var>dataType</var>: 
+  <code>c8</code>, 
+  <code>u8</code>, 
+  <code>u16</code>, 
+  <code>u32</code>, 
+  <code>i8</code>, 
+  <code>i16</code>, 
+  <code>i32</code>, 
+  <code>f32</code> or 
+  <code>f64</code>
+  <br />
+  <var>fileId</var>: Tcl file handle (default: 
+  <code>stdin</code>)
+  <br />
+  <var>mode</var>: 
+  <code>binary</code> (default) or 
+  <code>swap</code>
+    <a name="put_bin">
+  <h4>
+    Procedure <code>put_bin</code> <var>napExpr</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+  </h4>
+  Write Fortran binary (unformatted) record.
+  <br />
+  <var>napExpr</var>: NAP expression to be evaluated in caller
+  namespace
+  <br />
+  <var>fileId</var>: Tcl file handle (default: 
+  <code>stdout</code>)
+  <br />
+  <var>mode</var>: 
+  <code>binary</code> (default) or 
+  <code>swap</code>
+    <a name="Example">
+  <h4>
+    Example</a>
+  </h4>
+  The following example creates a NAO called 
+  <code>squares</code>, writes it to a file, then reads the data from
+  this file into a NAO called 
+  <code>in</code>.
+  <pre>
+% nap &quot;squares = (0 .. 4)**2&quot;
+::NAP::66-66
+% $squares all
+::NAP::66-66  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 1 4 9 16
+% set file [open tmp.bin w]; # open file &quot;tmp.bin&quot; for
+writing
+file5
+% put_bin squares $file; # write data from squares
+% close $file
+% set file [open tmp.bin]; # open file &quot;tmp.bin&quot; for reading
+file5
+% nap &quot;in = [get_bin f32 $file]&quot;; # read data into in
+::NAP::78-78
+% close $file
+% $in all
+::NAP::78-78  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 5      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+0 1 4 9 16
+</pre>
+    <a name="cif">
+  <h3>
+    Reading and Writing <code>cif</code> Files</a>
+  </h3>
+  <p>The 
+  <code>cif</code> ( 
+  <code>conmap</code> input file) format is one which originated in the
+  Melbourne University Department of Meteorology in the days before
+  netCDF and HDF. It is now rather obsolete but is still used within
+  CSIRO and other Australian organisations. A cif is a Fortran
+  unformatted file consisting of one or more frames, each of which
+  consists of six records as follows:</p>
+  <ul>
+    <li>number of rows</li>
+    <li>vertical coordinate variable (often latitude)</li>
+    <li>number of columns</li>
+    <li>horizontal coordinate variable (often longitude)</li>
+    <li>title</li>
+    <li>main data (matrix)</li>
+  </ul>
+  <p>The main input procedure is 
+  <code>get_cif</code>, which reads one or more matrices from each of
+  one or more cif files. The main output procedure is 
+  <code>put_cif</code>, which writes a NAO as an entire cif. These
+  procedures call the low-level procedures 
+  <code>get_cif1</code> or 
+  <code>put_cif1</code> for each frame. The default 
+  <var>mode</var> for 
+  <code>put_cif</code> and 
+  <code>put_cif1</code> is 
+  <code>auto</code> which produces a big-endian file regardless of the
+  platform.</p>
+    <a name="get_cif">
+  <h4>
+    Procedure <code>get_cif</code> [ <var>options</var>] <var>pattern</var> [ <var>pattern</var> ...]</a>
+  </h4>
+  Read one or more matrices from each of one or more cif files
+  (whose names are specified by one or more glob patterns). The result
+  is 2D if only one frame is read, otherwise it is 3D. Check whether
+  byte swapping is needed by examining 1st word in file.
+  <br />Options:
+  <br />
+  <code>-g 0|1</code>: 
+  <code>1</code> (default) for geographic mode, 
+  <code>0</code> for non-geographic mode
+  <br />
+  <code>-m</code> 
+  <b>real</b>: Input missing value (default: 
+  <code>-7777777.0</code>)
+  <br />
+  <code>-um</code> 
+  <b>text</b>: Units for matrix (default: none)
+  <br />
+  <code>-ux</code> 
+  <b>text</b>: Units for x (default: if geographic mode then 
+  <code>degrees_east</code>, else none)
+  <br />
+  <code>-uy</code> 
+  <b>text</b>: Units for y (default: if geographic mode then 
+  <code>degrees_north</code>, else none)
+  <br />
+  <code>-x</code> 
+  <b>text</b>: Name of dimension x (default: if geographic mode then 
+  <code>longitude</code> else x)
+  <br />
+  <code>-y</code> 
+  <b>text</b>: Name of dimension y (default: if geographic mode then 
+  <code>latitude</code> else x)
+  <p>The following example reads a single-frame cif named 
+  <code>7.cif</code> into a NAO called 
+  <code>in</code>, then displays it (including the coordinate
+  variables).</p>
+  <pre>
+% nap &quot;in = [get_cif 7.cif]&quot;
+::NAP::357-357
+% $in all
+::NAP::357-357  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+This data originated from ascii conmap input file &#39;acif.7&#39;
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable:
+::NAP::236-236
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable:
+::NAP::308-308
+Value:
+ 1  1  2 -3
+ 1  _  3 -4
+ 2  0  4  5
+% [nap &quot;coordinate_variable(in,0)&quot;]
+-60 30 60
+% [nap &quot;coordinate_variable(in,1)&quot;]
+-90 30 90 180
+</pre>
+    <a name="put_cif">
+  <h4>
+    Procedure <code>put_cif</code> <var>napExpr</var> [ <var>fileName</var> [ <var>mode</var>]]</a>
+  </h4>
+  Write NAO as entire cif.
+  <br />
+  <var>napExpr</var>: NAP expression to be evaluated in caller
+  namespace
+  <br />
+  <var>fileName</var>: file name (default: 
+  <code>stdout</code>)
+  <br />
+  <var>mode</var>: 
+  <code>auto</code> (default), 
+  <code>binary</code> or 
+  <code>swap</code>
+    <a name="get_cif1">
+  <h4>
+    Procedure <code>get_cif1</code> [ <var>options</var>] <var>fileId</var></a>
+  </h4>
+  Read next frame from cif (Conmap Input File).
+  <br />Options:
+  <br />
+  <code>-g 0|1</code>: 
+  <code>1</code> (default) for geographic mode, 
+  <code>0</code> for non-geographic mode
+  <br />
+  <code>-m</code> 
+  <b>real</b>: Input missing value (default: 
+  <code>-7777777.0</code>)
+  <br />
+  <code>-s 0|1</code>: 
+  <code>0</code> (default) for binary mode, 
+  <code>1</code> for swap (byte-swapping) mode
+  <br />
+  <code>-um</code> 
+  <b>text</b>: Units for matrix (default: none)
+  <br />
+  <code>-ux</code> 
+  <b>text</b>: Units for x (default: if geographic mode then 
+  <code>degrees_east</code>, else none)
+  <br />
+  <code>-uy</code> 
+  <b>text</b>: Units for y (default: if geographic mode then 
+  <code>degrees_north</code>, else none)
+  <br />
+  <code>-x</code> 
+  <b>text</b>: Name of dimension x (default: if geographic mode then 
+  <code>longitude</code> else x)
+  <br />
+  <code>-y</code> 
+  <b>text</b>: Name of dimension y (default: if geographic mode then 
+  <code>latitude</code> else x)
+  <p>The following example reads the first frame of a cif named 
+  <code>7.cif</code> into a NAO called 
+  <code>in</code>, then displays it (including the coordinate
+  variables).</p>
+  <pre>
+% set f [open 7.cif]
+file5
+% nap &quot;in = [get_cif1 $f]&quot;
+::NAP::218-218
+% close $f
+% $in all
+::NAP::218-218  f32  MissingValue: NaN  References: 1  Unit: (NULL)
+This data originated from ascii conmap input file &#39;acif.7&#39;
+Dimension 0   Size: 3      Name: latitude  Coordinate-variable:
+::NAP::97-97
+Dimension 1   Size: 4      Name: longitude  Coordinate-variable:
+::NAP::169-169
+Value:
+ 1  1  2 -3
+ 1  _  3 -4
+ 2  0  4  5
+% ::NAP::97-97
+-60 30 60
+% ::NAP::169-169
+-90 30 90 180
+</pre>
+    <a name="put_cif1">
+  <h4>
+    Procedure <code>put_cif1</code> <var>napExpr</var> [ <var>fileId</var> [ <var>mode</var>]]</a>
+  </h4>
+  Write NAO as frame of cif.
+  <br />
+  <var>napExpr</var>: NAP expression to be evaluated in caller
+  namespace
+  <br />
+  <var>fileId</var>: Tcl file handle (default: 
+  <code>stdout</code>)
+  <br />
+  <var>mode</var>: 
+  <code>auto</code> (default), 
+  <code>binary</code> or 
+  <code>swap</code>
+    <a name="hdf_netcdf">
+  <h3>
+    Writing HDF and netCDF files</a>
+  </h3>
+    <a name="put16">
+  <h4>
+    Procedure <code>put16</code> <var>napExpr fileName variableName</var></a>
+  </h4>
+  Write automatically-scaled 16-bit variable to netCDF or HDF
+  file.
+  <br />
+  <var>napExpr</var>: NAP expression to be evaluated in caller
+  name-space
+  <br />
+  <var>fileName</var>: name of netCDF ( 
+  <code>.nc</code>) or HDF ( 
+  <code>.hdf</code>) file
+  <br />
+  <var>variableName</var>: name of 16-bit netCDF variable or HDF SDS
+  <p>Example:</p>
+  <pre>
+% put16 &quot;{{1.2e4 -99 _}{_ 101 0}}&quot; m.nc matrix
+</pre>
+    <a name="Miscellaneous_Procedures">
+  <h3>
+    Miscellaneous Procedures</a>
+  </h3>
+    <a name="size_of">
+  <h4>
+    Procedure <code>size_of</code> <var>dataType</var></a>
+  </h4>
+  Number of bytes in 
+  <var>dataType</var>.
+  <p>Example:</p>
+  <pre>
+% size_of i16
+2
+</pre>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: bin_io.html,v 1.5 2005/07/28
+          06:45:32 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

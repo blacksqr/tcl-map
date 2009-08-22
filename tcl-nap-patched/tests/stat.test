@@ -1,0 +1,110 @@
+# stat.test --
+# 
+# Test Statistics functions defined in file $env(LIBRARY_DIR)/stat.tcl
+#
+# Copyright (c) 1999, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: stat.test,v 1.11 2005/12/13 01:53:07 dav480 Exp $
+
+source $env(LIBRARY_DIR)/stat.tcl
+
+nap "v = {12 6 _ 7 3 15 _ 10 18 5}"
+$v set unit kg
+
+Test stat-1.1 {am vector} {[nap "am(v)"]} 9.5
+Test stat-1.2 {gm vector} {[nap "gm{2 4 8}"]} 4
+Test stat-1.3 {median vector} {[nap "median{4 4 3 5 6 3#8 10}"]} 6
+Test stat-1.4 {median vector} {[nap "median{5 7 5 9 11 12 18 15}"]} 10
+Test stat-1.5 {rms vector} {[nap "rms{1 3 4 5 7}"]} 4.47214
+Test stat-1.6 {var vector} {[nap "var(v)"]} 23.75
+Test stat-1.7 {sd vector} {[nap "sd(v)"]} 4.8734
+Test stat-1.8 {var1 vector} {[nap "var1(v)"]} 27.1429
+Test stat-1.9 {sd1 vector} {[nap "sd1(v)"]} 5.20988
+Test stat-1.10 {verb-rank = 0} {[nap "am(v,0)"] value} \
+{12 6 _ 7 3 15 _ 10 18 5}
+Test stat-1.11 {verb-rank = 0} {[nap "sd(v,0)"] value} \
+{0 0 _ 0 0 0 _ 0 0 0}
+Test stat-1.12 {verb-rank = 0} {[nap "sd1(v,0)"] value} \
+{_ _ _ _ _ _ _ _ _ _}
+Test stat-1.13 {am vector -- check unit} {[nap "am(v)"] unit} kg
+Test stat-1.14 {mode vector} {[nap "mode(v)"]} 9.5
+Test stat-1.15 {mode vector} {[nap "mode{5 7 5 9 11 12 18 15}"]} 5
+Test stat-1.16 {mode vector} {[nap "mode({5.01 7 4.99 0 9 11 12 16 12 5})"]} 5
+Test stat-1.17 {percentile vector} {
+    [nap "abs(percentile({4 4 3 5 6 3#8 10},{0 50 100}) - {3 6 10}) < 0.1"]
+} {1 1 1}
+Test stat-1.18 {percentile vector} {
+    [nap "abs(percentile({5 7 5 9 11 12 18 15},50) - 10) < 0.1"]
+} {1}
+Test stat-1.19 {percentile vector} {
+    nap "p = percentile(random(100000 # 10), 0 .. 100 ... 25, 1, 1000)"
+    [nap "abs(p - (0 .. 10 ... 2.5)) < 0.1"]
+} {1 1 1 1 1}
+
+nap "m = {
+    {1.5 2.1 -5}
+    {5.5 9.4  0}
+}"
+
+Test stat-2.1 {am matrix columns} {[nap "am(m)"]} {3.5 5.75 -2.5}
+Test stat-2.2 {am matrix rows} {[nap "am(m,1)"]} {-0.466667 4.96667}
+Test stat-2.3 {median matrix columns} {[nap "median(m)"]} {3.5 5.75 -2.5}
+Test stat-2.4 {median matrix rows} {[nap "median(m,1)"]} {1.5 5.5}
+Test stat-2.5 {sd matrix columns} {[nap "sd(m)"]} {2 3.65 2.5}
+Test stat-2.6 {sd matrix rows} {[nap "sd(m,1)"]} {3.2149 3.85602}
+Test stat-2.7 {mode matrix columns} {[nap "mode(m)"]} {3.5 5.75 -2.5}
+Test stat-2.8 {mode matrix rows} {[nap "mode({{-3 9 -3}{_ 0 _}},1)"]} {-3 0}
+Test stat-2.9 {percentile matrix columns} {
+    nap "p = percentile(m, {0 50 100})"
+    [nap "max(max(abs(p - {{1.5 2.1 -5}{3.5 5.75 -2.5}{5.5 9.4 0}}))) < 0.1"]
+} {1}
+Test stat-2.10 {percentile matrix rows} {
+    nap "p = percentile(m, {0 50 100}, 1)"
+    [nap "max(max(abs(p - {{-5 0}{1.5 5.5}{2.1 9.4}}))) < 0.1"]
+} {1}
+Test stat-2.11 {CV matrix columns} {[nap "CV(m)"]} {0.571429 0.634783 -1}
+
+nap "a = reshape(0 .. 99, {2 3 4})"
+
+Test stat-4.1 {am 3D} {[nap "am(a)"]} \
+{ 6  7  8  9
+10 11 12 13
+14 15 16 17}
+
+Test stat-4.2 {am 3D} {[nap "am(a,1)"]} \
+{ 1.5  5.5  9.5
+13.5 17.5 21.5}
+
+Test stat-4.3 {am 3D} {[nap "am(a,2)"]} \
+{ 4  5  6  7
+16 17 18 19}
+
+Test stat-4.4 {median 3D} {[nap "median(a)"]} \
+{ 6  7  8  9
+10 11 12 13
+14 15 16 17}
+
+Test stat-4.5 {median 3D} {[nap "median(a,1)"]} \
+{ 1.5  5.5  9.5
+13.5 17.5 21.5}
+
+Test stat-4.6 {median 3D} {[nap "median(a,2)"]} \
+{ 4  5  6  7
+16 17 18 19}
+
+Test stat-4.7 {percentile 3D} {
+    nap "p = percentile(a, {0 50 100})"
+    [nap "max(max(max(abs(p - (min(a) /// median(a) // max(a)))))) < 0.1"]
+} {1}
+
+Test stat-4.8 {percentile 3D} {
+    nap "p = percentile(a, {0 50 100}, 1)"
+    [nap "max(max(max(abs(p - (min(a, 1) /// median(a, 1) // max(a, 1)))))) < 0.1"]
+} {1}
+
+Test stat-4.9 {percentile 3D} {
+    nap "p = percentile(a, {0 50 100}, 2)"
+    [nap "max(max(max(abs(p - (min(a, 2) /// median(a, 2) // max(a, 2)))))) < 0.1"]
+} {1}
+
+unset a m p v

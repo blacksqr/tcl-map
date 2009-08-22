@@ -1,0 +1,313 @@
+# nap_function_lib.test --
+# 
+# Test functions defined in file $env(LIBRARY_DIR)/nap_function_lib.tcl
+#
+# Copyright (c) 2003, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: nap_function_lib.test,v 1.14 2005/07/20 01:55:36 dav480 Exp $
+
+source $env(LIBRARY_DIR)/nap_function_lib.tcl
+
+Test nap_function_lib-1.1 {simple regression} {
+# Problem 11 on p226 of Schaum's "Theory & Problems of Statistics" by Murray R. Spiegel, 1961
+    [nap "regression({1 3 4 6 8 9 11 14}, {1 2 4 4 5 7  8  9})"]
+} {0.545455 0.636364}
+
+Test nap_function_lib-1.2 {multiple regression} {
+# Problem 3 on p273 of Schaum's "Theory & Problems of Statistics" by Murray R. Spiegel, 1961
+    [nap "regression(
+	transpose({57 59 49 62 51 50 55 48 52 42 61 57} /// {8 10 6 11 8 7 10 9 10 6 12 9}),
+	{64 71 53 67 55 58 77 57 56 51 76 68})"]
+} {3.65122 0.85461 1.50633}
+
+Test nap_function_lib-2.1 {isMember} {
+    [nap "isMember({{1 3}{  5 9}}, {1 2 3 9})"]
+} {1 1
+0 1}
+
+Test nap_function_lib-3.1 {scaleAxis xstart == xend} {
+    [nap "scaleAxis(3,3)"] value
+} {3}
+
+Test nap_function_lib-3.2 {scaleAxis xstart == xend} {
+    [nap "scaleAxis(0,0)"] value
+} {0}
+
+Test nap_function_lib-3.3 {scaleAxis} {
+    [nap "scaleAxis(3, 3.6, 2)"] value
+} {3 3.5}
+
+Test nap_function_lib-3.4 {scaleAxis} {
+    [nap "scaleAxis(3, 3.6)"] value
+} {3 3.1 3.2 3.3 3.4 3.5 3.6}
+
+Test nap_function_lib-3.5 {scaleAxis} {
+    [nap "scaleAxis(-3.1, 3.6)"] value
+} {-3 -2 -1 0 1 2 3}
+
+Test nap_function_lib-3.6 {scaleAxis} {
+    [nap "scaleAxis(0, 3.1)"] value
+} {0 0.5 1 1.5 2 2.5 3}
+
+Test nap_function_lib-3.7 {scaleAxis} {
+    [nap "scaleAxis(-3.1, 0)"] value
+} {-3 -2.5 -2 -1.5 -1 -0.5 0}
+
+Test nap_function_lib-4.1 {scaleAxisSpan xstart == xend} {
+    [nap "scaleAxisSpan(3,3)"] value
+} {0 0.5 1 1.5 2 2.5 3}
+
+Test nap_function_lib-4.2 {scaleAxisSpan xstart == xend} {
+    [nap "scaleAxisSpan(0,0)"] value
+} {0 0.2 0.4 0.6 0.8 1}
+
+Test nap_function_lib-4.3 {scaleAxisSpan} {
+    [nap "scaleAxisSpan(3, 3.6, 2)"] value
+} {3 4}
+
+Test nap_function_lib-4.4 {scaleAxisSpan} {
+    [nap "scaleAxisSpan(3, 3.6)"] value
+} {3 3.1 3.2 3.3 3.4 3.5 3.6}
+
+Test nap_function_lib-4.5 {scaleAxisSpan} {
+    [nap "scaleAxisSpan(-3.1, 3.6)"] value
+} {-4 -3 -2 -1 0 1 2 3 4}
+
+Test nap_function_lib-4.6 {scaleAxisSpan} {
+    [nap "scaleAxisSpan(0, 3.1)"] value
+} {0 0.5 1 1.5 2 2.5 3 3.5}
+
+Test nap_function_lib-4.7 {scaleAxisSpan} {
+    [nap "scaleAxisSpan(-3.1, 0)"] value
+} {-3.5 -3 -2.5 -2 -1.5 -1 -0.5 0}
+
+# Following problems from Spiegel, M. R., "Theory and Problems of Statistics", Schaum, 1961.
+Test nap_function_lib-5.1 {moving_average of vector (page 285)} {
+    [nap "moving_average({2 6 1 5 3 7 2}, 3)"] value
+} {3 4 3 5 4}
+
+Test nap_function_lib-5.2 {moving_average of vector (page 290)} {
+    nap "v = {50.0 36.5 43.0 44.5 38.9 38.1 32.6 38.7 41.7 41.1 33.8}"
+    [nap "moving_average(v, 5)"] value -f %.1f
+} {42.6 40.2 39.4 38.6 38.0 38.4 37.6}
+
+Test nap_function_lib-5.3 {moving_average of vector (page 290)} {
+    [nap "moving_average(v, 4)"] value -f %.1f
+} {43.5 40.7 41.1 38.5 37.1 37.8 38.5 38.8}
+
+Test nap_function_lib-5.4 {moving_average of vector} {
+    [nap "moving_average(v, 1)"] value -f %.1f
+} {50.0 36.5 43.0 44.5 38.9 38.1 32.6 38.7 41.7 41.1 33.8}
+
+Test nap_function_lib-5.5 {moving_average of vector} {
+    [nap "moving_average(v, 11)"] value -f %.1f
+} {39.9}
+
+Test nap_function_lib-5.6 {moving_average of vector} {
+    [nap "moving_average(v, 2, 2)"] value -f %.2f
+} {43.25 43.75 38.50 35.65 41.40}
+
+Test nap_function_lib-5.7 {moving_average of matrix} {
+    nap "m = reshape(v, {4 6})"
+    [nap "moving_average(m, 1)"]
+} {50.0 36.5 43.0 44.5 38.9 38.1
+32.6 38.7 41.7 41.1 33.8 50.0
+36.5 43.0 44.5 38.9 38.1 32.6
+38.7 41.7 41.1 33.8 50.0 36.5}
+
+Test nap_function_lib-5.8 {moving_average of matrix} {
+    [nap "moving_average(m, {2 3})"]
+} {40.4167 40.9167 40.5000 41.0667
+39.5000 41.3167 39.6833 39.0833
+40.9167 40.5000 41.0667 38.3167}
+
+Test nap_function_lib-5.8 {moving_average of matrix} {
+    [nap "moving_average(m, {2 3}, {2 3})"]
+} {40.4167 41.0667
+40.9167 38.3167}
+
+Test nap_function_lib-5.9 {moving_average of matrix} {
+    [nap "moving_average(m, 3, 3)"]
+} {40.7222 39.5556}
+
+Test nap_function_lib-5.10 {moving_average of matrix with missing values} {
+    $m set value "" "-1,-1" 
+    [nap "moving_average(m, {2 3})"]
+} {40.4167 40.9167 40.5000 41.0667
+39.5000 41.3167 39.6833 39.0833
+40.9167 40.5000 41.0667 38.6800}
+
+Test nap_function_lib-5.11 {moving_average of vector with missing values} {
+    [nap "moving_average({2 6 1 _ 5 3 _ _ 7 2}, 2)"] value
+} {4 3.5 1 5 4 3 _ 7 4.5}
+
+Test nap_function_lib-5.12 {moving_average of vector with step = -1} {
+    [nap "moving_average(v, 5, -1)"] value -f %.1f
+} {43.2 43.5 42.6 40.2 39.4 38.6 38.0 38.4 37.6 38.8 38.9}
+
+Test nap_function_lib-5.13 {moving_average of matrix with step = 1} {
+    [nap "moving_average(m, 3, 1)"] value -f %.1f
+} {40.7 41.3 40.5 39.6
+39.8 40.5 40.3 39.8}
+
+Test nap_function_lib-5.14 {moving_average of matrix with step = -1} {
+    [nap "max(max(abs(moving_average(m, 3, -1) - {
+	    {39.45 40.42 40.92 40.50 41.07 40.20}
+	    {39.55 40.72 41.32 40.50 39.56 38.58}
+	    {38.53 39.83 40.50 40.33 39.79 40.90}
+	    {39.97 40.92 40.50 41.07 38.68 40.23}
+	}))) < 0.02"]} {1}
+
+Test nap_function_lib-5.15 {moving_average of 3D array} {
+    [nap "moving_average(reshape(0..63, 3#4), 3)"]
+} {21 22
+25 26
+
+37 38
+41 42}
+
+Test nap_function_lib-6.1 {fill_holes(vector)} {
+    [nap "fill_holes{2 6 1 _ 5 3 _ _ 7 2}"] value
+} {2 6 1 3 5 3 3 7 7 2}
+
+Test nap_function_lib-6.2 {fill_holes(vector)} {
+    [nap "fill_holes{_ _ _ _ 5 _ _ _ _ _}"] value
+} {5 5 5 5 5 5 5 5 5 5}
+
+Test nap_function_lib-6.3 {fill_holes(matrix)} {
+    [nap "fill_holes m"] value -f %.1f
+} {50.0 36.5 43.0 44.5 38.9 38.1
+32.6 38.7 41.7 41.1 33.8 50.0
+36.5 43.0 44.5 38.9 38.1 32.6
+38.7 41.7 41.1 33.8 50.0 40.2}
+
+Test nap_function_lib-7.1 {derivative(vector)} {
+    nap "x = {-2 0 1 4 5 9}"
+    nap "y = x * x"
+    $y set coo x
+    [nap "derivative(y)"] value
+} {-4 0 2 8 10 18}
+
+Test nap_function_lib-7.2 {derivative(matrix)} {
+    nap "x = {-2 0 1 4 5 9}"
+    nap "y = {-5 -1 1 2 6}"
+    nap "m = outer('*', y * y, x * x)"
+    $m set coo y x
+    [nap "derivative(m)"] value
+} { -40    0  -10 -160 -250 -810
+  -8    0   -2  -32  -50 -162
+   8    0    2   32   50  162
+  16    0    4   64  100  324
+  48    0   12  192  300  972}
+
+Test nap_function_lib-7.3 {derivative(matrix)} {
+    [nap "derivative(m, 'x')"] value
+} {-100    0   50  200  250  450
+  -4    0    2    8   10   18
+  -4    0    2    8   10   18
+ -16    0    8   32   40   72
+-144    0   72  288  360  648}
+
+Test nap_function_lib-7.4 {derivative(3D array)} {
+    nap "z = {5 2 0}"
+    nap "nx = nels(x)"
+    nap "ny = nels(y)"
+    nap "nz = nels(z)"
+    nap "ry = transpose(reshape(y, nx // nz // ny), {1 2 0})"
+    nap "rz = transpose(reshape(z, nx // ny // nz))"
+    nap "m = x * x * ry * (rz + rz * rz)"
+    $m set coo z y x
+    [nap "derivative(m,0)"] value
+} { -220     0   -55  -880 -1375 -4455
+  -44     0   -11  -176  -275  -891
+   44     0    11   176   275   891
+   88     0    22   352   550  1782
+  264     0    66  1056  1650  5346
+
+ -100     0   -25  -400  -625 -2025
+  -20     0    -5   -80  -125  -405
+   20     0     5    80   125   405
+   40     0    10   160   250   810
+  120     0    30   480   750  2430
+
+  -20     0    -5   -80  -125  -405
+   -4     0    -1   -16   -25   -81
+    4     0     1    16    25    81
+    8     0     2    32    50   162
+   24     0     6    96   150   486}
+
+Test nap_function_lib-7.5 {derivative(3D array)} {
+    [nap "derivative(m,1)"] value
+} { 120    0   30  480  750 2430
+ 120    0   30  480  750 2430
+ 120    0   30  480  750 2430
+ 120    0   30  480  750 2430
+ 120    0   30  480  750 2430
+
+  24    0    6   96  150  486
+  24    0    6   96  150  486
+  24    0    6   96  150  486
+  24    0    6   96  150  486
+  24    0    6   96  150  486
+
+   0    0    0    0    0    0
+   0    0    0    0    0    0
+   0    0    0    0    0    0
+   0    0    0    0    0    0
+   0    0    0    0    0    0}
+
+Test nap_function_lib-7.6 {derivative(3D array)} {
+    [nap "derivative(m,2)"] value
+} {  600     0  -300 -1200 -1500 -2700
+  120     0   -60  -240  -300  -540
+ -120     0    60   240   300   540
+ -240     0   120   480   600  1080
+ -720     0   360  1440  1800  3240
+
+  120     0   -60  -240  -300  -540
+   24     0   -12   -48   -60  -108
+  -24     0    12    48    60   108
+  -48     0    24    96   120   216
+ -144     0    72   288   360   648
+
+    0     0     0     0     0     0
+    0     0     0     0     0     0
+    0     0     0     0     0     0
+    0     0     0     0     0     0
+    0     0     0     0     0     0}
+
+Test nap_function_lib-7.7 {derivative(vector)} {
+    nap "x = {1.0 3.0}"
+    nap "y = {0.5 0.9}"
+    $y set coo x
+    [nap "derivative(y)"] value
+} {0.2 0.2}
+
+Test nap_function_lib-8.1 {dimension_number} {
+    [nap "dimension_number(m,'x')"] value
+} {2}
+
+Test nap_function_lib-8.2 {dimension_number} {
+    [nap "dimension_number(m,-2)"] value
+} {1}
+
+Test nap_function_lib-9.1 {cv} {
+    [nap "cv(m,'x')"] value
+} {-2 0 1 4 5 9}
+
+Test nap_function_lib-9.2 {cv} {
+    [nap "cv(m,0)"] value
+} {5 2 0}
+
+Test nap_function_lib-9.3 {cv} {
+    [nap "cv(m)"] value
+} {5 2 0}
+
+Test nap_function_lib-10.1 {gets_matrix} {
+    [nap "gets_matrix('$env(TEST_DATA_DIR)/gets_matrix.in',2)"]
+} {   1.2    9.0   -3.0
+   0.0    2.0    4.0
+  -2.0    0.0    9.0
+1000.0      _   99.0}
+
+unset m v x y z nx ny nz ry rz

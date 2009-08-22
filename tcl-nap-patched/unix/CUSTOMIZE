@@ -1,0 +1,34 @@
+# CUSTOMIZE --
+#
+# Copyright (c) 1999, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# RCS: @(#) $Id: CUSTOMIZE,v 1.4 1999/10/15 04:06:11 dav480 Exp $
+#
+# This file is for customizing the configuation process performed by
+# `./configure'.  This file consists of sh(1) variable-definition lines.
+# The value given to those variable by this file will override their default
+# values.
+#
+# You can also customize the configuration process via the environment
+# variables seen by ./configure.  For example:
+#
+#     In csh(1):
+#	  % setenv CC gcc
+#	  & setenv CFLAGS_DEBUG -g
+#	  % ./configure
+#
+#     In sh(1):
+#	  $ CC=gcc CFLAGS_DEBUG=-g ./configure
+#
+# Variables in this file override the environmental ones.
+#
+#############################################################################
+#
+# Type of C compiler
+# CC='gcc'
+#
+# C compiler flags
+# CFLAGS_DEBUG=-g
+#
+# Installation prefix (default is `../..'):
+# prefix=$HOME

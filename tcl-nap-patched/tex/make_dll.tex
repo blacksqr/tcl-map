@@ -1,0 +1,174 @@
+%  $Id: make_dll.tex,v 1.7 2006/06/02 07:13:30 dav480 Exp $ 
+    % Nap Library: make\_dll.tcl
+
+\section{Interfacing Nap to a DLL based on C or Fortran Code}
+    \label{make-dll}
+
+\subsection{Introduction}
+    \label{make-dll-Introduction}
+
+The file 
+  \texttt{make\_dll.tcl} defines procedures for automatically
+  producing an interface from Nap to a 
+  \emph{DLL} (\emph{dynamic link library} or 
+  \emph{shared library}) based on C or Fortran Code. This process
+  defines a new tcl command which can be used either directly or via
+  another interface (written in Tcl) defining a Nap function.
+
+\subsection{\texttt{make\_dll}}
+\label{make-dll-make-dll}
+
+The standard command used to create a DLL is:
+\\
+\texttt{make\_dll}
+$\mathit{options}$
+$\mathit{newCommand}$
+$\mathit{argDec}$
+$\mathit{argDec}$
+$\mathit{argDec}$
+$\ldots$
+\\
+$\mathit{newCommand}$ is name of new command.
+\\
+Each argument-declaration 
+$\mathit{argDec}$ is a list with the form
+\\
+$\mathit{name}$
+$\mathit{dataType}$
+$\mathit{intent}$
+\\
+ where
+  \begin{bullets}
+    \item 
+    $\mathit{name}$ is any string (used only in error messages)
+    \item 
+    $\mathit{dataType}$ can be: 
+    \texttt{c8 i8 u8 i16 u16 i32 u32 f32 f64 void}
+    \item 
+    $\mathit{intent}$ can be: 
+    \texttt{in} (default) or 
+    \texttt{inout}. Actual 
+    \texttt{in} arguments can be expressions of any type (including
+    \texttt{ragged}) and will be converted to the specified type
+    (unless this is 
+    \texttt{void}).
+  \end{bullets}
+$\mathit{options}$ are:
+\begin{simpleitems}
+\item \texttt{-quiet}: Do not echo commands.
+\item \texttt{-compile} $\mathit{command}$: C compile-command with options
+\item \texttt{-dll} $\mathit{fileName}$: output filename for DLL
+	(default: $\mathit{newCommand}$.dll for windows, $\mathit{newCommand}$.so for unix)
+\item \texttt{-entry} $\mathit{string}$: User-routine entry-point (default: 
+  $\mathit{newCommand}$). Note that fortran entry points often include suffix '\_'.
+\item \texttt{-header} $\mathit{fileName}$: header (\texttt{*.h}) filename (default: none)
+\item \texttt{-libs} $\mathit{fileNames}$: filenames of extra binary libraries (default: none)
+\item \texttt{-link} $\mathit{command}$: Link-command with options
+\item \texttt{-object} $\mathit{fileName}$: User-routine object-file
+	(default: $\mathit{newCommand}$\texttt{.obj} for windows,
+	$\mathit{newCommand}$\texttt{.o} for unix)
+\item \texttt{-source} $\mathit{fileName}$: Output file containing C source code of interface
+	(default: $\mathit{newCommand}$\texttt{\_i.c})
+\item \texttt{-version} $\mathit{n.m}$: Version number (default: \texttt{1.0})
+\end{simpleitems}
+
+\subsubsection{C Example}
+    \label{make-dll-C-example}
+
+The following example (under SunOS 5.8) defines a new NAP
+  function 
+  \texttt{partialProd} which calculates partial-products. This is
+  analogous to the standard Nap function 
+  \texttt{psum} which calculates partial sums. The new function is
+  based on the following C file 
+  \texttt{pprod.c}:
+  \begin{verbatim}
+void pprod(int *n, float *x, float *result) {
+   int         i;
+   float       prod = 1;
+
+   for (i = 0; i < *n; i++) {
+       result[i] = prod = prod * x[i];
+   }
+}
+\end{verbatim}
+
+  \begin{verbatim}
+% exec cc -c -o pprod.o pprod.c
+% make_dll pprod {n i32 in} {x f32} {y f32 inout}
+cc -I/sol/home/dav480/tcl/include -c pprod_i.c
+ld -G -o libpprod.so pprod_i.o pprod.o  
+% load ./libpprod.so                             
+% proc partialProd x {
+    nap "result = reshape(f32(_), shape(x))"
+    pprod  "nels(x)" x result
+    nap "result"
+}
+% [nap "partialProd({2 1.5 3 0.5})"]
+2 3 9 4.5
+\end{verbatim}
+
+\subsubsection{Fortran 90 Example}
+    \label{make-dll-f90-example}
+
+The following fortran 90 example does the same thing as the
+  above C example. The f90 source code in the file 
+  \texttt{pprod.f90} is:
+  \begin{verbatim}
+subroutine pprod(n, x, result)
+   integer, intent(in) :: n
+   real, intent(in) :: x(n)
+   real, intent(out) :: result(n)
+   integer :: i
+   real :: prod
+   prod = 1.0
+   do i = 1, n
+       prod = prod * x(i)
+       result(i) = prod
+   end do
+end subroutine pprod
+\end{verbatim}
+
+The following log was produced using the SunOS 5.8 f95 compiler.
+  (Note that the entry point is `\texttt{pprod\_}'.)
+  \begin{verbatim}
+% exec f95 -c pprod.f90
+% make_dll -entry pprod_ pprod {n i32 in} {x f32} {y f32 inout}
+cc -I/sol/home/dav480/tcl/include -c pprod_i.c
+ld -G -o libpprod.so pprod_i.o pprod.o  
+% load ./libpprod.so
+% proc partialProd x {
+    nap "result = reshape(f32(_), shape(x))"
+    pprod  "nels(x)" x result
+    nap "result"
+}
+% [nap "partialProd({2 1.5 3 0.5})"]
+2 3 9 4.5
+\end{verbatim}
+
+\subsection{\texttt{make\_dll\_i}}
+    \label{make-dll-make-dll-i}
+
+This procedure is normally used via 
+\texttt{make\_dll}, but may be called directly if you prefer to do your own compiling and linking.
+It makes the Nap C interface to the user's C function or Fortran subroutine.
+It is called as follows:
+\\
+\texttt{make\_dll\_i}
+$\mathit{options}$
+$\mathit{newCommand}$
+$\mathit{argDec}$
+$\mathit{argDec}$
+$\mathit{argDec}$
+$\ldots$
+\\
+This command's result is the C code.
+
+The arguments are similar to 
+  \texttt{make\_dll}, except that the only options are:
+\begin{simpleitems}
+  \item \texttt{-entry} $\mathit{string}$: User-routine entry-point (default: 
+      $\mathit{newCommand}$). Note that fortran entry points often include suffix '\_'.
+  \item \texttt{-header} $\mathit{fileName}$: header (\texttt{*.h}) filename (default: none)
+  \item \texttt{-version} $\mathit{n.m}$: Version number (default: \texttt{1.0})
+\end{simpleitems}

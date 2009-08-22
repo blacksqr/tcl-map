@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_construct.html,v 1.4 2005/12/05 04:57:05 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Constructing Arrays</title>
+  </head>
+  <body>
+    <center>
+      <h2>Constructing Arrays</h2>
+    </center>
+    <h3>Arithmetic Progression</h3>
+    <pre>
+% [nap &quot;3 .. 8&quot;]l # Default step is either 1
+3 4 5 6 7 8
+% [nap &quot;8 .. 3&quot;]; # or -1
+8 7 6 5 4 3
+% [nap &quot;-1 .. 2 ... 1r2&quot;] value; # From -1 to 2 in steps of
+1/2
+-1 -0.5 0 0.5 1 1.5 2
+% [nap &quot;-1 .. 0.9 ... 1r2&quot;] value; # Final step may be
+smaller!
+-1 -0.5 0 0.5 0.9
+% [nap &quot;4 ... 3 .. 8&quot;]; # 4-element vector from 3 to 8 
+3 4.66667 6.33333 8
+</pre>
+    <h3>Catenate: (&#39; 
+    <code>//</code>&#39;)</h3>
+    <pre>
+% [nap &quot;{3 1 9} // {0 -1 5}&quot;]
+3 1 9 0 -1 5
+</pre>
+    <h3>Laminate (&#39; 
+    <code>///</code>&#39;)</h3>
+    <pre>
+% [nap &quot;{3 1 9} // {0 -1 5}&quot;]
+% [nap &quot;{3 1 9} /// {0 -1 5}&quot;]
+ 3  1  9
+ 0 -1  5
+</pre>
+    <h3>Reverse (niladic &#39; 
+    <code>-</code>&#39;)</h3>
+    <pre>
+% nap &quot;x = {9 1 0 2 3}&quot;
+::NAP::24-24
+% [nap &quot;x(-)&quot;]
+3 2 0 1 9
+</pre>
+    <h3>Replicate (binary &#39; 
+    <code>#</code>&#39;)</h3>
+    <pre>
+% [nap &quot;{2 0 1 1 0} # x&quot;]
+9 9 0 2
+% [nap &quot;2 # x&quot;] value
+9 9 1 1 0 0 2 2 3 3
+% [nap &quot;(x % 2 == 0) # x&quot;]; # select even elements
+0 2
+% [nap &quot;(x % 2 == 0)&quot;]
+0 0 1 1 0
+</pre>
+    <h3>Function 
+    <code>reshape</code></h3>
+    <pre>
+% nap &quot;m = reshape(1 .. 6, {3 4})&quot;
+::NAP::126-126
+% $m
+1 2 3 4
+5 6 1 2
+3 4 5 6
+% [nap &quot;reshape(m)&quot;] value
+1 2 3 4 5 6 1 2 3 4 5 6
+</pre>
+    <h3>Function 
+    <code>transpose</code></h3>
+    <pre>
+% [nap &quot;transpose(m)&quot;] value
+1 5 3
+2 6 4
+3 1 5
+4 2 6
+</pre>
+    <h3>Function 
+    <code>sort</code></h3>
+    <pre>
+% [nap &quot;sort({3.6 -1 0 -9 9})&quot;]
+-9 -1 0 3.6 9
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: demo_construct.html,v 1.2
+            2005/03/15 00:21:29 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

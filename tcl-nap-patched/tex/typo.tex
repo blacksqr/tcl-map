@@ -1,0 +1,39 @@
+%  $Id: typo.tex,v 1.3 2006/04/06 09:54:47 dav480 Exp $ 
+    % Nap Typographic Conventions
+
+\section{Typographic Conventions}
+
+Hyperlinks are blue, as in
+\href{http://tcl-nap.sourceforge.net/index.php}{tcl-nap}.
+Internal references are red, as in section \ref{overview}.
+Both can be clicked on if you are reading this on a screen rather than paper.
+Try it.
+
+Consider the following example:
+\\
+\texttt{count(}$x$[\texttt{,} $r$]\texttt{)}
+
+The font used for `\texttt{count(,)}' indicates this is 
+    \textit{literal text}. In other words this is exactly what appears
+    on the screen (which could be either output or typed input). Note
+    that `$x$' 
+    and `$r$' are in italics (with slanted font), which
+    indicates these are 
+    \textit{formal argument names} rather than literal text. You
+    replace such names with whatever is desired.
+    
+ Optional arguments are indicated using two alternative
+    conventions. In the above example they are enclosed in brackets,
+    indicating that `\texttt{,} $r$' is optional. This convention is common in
+    computing documentation. Use has also been made of the the
+    alternative (commonly used in Tcl documentation) of surrounding the
+    optional component with question marks. For example:
+    \\
+    \texttt{count(}$x$ ?\texttt{,} $r$?\texttt{)}
+    
+ Alternatives are indicated with a vertical bar `\texttt{|}', as
+    in the following:
+    \\
+    \texttt{nap\_info bytes|sequence}
+    \\
+    which indicates that the argument can be either `\texttt{bytes}' or `\texttt{sequence}'.

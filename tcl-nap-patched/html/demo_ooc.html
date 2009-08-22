@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: demo_ooc.html,v 1.5 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>OOCs (Object-Oriented Commands)</title>
+  </head>
+  <body>
+    <center>
+      <h2>OOCs (Object-Oriented Commands)</h2>
+    </center>
+    <ol>
+      <li>
+        <a href="#display">Display contents (data &amp; attributes) of
+        NAO</a>
+      </li>
+      <li>
+        <a href="#set">Set (change) these contents</a>
+      </li>
+      <li>
+        <a href="#write">Write data to (netCDF) file</a>
+      </li>
+    </ol>
+    <h3>
+      <a name="display">Display contents (data &amp; attributes) of NAO (n-dimensional array object)</a>
+    </h3>
+    <h4>Default OOC</h4>
+    <pre>
+% [nap &quot;2 ** (0 .. 8)&quot;]
+1 2 4 8 16 32 ..
+% [nap &quot;2 ** (0 .. 8)&quot;] -columns 8 -format %.1f
+1.0 2.0 4.0 8.0 16.0 32.0 64.0 128.0 ..
+% [nap &quot;2 ** (0 .. 8)&quot;] -columns -1; # -1 = infinity
+1 2 4 8 16 32 64 128 256
+</pre>
+    <h4>Method 
+    <code>value</code>: Display all lines &amp; columns</h4>
+    <pre>
+% [nap &quot;2 ** (0 .. 8)&quot;] value
+1 2 4 8 16 32 64 128 256
+% [nap &quot;2 ** (0 .. 8)&quot;] v; # can abbreviate, provided unique
+1 2 4 8 16 32 64 128 256
+</pre>
+    <h4>Method 
+    <code>head</code></h4>
+    <pre>
+% [nap &quot;2 ** (0 .. 8)&quot;] head
+::NAP::233-233  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+</pre>
+    <h4>Method 
+    <code>all</code></h4>
+    <pre>
+% [nap &quot;2 ** (0 .. 8)&quot;] all
+::NAP::242-242  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 2 4 8 16 32 ..
+% [nap &quot;2 ** (0 .. 8)&quot;] all -columns -1 -lines -1; # all
+columns &amp; lines
+::NAP::252-252  f32  MissingValue: NaN  References: 0  Unit: (NULL)
+Dimension 0   Size: 9      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1 2 4 8 16 32 64 128 256
+</pre>
+    <h4>Individual attributes</h4>
+    <pre>
+% [nap &quot;x = {{0 2.4 1}{3.6 2 -9}}&quot;]
+ 0.0  2.4  1.0
+ 3.6  2.0 -9.0
+% $x datatype
+f64
+% $x shape
+2 3
+% $x missing
+NaN
+</pre>
+    <h3>
+      <a name="set">Method <code>set</code>: Change these contents</a>
+    </h3>
+    <h4>Set 
+    <em>missing value</em></h4>
+    <pre>
+% [nap &quot;sum(x)&quot;]
+3.6 4.4 -8
+% $x set missing -9
+% $x missing
+-9
+% $x 
+0.0 2.4 1.0
+3.6 2.0   _
+% [nap &quot;sum(x)&quot;]
+3.6 4.4 1
+% $x set value &quot;{-1 -3}&quot; &quot;1,{0 2}&quot;; # Set x(1,0) =
+-1, x(1,2) = -3
+% $x
+ 0.0  2.4  1.0
+-1.0  2.0 -3.0
+</pre>
+    <h4>Set 
+    <em>coordinate variable</em></h4>
+    <pre>
+% nap &quot;x = 999 ... -2p .. 2p&quot;
+::NAP::339-339
+% $x all
+::NAP::339-339  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+-6.28319 -6.27059 -6.258 -6.24541 -6.23282 -6.22023 ..
+% nap &quot;y = sin x&quot;
+::NAP::341-341
+% $y all
+::NAP::341-341  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+2.44921e-16 0.0125912 0.0251804 0.0377657 0.0503449 0.0629162 ..
+% $y set coord x
+% $y all
+::NAP::341-341  f64  MissingValue: NaN  References: 1  Unit: (NULL)
+Dimension 0   Size: 999    Name: x         Coordinate-variable:
+::NAP::339-339
+Value:
+2.44921e-16 0.0125912 0.0251804 0.0377657 0.0503449 0.0629162 ..
+% plot_nao y; # Display graph. Note that x axis corresponds to
+coordinate variable &#39;x&#39;
+.win0
+</pre>
+    <h3>
+      <a name="write">Write data to (netCDF) file</a>
+    </h3>
+    <pre>
+% $y netcdf test.nc sin; # write to variable &quot;sin&quot; in netCDF file &quot;test.nc&quot;
+</pre>
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"
+    bgcolor="#737B9C">
+      <tr>
+        <td align="center">
+          <font color="#FFFFFF" size="-2">
+            <span class="titlebar">
+            <b>Author:</b> 
+            <a href="http://sourceforge.net/users/dav480/">Harvey
+            Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+            &#160; &#160; &#160; 
+            <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+            Notice and Disclaimer</a>
+            <br />
+            <b>CVS Version Details:</b> $Id: demo_ooc.html,v 1.2
+            2005/03/14 23:18:25 dav480 Exp $</span>
+          </font>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

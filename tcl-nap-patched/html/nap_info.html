@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: nap_info.html,v 1.6 2005/12/05 05:08:03 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>nap_info</title>
+  </head>
+  <body>
+  <center>
+    <h2>The 
+    <code>nap_info</code> Command</h2>
+  </center>
+  <p>The 
+  <code>nap_info</code> command provides information (mainly about the
+  NAP system). There are three variants which are shown in the
+  following example:</p>
+  <pre>
+% nap_info bytes
+2692 2920 68216 68224
+% nap_info seconds
+12.519
+% nap_info sequence
+15
+</pre>
+  <p>The command &quot;<code>nap_info bytes</code>&quot; provides information about
+  NAP&#39;s use of memory. This use falls into the following three
+  categories:</p>
+  <ul>
+    <li>direct use for 
+    <em>NAOs</em> within a Tcl interpreter</li>
+    <li>
+    <em>other</em> purposes local to a Tcl interpreter</li>
+    <li>
+    <em>global</em> purposes</li>
+  </ul>There can be multiple Tcl interpreters, each with its own NAP.
+  No statistics are available on 
+  <em>global</em> memory usage. The command &quot;<code>nap_info bytes</code>&quot; returns the following four numbers
+  relating to NAP&#39;s memory usage within the current Tcl
+  interpreter:
+  <ol>
+    <li>current number of bytes of memory being used by 
+    <em>NAOs</em> (2692 in above example)</li>
+    <li>maximum number of bytes used by 
+    <em>NAOs</em> at any time so far (2920 in above example)</li>
+    <li>current number of bytes of memory being used for 
+    <em>other</em> purposes (68216 in above example)</li>
+    <li>maximum number of bytes used for 
+    <em>other</em> purposes at any time so far (68224 in above
+    example)</li>
+  </ol>
+  <p>The command &quot;<code>nap_info seconds</code>&quot; returns the processor time used
+  by tcl, as defined by the C function &quot;<code>clock()</code>&quot;.</p>
+  <p>The command &quot;<code>nap_info sequence</code>&quot; returns the sequence-number of
+  the most recently created NAO.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: nap_info.html,v 1.3
+          2005/11/06 07:33:46 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

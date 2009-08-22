@@ -1,0 +1,148 @@
+%  $Id: caps_nap_menu.tex,v 1.8 2006/09/28 14:01:36 dav480 Exp $ 
+    % Caps/Nap Menu
+
+\section{Caps/Nap Menu}
+    \label{caps-nap-menu}
+
+\subsection{Introduction}
+\label{caps-nap-menu-Introduction}
+
+The distributed 
+  \texttt{wish} startup file `\texttt{wishrc.tcl}'
+    (which is copied to file `\texttt{.wishrc}' on unix systems)
+    ends with the command
+  `\texttt{caps\_nap\_menu}', which displays a GUI menu
+  consisting of three buttons labelled 
+  \emph{Browse}, 
+  \emph{Command} and 
+  \emph{Help}. This command `\texttt{caps\_nap\_menu}' is defined by the file
+    `\texttt{caps\_nap\_menu.tcl}'. Each of these three buttons is
+  used to display a sub-menu detailed in the following sections.
+
+\subsection{Browse}
+    \label{caps-nap-menu-Browse}
+
+The 
+  \emph{Browse} menu provides access to browsers for Tcl variables
+  and a variety of files. These file browsers typically provide
+  facilities to:
+\begin{bullets}
+    \item Select a file using the \texttt{choose\_file} GUI
+	(see section \ref{choose-file}).
+    \item Select data from this file.
+    \item Display this data as text.
+    \item Plot this data (as an XY graph or a 2D image) using 
+    \texttt{plot\_nao} (see section \ref{plot-nao}).
+    \item Print this data.
+    \item Convert this data to a NAO.
+\end{bullets}
+Detailed help is available within each browser.
+
+\subsubsection{Tcl Variables} 
+\label{caps-nap-menu-Variables}
+
+    This facility for browsing 
+    \emph{Tcl variables} is defined by the file 
+    \texttt{browse\_var.tcl}. It can be used to display the names
+    and values of all tcl variables (including arrays), but has
+    particular facilities for those referencing NAOs. The menu buttons
+    have the following functions:
+    \begin{description}
+      \item[\emph{namespace}]
+      Use tree widget to set the namespace.
+      \item[\emph{list}]
+      List tcl variables in the namespace matching the glob
+      pattern. Display a line for each matching tcl variable. This line
+      contains the variable's name and value provided there is
+      room. Otherwise the line is truncated. You can click on a line to
+      display:
+    \begin{bullets}
+        \item full value of an ordinary tcl variable or array whose line is truncated as above
+        \item a NAO as either text or graph/image as specified by the radio-button
+    \end{bullets}
+      \item[\emph{help}] Display \emph{Help on Tcl Variable Browser}.
+      \item[\emph{cancel}] Remove \emph{Tcl Variable Browser} widget.
+    \end{description}
+
+\subsubsection{\emph{AVHRR} and \emph{ATSR} Satellite Files}
+\label{caps-nap-menu-AVHRR-ATSR}
+	This item is only available if the Caps package is loaded.
+
+\subsubsection{\emph{CIF} Files}
+\label{caps-nap-menu-CIF}
+
+    CIF files originated at Melbourne University. Their use has
+    been largely replaced by netCDF but some data still exists in this
+    format. This facility for browsing 
+    \emph{CIF} files is defined by the file 
+    \texttt{browse\_cif.tcl}.
+
+\subsubsection{\emph{HDF} and \emph{netCDF} Files}
+\label{caps-nap-menu-HDF-netCDF}
+
+\paragraph{Introduction \\}
+\label{caps-nap-menu-HDF-netCDF-intro}
+
+HDF and netCDF are two similar common file formats used for
+data in the form of arrays and grids, especially in the earth
+sciences such as Meteorology and Oceanography.
+See section \ref{hdf-netcdf} for further information about HDF 
+and netCDF.
+
+The term \emph{variable/SDS} is used below.
+This means \emph{variable} for netCDF and \emph{SDS} for HDF.
+
+The HDF/netCDF browser is a powerful tool which allows one to
+select a variable/SDS or attribute from a displayed tree, then (for
+variable/SDS) select a region within it.
+
+The HDF/netCDF browser is defined by the file \texttt{hdf.tcl}.
+
+\paragraph{Instructions}
+
+\input{hdf.tex}
+
+\subsubsection{\emph{Image} Files}
+\label{caps-nap-menu-Image}
+
+    This facility for 
+    \emph{viewing image files} is defined by the file 
+    \texttt{vif.tcl}. Standard Tk supports the PPM, PGM and GIF
+    formats. If the package 
+    \texttt{Img} is installed then it will be used, giving support
+    for BMP, XBM, XPM, PNG, JPEG and TIFF as well. The ActiveTcl
+    distribution of Tcl/Tk includes 
+    \texttt{Img}.
+
+\subsection{Command}
+    \label{caps-nap-menu-Command}
+
+The 
+  \emph{Command} menu allows the following common Tcl commands to be
+  executed with a mouse click:
+  \begin{description}
+    \item[\label{caps-nap-menu-History} \texttt{history}]
+    Display command history. This differs from the command-line 
+    \texttt{history} command in that it uses a scrolled window.
+    Note that 
+    \texttt{tkcon} also provides:
+    \begin{bullets}
+      \item \emph{History} entry in main menu
+      \item \emph{History} entry within \emph{File}/\emph{Save}
+    \end{bullets}
+    \item[\label{caps-nap-menu-Exit} \texttt{exit}] Quit.
+  \end{description}
+
+  \subsection{Help}
+    \label{caps-nap-menu-Help}
+
+The 
+  \emph{Help} menu provides access to local and Web documentation on:
+\begin{bullets}
+    \item Caps/Nap Menu
+    \item Tcl/Tk
+    \item Nap
+    \item Caps
+\end{bullets}
+Note that the Web versions may be more recent than the installed
+  local documentation.

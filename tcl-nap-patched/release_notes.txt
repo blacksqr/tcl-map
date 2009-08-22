@@ -1,0 +1,97 @@
+			RELEASE NOTES
+
+Summary of changes from 2005-08-05 (version 5.0.5) to 2006-10-03 (version 6.2.2)
+
+
+DOCUMENTATION
+
+The "Nap User's Guide" has been largely rewritten and vastly improved. The
+source was converted from HTML to LATEX.
+The resultant PDF file is available from
+http://tcl-nap.sourceforge.net/nap_users_guide.pdf
+(which can be accessed via the main nap menu help button)
+
+Help pages for specific GUIs were also converted to LATEX. They are also in the
+User's Guide.
+
+
+MEMORY MANAGEMENT
+
+There were serious memory leaks version 5. It is believed these have all been
+fixed.
+
+Nap now monitors all its memory allocation, not just for NAOs as before.
+This additional monitoring information is available to the user from the command
+"nap_info bytes"
+
+
+EXPRESSIONS
+
+There are two new unary operators '<=' and '>=' for sorting via permuation-
+vector indices. Example:
+% nap "v = {2.6 2.5 6 -9 9}"
+::NAP::13-13
+% [nap "i = <= v"]
+3 1 0 2 4
+% [nap "v i"]
+-9 2.5 2.6 6 9
+% [nap "v(>= v)"]
+9 6 2.6 2.5 -9
+
+The rules for array (but not scalar) constants have been relaxed to allow
+- commas (treated as spaces)
+- leading & trailing decimal point
+This facilitates the reading of text data.
+Example:
+% [nap "{.2,5.}"]
+0.2 5
+
+Functions may now have no arguments.  Example:
+% proc wd {} {nap "'[pwd]'"}
+% [nap "wd()"]
+C:/dav480/tcl/tcl-nap
+
+Version 5 introduced more general indirect indexing using the '@' and '@@' unary
+operators. However only cross-product indexing was allowed, whereas indirect
+full indexing had been allowed previously. In particular, function invert_grid
+produces a full index and this was a serious backward-compatility problem.
+Version 6 solves this problem by again allowing indirect full indexing.
+
+There are two new built-in functions cart_proj_fwd & cart_proj_inv. These
+provide an interface to the cartographic projection package PROJ.4. This
+supports about eighty projections, which are tailored using parameters.
+
+
+NAP_GET
+
+The "nap_get netcdf|hdf" command allows an index to select data from a netCDF
+variable or HDF SDS.  Previous versions allowed f32 and f64 indices, but simply
+cast them to integers. Users might reasonably expect fractional subscripts
+(including result of '@') to produce interpolated results, but Nap does not
+support this.  Version 6 treats f32 and f64 indices as errors to prevent
+such confusion.
+
+
+TCL LIBRARY
+
+The new function 'get_gshhs' reads data from a GSHHS (Global Self-consistent
+Hierarchical High-resolution Shorelines) file of specified resolution.
+The Nap installation now includes the three (25 km, 5 km, 1 km) lower
+resolution data files. Example:
+plot nao u -overlay "E get_gshhs(25)"
+
+Significant changes have been made to 'geog.tcl' to provide new geographic
+functions and improve old ones.
+
+The browse_cif facility has also been rewritten.
+
+There have also been extensive improvements to plot_nao. These were mainly
+to fix bugs (e.g. axes, overlays).
+
+
+A PROPOSED CHANGE THAT NEVER HAPPENED
+
+A unit conversion system (including automatic conversion during arithmetic) was
+implemented (but never released) and was pleasing in many respects.  However
+serious backward-compatibility problems became apparent and the whole system was
+abandoned.

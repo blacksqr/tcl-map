@@ -1,0 +1,92 @@
+%  $Id: model.tex,v 1.4 2006/02/27 08:10:15 dav480 Exp $ 
+    % NAP: Data Models
+    \section{Data Models}
+
+  \par A 
+  \textit{data model} is a mental model of the nature of some data. It
+  answers such questions as the following:
+  \subsection{What values can the data take?}
+Are they all numeric? Are they
+  all integers? Is the set of possible values finite? What are the
+  minimum and maximum possible values? Are $\infty$ and 
+  \textit{NaN} possible values? Do some values have special meanings,
+  such as indicating undefined or missing data?
+  \subsection{What is the measurement level?}
+
+  \par Data is often classified as follows according to 
+  \begin{i}measurement level\end{i}:
+  \begin{center}
+    \begin{tabular}{|l||p{40 mm}|p{20 mm}|p{20 mm}|p{30 mm}|}
+    \hline 
+      \textbf{Level} & 
+      \textbf{Description} & 
+      \textbf{Valid \mbox{Operations}} & 
+      \textbf{Measure of Central\ Tendency} & 
+      \textbf{Examples}
+    \\
+    \hline 
+    \hline 
+      nominal & 
+      Values denote categories which have no order & 
+      = $\neq$ & 
+      mode & 
+      \mbox{zip post-code} \mbox{chemical e.g. CO$_{2}$}
+    \\
+    \hline 
+      ordinal & 
+      \mbox{Values ordered} \mbox{Differences meaningless} & 
+      = $\neq$ $<$ $\le$ $>$ $\ge$ & 
+      median & 
+      Richter earthquake scale
+    \\
+    \hline 
+      interval & 
+      \mbox{Differences valid} \mbox{Quotients meaningless} & 
+      $= \neq < \le > \ge + -$ & 
+      arithmetic mean & 
+      temperature in $^{\circ}$C
+    \\
+    \hline 
+      ratio & 
+      Quotients valid & 
+      $= \neq < \le > \ge + - \times \div $ & 
+      geometric mean & 
+      temperature in $^{\circ}$K 
+    \\
+  \hline
+\end{tabular} \\ \par
+  \end{center}
+
+  \subsection{How accurate are the values?}
+
+  \par A 
+  \textit{measurement error} is the difference between the 
+  \textit{true value} and the 
+  \textit{measured value}. Measured values can differ from true values
+  due to:
+  \begin{itemize}
+    \item finite precision of instrument
+    \item systematic errors (e.g. inadequately calibrated
+    instrument)
+    \item random errors (due to finite size of sample)
+    \item sampling errors (due to non-randomness of sample)
+    \item blunders (e.g. a human misreading an instrument)
+  \end{itemize}It is desirable to include error estimates with data.
+  \subsection{Are the data located in some space?}
+
+  \par A 
+  \textit{time series} consists of values located along the time
+  dimension. 
+  \textit{Geographic} data is located along spatial dimensions such as
+  latitude, longitude and altitude and may also have a time dimension.
+  Note that longitude is 
+  \textit{cyclic}.
+  \par The dimensions of the space can have a measurement level of 
+  \textit{nominal}. For example, an accounting spreadsheet might have
+  columns corresponding to 
+  \textit{charge codes} and rows corresponding to 
+  \textit{company divisions}.
+  \par Data located in a continuous space can be either 
+  \textit{gridded} or 
+  \textit{scattered}. Both types are discussed in 
+  \href{grid.html}{NAP Grids}.

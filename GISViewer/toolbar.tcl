@@ -2,27 +2,28 @@ package require Tcl 8.5
 package require Tk 8.5
 package require toe 1.0
 
-toe::class GIScanvas {
+toe::class Toolbar {
   private variable toolbar
   private variable orientation
   private variable groups
+  private variable thickness
+  private variable toolbar
 
-  method constructor {frame orient} {
+  method constructor {frame orient thick} {
       set orientation $orient
+      set thickness $thick
       
       #XXX The following does not work
       ttk::style configure toolbar.TPanedwindow -showHandle 1 -handleSize 0 -sashRelief ridge -sashWidth 2 -sashPad 4
       
-      switch -exact -- $orient {
+      switch -exact -- $orientation {
           "horizontal" {
-              set toolbar [ttk::panedwindow $frame.tbar -height 30 -orient horizontal -style toolbar.TPanedwindow]
+              set toolbar [ttk::panedwindow $frame.panedwin -height $thickness -orient horizontal -style toolbar.TPanedwindow]
           }
           "vertical" {
-              set toolbar [ttk::panedwindow $frame.tbar -width 30 -orient vertical -style toolbar.TPanedwindow]
+              set toolbar [ttk::panedwindow $frame.panedwin -width $thickness -orient vertical -style toolbar.TPanedwindow]
           }
-          default {
-              error "Unsupported orientation: $orient"
-          }
+          default {error}
       }
       
       grid $toolbar -row 0 -column 0 -sticky nswe
@@ -56,9 +57,7 @@ toe::class GIScanvas {
                   }
               }
           }
-          default {
-              error "Action $action not recognized"
-          }
+          default {error}
       }
   }
   
@@ -68,7 +67,7 @@ toe::class GIScanvas {
       switch -exact -- $action {
           "add" {
               lassign $args img cmd pos
-              if {[lempty $pos]} {
+              if {$pos eq ""} {
                   set pos $gsize
               }
               
@@ -91,6 +90,7 @@ toe::class GIScanvas {
           "deactivate" {
               $toolbar.$group.$name configure -state disabled
           }
+          default {error}
       }
   }
   
@@ -99,7 +99,7 @@ toe::class GIScanvas {
       
       switch -exact -- $action {
           "add" {
-              if {[lempty $pos]} {
+              if {$pos eq ""} {
                   set pos $gsize
               }
               
@@ -121,6 +121,7 @@ toe::class GIScanvas {
           "deactivate" {
               $widget configure -state disabled
           }
+          default {error}
       }
   }
 } ;# class

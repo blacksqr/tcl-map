@@ -1,0 +1,517 @@
+%  $Id: grid.tex,v 1.6 2006/05/04 04:49:04 dav480 Exp $ 
+    % Nap Grids
+
+\section{Grids}
+    \label{grid}
+
+\subsection{Dimensions, Coordinate variables and Mappings}
+    \label{grid-Dims}
+
+Traditional array-processors, such as APL, are based on a
+  data-model which has discrete dimensions whose corresponding
+  subscripts take integer values. Nap handles such traditional arrays
+  in the traditional manner. However Nap is based on a more general
+  data-model which also allows non-integer subscript values. These
+  values represent distances along dimensions which often correspond to
+  the physical dimensions of spacio-temporal spaces, which are of
+  course continuous.
+
+If desired, a dimension can have an associated variable called the
+  \textit{coordinate variable (CV)}. This is a vector which defines a
+  piecewise-linear mapping from subscript to physical dimension.
+
+\emph{Nominal} dimensions often have text labels associated with each value.
+For example, wind components could be labelled `\texttt{east}' and `\texttt{north}'.
+One could imagine some kind of CV containing such string values.
+Nap does allow a string CV, but there can be only a single character for each value.
+So in the wind case one would have to make do with a string CV with a value such as `\texttt{EN}'.
+
+CVs are convenient when each array dimension maps to a single
+  physical dimension. However, the relationship between array
+  dimensions and physical dimensions may be more complex. Consider the
+  example of a satellite image with dimensions 
+  \textit{line} (row) and 
+  \textit{pixel} (column). The physical dimension 
+  \textit{latitude} depends on both array dimensions (\textit{line} and 
+  \textit{pixel}). There is a matrix (with the same 
+  \textit{line} and 
+  \textit{pixel} dimensions as the image) giving the latitude at each
+  point. There is another similar longitude matrix. These two matrices
+  define piecewise-bilinear mappings from line/pixel space to
+  latitude/longitude space. The task of warping the image to
+  latitude/longitude space is essentially that of defining mappings
+  from latitude/longitude space to line/pixel space i.e. the inverses
+  of the given mappings. This can be done using the Nap functions 
+{\texttt{invert\_grid} and \texttt{invert\_grid\_no\_trim}},
+which are discussed in section \ref{function-Grid}.
+
+\subsection{Difference between Grids and Scattered Data}
+    \label{grid-Dif}
+
+Data in a continuous space with two or more dimensions can be
+  either 
+  \textit{gridded} or 
+  \textit{scattered}. Nap's data-model (with continuous subscripts,
+  coordinate variables, etc.) facilitates the processing of gridded
+  data.
+
+Let us consider the case of two dimensions i.e. matrices.
+  Two-dimensional 
+  \textit{gridded} data is aligned in rows and columns, whereas 
+  \textit{scattered} data is not. The following examples are intended
+  to illustrate the difference between 
+  \textit{scattered} and 
+  \textit{gridded} 2D data.
+
+\subsubsection{Example of Scattered 2D Data (Not a Grid)}
+
+Note that the data are not aligned in rows and columns.
+
+  \begin{tabular}{|*{9}{p{6 mm}}|}
+      \hline 
+       & 
+       & 
+       & 
+      $\bullet$
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+      $\bullet$
+       & 
+       & 
+       & 
+       & 
+       & 
+      $\bullet$
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+      $\bullet$ 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+      $\bullet$
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+      $\bullet$
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+      $\bullet$
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+      $\bullet$
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+    \\
+       & 
+       & 
+       & 
+       & 
+       & 
+       & 
+      $\bullet$
+       & 
+       & 
+    \\
+      \hline 
+\end{tabular}
+
+\subsubsection{Example of 2D Grid}
+    \label{grid-ex2dgrid}
+
+The following example has the grid in black. The green point is not
+  on the grid and has non-integer subscript values (2.1, 1.6). The
+  coordinate variables are latitude and longitude.
+
+    \begin{tabular}{|lrl|cccccc|}
+      \hline 
+         & 
+         & 
+        column & 
+        0 & 
+        1 & 
+	\textcolor{green}{1.6}
+         & 
+        2 & 
+        3 & 
+        4
+      \\
+         & 
+         & 
+        longitude & 
+        30$^{\circ}$E & 
+        40$^{\circ}$E & 
+	\textcolor{green}{52$^{\circ}$E}
+         & 
+        60$^{\circ}$E & 
+        65$^{\circ}$E & 
+        75$^{\circ}$E
+      \\
+        row & 
+        latitude
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+      \\
+      \hline 
+        0 & 
+        30$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$
+      \\
+        1 & 
+        25$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$ 
+      \\
+        2 & 
+        10$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$ 
+      \\
+	\textcolor{green}{2.1}
+         & 
+	\textcolor{green}{8$^{\circ}$N}
+         & 
+         & 
+         & 
+         & 
+\textcolor{green}{$\bullet$}
+         & 
+         & 
+         & 
+      \\
+        3 & 
+        10$^{\circ}$S & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$
+      \\
+      \hline 
+\end{tabular}
+
+\subsection{Missing Data}
+    \label{grid-Missing}
+
+The Nap data model allows any element of an array to have a
+  value which is a 
+  \textit{missing-value}. Such elements are considered null or missing
+  and are treated specially in operations such as arithmetic. Thus
+  adding a missing value to anything produces a missing value.
+
+The following example is similar to that above. However four grid
+  points are missing. These are shown in red.
+
+    \begin{tabular}{|lrl|cccccc|}
+      \hline 
+         & 
+         & 
+        column & 
+        0 & 
+        1 & 
+	\textcolor{green}{1.6}
+         & 
+        2 & 
+        3 & 
+        4
+      \\
+         & 
+         & 
+        longitude & 
+        30$^{\circ}$E & 
+        40$^{\circ}$E & 
+	\textcolor{green}{52$^{\circ}$E}
+         & 
+        60$^{\circ}$E & 
+        65$^{\circ}$E & 
+        75$^{\circ}$E
+      \\
+        row & 
+        latitude
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+      \\
+      \hline 
+        0 & 
+        30$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+	\textcolor{red}{$\bullet$} & 
+        $\bullet$
+      \\
+        1 & 
+        25$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$ 
+      \\
+        2 & 
+        10$^{\circ}$N & 
+         & 
+	\textcolor{red}{$\bullet$}
+         & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+	\textcolor{red}{$\bullet$}
+      \\
+	\textcolor{green}{2.1}
+         & 
+	\textcolor{green}{8$^{\circ}$N}
+         & 
+         & 
+         & 
+         & 
+\textcolor{green}{$\bullet$}
+         & 
+         & 
+         & 
+      \\
+        3 & 
+        10$^{\circ}$S & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+	\textcolor{red}{$\bullet$}
+         & 
+        $\bullet$ & 
+        $\bullet$
+      \\
+      \hline 
+\end{tabular}
+
+  The missing points are treated as if they did not exist, as shown
+  in the following:
+
+    \begin{tabular}{|lrl|cccccc|}
+      \hline 
+         & 
+         & 
+        column & 
+        0 & 
+        1 & 
+	\textcolor{green}{1.6}
+         & 
+        2 & 
+        3 & 
+        4
+      \\
+         & 
+         & 
+        longitude & 
+        30$^{\circ}$E & 
+        40$^{\circ}$E & 
+	\textcolor{green}{52$^{\circ}$E}
+         & 
+        60$^{\circ}$E & 
+        65$^{\circ}$E & 
+        75$^{\circ}$E
+      \\
+        row & 
+        latitude
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+         & 
+      \\
+      \hline 
+        0 & 
+        30$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+	& 
+        $\bullet$
+      \\
+        1 & 
+        25$^{\circ}$N & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+        $\bullet$ 
+      \\
+        2 & 
+        10$^{\circ}$N & 
+         & 
+         & 
+        $\bullet$ & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+      \\
+	\textcolor{green}{2.1}
+         & 
+	\textcolor{green}{8$^{\circ}$N}
+         & 
+         & 
+         & 
+         & 
+\textcolor{green}{$\bullet$}
+         & 
+         & 
+         & 
+      \\
+        3 & 
+        10$^{\circ}$S & 
+         & 
+        $\bullet$ & 
+        $\bullet$ & 
+         & 
+         & 
+        $\bullet$ & 
+        $\bullet$
+      \\
+      \hline 
+\end{tabular}
+
+It would be possible to represent scattered data by a grid with
+  many missing points. In the extreme, each scattered point would have
+  its own row and its own column. There would be only one non-missing
+  point in each row. There would be only one non-missing point in each
+  column. Of course this would be very inefficient for a matrix of
+  significant size.
+
+\subsection{Processing Scattered Data}
+    \label{grid-Scattered}
+
+Function 
+{\texttt{scattered2grid} } interpolates scattered data onto a grid.
+See section
+  \ref{nap-function-lib-scattered2grid}
+for details.

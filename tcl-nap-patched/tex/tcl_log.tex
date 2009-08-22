@@ -1,0 +1,289 @@
+%  $Id: tcl_log.tex,v 1.8 2006/09/20 08:48:49 dav480 Exp $ 
+    % Simple Tcl/Tk
+
+\section{Demonstration of Simple Tcl/Tk}
+
+\subsection{Introduction}
+    \label{Introduction}
+
+The following are logs of demonstrations of simple 
+  \emph{Tcl/Tk} (excluding Nap). These can be used as a starting
+  point from which to explore the system.
+
+\subsection{First Look at Tcl}
+    \label{tcl1}
+
+The following demonstrates Tcl syntax, variables and the
+  following commands:
+\begin{bullets}
+    \item 
+    \texttt{expr} (arithmetic)
+    \item 
+    \texttt{set} (setting and displaying variables)
+    \item 
+    \texttt{puts} (output)
+    \item 
+    \texttt{for} (looping)
+\end{bullets}
+  \begin{verbatim}
+% expr 3.1416 * 10 * 10
+314.16
+% set pi 3.1416
+3.1416
+% set pi
+3.1416
+% set r 10
+10
+% expr $pi * $r * $r
+314.16
+% set area [expr $pi * $r * $r]
+314.16
+% puts "circle of radius $r has area $area"
+circle of radius 10 has area 314.16
+% puts "circle of radius $r has area [expr $pi * $r * $r]"
+circle of radius 10 has area 314.16
+% for {set r 4} {$r < 5.1} {set r [expr $r + 0.2]} {
+puts "circle of radius $r has area [expr $pi * $r * $r]"
+}
+circle of radius 4 has area 50.2656
+circle of radius 4.2 has area 55.417824
+circle of radius 4.4 has area 60.821376
+circle of radius 4.6 has area 66.476256
+circle of radius 4.8 has area 72.382464
+circle of radius 5.0 has area 78.54
+\end{verbatim}
+
+\subsection{First Look at Tk}
+    \label{tcl-log-tk1}
+
+Tcl was designed to be extended. One of the first extensions was
+  \emph{Tk}, which provides a toolkit for building GUIs (Graphical
+  User Interfaces).
+  
+
+The following demonstration is intended to provide just a hint of
+  the nature of Tk. It displays two buttons which can be pressed to
+  execute simple commands.
+  \begin{verbatim}
+% button .hello -text "press me" -command {puts "Hello world"}
+.hello
+% pack .hello
+Hello world
+% button .beep -text beep -command bell
+.beep
+% pack .beep
+\end{verbatim}
+
+\subsection{Syntax of Tcl}
+    \label{tcl-log-syntax}
+
+The syntax of Tcl is based on the following 
+  \emph{metacharacters} (characters treated in special ways):
+  \\
+  \texttt{; \# \$ " $\backslash$ \{\} []}
+  \\Note that the following are 
+  \emph{not} metacharacters:
+  \\
+  \texttt{' * ()}
+  \begin{verbatim}
+% set s1 the; set s2 "This is $s1"; set s3 {end of it all.}
+end of it all.
+% puts "$s2$s3"
+This is theend of it all.
+% puts "${s1}2"; # Braces around name are needed when next char could be part of name
+the2
+% puts \
+"$s2 $s3"
+This is the end of it all.
+% puts "$s2
+$s3"
+This is the
+end of it all.
+% puts "$s2\
+$s3"
+This is the end of it all.
+% puts \
+"$s2\n$s3"
+This is the
+end of it all.
+% # This is a comment
+% set s1; # Value of s1
+the
+% # Character # is only special at start:
+% puts #
+#
+% puts [expr [string length $s2] + 1 + [string length $s3]]
+26
+% unset s1
+% set s1
+can't read "s1": no such variable
+% puts [expr "2 + 2"]
+4
+\end{verbatim}
+
+\subsection{Lists and Strings}
+    \label{tcl-log-lists-strings}
+
+Tcl is a 
+  \emph{text-oriented} language in which text can be treated as
+  either a single 
+  \emph{string} or a 
+  \emph{list} of elements. A sentence is a simple 
+  \emph{list} of words separated by white-space. An element of a list
+  can itself be a list.
+  \begin{verbatim}
+% set names "Bill Jan Harry"; # Simple list of 3 words
+Bill Jan Harry
+% lindex $names 0
+Bill
+% lindex $names 2
+Harry
+% lsort $names
+Bill Harry Jan
+% foreach name $names {puts "'$name' has [string length $name] letters"}
+'Bill' has 4 letters
+'Jan' has 3 letters
+'Harry' has 5 letters
+% set names {{Bill Jones} {Jan Smith} {Harry Brown}}; # list of lists
+{Bill Jones} {Jan Smith} {Harry Brown}
+% foreach name $names {puts "'$name' has [string length $name] letters"}
+'Bill Jones' has 10 letters
+'Jan Smith' has 9 letters
+'Harry Brown' has 11 letters
+% string toupper $names
+{BILL JONES} {JAN SMITH} {HARRY BROWN}
+% string map {i a rr r} $names; # change "i" to "a", "rr" to "r"
+{Ball Jones} {Jan Smath} {Hary Brown}
+% string index hello 0
+h
+% string index hello 4
+o
+% foreach name $names {puts "[lindex $name 1], [lindex $name 0]"}
+Jones, Bill
+Smith, Jan
+Brown, Harry
+% foreach name $names {
+    foreach word $name {
+       puts -nonewline [string index $word 0]
+    }
+    puts ""
+}
+BJ
+JS
+HB
+\end{verbatim}
+
+\subsection{File Input and Output}
+    \label{tcl-log-file}
+
+The following commands are demonstrated in the following log:
+\begin{bullets}
+    \item 
+      \texttt{open}
+    \item 
+      \texttt{close}
+    \item 
+    \texttt{puts} (Write to file or screen)
+    \item 
+    \texttt{gets} (Read from file)
+    \item 
+    \texttt{format} (Controlled conversion of values to text)
+    \item 
+    \texttt{glob} (List of files matching pattern)
+\end{bullets}
+\begin{verbatim}
+% # Write file containing height and width on each line
+% set lines {{2 4} {1 1} {9 3}}
+{2 4} {1 1} {9 3}
+% set f [open hw.txt w]; # open file for writing
+filee1c290
+% foreach line $lines {puts $f $line}
+% close $f
+% 
+% # Read this file and display: height, width, area of rectangle
+% set f [open hw.txt]; # open file for reading
+filee1cd80
+% while {[gets $f line] >= 0} {
+     set h [lindex $line 0]
+     set w [lindex $line 1]
+     puts "$h $w [expr $h * $w]"
+}
+2 4 8
+1 1 1
+9 3 27
+% close $f
+% 
+% format {%s is %5.2f} {my age} 60.127
+my age is 60.13
+% format {%s is %8.1f} {my age} 60.127
+my age is     60.1
+%
+% # For files *.txt: Display lines containing "if"
+% foreach file [glob *.txt] {
+     set f [open $file]
+     while {[gets $f line] >= 0} {
+         if {[string match {*if*} $line]} {puts "$file $line"}
+     }
+}
+\end{verbatim}
+
+\subsection{Procedures and Control Structures}
+    \label{tcl-log-control}
+
+The following shows how the 
+  \texttt{proc} command can be used to define a procedure and thus
+  a new command. It also illustrates the control-structure commands 
+  \texttt{if}, 
+  \texttt{for} and 
+  \texttt{foreach}.
+  \begin{verbatim}
+% proc initials words {
+    foreach word $words {append result [string index $word 0]}
+    return $result
+}
+% initials {Bill Harry Jan}
+BHJ
+% 
+% # arithmetic progression
+% proc ap {
+     from
+     to
+     {step 1}
+} {
+     for {set next $from} {$next <= $to} {set next [expr $next + $step]} {
+         lappend result $next
+     }
+     return $result
+}
+% ap 1 9 2
+1 3 5 7 9
+% ap 1 9
+1 2 3 4 5 6 7 8 9
+% ap 0 3 0.5
+0 0.5 1.0 1.5 2.0 2.5 3.0
+% foreach r [ap 1 9 2] {puts "square of $r is [expr $r * $r]"}
+square of 1 is 1
+square of 3 is 9
+square of 5 is 25
+square of 7 is 49
+square of 9 is 81
+% 
+% # Define factorial using recursion
+% proc factorial n {
+     if {$n > 1} {
+         return [expr $n * [factorial [expr $n - 1]]]
+     } else {
+         return 1
+     }
+}
+% factorial 3
+6
+% foreach i [ap 0 5] {puts "$i [factorial $i]"}
+0 1
+1 1
+2 2
+3 6
+4 24
+5 120
+\end{verbatim}
+

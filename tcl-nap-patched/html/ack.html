@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: ack.html,v 1.9 2006/02/07 06:35:08 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Acknowledgments</title>
+  </head>
+  <body>
+  <center>
+    <h2>Acknowledgments</h2>
+  </center>Ken Iverson (who died in 2004) is the father of array
+  processing. NAP does not use the radical mathematical conventions of
+  his languages 
+  <a href="http://www.acm.org/sigapl/">APL</a>, and 
+  <a href="http://www.jsoftware.com/">J</a>, but he must be
+  acknowledged as the source of the fundamental concepts upon which NAP
+  is based. NAP has also adopted various J conventions such as that for
+  floating-point constants (e.g. allowing 0.5 to be written in rational
+  form as 
+  <code>1r2</code> and allowing powers of &#960; as in 
+  <code>1p1</code>).
+  <p>NAP would never have happened if the author (Harvey Davies) had
+  not worked with Rhys Francis and Ian Mathieson on development of the
+  data-parallel modelling language 
+  <em>DPML</em> and learned from them things like 
+  <em>yacc</em>. This project met a premature death but we did learn a
+  lot. It is hoped to implement unit calculus (automatic unit
+  conversion and definition) in NAP as was done in DPML.</p>
+  <p>The other strong influence on NAP was 
+  <a href="http://www.unidata.ucar.edu/packages/netcdf/index.html">netCDF</a>.
+  It is amazing that a portable array file format did not exist until
+  Russ Rew and the late Glenn Davis developed netCDF in the early
+  1990s. This work was based on 
+  <a href="http://nssdc.gsfc.nasa.gov/cdf/cdf_home.html">CDF</a>, which
+  was developed by Michael Gough and Lloyd Treinish. NAP is designed to
+  read and write netCDF (and the similar 
+  <a href="http://hdf.ncsa.uiuc.edu">HDF</a>) files and stores data in
+  memory in stuctures called 
+  <em>NAOs</em>, which have similar properties to netCDF variables.</p>
+  <p>Peter Turner (now with CSIRO Marine Research) made significant
+  contributions to the NAP code. He wrote the C code for:</p>
+  <ul>
+    <li>NAO photo-image handler</li>
+    <li>
+    <em>draw</em> and 
+    <em>fill</em> OOC methods</li>
+    <li>morphological functions (moving_range, dilate, erode)</li>
+  </ul>He also made significant contributions to the following Tcl
+  library files:
+  <ul>
+    <li>
+      <code>browse_var.tcl</code>
+    </li>
+    <li>
+      <code>caps_nap_menu.html</code>
+    </li>
+    <li>
+      <code>colour.tcl</code>
+    </li>
+    <li>
+      <code>hdf.tcl</code>
+    </li>
+    <li>
+      <code>pal.tcl</code>
+    </li>
+    <li>
+      <code>plot_nao.tcl</code>
+    </li>
+    <li>
+      <code>proc_lib.tcl</code>
+    </li>
+  </ul>
+  <p>The 
+  <a href="land_flag.html"> <code>nap_land_flag</code> </a> command is based on code which was originally written by Dr.
+  Chris. Mutlow at the Rutherford Appleton Laboratory in England. This
+  code has been adapted for NAP by Peter Turner and Harvey Davies.</p>
+  <p>Past and present members of The CAPS development group (Ian Grant,
+  Edward King, Jenny Lovell, Paul Tildesley, Peter Turner and Chris
+  Rathbone) have provided ideas, support and feedback over the years.
+  Mark Collier and Janice Bathols were early users of NAP for
+  processing results from atmospheric modelling. Their success and
+  enthusiasm has has done a great deal to convert others to 
+  <em>napism</em>. Paul Durack produced the PDF version of the
+  User&#39;s Guide.</p>
+  <p>Dr Takeshi Enomoto, Earth Simulator Center, maintains the 
+  <a href="http://fink.sourceforge.net/pdb/package.php/nap">nap Fink site</a>, which provides distributions for the 
+  <em>Mac OS X</em> and 
+  <em>Darwin</em> platforms.</p>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2005, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: ack.html,v 1.6 2005/08/04
+          05:32:24 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

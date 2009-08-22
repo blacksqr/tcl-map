@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: writing_procs.html,v 1.9 2006/02/08 06:00:01 dav480 Exp $ -->
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for Windows (vers 1 September 2005), see www.w3.org" />
+    <title>Writing Procedures</title>
+  </head>
+  <body>
+  <center>
+    <h2>Writing Procedures to be called as Commands or Functions</h2>
+  </center>
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>
+      <a href="#Introduction">Introduction</a>
+    </li>
+    <li>
+      <a href="#Command_or_Function">Command or Function?</a>
+    </li>
+    <li>
+      <a href="#Function">Writing a Procedure to be called as a
+      Function</a>
+      <ol>
+        <li>
+          <a href="#sind">Function 
+          <code>sind</code></a>
+        </li>
+        <li>
+          <a href="#lam">Function 
+          <code>lam</code></a>
+        </li>
+        <li>
+          <a href="#get_bin">Function 
+          <code>get_bin</code></a>
+        </li>
+        <li>
+          <a href="#fact">Function 
+          <code>fact</code></a>
+        </li>
+        <li>
+          <a href="#factorial">Function 
+          <code>factorial</code></a>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <a href="#How">How NAP Functions Work</a>
+    </li>
+    <li>
+      <a href="#Command">Writing a Procedure to be called as a
+      Command</a>
+      <ol>
+        <li>
+          <a href="#write_expr">Command 
+          <code>write_expr</code></a>
+        </li>
+        <li>
+          <a href="#get_binary">Command 
+          <code>get_binary</code></a>
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <h3>
+    <a name="Introduction">Introduction</a>
+  </h3>One can write a Tcl procedure which defines a new NAP function
+  or replaces a built-in NAP function. Of course it is also possible to
+  write a Tcl procedure which is called in the normal Tcl manner (as a
+  Tcl command) to do something related to NAP.
+  <p>The following sections include various examples of procedure
+  definition directly from the command-line. Of course in practice one
+  would normally create such code in files, which would be sourced.</p>
+  <p>Tcl has facilities for automatically defining undefined commands
+  when an attempt is made to execute them. In particular, the array 
+  <code>auto_index</code> contains the commands to define indexed
+  commands.</p>
+  <p>Users with small libraries of their own procedures may prefer to
+  simply source the relevant files as part of Tcl startup. The startup
+  files distributed with NAP automatically source any file called 
+  <code>my.tcl</code> in the home directory. This file can contain 
+  <code>source</code> commands to define one&#39;s own procedures.</p>
+  <h3>
+    <a name="Command_or_Function">Command or Function?</a>
+  </h3>Before writing a procedure to perform some NAP task, one needs
+  to decide whether it is to be called as a command or as a function.
+  The first question to ask is &quot;Is the sole purpose to define a
+  NAO?&quot;. If the answer is &quot;no&quot; then it should be a
+  command. If the answer is &quot;yes&quot; then it should probably be
+  a function, provided the arguments are not too complex. If there are
+  many optional string arguments then a command would probably be
+  better. Such a command can be called from within a NAP expression
+  using the Tcl bracket 
+  <code>[]</code> facility.
+  <h3>
+    <a name="Function">Writing a Procedure to be called as a Function</a>
+  </h3>The following examples comprise a variety of function
+  definitions starting from the simplest imaginable and ending with
+  some sophistication.
+  <h4>
+    <a name="sind">Function <code>sind</code></a>
+  </h4>Let&#39;s begin with a simple function defined by a simple
+  expression with one argument. How about the sine of an angle in
+  degrees? Let&#39;s call it &quot;<code>sind</code>&quot;. The procedure can be defined on one line as
+  follows:
+  <pre>
+% proc sind degrees {nap &quot;sin(1r180p * degrees)&quot;}
+</pre>
+Note that &quot;<code>1r180p</code>&quot; is the constant &#960;/180. Now let&#39;s
+  test function &quot;<code>sind</code>&quot;:
+  <pre>
+% nap &quot;x = 0 .. 180 ... 30&quot;
+::NAP::76-76
+% nap &quot;y = sind x&quot;
+::NAP::83-83
+% [nap &quot;transpose(x /// y)&quot;]
+            0             0
+           30           0.5
+           60     0.8660254
+           90             1
+          120     0.8660254
+          150           0.5
+          180  1.224606e-16
+</pre>
+  <h4>
+    <a name="lam">Function <code>lam</code></a>
+  </h4>
+  <p>Now let&#39;s define a function (with two arguments x and y)
+  defined by the above expression
+  <br />&quot;<code>transpose(x /// y)</code>&quot;.
+  <br />This is the transpose of the 
+  <em>laminated</em> arguments, so let&#39;s call it &quot;<code>lam</code>&quot;.</p>
+  <pre>
+% proc lam {
+    x
+    y
+} {
+    nap &quot;z = x /// y&quot;
+    nap &quot;transpose z&quot;
+}
+</pre>
+There are two lines in the body of this procedure. The result of
+the final line defines the result of the function. Testing:
+  <pre>
+% [nap &quot;lam(x,y)&quot;]
+            0             0
+           30           0.5
+           60     0.8660254
+           90             1
+          120     0.8660254
+          150           0.5
+          180  1.224606e-16
+</pre>
+  <h4>
+    <a name="get_bin">Function <code>get_bin</code></a>
+  </h4>
+  <p>Now let&#39;s define a function &quot;<code>get_bin</code>&quot; for binary input using the &quot;<code>nap_get</code>&quot; command:</p>
+  <pre>
+% proc get_bin {
+    filename
+    {datatype {&#39;f32&#39;}}
+    {swap 0}
+} {
+    # convert all arguments to strings
+    set filename [[nap &quot;filename&quot;]]
+    set datatype [[nap &quot;datatype&quot;]]
+    set swap     [[nap &quot;swap&quot;]]
+    set channel [open $filename]
+    nap &quot;in = [nap_get [lindex {binary swap} $swap] $channel $datatype]&quot;
+    close $channel
+    nap &quot;in&quot;; # Define result
+}
+</pre>
+Note that the arguments &quot;<code>datatype</code>&quot; and &quot;<code>swap</code>&quot; have default values. Also note how all three
+  arguments are converted from NAP expressions to Tcl strings.
+  <p>Now let&#39;s test it. The following uses the OOC 
+  <code>binary</code> method to write six 
+  <code>f64</code> values to the file &quot;<code>double.dat</code>&quot;. Then this file is read using function
+  &quot;<code>get_bin</code>&quot;.</p>
+  <pre>
+% set file [open double.dat w]
+filee1eb10
+% [nap &quot;{1.5 -3 0 2 4 5}&quot;] binary $file
+% close $file
+% nap &quot;x = get_bin(&#39;double.dat&#39;, &#39;f64&#39;)&quot;
+::NAP::27-27
+% $x all
+::NAP::27-27  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+</pre>
+  <h4>
+    <a name="fact">Function <code>fact</code></a>
+  </h4>
+  <p>Now let&#39;s define a factorial function called &quot;<code>fact</code>&quot;. Of course we cannot resist the temptation to
+  use recursion:</p>
+  <pre>
+% proc fact n {
+    if {[$n] &gt; 1} {
+        nap &quot;n * fact(n-1)&quot;
+    } else {
+        nap &quot;1&quot;
+    }
+}
+</pre>
+This works fine for scalar arguments:
+  <pre>
+% [nap &quot;fact 4&quot;]
+24
+% [nap &quot;fact 1&quot;]
+1
+% [nap &quot;fact 0&quot;]
+1
+</pre>
+But the following shows that it fails for a vector argument!
+  <pre>
+% [nap &quot;fact {0 1 4 6}&quot;]
+1
+</pre>
+  <h4>
+    <a name="factorial">Function <code>factorial</code></a>
+  </h4>
+  <p>One can define a proper elemental factorial function as
+  follows:</p>
+  <pre>
+% proc factorial n {
+    if {[[nap &quot;max(reshape(n)) &gt; 1&quot;]]} {
+        nap &quot;n &gt; 1 ? n * factorial(n-1) : 1&quot;
+    } else {
+        nap &quot;1&quot;
+    }
+}
+% [nap &quot;factorial {0 1 4 6}&quot;]
+1 1 24 720
+</pre>
+Note the double brackets in the if command. The inner brackets
+produce an OOC-name. The outer brackets execute this OOC to produce the
+string &quot;<code>0</code>&quot; or &quot;<code>1</code>&quot;.
+  <h3>
+    <a name="How">How NAP Functions Work</a>
+  </h3>As an example, consider the expression &quot;<code>a(b)</code>&quot;, which is of course equivalent to &quot;<code>a b</code>&quot;. NAP checks whether &quot;<code>a</code>&quot; is a Tcl variable. If not, it is assumed to be a
+  function. In this case NAP first looks for a Tcl procedure called
+  &quot;<code>::NAP::a</code>.&quot; If this does not exist then NAP looks
+  for a built-in NAP function called &quot;<code>a</code>&quot;. If this does not exist then NAP looks for a Tcl
+  procedure called &quot;<code>a</code>&quot;.
+  <p>The following example shows that a procedure with the global name
+  &quot;<code>sin</code>&quot; does not override the built-in function with
+  that name, whereas defining it within the NAP namespace &quot;<code>::NAP::</code>&quot; does override:</p>
+  <pre>
+% proc sin x {nap &quot;2*x&quot;}
+% [nap &quot;sin 1&quot;]
+0.841471
+% proc ::NAP::sin x {nap &quot;2*x&quot;}
+% [nap &quot;sin 1&quot;]
+2
+</pre>
+  <p>It is possible to call some procedures as either functions or
+  commands. The following example defines and uses the same function
+  &quot;<code>sind</code>&quot; defined above:</p>
+  <pre>
+% proc sind degrees {nap &quot;sin(1r180p * degrees)&quot;}
+% [nap &quot;sind 30&quot;]; # call as function
+0.5
+% nap &quot;s = [sind 30]&quot;; # call as command within NAP
+expression
+::NAP::80-80
+% $s
+0.5
+% [sind 30] all; # call as direct OOC
+::NAP::86-86  f64  MissingValue: NaN  References: 0
+Value:
+0.5
+</pre>
+  <p>But there is a problem calling procedures as commands if the
+  result is referenced by a variable which is local to the procedure.
+  At the end of the procedure Tcl deletes such local variables. This
+  causes the referenced NAOs to be deleted. For example we could
+  redefine function &quot;<code>sind</code>&quot; as follows:</p>
+  <pre>
+% proc sind degrees {
+    nap &quot;result = sin(1r180p * degrees)&quot;
+    nap &quot;result&quot;
+}
+% [nap &quot;sind 30&quot;]
+0.5
+% [sind 30]
+invalid command name &quot;::NAP::32-32&quot;
+</pre>
+  <p>Note that the call as a function still worked but not the call as
+  a command. NAP operates in a special mode while executing a procedure
+  called as a function. The deletion of NAOs referenced by local
+  variables is delayed until after the result has been saved. This is
+  one advantage of calling procedures as functions rather than
+  commands.</p>
+  <h3>
+    <a name="Command">Writing a Procedure to be called as a Command</a>
+  </h3>
+  <h4>
+    <a name="write_expr">Command <code>write_expr</code></a>
+  </h4>First let&#39;s define a procedure whose Tcl result is empty and
+  of no interest. It is obvious that such a procedure cannot be called
+  as a function. The purpose of the procedure is to write to a text
+  file the result of a NAP expression, which can of course contain
+  variables and therefore must be executed in the caller&#39;s
+  namespace. The following defines and tests the procedure:
+  <pre>
+% proc write_expr {
+    expr
+    filename
+} {
+    set channel [open $filename w]
+    puts $channel [[uplevel nap \&quot;$expr\&quot;] value]
+    close $channel
+}
+% nap &quot;to = 5&quot;
+::NAP::52-52
+% write_expr &quot;1 .. to /// {0 7}&quot; matrix.txt
+% cat matrix.txt; # display contents of file &#39;matrix.txt&#39;
+1 2 3 4 5
+0 7 0 7 0
+</pre>
+  <h4>
+    <a name="get_binary">Command <code>get_binary</code></a>
+  </h4>
+  <p>Next let&#39;s define a procedure called &quot;<code>get_binary</code>&quot; which is intended to be called as a
+  command, but does essentially the same thing as the above function
+  &quot;<code>get_bin</code>&quot;. This will help us to compare the two
+  techniques in a situation where each has some advantages and some
+  disadvantages. We assume the file &quot;<code>double.dat</code>&quot; still exists. The following example
+  defines and tests procedure &quot;<code>get_binary</code>&quot;:</p>
+  <pre>
+% proc get_binary {
+    filename
+    {datatype f32}
+    {swap 0}
+} {
+    set channel [open $filename]
+    nap &quot;in = [nap_get [lindex {binary swap} $swap] $channel $datatype]&quot;
+    close $channel
+    nap &quot;+in&quot;; # Define result as copy of &#39;in&#39; to
+prevent premature deletion
+}
+% nap &quot;x = [get_binary double.dat f64]&quot;
+::NAP::63-63
+% $x all
+::NAP::63-63  f64  MissingValue: NaN  References: 1
+Dimension 0   Size: 6      Name: (NULL)    Coordinate-variable: (NULL)
+Value:
+1.5 -3 0 2 4 5
+</pre>
+Note that &quot;<code>get_binary</code>&quot; is simpler to define and simpler to use
+  than &quot;<code>get_bin</code>&quot;. The main reason for this is the fact that
+  all three arguments are used as strings rather than NAOs. One
+  disadvantage of the command approach is the need to define the result
+  as &quot;<code>+in</code>&quot; rather than simply &quot;<code>in</code>&quot;.
+  <table width="100%" border="0" cellspacing="0" cellpadding="2"
+  bgcolor="#737B9C">
+    <tr>
+      <td align="center">
+        <font color="#FFFFFF" size="-2">
+          <span class="titlebar">
+          <b>Author:</b> 
+          <a href="http://sourceforge.net/users/dav480/">Harvey
+          Davies</a> &#160; &#160; &#160; © 2002, CSIRO Australia.
+          &#160; &#160; &#160; 
+          <a href="http://www.csiro.au/legalnotices/disclaimer.html">Legal
+          Notice and Disclaimer</a>
+          <br />
+          <b>CVS Version Details:</b> $Id: writing_procs.html,v 1.4
+          2005/08/04 05:37:43 dav480 Exp $</span>
+        </font>
+      </td>
+    </tr>
+  </table></body>
+</html>

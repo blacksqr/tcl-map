@@ -1,0 +1,27 @@
+# error.test --
+# 
+# Test error handling
+#
+# Copyright (c) 2005, CSIRO Australia
+# Author: Harvey Davies, CSIRO Atmospheric Research
+# $Id: error.test,v 1.1 2005/06/27 06:52:44 dav480 Exp $
+
+Test nap-60.1 {empty expression} { 
+    set status [catch { nap "" } msg]
+    concat $status [regexp "Nap_SetParseResult: Result undefined" $msg]
+} {1 1}
+
+Test nap-60.2 {ooc illegal method} { 
+    set status [catch {[nap "3"] abc} msg]
+    concat $status [regexp {^bad method "abc": must be all, binary,} $msg]
+} {1 1}
+
+Test nap-60.3 {ooc set illegal option} { 
+    set status [catch {[nap "3"] set abc} msg]
+    concat $status [regexp {^bad option "abc": must be coordinate, count,} $msg]
+} {1 1}
+
+Test nap-60.4 {ooc nap_get binary: non-existent channel} { 
+    set status [catch {nap_get binary abc} msg]
+    concat $status [regexp {^can not find channel named "abc"} $msg]
+} {1 1}

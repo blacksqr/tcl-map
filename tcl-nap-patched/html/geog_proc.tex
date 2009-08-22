@@ -1,0 +1,53 @@
+%  $Id: geog_proc.tex,v 1.2 2006/03/02 03:19:51 dav480 Exp $ 
+    % NAP Library: Geographic Procedures
+    \section{Geographic Procedures}
+
+  \subsection{
+    \label{Introduction}Introduction
+  }
+The following procedures are defined in the file 
+  \texttt{geog.tcl}. Note that there are also 
+  \href{geog.html}{Geographic Functions}.
+  \subsection{
+    \label{put-gridascii}Write \emph{ARC/INFO GRIDASCII} file using \texttt{put\_gridascii}
+  }
+Procedure 
+  \texttt{put\_gridascii} writes a file in ARC/INFO GRIDASCII
+  format. All cells must be squares of the same size. Coordinate
+  variable 0 (usually latitude) can be either ascending or descending.
+  \subsubsection{Usage}
+
+  \texttt{put\_gridascii} $expr$ $filename$ [$missing\_value\_string$]
+  \begin{description}
+    \item[$expr$]
+    NAP expression defining a matrix with coordinate variables (normally latitude and longitude)
+    \item[$filename$]
+    Pathname of the output file
+    \item[$missing\_value\_string$]
+    String representing missing value in file (Default: \texttt{1e9})
+  \end{description}
+  \subsubsection{Example}
+
+  \texttt{\% put\_gridascii mat abc.txt -999}
+  \subsection{
+    \label{put-text-surfer}Write \emph{Surfer} file using \texttt{put\_text\_surfer}
+  }
+Procedure 
+  \texttt{put\_text\_surfer} writes a file in 
+  \emph{Surfer} format. Surfer is a package developed by 
+  \emph{Golden Software}.
+  \subsubsection{Usage}
+
+  \texttt{put\_text\_surfer} $expr$ [$filename$] [$format$]
+  \begin{description}
+    \item[$expr$]
+    NAP expression defining a matrix with coordinate variables
+    \item[$filename$]
+    Pathname of the output file. If none then writes to standard output.
+    \item[$format$]
+    C format specification of each output element (Default: \texttt{"\%g"})
+  \end{description}
+
+  \subsubsection{Example}
+
+  \texttt{\% put\_text\_surfer mat abc.txt \%8.4f}

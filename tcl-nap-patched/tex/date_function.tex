@@ -1,0 +1,373 @@
+%  $Id: date_function.tex,v 1.5 2006/05/05 07:46:14 dav480 Exp $ 
+    % Nap Library: date.tcl functions
+
+\section{Functions for Dates and Times}
+    \label{date-function}
+
+\subsection{Introduction}
+        \label{date-function-Introduction}
+
+The calendar commonly used in the modern world is the 
+      \href{http://scienceworld.wolfram.com/astronomy/GregorianCalendar.html}{ Gregorian Calendar} introduced by Pope Gregory XIII in 1582.
+      Years divisible by 400 (e.g. 1600, 2000) are leap years but other
+      years divisible by 100 (e.g. 1800, 1900) are not. The Gregorian
+      Calendar replaced the 
+      \href{http://scienceworld.wolfram.com/astronomy/JulianCalendar.html}{ Julian Calendar} introduced by Julius Caesar in 46 BC.
+      
+
+A 
+      \emph{date} is defined by a 
+      \emph{year} (AD for these functions), a 
+      \emph{month-of-year} and a 
+      \emph{day-of-month}. The following are examples of date
+      problems:
+      \\How many days are there between two specified dates?
+      \\What is the date 
+      $n$ days after a specified date?
+      \\What day of the week corresponds to a specified date?
+      \\Such problems can be solved by converting both ways between
+      dates and the (integer) number of days since some fixed date.
+      
+
+Let us call a combination of date and time of day a 
+      \emph{date/time}. The following are examples of date/time
+      problems:
+      \\How many seconds are there between two specified
+      date/times?
+      \\What is the date/time 
+      $t$ seconds after a specified date/time?
+      \\Such problems can be solved by converting both ways between
+      date/time and the time (as a real number of say days or seconds)
+      since some fixed date/time.
+      
+
+The XXIIIrd International Astronomical Union General Assembly
+      (1997) 
+      \href{http://www.iers.org/iers/earth/resolutions/UAI-b1.html}{Resolution B1} recommends and defines (using different wording) the
+      following terms:
+      \begin{description}
+        \item[Julian Day Number (JDN)]
+        integer assigned to a solar day, counting from 0 assigned
+        to the day starting at noon 
+        \href{http://tycho.usno.navy.mil/systime.html}{UTC} on
+        1st January 4713 BC (Julian Calendar).
+        \item[Julian Date (JD)]
+        JDN plus the fraction of the day since the preceding noon
+        UTC.
+        \item[Modified Julian Date (MJD)]
+        time (in days) since 0000 hours UTC on 17th November 1858.
+        \\MJD = JD $-$ 2400000.5.
+      \end{description}
+      
+
+This astronomical definition of JDN can be relaxed for civil
+      date calculations. Here one simply requires a way to associate a
+      date with an integer. So the JDN can be used for civil dates
+      commencing at local midnight. Alternatively, one can use the MJD
+      corresponding to the preceding midnight. There is a difference of
+      2400001 between these integer JDN and MJD values used to identify
+      entire days (see example below). Current dates correspond to a
+      7-digit JDN, as shown in the examples below.
+
+The file 
+      \texttt{date.tcl} defines the four functions 
+      \texttt{date2jdn}, 
+      \texttt{jdn2date}, 
+      \texttt{dateTime2mjd} and 
+      \texttt{mjd2dateTime}. These are valid for all Gregorian
+      dates from 1st January, 1 AD. The file 
+      \texttt{date.tcl} also defines the two formatting procedures 
+\texttt{format\_jdn} (see section \ref{date-proc-format-jdn})
+and 
+\texttt{format\_mjd} (see section \ref{date-proc-format-mjd}).
+      
+
+Function 
+      \texttt{date2jdn} converts Gregorian dates to JDNs.
+      \\Function 
+      \texttt{jdn2date} converts JDNs to Gregorian dates.
+      
+
+Function 
+      \texttt{dateTime2mjd} converts Gregorian date/times to MJDs.
+      \\Function 
+      \texttt{mjd2dateTime} converts MJDs to Gregorian date/times.
+      \\Double-precision (64-bit) floating point gives accuracy of
+      about a microsecond for years around 2000 AD.
+      
+
+These functions do not the handle the 
+      \href{http://tycho.usno.navy.mil/leapsec.html}{leap seconds} that occur in 
+      \href{http://tycho.usno.navy.mil/systime.html}{UTC}. These
+      functions simply assume that each day contains exactly 86400
+      seconds (as in 
+      \href{http://tycho.usno.navy.mil/systime.html}{UT1}). This
+      can cause errors of several seconds in UTC time differences. This
+      problem can be solved using a table of leap seconds such as that
+      at the end of 
+      \href{http://www.iers.org/iers/earth/resolutions/UAI-b1.html}{Resolution B1}.
+
+\subsection{Dates and Julian Day Numbers (JDNs)}
+        \label{date-function-jdn}
+
+\subsubsection{\texttt{date2jdn(}$ymd$\texttt{)}}
+        \label{date-function-date2jdn} 
+
+This returns the JDNs of the specified Gregorian dates. The
+      unit is set to 
+      \texttt{JDN}.
+      
+
+The argument 
+      $ymd$ is an array whose final dimension has the size 3.
+      \\Column 0 contains the year AD (positive integer).
+      \\Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...).
+      \\Column 2 contains the day of month (0 to 31). Final example
+      below illustrates 0.
+      
+
+Examples:
+      \begin{verbatim}
+% [nap "date2jdn{1997 3 21}"] all; # 21st March, 1997. Note unit
+::NAP::112-112  i32  MissingValue: -2147483648  References: 0  Unit: JDN
+Value:
+2450529
+% [nap "date2jdn{1 1 1}"]; # 1st January, 1 AD
+1721426
+% [nap "date2jdn{1858 11 16}"]; # 16th November, 1858 AD
+2400000
+% [nap "date2jdn{{1997 2 28}{1997 3 1}}"]; # 28th February and 1st March, 1997
+2450508 2450509
+% [nap "date2jdn{{2004 8 31}{2004 9 0}}"]; # Both 31st August 2004
+2453249 2453249
+\end{verbatim}
+
+The following example calculates the day of the week for the
+      first ten days of September 2004:
+      \begin{verbatim}
+% [nap "ymd = transpose(2004 // (9 /// 1 .. 10))"]; # 1st to 10th Sept 2004
+2004    9    1
+2004    9    2
+2004    9    3
+2004    9    4
+2004    9    5
+2004    9    6
+2004    9    7
+2004    9    8
+2004    9    9
+2004    9   10
+% [nap "date2jdn(ymd) % 7"] value; # 0 = Mon, 1 = Tue, 2 = Wed, ..., 6 = Sun
+2 3 4 5 6 0 1 2 3 4
+% [nap "1 + date2jdn(ymd) % 7"] value; # 1 = Mon, 2 = Tue, ..., 7 = Sun
+3 4 5 6 7 1 2 3 4 5
+% [nap "1 + (1 + date2jdn(ymd)) % 7"] value; # 1 = Sun, 2 = Mon, ..., 7 = Sat
+4 5 6 7 1 2 3 4 5 6
+\end{verbatim}
+
+\subsubsection{\texttt{jdn2date(}$jdn$\texttt{)}}
+        \label{date-function-jdn2date} 
+
+This is the inverse of function 
+      \texttt{date2jdn} above. It converts JDNs to Gregorian dates.
+      The argument 
+      $jdn$ is an array of JDNs. The shape of the result is
+      \\
+      \texttt{shape($jdn$) // 3}
+      \\where the final dimension (3) corresponds to year, month,
+      day. The result is \{\_ \_ \_\} for any date prior to 1st January, 1
+      AD (JDN = 1721426).
+      
+
+The following examples are the inverses of the first four
+      examples above for 
+      \texttt{date2jdn}:
+      \begin{verbatim}
+% [nap "jdn2date(1721426)"]
+1 1 1
+% [nap "jdn2date(2400000)"]
+1858 11 16
+% [nap "jdn2date(2450529)"]
+1997 3 21
+% [nap "jdn2date{2450508 2450509}"]
+1997    2   28
+1997    3    1
+\end{verbatim}
+
+\subsection{Date/Times and Modified Julian Dates (MJDs)}
+        \label{date-function-mjd}
+
+\subsubsection{\texttt{dateTime2mjd(}$ymdhms$\texttt{)}}
+    \label{date-function-dateTime2mjd}
+
+This returns the MJDs corresponding to the specified
+      Gregorian date/times. The unit is set to 
+      \texttt{MJD}.
+      
+
+The argument 
+      $ymdhms$ is an array whose final dimension has a size
+      from 1 to 6.
+      \\Column 0 contains the year AD (positive integer)
+      \\Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...) (Default: 1)
+      \\Column 2 contains the day of month (0 to 31) (0: day before
+      1st) (Default: 1)
+      \\Column 3 contains the hour of day (0 to 23) (default: 0)
+      \\Column 4 contains the minute of hour (0 to 59) (default: 0)
+      \\Column 5 contains the (possibly fractional) second of
+      minute (0 to 60) (default: 0)
+      
+
+Examples:
+      \begin{verbatim}
+% [nap "dateTime2mjd{2004 8 16 14 39 59.5}"] all -f %.7f
+::NAP::525-525  f64  MissingValue: NaN  References: 0  Unit: MJD
+Value:
+53233.6111053
+% [nap "dateTime2mjd{
+{1858 11 16}
+{1858 11 17}
+{1858 11 18}
+}"]
+-1 0 1
+% [nap "dateTime2mjd{1 1 1}"];# 1st Jan 0001 AD
+-678575
+% [nap "dateTime2mjd{2000 1 0 12}"]; # 1200 hours, 31st December 1999
+51543.5
+# The following gives the difference between the JDN and MJD for a date
+% [nap "date2jdn{2004 8 16} - dateTime2mjd{2004 8 16}"] -f %d
+2400001
+\end{verbatim}
+
+\subsubsection{\texttt{mjd2dateTime(}$mjd$[\texttt{,} $delta$]\texttt{)}}
+        \label{date-function-mjd2dateTime}
+
+This is the inverse of function 
+      \texttt{dateTime2mjd} above. It converts MJDs to Gregorian
+      date/times.
+      
+
+The argument 
+      $mjd$ is an array of MJDs.
+      
+
+The optional argument 
+      $delta$ controls rounding. The result is rounded to the
+      nearest multiple of 
+      $delta$ seconds. The default value is 1, which rounds to
+      the nearest second. A value of 60 would round to the nearest
+      minute. A value of 1e-3 would round to the nearest
+      millisecond.
+      
+
+The shape of the result is
+      \\
+      \texttt{shape($mjd$) // 6}
+      \\where the final dimension (6) corresponds to year, month,
+      day, hour, minute, second.
+      
+
+The following examples are the inverses of the first three
+      examples for 
+      \texttt{dateTime2mjd}:
+      \begin{verbatim}
+% [nap "mjd2dateTime(53233.6111053, 0.1)"]; # round to multiple of 0.1 seconds
+2004 8 16 14 39 59.5
+% [nap "mjd2dateTime(-1 .. 1)"]
+1858   11   16    0    0    0
+1858   11   17    0    0    0
+1858   11   18    0    0    0
+% [nap "mjd2dateTime(-678575)"];# 1st Jan 0001 AD
+1 1 1 0 0 0
+\end{verbatim}
+
+\subsection{Calendars with Fixed-length Years}
+        \label{date-function-fixed-years}
+
+Computer models (of climate etc.) sometimes use simplified
+      calendars in which every year has the same number of days (e.g.
+      360, 365 or 366). The following two functions 
+      \texttt{dateTime2days} and 
+      \texttt{days2dateTime}, handle such calendars. In each case
+      there is a 12-element vector argument specifying the number of
+      days in each month of the year. Time is measured relative to the
+      start of the base year (year 0) and can be negative.
+
+\subsubsection{\texttt{dateTime2days(}$ymdhms, ndim$\texttt{)}}
+        \label{date-function-dateTime2days} 
+
+This returns the time in days since the start of year 0.
+This function is similar to the above 
+\texttt{dateTime2mjd}
+(see section \ref{date-function-dateTime2mjd})
+except that it uses the unconventional calendar defined by $ndim$.
+
+The argument 
+      $ymdhms$ is an array whose final dimension has a size
+      from 1 to 6.
+      \\Column 0 contains the (possibly negative) integer year
+      relative to year 0
+      \\Column 1 contains the month of year (1 for Jan, 2 for Feb,
+      ...) (Default: 1)
+      \\Column 2 contains the day of month (0 to 31) (0: day before
+      1st) (Default: 1)
+      \\Column 3 contains the hour of day (0 to 23) (default: 0)
+      \\Column 4 contains the minute of hour (0 to 59) (default: 0)
+      \\Column 5 contains the (possibly fractional) second of
+      minute (0 to 60) (default: 0)
+      
+
+The argument 
+      $ndim$ is a 12-element vector giving 
+      \emph{number of days in month}.
+      
+
+Examples:
+      \begin{verbatim}
+% nap "ndim = {31 28 31 30 31 30 31 31 30 31 30 31}"; # number of days in month
+% [nap "dateTime2days({1 1 1 18}, ndim)"]
+365.75
+% [nap "dateTime2days({{1 1 1}{1 4 10}{0 1 1}{-1 1 1}}, ndim)"]
+365 464 0 -365
+\end{verbatim}
+
+\subsubsection{\texttt{days2dateTime(}$days, ndim[, delta]$\texttt{)}}
+    \label{date-function-days2dateTime}
+
+This converts a time (in days since the start of year 0) to a calendar date and time-of-day.
+This function is similar to the above 
+\texttt{mjd2dateTime}
+(see section \ref{date-function-mjd2dateTime})
+except that it uses the unconventional calendar defined by $ndim$.
+
+The argument 
+      $days$ is the (possibly negative) time in days since the
+      start of the year 0.
+
+The argument 
+      $ndim$ is a 12-element vector giving 
+      \emph{number of days in month}.
+      
+
+The optional argument 
+      $delta$ controls rounding. The result is rounded to the
+      nearest multiple of 
+      $delta$ seconds. The default value is 1, which rounds to
+      the nearest second. A value of 60 would round to the nearest
+      minute. A value of 1e-3 would round to the nearest
+      millisecond.
+      
+
+Examples:
+      \begin{verbatim}
+% nap "ndim = {31 28 31 30 31 30 31 31 30 31 30 31}"; # number of days in month
+% [nap "days2dateTime(365.75, ndim)"]
+1 1 1 18 0 0
+% [nap "days2dateTime({365 464 0 -365}, ndim)"]
+ 1  1  1  0  0  0
+ 1  4 10  0  0  0
+ 0  1  1  0  0  0
+-1  1  1  0  0  0
+\end{verbatim}
+
