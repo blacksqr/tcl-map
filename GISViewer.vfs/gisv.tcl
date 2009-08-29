@@ -19,8 +19,8 @@ source [file join $RootDir toolbar.tcl]
 option add *tearOff 0
 
 # Additional global-wide bindings
-bind TScrollbar <Button-4> {ttk::scrollbar::Scroll %W -1 units}
-bind TScrollbar <Button-5> {ttk::scrollbar::Scroll %W 1 units}
+bind TScrollbar <Button-4> {ttk::scrollbar::Scroll %W -10 units}
+bind TScrollbar <Button-5> {ttk::scrollbar::Scroll %W 10 units}
 
 ### Setting up User Interface
 
