@@ -3,10 +3,10 @@ scrollregion on vectors
 #XXX spacial/transformer_lat/long
 #XXX rest_ogr_geometries zoom_bug/scale palette_rendering starpack
 #XXX grab info save read-write toolbar
-# wrapping/reprojection(set spacial data) loadworldfile zoom_limits centered_zoom progressbar_when_opening
-# interpolated-raster-zoom always-centered-map rulers/grid
-# ReadRasterNAP, ExportToList
 # better GetProjections.tcl
+# wrapping/reprojection(set spacial data) loadworldfile always-centered-map zoom_limits centered_zoom progressbar_when_opening
+# rulers/grid
+# ReadRasterNAP, ExportToList interpolated-raster-zoom
 
 # Show/hide layers, hightlight geometries, info for each, set&save colors, etc
 

@@ -48,7 +48,7 @@ toe::class GIScanvas {
                         -takefocus 0 \
                         -xscrollincrement 0 \
                         -yscrollincrement 0 \
-                        -render 0]
+                        -render 1]
         winupdate
 
         bind $Container <Button-4> "[self namespace]::zoom relative [expr {1.0 + $Map(zoomfactor)}] %x %y"
@@ -146,6 +146,7 @@ toe::class GIScanvas {
                 $Container itemconfigure root -visible 1
                 update
             }
+            default {error}
         }
         
         $Container configure -scrollregion [$Container bbox all]
@@ -158,52 +159,114 @@ toe::class GIScanvas {
         .c.map.vbar set {*}[set [self namespace]::tempy]
         .c.map.hbar set {*}[set [self namespace]::tempx]
         $Container configure -yscrollcommand ".c.map.vbar set" -xscrollcommand ".c.map.hbar set"
+        
+        # Center map
+        lassign [$Container tget root "translation"] shiftX shiftY
+        lassign [$Container bbox all] x1 y1 x2 y2
+        set mapwidth [expr {$x2 - $x1}]
+        set mapheight [expr {$y2 - $y1}]
+        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
+        
+        if {$mapwidth < $winwidth} {
+            #set shiftX [expr {($winwidth - $mapwidth) / 2.0}]
+            set shiftX 0
+        }
+        if {$mapheight < $winheight} {
+            #set shiftY [expr {($winheight - $mapheight) / 2.0}]
+            set shiftY 0
+        }
+        
+        $Container translate root $shiftX $shiftY yes
+        
+        #$Container xview moveto 0
+        #$Container yview moveto 0
     }
     
     public method xview {cmd args} {
+        lassign [$Container bbox all] x1 y1 x2 y2
+        set mapwidth [expr {$x2 - $x1}]
+        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
+        lassign [$Container tget root "translation"] shiftX shiftY
+        
         switch -exact -- $cmd {
             "moveto" {
                 set val $args
-
-                lassign [$Container bbox all] x1 y1 x2 y2
-                set width [expr {$x2 - $x1}]
-                lassign [grid bbox $Win(frame)] _ _ w h
-                set val2 [expr {double($w) / $width}]
+                set val2 [expr {double($winwidth) / $mapwidth}]
                 
                 if {$val < 0} {set val 0}
                 if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root [expr {$val * $width * -1}] 0 yes
+                $Container translate root [expr {$val * $mapwidth * -1}] $shiftY yes
                 
                 {*}[$Container cget -xscrollcommand] $val [expr {$val + $val2}]
             }
             "scroll" {
-                lassign $args val units
-                # XXX
+                lassign $args val type
+                if {$type eq "pages"} {
+                    set val [expr {$val * $winwidth}]
+                }
+                
+                set max [expr {$mapwidth - $winwidth}]
+                if {$max < 0} {return} ;# Map is small enough to be displayed in whole; no need of scrolling
+                
+                set val [expr {$shiftX - $val}]
+                if {$val > 0} { set val 0} ;# On the left edge; cannot scroll further
+                
+                if {[expr {abs($val)}] > $max} {
+                    set val [expr {$max * -1}] ;# On the right edge; cannot scroll further
+                }
+                
+                # Move map
+                $Container translate root $val $shiftY yes
+                
+                # Update scrollbars
+                set val2 [expr {double(abs($val)) / $mapwidth}]
+                {*}[$Container cget -xscrollcommand] $val2 [expr {$val2 + $winwidth / $mapwidth}]
             }
+            default {error}
         }
     }
     
     public method yview {cmd args} {
+        lassign [$Container bbox all] x1 y1 x2 y2
+        set mapheight [expr {$y2 - $y1}]
+        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
+        lassign [$Container tget root "translation"] shiftX shiftY
+        
         switch -exact -- $cmd {
             "moveto" {
                 set val $args
-
-                lassign [$Container bbox all] x1 y1 x2 y2
-                set width [expr {$x2 - $x1}]
-                set height [expr {$y2 - $y1}]
-                lassign [grid bbox $Win(frame)] _ _ w h
-                set val2 [expr {double($h) / $height}]
+                set val2 [expr {double($winheight) / $mapheight}]
                 
                 if {$val < 0} {set val 0}
                 if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root 0 [expr {$val * $height * -1}] yes
+                $Container translate root $shiftX [expr {$val * $mapheight * -1}] yes
                 
                 {*}[$Container cget -yscrollcommand] $val [expr {$val + $val2}]
             }
             "scroll" {
-                lassign $args val units
-                # XXX
+                lassign $args val type
+                if {$type eq "pages"} {
+                    set val [expr {$val * $winheight}]
+                }
+                
+                set max [expr {$mapheight - $winheight}]
+                if {$max < 0} {return} ;# Map is small enough to be displayed in whole; no need of scrolling
+                
+                set val [expr {$shiftY - $val}]
+                if {$val > 0} { set val 0} ;# On the top edge; cannot scroll further
+                
+                if {[expr {abs($val)}] > $max} {
+                    set val [expr {$max * -1}] ;# On the bottom edge; cannot scroll further
+                }
+                
+                # Move map
+                $Container translate root $shiftX $val yes
+                
+                # Update scrollbars
+                set val2 [expr {double(abs($val)) / $mapheight}]
+                {*}[$Container cget -yscrollcommand] $val2 [expr {$val2 + $winheight / $mapheight}]
             }
+            default {error}
         }
     }
     
