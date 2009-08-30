@@ -13,12 +13,15 @@ TCL = tclsh
 DESTDIR := $(prefix)
 TCL_BINDING_VERSION = 1.0
 TCL_MODULES = gdal.so ogr.so gdalconst.so osr.so
-TCL_INCLUDE_DIR := /usr/include
-TCL_LIB_DIR := /usr/lib
+TCL_INCLUDE_DIR := /home/alsterg/Projects/tcl-osgeo/cross-tools/TCL/kbskit/Linux/include
+#TCL_INCLUDE_DIR := /usr/include
+TCL_LIB_DIR := /home/alsterg/Projects/tcl-osgeo/cross-tools/TCL/kbskit/Linux/lib
+#TCL_LIB_DIR := /usr/lib
 INSTALL_DIR := /lib
 
 TCL_INCLUDE = -I$(TCL_INCLUDE_DIR)
-LDFLAGS += -shared -L$(TCL_LIB_DIR)
+LDFLAGS += -pipe -static -L$(TCL_LIB_DIR) -ldl  -lieee -lm
+#LDFLAGS += -pipe -shared -L$(TCL_LIB_DIR) -ldl  -lieee -lm
 TCL_LIB := -ltclstub8.5
 
 SWIG = swig
