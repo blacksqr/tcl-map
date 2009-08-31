@@ -10,8 +10,8 @@ package require Img 1.3
 set RootDir [file normalize [file dirname [info script]]]
 
 #XXX lappend auto_path $RootDir /usr/local/lib/
-::tcl::tm::path add $RootDir
-
+#XXX ::tcl::tm::path add $RootDir
+source [file join $RootDir toe-1.0.tm]
 source [file join $RootDir GIScanvas.tcl]
 source [file join $RootDir toolbar.tcl]
 
