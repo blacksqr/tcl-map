@@ -9,7 +9,7 @@ package require Img 1.3
 # Get full pathname to this file
 set RootDir [file normalize [file dirname [info script]]]
 
-lappend auto_path $RootDir /usr/local/lib/
+#XXX lappend auto_path $RootDir /usr/local/lib/
 ::tcl::tm::path add $RootDir
 
 source [file join $RootDir GIScanvas.tcl]
