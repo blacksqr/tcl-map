@@ -10,12 +10,12 @@
 package require Tcl 8.5
 package require Tk 8.5
 package require Tkzinc 3.3
-package require gdal 1.0
-package require gdalconst 1.0
-package require ogr 1.0
-package require osr 1.0
 package require nap 6.4
 package require toe 1.0
+package require gdalconst 1.0
+package require gdal 1.0
+package require ogr 1.0
+package require osr 1.0
 
 # Initialize GDAL/OGR
 ::gdal::AllRegister

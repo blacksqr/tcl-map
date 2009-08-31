@@ -1,3 +1,0 @@
-Look for "XXX" in the code.
-Or
-grep -R XXX *
