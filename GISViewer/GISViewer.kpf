@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="569d0883-084f-483c-a3c1-1b5c762ec5c6" kpf_version="4" name="GISViewer.kpf">
+<preference-set idref="569d0883-084f-483c-a3c1-1b5c762ec5c6">
+  <boolean id="import_live">1</boolean>
+</preference-set>
+</project>
