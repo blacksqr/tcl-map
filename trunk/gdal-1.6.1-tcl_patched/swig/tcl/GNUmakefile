@@ -13,15 +13,12 @@ TCL = tclsh
 DESTDIR := $(prefix)
 TCL_BINDING_VERSION = 1.0
 TCL_MODULES = gdal.so ogr.so gdalconst.so osr.so
-TCL_INCLUDE_DIR := /home/alsterg/Projects/tcl-osgeo/cross-tools/TCL/kbskit/Linux/include
-#TCL_INCLUDE_DIR := /usr/include
-TCL_LIB_DIR := /home/alsterg/Projects/tcl-osgeo/cross-tools/TCL/kbskit/Linux/lib
-#TCL_LIB_DIR := /usr/lib
+TCL_INCLUDE_DIR := /usr/include
+TCL_LIB_DIR := /usr/lib
 INSTALL_DIR := /lib
-
+TCL_CFLAGS := -DPACKAGE_TARNAME=\"osgeo\" -DPACKAGE_VERSION=\"$(TCL_BINDING_VERSION)\" -DPACKAGE_STRING=\"osgeo\ $(TCL_BINDING_VERSION)\" -DPACKAGE_BUGREPORT=\"\" -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DUSE_TCL_STUBS=1
 TCL_INCLUDE = -I$(TCL_INCLUDE_DIR)
-LDFLAGS += -pipe -static -L$(TCL_LIB_DIR) -ldl  -lieee -lm
-#LDFLAGS += -pipe -shared -L$(TCL_LIB_DIR) -ldl  -lieee -lm
+LDFLAGS += -shared -pipe -L$(TCL_LIB_DIR)
 TCL_LIB := -ltclstub8.5
 
 SWIG = swig
@@ -63,13 +60,13 @@ install: $(DESTDIR)$(INSTALL_DIR)/osgeo-$(TCL_BINDING_VERSION)
 	$(TCL) <<< 'pkg_mkIndex $(DESTDIR)$(INSTALL_DIR)/osgeo-$(TCL_BINDING_VERSION) $(TCL_MODULES)'
 
 $(TCL_MODULES): %.so: %_wrap.o
-	$(LD) $(LDFLAGS) $(LIBS) $(GDAL_SLIB_LINK) $(TCL_LIB) $< -o $@
+	$(LD) $< -o $@ $(LDFLAGS) $(LIBS) $(GDAL_SLIB_LINK) $(TCL_LIB)
 
 %.o: %.cpp
-	$(CXX) $(CFLAGS) $(GDAL_INCLUDE) $(TCL_INCLUDE)  -c $<
+	$(CXX) $(CFLAGS) $(TCL_CFLAGS) $(GDAL_INCLUDE) $(TCL_INCLUDE)  -c $<
 
 %.o: %.cxx
-	$(CXX) $(CFLAGS) $(GDAL_INCLUDE) $(TCL_INCLUDE) -c $<
+	$(CXX) $(CFLAGS) $(TCL_CFLAGS) $(GDAL_INCLUDE) $(TCL_INCLUDE) -c $<
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(GDAL_INCLUDE)  $(TCL_INCLUDE) -c $<
+	$(CC) $(CFLAGS) $(TCL_CFLAGS) $(GDAL_INCLUDE)  $(TCL_INCLUDE) -c $<
