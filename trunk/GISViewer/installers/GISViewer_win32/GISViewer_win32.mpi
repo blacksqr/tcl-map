@@ -30,7 +30,7 @@ Company
 {Alexandros Stergiakis}
 
 CompressionLevel
-6
+9
 
 CompressionMethod
 zlib
@@ -63,7 +63,7 @@ Icon
 Modern/Small/SetupModernSmall01.gif
 
 IgnoreDirectories
-{}
+.svn
 
 IgnoreFiles
 {}
@@ -239,7 +239,7 @@ File ::00AE8678-D733-BADF-2ED2-C85B73032C5B -name zoom-best-fit.png -parent 7713
 File ::B55EF7D2-9162-93F9-4236-F84A3B531CF7 -name zoom-in.png -parent 771392DA-51E0-1CF9-EB5D-6CC39FE19C4A
 File ::1C76CF79-901A-A7E5-1548-4EF743EBC5FD -name zoom-original.png -parent 771392DA-51E0-1CF9-EB5D-6CC39FE19C4A
 File ::51FE9FFE-CD12-C528-6013-A706A38FAB30 -name zoom-out.png -parent 771392DA-51E0-1CF9-EB5D-6CC39FE19C4A
-File ::A4873653-06D7-A7D3-D03E-FF71FDC7B745 -type dir -name .svn -parent 771392DA-51E0-1CF9-EB5D-6CC39FE19C4A
+File ::A4873653-06D7-A7D3-D03E-FF71FDC7B745 -type dir -name .svn -active 0 -parent 771392DA-51E0-1CF9-EB5D-6CC39FE19C4A
 File ::244AEC02-97B7-886E-FE4D-24CC0C7646AD -name entries -parent A4873653-06D7-A7D3-D03E-FF71FDC7B745
 File ::AFAAD3A3-ECE0-2D90-5740-EC4D712898D6 -name format -parent A4873653-06D7-A7D3-D03E-FF71FDC7B745
 File ::0AA9867E-9E30-3C88-779A-094011DAEF5B -type dir -name prop-base -parent A4873653-06D7-A7D3-D03E-FF71FDC7B745
@@ -258,6 +258,9 @@ File ::34B1EA64-E757-F5FA-F90D-1AED2FA2E221 -type dir -name prop-base -parent A4
 File ::4A041A64-D320-9161-3F43-655CF9DA755E -type dir -name props -parent A43F91B0-BB25-9ACB-676D-0997E11E76E9
 File ::CC88E887-8962-55B8-3A75-3E3E0357357D -type dir -name text-base -parent A43F91B0-BB25-9ACB-676D-0997E11E76E9
 File ::ABA8CE6E-2047-3378-B9AF-33E52BC59E38 -type dir -name lib -parent C66C8E1E-DC52-E7E5-7E7D-338A30C97566
+File ::BD46D9FA-2E19-A408-4EA4-A4C95B60FFA8 -name README.txt -parent C66C8E1E-DC52-E7E5-7E7D-338A30C97566
+File ::7931B686-B583-58F7-3560-3331FB50FE8D -name tclkit -parent C66C8E1E-DC52-E7E5-7E7D-338A30C97566
+File ::71C2896A-D8E0-F50F-A71C-7B7F773D3F5B -name LICENSE.txt -parent C66C8E1E-DC52-E7E5-7E7D-338A30C97566
 Component ::4B4B0949-7777-B165-1ECF-5010BBF6D531 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name {Default Component} -parent Components
 SetupType ::CF0EA3BE-751A-EE94-6CED-FC1C859E6836 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Typical -parent SetupTypes
 SetupType ::108F39EC-4E64-7540-F52D-CF06133C0CC3 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes
@@ -1976,7 +1979,7 @@ Windows,LastRequireAdministrator
 Yes
 
 Windows,ProgramExecutable
-<%InstallDir%>/GISViewer-win32-installer.exe
+<%InstallDir%>/GISViewer.exe
 
 Windows,ProgramFolderAllUsers
 No

@@ -30,7 +30,7 @@ Company
 {Alexandros Stergiakis}
 
 CompressionLevel
-6
+9
 
 CompressionMethod
 zlib
@@ -63,7 +63,7 @@ Icon
 Modern/Small/SetupModernSmall01.gif
 
 IgnoreDirectories
-{}
+.svn
 
 IgnoreFiles
 {}
@@ -239,7 +239,7 @@ File ::662C6E63-14F0-745B-7130-0A3378050A6E -name zoom-best-fit.png -parent 1F61
 File ::FA04952F-B5C0-301C-3EAF-2F845FE9F00A -name zoom-in.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
 File ::2371D916-7D56-FDE2-B091-15D9DD348BCF -name zoom-original.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
 File ::FC48EA05-F4BB-0BE7-5CA6-ACCD39E1614C -name zoom-out.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::CD2268FB-822D-1264-9127-E9E7D1DF929B -type dir -name .svn -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
+File ::CD2268FB-822D-1264-9127-E9E7D1DF929B -type dir -name .svn -active 0 -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
 File ::106BB981-02B3-3C6B-E2C4-FB922905CD08 -name entries -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
 File ::503034CC-1F1D-8916-CDB6-BFA66FEDED9E -name format -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
 File ::81E76116-0EF7-DE6E-F578-F96C614DEB52 -type dir -name prop-base -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
@@ -258,6 +258,9 @@ File ::64E3F441-DC7D-2833-9629-E7260DF2762A -type dir -name prop-base -parent 3C
 File ::159DEA40-EFD7-CBB7-95FE-2A39E6B5C65E -type dir -name props -parent 3C511E50-FA2A-2194-F973-77C32B50A589
 File ::5EDA95B3-6304-30F1-BC2B-811ECFB7DB0C -type dir -name text-base -parent 3C511E50-FA2A-2194-F973-77C32B50A589
 File ::A779888A-F9D5-32F4-20EF-0C9C9FDFC650 -type dir -name lib -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
+File ::DBB181CC-1786-EA90-C2B4-D07D53F7225A -name README.txt -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
+File ::93C386F9-0041-28B4-C598-BDFF98D1D170 -name tclkit -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
+File ::77F5D046-055A-1E4C-6FEC-77C6EB2BEB27 -name LICENSE.txt -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
 Component ::60169FE1-7572-723A-C37F-50EE2019F040 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name {Default Component} -parent Components
 SetupType ::95BA2E9B-7622-9EA7-D6D7-1734E9B88F8D -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Typical -parent SetupTypes
 SetupType ::080324B0-D88F-4D07-E7C7-6C64D41D3197 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes

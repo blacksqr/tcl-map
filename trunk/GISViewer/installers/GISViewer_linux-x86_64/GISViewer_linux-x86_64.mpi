@@ -30,13 +30,13 @@ Company
 {Alexandros Stergiakis}
 
 CompressionLevel
-6
+9
 
 CompressionMethod
 zlib
 
 Copyright
-{}
+{Alexandros Stergiakis}
 
 CreateDesktopShortcut
 Yes
@@ -63,16 +63,16 @@ ExtractSolidArchivesOnStartup
 No
 
 Icon
-Modern/Small/SetupModernSmall01.gif
+/home/alsterg/Projects/tcl-osgeo/GISViewer/icons/GISViewer-24x24.png
 
 IgnoreDirectories
-{}
+.svn
 
 IgnoreFiles
 {}
 
 Image
-Modern/SetupModern01.gif
+/home/alsterg/Projects/tcl-osgeo/GISViewer/icons/GISViwer-128x128.png
 
 IncludeDebugging
 Yes
@@ -120,7 +120,7 @@ Language,ru
 Yes
 
 LastIgnoreDirectories
-{}
+.svn
 
 LastIgnoreFiles
 {}
@@ -245,24 +245,13 @@ File ::DE799D27-DECB-9CF6-41C2-CB0AB4C67424 -name zoom-best-fit.png -parent 4A6B
 File ::D12322E7-936A-603A-E5BA-8DA3EDDDE20E -name zoom-in.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
 File ::ECC12377-812F-9B93-3456-33F0099469A6 -name zoom-original.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
 File ::20989CF4-D43A-9F5A-568F-A31BAB848349 -name zoom-out.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
-File ::E4CAA9DC-492F-CFDE-849C-28D61CF58E16 -type dir -name .svn -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
-File ::748B3F0C-C228-25C2-E72A-10F8EB5B944C -name entries -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::C3696FEF-DADE-5485-7E7F-C58B66534AD5 -name format -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::7A5BAC3B-D4FB-F147-AC7F-C1C91CC1E2E5 -type dir -name prop-base -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::45494AE6-4634-35E7-15EA-41FB61973BAC -name zoom-best-fit.png.svn-base -parent 7A5BAC3B-D4FB-F147-AC7F-C1C91CC1E2E5
-File ::6128AC3A-D216-B9F3-75AD-0DAC8FB6A4E2 -name zoom-in.png.svn-base -parent 7A5BAC3B-D4FB-F147-AC7F-C1C91CC1E2E5
-File ::4270B830-91C4-7406-F397-641CC7CB10C1 -name zoom-original.png.svn-base -parent 7A5BAC3B-D4FB-F147-AC7F-C1C91CC1E2E5
-File ::E30F0E83-6E43-3468-1FBA-03E90C17772D -name zoom-out.png.svn-base -parent 7A5BAC3B-D4FB-F147-AC7F-C1C91CC1E2E5
-File ::BBAE869A-D9EB-9CB0-E995-EB3FDD85D906 -type dir -name props -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::6A99F843-2112-9C01-F09A-A160A46F6063 -type dir -name text-base -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::510DFDEE-0864-B167-9460-E69C1EAF85D9 -name zoom-best-fit.png.svn-base -parent 6A99F843-2112-9C01-F09A-A160A46F6063
-File ::FE570AB7-B915-31CB-CA42-8B8B0B0527B1 -name zoom-in.png.svn-base -parent 6A99F843-2112-9C01-F09A-A160A46F6063
-File ::EC95115D-3AB2-2600-534C-DCCBBC765435 -name zoom-original.png.svn-base -parent 6A99F843-2112-9C01-F09A-A160A46F6063
-File ::684E75FB-DCEC-6C96-B4B9-392513EC70AA -name zoom-out.png.svn-base -parent 6A99F843-2112-9C01-F09A-A160A46F6063
-File ::0C747AE6-B899-7C55-BB12-68141F5C6407 -type dir -name tmp -parent E4CAA9DC-492F-CFDE-849C-28D61CF58E16
-File ::744F92BB-4748-5F95-0FA9-34C37DA63BE8 -type dir -name prop-base -parent 0C747AE6-B899-7C55-BB12-68141F5C6407
-File ::9A5E9727-32CC-0DFB-C7DE-8A28958F7794 -type dir -name props -parent 0C747AE6-B899-7C55-BB12-68141F5C6407
-File ::8BAD8735-0979-5AC9-4F9E-D196B04762CB -type dir -name text-base -parent 0C747AE6-B899-7C55-BB12-68141F5C6407
+File ::390B7FB0-2AEB-D922-5A90-5719E1027D4D -name GISViewer-16x16.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::DD445B1C-4619-CD20-3D89-65643B72C6B2 -name GISViewer-24x24.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::5B117154-8BA2-6A32-E226-0F985C89228C -name GISViewer-32x32.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::D76E3AD4-4FA8-9372-9C24-40425AC31310 -name GISViewer-48x48.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::342F55CE-6904-1944-23FE-178069F158E7 -name GISViewer-256x256.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::0EB4363F-4A05-4316-66AF-B790FD588430 -name GISViewer.ico -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
+File ::4AF0DED0-936E-A308-F1A2-3A94D5010F6A -name GISViwer-128x128.png -parent 4A6B9148-BDB4-0B00-1107-9F26021B13F3
 File ::698C4925-9ACB-05D8-7C13-03B4A8AD74D9 -type dir -name lib -parent 56FACDB4-F3EA-F1A1-1A97-D5C426016B73
 File ::0256F256-BD22-F43F-8448-61EC5599D6E1 -name libcom_err.so.2 -parent 698C4925-9ACB-05D8-7C13-03B4A8AD74D9
 File ::FCB80358-A0A6-4A41-41EE-6A6EC11466D8 -name libcom_err.so.2.1 -parent 698C4925-9ACB-05D8-7C13-03B4A8AD74D9
@@ -412,6 +401,10 @@ File ::5BAE3032-16C1-4FB9-30E9-1606E16571F9 -name pkgIndex.tcl -parent 00953C4D-
 File ::8E160772-4177-0519-389F-AFF2D4512656 -name zincGraphics.tcl -parent 00953C4D-AB8B-6A88-EA24-4EF41568DBC4
 File ::AA78C7F6-9C09-3F36-572E-4101BACED8DE -name zincLogo.tcl -parent 00953C4D-AB8B-6A88-EA24-4EF41568DBC4
 File ::8F791AB9-A8CB-8A67-6945-055144665739 -name zincText.tcl -parent 00953C4D-AB8B-6A88-EA24-4EF41568DBC4
+File ::F67EA9BE-1C29-E8A2-7252-F3D1B7A1830C -name README.txt -parent 56FACDB4-F3EA-F1A1-1A97-D5C426016B73
+File ::A4EE3DF8-761A-8DBF-3DD5-168FF33F9655 -name start.sh -parent 56FACDB4-F3EA-F1A1-1A97-D5C426016B73
+File ::F8E8DDF8-C9E6-D5CC-BC08-22217C836F66 -name tclkit -parent 56FACDB4-F3EA-F1A1-1A97-D5C426016B73
+File ::80BC7E4F-EFCE-689F-D034-23BE2978D1DA -name LICENSE.txt -parent 56FACDB4-F3EA-F1A1-1A97-D5C426016B73
 Component ::93064A0A-951B-F899-EBE7-92E01FB266F2 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name {Default Component} -parent Components
 SetupType ::D7C32502-E7AD-8B4E-3E03-228E984DDFD3 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Typical -parent SetupTypes
 SetupType ::BBA79764-79A0-0E4D-ADE8-785712171875 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes
@@ -423,7 +416,7 @@ Condition FB865FDE-95BD-D399-42D1-A8B7D02C9A10 -active Yes -parent 809EE556-64BC
 InstallComponent 47F1755A-9AD2-6C0F-1F58-D31AEA56830D -setup Install -type pane -conditions {69726CBC-0D37-DBC9-ED5F-A61F246B25E2 D93B7F3A-DF40-3388-7932-355FACBA24EC} -title {Setup Type} -component SetupType -command insert -active Yes -parent StandardInstall
 Condition 69726CBC-0D37-DBC9-ED5F-A61F246B25E2 -active Yes -parent 47F1755A-9AD2-6C0F-1F58-D31AEA56830D -title {Script Condition} -component ScriptCondition -TreeObject::id 69726CBC-0D37-DBC9-ED5F-A61F246B25E2
 Condition D93B7F3A-DF40-3388-7932-355FACBA24EC -active Yes -parent 47F1755A-9AD2-6C0F-1F58-D31AEA56830D -title {String Is Condition} -component StringIsCondition -TreeObject::id D93B7F3A-DF40-3388-7932-355FACBA24EC
-InstallComponent 72AD475B-1103-D14C-5903-03D60FF7DD9E -setup Install -type action -title {Populate Setup Types} -component PopulateSetupTypes -active Yes -parent 47F1755A-9AD2-6C0F-1F58-D31AEA56830D
+InstallComponent 72AD475B-1103-D14C-5903-03D60FF7DD9E -setup Install -type action -title {Populate Setup Types} -component PopulateSetupTypes -active No -parent 47F1755A-9AD2-6C0F-1F58-D31AEA56830D
 InstallComponent 42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3 -setup Install -type pane -conditions E947AF03-BE52-6445-0325-E5B260CDB2F9 -title {Choose Components} -component ChooseComponents -command insert -active Yes -parent StandardInstall
 Condition E947AF03-BE52-6445-0325-E5B260CDB2F9 -active Yes -parent 42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3 -title {String Equal Condition} -component StringEqualCondition -TreeObject::id E947AF03-BE52-6445-0325-E5B260CDB2F9
 InstallComponent 54829B67-081A-146B-BE03-455FDFDEC0B5 -setup Install -type action -title {Populate Components} -component PopulateComponents -active Yes -parent 42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3
@@ -543,6 +536,9 @@ array set Properties {
 045784A0-D186-92DF-1C0F-A515E4FDEC29,Caption,subst
 1
 
+045784A0-D186-92DF-1C0F-A515E4FDEC29,Conditions
+{0 conditions}
+
 045784A0-D186-92DF-1C0F-A515E4FDEC29,Message,subst
 1
 
@@ -569,6 +565,9 @@ Finish
 
 0749E0DB-EE34-62D5-5681-39E76D746888,Caption,subst
 1
+
+0749E0DB-EE34-62D5-5681-39E76D746888,Conditions
+{0 conditions}
 
 0749E0DB-EE34-62D5-5681-39E76D746888,Message,subst
 1
@@ -633,6 +632,9 @@ false
 21FED99A-B3DB-EDD8-DB3E-411D869FA1EA,Caption,subst
 1
 
+21FED99A-B3DB-EDD8-DB3E-411D869FA1EA,Conditions
+{0 conditions}
+
 21FED99A-B3DB-EDD8-DB3E-411D869FA1EA,Message,subst
 1
 
@@ -641,6 +643,9 @@ false
 
 2217B455-6BA4-086B-D66F-E7901DED6143,Background
 white
+
+2217B455-6BA4-086B-D66F-E7901DED6143,Conditions
+{2 conditions}
 
 2217B455-6BA4-086B-D66F-E7901DED6143,Text,subst
 1
@@ -732,6 +737,9 @@ false
 384678B8-DE84-E354-7DF8-1ADFEC57F042,Destination
 <%InstallDir%>
 
+384678B8-DE84-E354-7DF8-1ADFEC57F042,FileSize
+93242162
+
 384678B8-DE84-E354-7DF8-1ADFEC57F042,Name
 {Program Files}
 
@@ -752,6 +760,12 @@ false
 
 3C74FB92-4E78-8EE1-66B2-9BD645FC72E8,Background
 white
+
+3C74FB92-4E78-8EE1-66B2-9BD645FC72E8,Checked
+Yes
+
+3C74FB92-4E78-8EE1-66B2-9BD645FC72E8,Conditions
+{2 conditions}
 
 3C74FB92-4E78-8EE1-66B2-9BD645FC72E8,Text,subst
 1
@@ -795,6 +809,9 @@ Yes
 42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3,Caption,subst
 1
 
+42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3,Conditions
+{1 condition}
+
 42E1A9D1-416D-1DE7-AEB2-56E4FC1C9FB3,DescriptionLabel,subst
 0
 
@@ -827,6 +844,9 @@ Yes
 
 47F1755A-9AD2-6C0F-1F58-D31AEA56830D,Caption,subst
 1
+
+47F1755A-9AD2-6C0F-1F58-D31AEA56830D,Conditions
+{2 conditions}
 
 47F1755A-9AD2-6C0F-1F58-D31AEA56830D,DescriptionLabel,subst
 0
@@ -870,6 +890,9 @@ false
 4E698763-7D1B-3C8A-573E-F2B276CA9E14,Caption,subst
 1
 
+4E698763-7D1B-3C8A-573E-F2B276CA9E14,Conditions
+{0 conditions}
+
 4E698763-7D1B-3C8A-573E-F2B276CA9E14,FileLabel,subst
 1
 
@@ -902,6 +925,9 @@ false
 
 52DF953A-5431-A468-3350-D8DF3285E0B7,Action
 {Install Actions}
+
+54829B67-081A-146B-BE03-455FDFDEC0B5,Conditions
+{0 conditions}
 
 54829B67-081A-146B-BE03-455FDFDEC0B5,ExecuteAction
 {Before Pane is Displayed}
@@ -972,6 +998,9 @@ disabled
 6E14E4A7-CD66-B975-9445-FEE980D24CE1,Caption,subst
 1
 
+6E14E4A7-CD66-B975-9445-FEE980D24CE1,Conditions
+{0 conditions}
+
 6E14E4A7-CD66-B975-9445-FEE980D24CE1,Message,subst
 1
 
@@ -986,6 +1015,9 @@ disabled
 
 6E8BC652-4251-E461-C98B-C6387DB76F4A,Caption,subst
 1
+
+6E8BC652-4251-E461-C98B-C6387DB76F4A,Conditions
+{0 conditions}
 
 6E8BC652-4251-E461-C98B-C6387DB76F4A,FileLabel,subst
 1
@@ -1017,6 +1049,12 @@ false
 70257F7C-BD2A-4801-F8D1-FA5EFD5160B6,Background
 white
 
+70257F7C-BD2A-4801-F8D1-FA5EFD5160B6,Checked
+Yes
+
+70257F7C-BD2A-4801-F8D1-FA5EFD5160B6,Conditions
+{3 conditions}
+
 70257F7C-BD2A-4801-F8D1-FA5EFD5160B6,Text,subst
 1
 
@@ -1031,6 +1069,9 @@ CreateQuickLaunchShortcut
 
 70257F7C-BD2A-4801-F8D1-FA5EFD5160B6,Y
 200
+
+72AD475B-1103-D14C-5903-03D60FF7DD9E,Conditions
+{0 conditions}
 
 72AD475B-1103-D14C-5903-03D60FF7DD9E,ExecuteAction
 {Before Pane is Displayed}
@@ -1065,6 +1106,9 @@ Finish
 809EE556-64BC-C07E-3FF6-135A70BA78D4,Caption,subst
 1
 
+809EE556-64BC-C07E-3FF6-135A70BA78D4,Conditions
+{2 conditions}
+
 809EE556-64BC-C07E-3FF6-135A70BA78D4,Destination,subst
 1
 
@@ -1085,6 +1129,12 @@ Finish
 
 81EA34A5-D98D-3A3E-3BBD-2F91A57F11AD,Background
 white
+
+81EA34A5-D98D-3A3E-3BBD-2F91A57F11AD,Checked
+Yes
+
+81EA34A5-D98D-3A3E-3BBD-2F91A57F11AD,Conditions
+{2 conditions}
 
 81EA34A5-D98D-3A3E-3BBD-2F91A57F11AD,Text,subst
 1
@@ -1343,6 +1393,9 @@ BBA79764-79A0-0E4D-ADE8-785712171875,DisplayName,subst
 
 BBA79764-79A0-0E4D-ADE8-785712171875,Name
 Custom
+
+BBA79764-79A0-0E4D-ADE8-785712171875,ShowSetupType
+No
 
 BD43EFE9-46B0-D213-3D6E-3F2562C43AA8,CheckCondition
 {Before Action is Executed}
@@ -1993,7 +2046,7 @@ Linux-x86_64,InstallType
 Typical
 
 Linux-x86_64,ProgramExecutable
-<%InstallDir%>/GISViewer-linux-x86_64.run
+<%InstallDir%>/start.sh
 
 Linux-x86_64,ProgramFolderAllUsers
 No
@@ -2340,6 +2393,9 @@ B88D362E-4630-65D6-E064-BA61806D0306,Message
 ::msgcat::mcmset en {
 14B7405A-6651-F5C8-CFEC-BE3F34DAB48A,Message
 <%InstallingApplicationText%>
+
+21FED99A-B3DB-EDD8-DB3E-411D869FA1EA,Caption
+{Welcome to the Installation Wizard for <%AppName%>}
 
 2217B455-6BA4-086B-D66F-E7901DED6143,Text
 <%ViewReadmeText%>

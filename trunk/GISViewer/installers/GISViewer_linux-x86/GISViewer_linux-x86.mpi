@@ -30,7 +30,7 @@ Company
 {Alexandros Stergiakis}
 
 CompressionLevel
-6
+9
 
 CompressionMethod
 zlib
@@ -63,7 +63,7 @@ Icon
 Modern/Small/SetupModernSmall01.gif
 
 IgnoreDirectories
-{}
+.svn
 
 IgnoreFiles
 {}
@@ -239,7 +239,7 @@ File ::498035B8-739B-C1B5-6F2C-51AA249473BF -name zoom-best-fit.png -parent 2F77
 File ::C29B8E41-9728-2E4E-5CDB-CCE205DB78BE -name zoom-in.png -parent 2F77B1B4-89FF-C849-46F0-4D2D23C83DCB
 File ::A457A49A-A4A6-B56F-F6E1-4349D92DFAF7 -name zoom-original.png -parent 2F77B1B4-89FF-C849-46F0-4D2D23C83DCB
 File ::AE0D20A2-E835-14A1-0DB1-F8CB8074D6A9 -name zoom-out.png -parent 2F77B1B4-89FF-C849-46F0-4D2D23C83DCB
-File ::2CFD88D5-C4F9-1538-8059-C23F507F37BF -type dir -name .svn -parent 2F77B1B4-89FF-C849-46F0-4D2D23C83DCB
+File ::2CFD88D5-C4F9-1538-8059-C23F507F37BF -type dir -name .svn -active 0 -parent 2F77B1B4-89FF-C849-46F0-4D2D23C83DCB
 File ::FFFFF4F6-FD36-9F6C-C177-822E13C0BE51 -name entries -parent 2CFD88D5-C4F9-1538-8059-C23F507F37BF
 File ::5678EEBE-5ED9-B998-DA8B-92EA2E8A2D79 -name format -parent 2CFD88D5-C4F9-1538-8059-C23F507F37BF
 File ::EBE52939-CF2E-26D3-B1F0-C9535ACA65D8 -type dir -name prop-base -parent 2CFD88D5-C4F9-1538-8059-C23F507F37BF
@@ -258,6 +258,10 @@ File ::39A5B883-5AC7-E046-EF0B-4A3A54131EB1 -type dir -name prop-base -parent 12
 File ::1129F5F0-5D93-E4C8-3039-58A0A8D6B436 -type dir -name props -parent 128BE992-945F-BAAA-1F31-861528EC4EC6
 File ::775C588D-2556-FCDB-5B47-DC0EEB263B1B -type dir -name text-base -parent 128BE992-945F-BAAA-1F31-861528EC4EC6
 File ::6606CDF1-5F6E-B833-B775-087E7D4ED42F -type dir -name lib -parent 854166C3-8F31-0D12-CE7C-C0A8BC806111
+File ::E1FE2F82-9E19-8450-FCB5-93EA81C82E7E -name README.txt -parent 854166C3-8F31-0D12-CE7C-C0A8BC806111
+File ::178E564E-A814-3FF7-BA69-082E05B63A04 -name start.sh -parent 854166C3-8F31-0D12-CE7C-C0A8BC806111
+File ::E98911DE-EBDA-8E34-445E-C7802030170C -name tclkit -parent 854166C3-8F31-0D12-CE7C-C0A8BC806111
+File ::5A4FCD25-D11E-A14D-07B6-5781C5B87BB6 -name LICENSE.txt -parent 854166C3-8F31-0D12-CE7C-C0A8BC806111
 Component ::DEBD425C-A2A5-B34F-E0C4-39934FDC5E02 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name {Default Component} -parent Components
 SetupType ::ECA4AD7B-C7B8-2DDF-EC94-9A21F55C4AFA -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Typical -parent SetupTypes
 SetupType ::D91A24B6-BBCB-6F07-131C-6266C2187738 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes
@@ -1697,7 +1701,7 @@ Linux-x86,InstallType
 Typical
 
 Linux-x86,ProgramExecutable
-<%InstallDir%>/GISViewer-linux-x86.run
+<%InstallDir%>/start.sh
 
 Linux-x86,ProgramFolderAllUsers
 No
@@ -1751,7 +1755,7 @@ Linux-x86_64,InstallType
 Typical
 
 Linux-x86_64,ProgramExecutable
-<%InstallDir%>/GISViewer-linux-x86.run
+<%InstallDir%>/start.sh
 
 Linux-x86_64,ProgramFolderAllUsers
 No
