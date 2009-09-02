@@ -6,7 +6,7 @@ set RootDir [file normalize [file dirname [info script]]]
 foreach lib [glob -types d -nocomplain -- [file join $RootDir lib *]] {
     lappend auto_path $lib
 }
-unset lib
+catch {unset lib}
 
 package require Tcl 8.5
 package require Tk 8.5
