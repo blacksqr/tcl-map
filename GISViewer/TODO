@@ -3,40 +3,43 @@ scrollregion on vectors
 #XXX spacial/transformer_lat/long
 #XXX rest_ogr_geometries zoom_bug/scale palette_rendering starpack
 #XXX grab info save read-write toolbar
+better openfile for linux
 # better GetProjections.tcl
 # wrapping/reprojection(set spacial data) loadworldfile always-centered-map zoom_limits centered_zoom progressbar_when_opening
 # rulers/grid
-# ReadRasterNAP, ExportToList interpolated-raster-zoom
+# ReadRasterNAP, ExportToList
 
 # Show/hide layers, hightlight geometries, info for each, set&save colors, etc
+itcl
 
-MAX_NC_NAME
-Segfault
-8.5
-alpha channel
-ReadRasterNAP compilation
-HDF/netcdf optional
+nap:
+    MAX_NC_NAME
+    Segfault
+    for 8.5
+    alpha channel
+    ReadRasterNAP compilation
+    HDF/netcdf optional
 
 gdal:
-GDALLoadWorldFile
-GDALGetProjectionRef 
-GDALSetProjectionRef
-GDALSetGeoTransform
-GDALGCPsToGeoTransform
-set GCPs manually
-GDALGetGCPProjection (GDALDatasetH)
-GDALGetRasterCategoryNames
-RAT
-MaskBand
-set trans [::gdal::new_Transformer $sref $dref f]
-TransformPoint, TransformPoints
+    GDALLoadWorldFile
+    GDALGetProjectionRef 
+    GDALSetProjectionRef
+    GDALSetGeoTransform
+    GDALGCPsToGeoTransform
+    set GCPs manually
+    GDALGetGCPProjection (GDALDatasetH)
+    GDALGetRasterCategoryNames
+    RAT
+    MaskBand
+    set trans [::gdal::new_Transformer $sref $dref f]
+    TransformPoint, TransformPoints
 
 ogr:
-OGR_G_GetDimension
-OGR_G_GetCoordinateDimension
-OGR_G_AssignSpatialReference
-OGR_G_GetSpatialReference
-OGR_G_Transform
-OGR_G_TransformTo
-OGR_G_Distance
-OGR_G_GetArea
+    OGR_G_GetDimension
+    OGR_G_GetCoordinateDimension
+    OGR_G_AssignSpatialReference
+    OGR_G_GetSpatialReference
+    OGR_G_Transform
+    OGR_G_TransformTo
+    OGR_G_Distance
+    OGR_G_GetArea

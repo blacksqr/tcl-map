@@ -1,0 +1,50 @@
+.TH "gdalbuildvrt" 1 "11 May 2009" "GDAL" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+gdalbuildvrt \- gdalbuildvrt
+Builds a VRT from a list of datasets. (compiled by default since GDAL 1.6.1)
+.SH "SYNOPSIS"
+.PP
+.PP
+.nf
+
+gdalbuildvrt [-tileindex field_name] [-resolution {highest|lowest|average}]
+             [-input_file_list my_liste.txt] output.vrt [gdalfile]*
+.fi
+.PP
+.SH "DESCRIPTION"
+.PP
+This program builds a VRT (Virtual Dataset) that is a mosaic of the list of input gdal datasets. The list of input gdal datasets can be specified at the end of the command line, or put in a text file (one filename per line) for very long lists, or it can be a MapServer tileindex (see \fBgdaltindex\fP utility). In the later case, all entries in the tile index will be added to the VRT.
+.PP
+If one GDAL dataset is made of several subdatasets and has 0 raster bands, all the subdatasets will be added to the VRT rather than the dataset itself.
+.PP
+gdalbuildvrt does some amount of checks to assure that all files that will be put in the resulting VRT have similar characteristics : number of bands, projection, color interpretation... If not, files that do not match the common characteristics will be skipped.
+.PP
+If there is some amount of spatial overlapping between files, the order may depend on the order they are inserted in the VRT file, but this behaviour should not be relied on.
+.PP
+This utility is somehow equivalent to the gdal_vrtmerge.py utility and is build by default in GDAL 1.6.1.
+.PP
+.IP "\fB\fB-tileindex\fP:\fP" 1c
+Use the specified value as the tile index field, instead of the default value with is 'location'. 
+.PP
+.IP "\fB\fB-resolution\fP:\fP" 1c
+In case the resolution of all input files is not the same, the -resolution flag enables the user to control the way the output resolution is computed. average is the default. 
+.PP
+.IP "\fB\fB-input_file_list\fP:\fP" 1c
+To specify a text file with an input filename on each line/ 
+.PP
+.PP
+.SH "EXAMPLE"
+.PP
+.PP
+.PP
+.nf
+
+gdalbuildvrt doq_index.vrt doq/*.tif
+gdalbuildvrt -input_file_list my_liste.txt doq_index.vrt
+.fi
+.PP
+.SH "AUTHOR"
+.PP
+Even Rouault <even.rouault@mines-paris.org> 
