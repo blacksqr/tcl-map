@@ -36,7 +36,7 @@ CompressionMethod
 zlib
 
 Copyright
-{}
+{Alexandros Stergiakis}
 
 CreateDesktopShortcut
 Yes
@@ -60,7 +60,7 @@ ExtractSolidArchivesOnStartup
 No
 
 Icon
-Modern/Small/SetupModernSmall01.gif
+/home/alsterg/Projects/tcl-osgeo/GISViewer/InstallTree/linux-x86_64/icons/GISViewer-48x48.png
 
 IgnoreDirectories
 .svn
@@ -69,7 +69,7 @@ IgnoreFiles
 {}
 
 Image
-Modern/SetupModern01.gif
+/home/alsterg/Projects/tcl-osgeo/GISViewer/InstallTree/linux-x86_64/icons/GISViewr-128x128.png
 
 IncludeDebugging
 Yes
@@ -227,40 +227,7 @@ test
 {Testing Switch Yes No {} {run uninstaller without uninstalling any files}}
 
 }
-FileGroup ::F613A78A-EF99-A68C-2062-69012E9FF048 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name {Program Files} -parent FileGroups
-File ::284E45D5-BE2F-0E3C-1F7E-A32030227BF1 -type dir -directory <%InstallDir%> -name /home/alsterg/Projects/tcl-osgeo/GISViewer/InstallTree/win32_64 -parent F613A78A-EF99-A68C-2062-69012E9FF048
-File ::B77FA345-13D3-CC53-2087-8AAE93C0246B -name GetProjections.tcl -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::AAE79626-6CE4-9743-52CC-FE28C3F90C54 -name GIScanvas.tcl -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::41C6047E-2779-4803-6047-41923368C906 -name gisv.tcl -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::6AE3CD6B-E48B-1C1D-2661-91D5A6E9DB0E -name toe-1.0.tm -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::B8799727-9101-418C-8444-566BD1526622 -name toolbar.tcl -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::1F616BE3-B9C6-BD3F-EA8E-184F3C818750 -type dir -name icons -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::662C6E63-14F0-745B-7130-0A3378050A6E -name zoom-best-fit.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::FA04952F-B5C0-301C-3EAF-2F845FE9F00A -name zoom-in.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::2371D916-7D56-FDE2-B091-15D9DD348BCF -name zoom-original.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::FC48EA05-F4BB-0BE7-5CA6-ACCD39E1614C -name zoom-out.png -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::CD2268FB-822D-1264-9127-E9E7D1DF929B -type dir -name .svn -active 0 -parent 1F616BE3-B9C6-BD3F-EA8E-184F3C818750
-File ::106BB981-02B3-3C6B-E2C4-FB922905CD08 -name entries -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::503034CC-1F1D-8916-CDB6-BFA66FEDED9E -name format -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::81E76116-0EF7-DE6E-F578-F96C614DEB52 -type dir -name prop-base -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::5AC2A1E2-7B5D-4F46-FA1D-E998388619AD -name zoom-best-fit.png.svn-base -parent 81E76116-0EF7-DE6E-F578-F96C614DEB52
-File ::A35CF914-1D61-E316-D765-45819F2EABF5 -name zoom-in.png.svn-base -parent 81E76116-0EF7-DE6E-F578-F96C614DEB52
-File ::0C22AE3A-80A8-C13A-A47E-C88E8193BE77 -name zoom-original.png.svn-base -parent 81E76116-0EF7-DE6E-F578-F96C614DEB52
-File ::3F86EF76-B1BB-E0C0-34A4-863B9545CA7F -name zoom-out.png.svn-base -parent 81E76116-0EF7-DE6E-F578-F96C614DEB52
-File ::AFA4C107-1105-61B0-0FD3-3C149CDCA9D7 -type dir -name props -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::7E8D8F65-AE4B-EA90-F259-C8031CB5FC83 -type dir -name text-base -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::D747B5D8-678F-1D4C-3587-E784066E4CF2 -name zoom-best-fit.png.svn-base -parent 7E8D8F65-AE4B-EA90-F259-C8031CB5FC83
-File ::BCC26697-BAD8-467A-EC7A-FCEF73F5E232 -name zoom-in.png.svn-base -parent 7E8D8F65-AE4B-EA90-F259-C8031CB5FC83
-File ::D90DC177-B481-CE35-8D0E-C4DE31E657D9 -name zoom-original.png.svn-base -parent 7E8D8F65-AE4B-EA90-F259-C8031CB5FC83
-File ::CEC3C2ED-5525-1031-348B-B011940C4A11 -name zoom-out.png.svn-base -parent 7E8D8F65-AE4B-EA90-F259-C8031CB5FC83
-File ::3C511E50-FA2A-2194-F973-77C32B50A589 -type dir -name tmp -parent CD2268FB-822D-1264-9127-E9E7D1DF929B
-File ::64E3F441-DC7D-2833-9629-E7260DF2762A -type dir -name prop-base -parent 3C511E50-FA2A-2194-F973-77C32B50A589
-File ::159DEA40-EFD7-CBB7-95FE-2A39E6B5C65E -type dir -name props -parent 3C511E50-FA2A-2194-F973-77C32B50A589
-File ::5EDA95B3-6304-30F1-BC2B-811ECFB7DB0C -type dir -name text-base -parent 3C511E50-FA2A-2194-F973-77C32B50A589
-File ::A779888A-F9D5-32F4-20EF-0C9C9FDFC650 -type dir -name lib -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::DBB181CC-1786-EA90-C2B4-D07D53F7225A -name README.txt -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::93C386F9-0041-28B4-C598-BDFF98D1D170 -name tclkit -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
-File ::77F5D046-055A-1E4C-6FEC-77C6EB2BEB27 -name LICENSE.txt -parent 284E45D5-BE2F-0E3C-1F7E-A32030227BF1
+FileGroup ::F613A78A-EF99-A68C-2062-69012E9FF048 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name GISViewer -parent FileGroups
 Component ::60169FE1-7572-723A-C37F-50EE2019F040 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name {Default Component} -parent Components
 SetupType ::95BA2E9B-7622-9EA7-D6D7-1734E9B88F8D -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Typical -parent SetupTypes
 SetupType ::080324B0-D88F-4D07-E7C7-6C64D41D3197 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 FreeBSD-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Custom -parent SetupTypes
@@ -1310,7 +1277,7 @@ F613A78A-EF99-A68C-2062-69012E9FF048,Destination
 <%InstallDir%>
 
 F613A78A-EF99-A68C-2062-69012E9FF048,Name
-{Program Files}
+GISViewer
 
 F7D056C4-7371-0449-0CAC-AC01894CF88D,BackButton,subst
 1
@@ -1895,7 +1862,7 @@ TarArchive,BuildSeparateArchives
 No
 
 TarArchive,CompressionLevel
-6
+9
 
 TarArchive,DefaultDirectoryPermission
 0755
@@ -1979,7 +1946,7 @@ Windows,LastRequireAdministrator
 Yes
 
 Windows,ProgramExecutable
-{<%InstallDir%>/GIS Viewer-win32_64-installer.exe}
+<%InstallDir%>/GISViewer.exe
 
 Windows,ProgramFolderAllUsers
 No
@@ -2012,7 +1979,7 @@ ZipArchive,BuildSeparateArchives
 No
 
 ZipArchive,CompressionLevel
-6
+9
 
 ZipArchive,DefaultDirectoryPermission
 0755
