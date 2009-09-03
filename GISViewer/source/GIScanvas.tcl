@@ -17,12 +17,11 @@ package require gdal 1.0
 package require ogr 1.0
 package require osr 1.0
 
+source [file join $VRootDir GetProjections.tcl]
+
 # Initialize GDAL/OGR
 ::gdal::AllRegister
 ::ogr::RegisterAll
-
-set RootDir [file normalize [file dirname [info script]]]
-source [file join $RootDir GetProjections.tcl]
 
 toe::class GIScanvas {
     private variable Container
