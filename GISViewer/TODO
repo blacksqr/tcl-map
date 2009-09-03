@@ -1,7 +1,7 @@
 " root "
 scrollregion on vectors
 #XXX spacial/transformer_lat/long
-#XXX rest_ogr_geometries zoom_bug/scale palette_rendering starpack
+#XXX rest_ogr_geometries zoom_bug/scale palette_rendering
 #XXX grab info save read-write toolbar
 better openfile for linux
 # better GetProjections.tcl

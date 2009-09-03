@@ -17,13 +17,15 @@ package require gdal 1.0
 package require ogr 1.0
 package require osr 1.0
 
+namespace import ::toe::class
+
 source [file join $VRootDir GetProjections.tcl]
 
 # Initialize GDAL/OGR
 ::gdal::AllRegister
 ::ogr::RegisterAll
 
-toe::class GIScanvas {
+class GIScanvas {
     private variable Container
     private variable Dataset
     private variable Win ;# Array with info that pertain the frame given to GIScanvas
@@ -39,12 +41,19 @@ toe::class GIScanvas {
         grid [ttk::frame $frame.f -borderwidth 2] -sticky nwes
         grid columnconfigure $frame.f 0 -weight 1; grid rowconfigure $frame.f 0 -weight 1
         
+        image create photo [self namespace]::tile -data \
+{R0lGODlhCgAKAIABANnZ2f///yH+EUNyZWF0ZWQgd2l0aCBHSU1QACwAAAAACgAKAAACEYQdmYca
+DNxjEspKndVZbc8UADs=}
+
         set Container [zinc $frame.f.canvas \
                         -backcolor white \
+                        -tile [self namespace]::tile \
                         -borderwidth 0 \
                         -cursor cross \
-                        -relief flat \
+                        -overlapmanager 1 \
+                        -confine 1 \
                         -takefocus 0 \
+                        -relief flat \
                         -xscrollincrement 0 \
                         -yscrollincrement 0 \
                         -render 1]
