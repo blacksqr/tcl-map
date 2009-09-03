@@ -4,6 +4,8 @@ package require Tcl 8.5
 package require Tk 8.5
 package require Img 1.3
 
+lappend auto_path [file join $VRootDir fsdialog]
+
 ### Dependencies and dependency checks
 
 source [file join $VRootDir toe-1.0.tm]
@@ -103,7 +105,12 @@ if {$::argv ne ""} {
 
 proc file_open {} {
     global map
-    set filepath [tk_getOpenFile -filetypes [list [list "All files" "*"] {*}[concat [$map cget -rasterfiletypes] [$map cget -vectorfiletypes]]]]
+    
+    if {$tcl_platform(os) eq "Linux"} {
+        set filepath [ttk_getOpenFile -hidden 0 -sepfolders 0 -filetypes [list [list "All files" "*"] {*}[concat [$map cget -rasterfiletypes] [$map cget -vectorfiletypes]]]]
+    } else {
+        set filepath [tk_getOpenFile -filetypes [list [list "All files" "*"] {*}[concat [$map cget -rasterfiletypes] [$map cget -vectorfiletypes]]]]
+    }
     if {$filepath ne ""} {
         if {[catch {
             $map openMap $filepath
