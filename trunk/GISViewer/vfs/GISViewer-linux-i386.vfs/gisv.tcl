@@ -57,6 +57,20 @@ $toolbar button add maptbar zoom_out ::images::zoom_out "$map zoom relative [exp
 $toolbar button add maptbar zoom_original ::images::zoom_original "$map zoom absolute 1.0"
 $toolbar button add maptbar zoom_best ::images::zoom_best "$map zoom best"
 
+set menubar [menu .menubar -relief flat]
+. configure -menu $menubar
+menu $menubar.file
+menu $menubar.help
+$menubar add cascade -menu $menubar.file -label File
+$menubar add cascade -menu $menubar.help -label Help
+$menubar.file add command -label Open -command file_open
+#$menubar.file add command -label Info -command XXX
+$menubar.file add separator
+$menubar.file add command -label Exit -command exit
+$menubar.help add command -label About -command \
+        [list tk_messageBox -title "About GISVierer" -message \
+        "GISVierwer GIS Software\n\nCopyright © 2009 Alexandros Stergiakis. All rights reserved.\n\nTerms of Use: GNU General Public License Version 3"]
+
 array set info1 {x 0 y 0 projx 0 projy 0 lat 0 long 0 altitude 0}
 array set info2 {zoom 100 scale 1}
 $map monitor -x ::info1(x) -y ::info1(y) -lat ::info1(lat) -long ::info1(long) -altitude ::info1(altitude) -projx ::info1(projx) -projy ::info1(projy)
