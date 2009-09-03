@@ -1,22 +1,14 @@
 #!/usr/bin/tclsh
 
-# Get full pathname to this file
-set RootDir [file normalize [file dirname [info script]]]
-
-foreach lib [glob -types d -nocomplain -- [file join $RootDir lib *]] {
-    lappend auto_path $lib
-}
-catch {unset lib}
-
 package require Tcl 8.5
 package require Tk 8.5
 package require Img 1.3
 
 ### Dependencies and dependency checks
 
-source [file join $RootDir toe-1.0.tm]
-source [file join $RootDir GIScanvas.tcl]
-source [file join $RootDir toolbar.tcl]
+source [file join $VRootDir toe-1.0.tm]
+source [file join $VRootDir GIScanvas.tcl]
+source [file join $VRootDir toolbar.tcl]
 
 # No Tear-Off menus in Tk
 option add *tearOff 0
