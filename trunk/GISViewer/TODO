@@ -1,14 +1,19 @@
-" root "
-scrollregion on vectors
-#XXX spacial/transformer_lat/long
-#XXX rest_ogr_geometries zoom_bug/scale palette_rendering
-#XXX grab info save read-write toolbar
-better openfile for linux
-# better GetProjections.tcl
-# wrapping/reprojection(set spacial data) loadworldfile always-centered-map zoom_limits centered_zoom progressbar_when_opening
-# rulers/grid
-# ReadRasterNAP, ExportToList
+spacial/transformer_lat/long
 
+OSRValidate
+OSRFixup
+OSRFixupOrdering
+
+rest_ogr_geometries palette_rendering grab
+
+always-centered-map progressbar_when_opening
+scale
+read-write toolbar
+# better GetProjections.tcl
+# wrapping/reprojection(set spacial data) loadworldfile 
+# rulers, grid
+# ReadRasterNAP, ExportToList
+file -> info
 # Show/hide layers, hightlight geometries, info for each, set&save colors, etc
 itcl
 

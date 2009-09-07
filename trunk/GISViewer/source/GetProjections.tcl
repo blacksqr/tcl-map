@@ -1,3 +1,35 @@
+    proc GetProjectionsUI {geoProj4 projProj4} {    
+        lassign [GetProjections_ui::GetProjections_ui $geoProj4 $projProj4] geoProj4 projProj4
+        
+        set projected [::osr::new_SpatialReference]
+        if {[catch {
+            $projected ImportFromProj4 $projProj4
+        } errstr errtrace]} {
+            $projected -delete
+            tk_messageBox -icon error -message "Invalid Proj4 input for map projection"
+            error
+        }
+        if {! [$projected IsProjected]} {
+            $projected -delete
+            tk_messageBox -icon error -message "Inadequate information for map projection"
+            error                
+        }
+        set geographic [::osr::new_SpatialReference]
+        if {[catch {
+            $geographic ImportFromProj4 $geoProj4
+        } errstr errtrace]} {
+            $geographic -delete
+            tk_messageBox -icon error -message "Invalid Proj4 input for geographic projection"
+            error
+        }
+        if {! [$geographic IsGeographic]} {
+            $geographic -delete
+            set geographic [$geographic CloneGeogCS]
+        }
+        
+        return [list $geographic $projected]
+    }
+
 namespace eval GetProjections_ui {
 proc GetProjections_ui {{geoProj4 ""} {projProj4 ""}} {
     variable base
