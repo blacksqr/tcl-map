@@ -5,7 +5,7 @@
 #       Raster: Understand and render band types: "Cyan" - "Magenta" - "Yellow" - "Black" - "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr"
 #       Raster: Understand and visualize bands that embody information such as height.
 #               Units value (e.g. elevation as described in GetDescription in units of GetUnitType and resolution of GetDatatype) = (raw pixel value * GetScale) + GetOffset
-#       
+#       Keep map centered on the dimentions that fit in the screen.
 
 package require Tcl 8.5
 package require Tk 8.5
@@ -20,26 +20,31 @@ package require osr 1.0
 namespace import ::toe::class
 
 source [file join $VRootDir GetProjections.tcl]
+#source [file join $VRootDir progress.tcl]
 
 # Initialize GDAL/OGR
 ::gdal::AllRegister
 ::ogr::RegisterAll
 
 class GIScanvas {
-    private variable Container
-    private variable Dataset
-    private variable Win ;# Array with info that pertain the frame given to GIScanvas
-    private variable Export ;# Array with names of external variables to export internal information to.
-    private variable Map ;# Array with Map info.
+    private variable Container ;# The zinc canvas.
+    private variable Dataset   ;# The GDAL/OGR dataset.
+    private variable Win       ;# Array with info that pertain the GIScanvas as a whole, as well as the frames and other widgets sourounding it..
+    private variable Export    ;# Array with names of external variables to export internal information to.
+    private variable Map       ;# Array with Map info.
+    private variable Cursor    ;# Array with info about the position of the cursor.
 
     method constructor {frame} {
         array set Export {x "" y "" lat "" long "" altitude "" projx "" projy "" zoom "" scale ""}
-        array set Map {loaded false filepath "" type "" zoomfactor 0.05 projection "" geographic "" proj2geo "" geo2proj ""}
+        array set Cursor {x "" y "" lat "" long "" altitude "" projx "" projy ""}
+        array set Map {loaded false filepath "" type "" zoomfactor 0.05 zoom "" scale "" projection "" geographic "" proj2geo "" geo2proj "" width 0 height 0}
+        array set Win {frame "" width 0 height 0}
         set Win(frame) $frame
         
         grid columnconfigure $frame 0 -weight 1; grid rowconfigure $frame 0 -weight 1
         grid [ttk::frame $frame.f -borderwidth 2] -sticky nwes
         grid columnconfigure $frame.f 0 -weight 1; grid rowconfigure $frame.f 0 -weight 1
+        update ;# To be able to read width & height
         
         image create photo [self namespace]::tile -data \
 {R0lGODlhCgAKAIABANnZ2f///yH+EUNyZWF0ZWQgd2l0aCBHSU1QACwAAAAACgAKAAACEYQdmYca
@@ -56,226 +61,48 @@ DNxjEspKndVZbc8UADs=}
                         -relief flat \
                         -xscrollincrement 0 \
                         -yscrollincrement 0 \
+                        -width 1 -height 1 \
                         -render 1]
+        
+        $Container add group 1 -tags root
+        $Container add group root -tags scaleLayer
+        $Container add group scaleLayer -tags shiftLayer
+        $Container add group shiftLayer -tags map
+        
         winupdate
+        bind $Win(frame) <Configure> "[self namespace]::winupdate"
 
-        bind $Container <Button-4> "[self namespace]::zoom relative [expr {1.0 + $Map(zoomfactor)}] %x %y"
-        bind $Container <Button-5> "[self namespace]::zoom relative [expr {1.0 - $Map(zoomfactor)}] %x %y"
-        bind $Container <Motion> "[self namespace]::cursorupdate %x %y"
-        bind $Container <Configure> "[self namespace]::winupdate"
+        # NOTE: The following bindings will take effect only when Container is mapped by grid.
+        bind $Container <Button-4> "[self namespace]::zoomin %x %y"
+        bind $Container <Button-5> "[self namespace]::zoomout %x %y"
+        bind $Container <Motion> "[self namespace]::motion %x %y"
     }
     
-    public method zoomfactor {{val ""}} { if {$val eq ""} { return $Map(zoomfactor) } else { set $Map(zoomfactor) $val } }
-
-    public method convert_xy2proj {x y} {
-        if {$Map(projected) ne ""} {
-            if {$Map(type) eq "Raster"} {
-                lassign [lindex [$Dataset GetGeoTransform] 0] x_start x_resol x_rot y_start y_rot y_resol
-                set projx [expr {$x_start + $x * $x_resol + $y * $x_rot}]
-                set projy [expr {$y_start + $x * $y_rot + $y * $y_resol}]
-                
-                # Shift to the center of the pixel
-                set projx [expr {$projx + $x_resol / 2.0}]
-                set projy [expr {$projy + $y_resol / 2.0}]
-                
-                return [list $projx $projy]
-            } elseif {$Map(type) eq "Vector"} {
-                return [list 0 0] ;# XXX
-            }
+    private method motion {x y} {
+        if {$Map(type) eq "Raster"} {
+            lassign [$Container transform map [list $x $y]] Cursor(x) Cursor(y)
+            lassign [convert_xy2proj $Cursor(x) $Cursor(y)] Cursor(projx) Cursor(projy)
+        } else {
+            # XXX y coord need to * -1
+            lassign [$Container transform root [list $x $y]] Cursor(x) Cursor(y)
+            lassign [convert_xy2proj $x $y] Cursor(projx) Cursor(projy)
         }
         
-        return [list 0 0]
-    }
-
-    public method convert_proj2geo {x y} {
-        if {$Map(proj2geo) ne ""} {
-            return [lindex [$Map(proj2geo) TransformPoint $x $y] 0]
-        }
-            
-        return [list 0 0]
+        lassign [convert_proj2geo $Cursor(projx) $Cursor(projy)] Cursor(long) Cursor(lat) Cursor(altitude)
     }
     
-    public method convert_geo2proj {x y} {
-        if {$Map(geo2proj) ne ""} {
-            return [lindex [$Map(geo2proj) TransformPoint $x $y] 0]
-        }
-            
-        return [list 0 0]
-    }
-    
-    method cursorupdate {x y} {
-        lassign [$Container transform root [list $x $y]] x y
-        lassign [list $x $y] $Export(x) $Export(y)
-        lassign [convert_xy2proj $x $y] projx projy
-        lassign [list $projx $projy] $Export(projx) $Export(projy)
-        lassign [convert_proj2geo $projx $projy] $Export(long) $Export(lat) $Export(altitude)
-    }
-    
-    method winupdate {} {
-        lassign [grid bbox $Win(frame)] _ _ w h
-        $Container configure -width $w -height $h
-    }
-    
-    public method zoom {type {factor 1.0} {x ""} {y ""}} {
-        $Container configure \
-                -xscrollcommand "catch {unset [self namespace]::tempx}; lappend [self namespace]::tempx" \
-                -yscrollcommand "catch {unset [self namespace]::tempy}; lappend [self namespace]::tempy"
-        
-        switch -exact -- $type {
-            "relative" {
-                $Container scale root $factor $factor
-            }
-            "absolute" {
-                # TODO: Instead of reseting first, extend tkzinc to support an 'absolute' option like "transform"
-                $Container itemconfigure root -visible 0
-                update
-                $Container treset root
-                $Container scale root $factor $factor
-                $Container itemconfigure root -visible 1
-                update
-            }
-            "best" {
-                zoom absolute 1.0
-                lassign [$Container bbox all] x1 y1 x2 y2
-                set width [expr {$x2 - $x1}]
-                set height [expr {$y2 - $y1}]
-                lassign [grid bbox $Win(frame)] _ _ w h
-                if {[expr {double($width) / $height}] > 1} {
-                    set factor [expr {double($w) / $width}]
-                } else {
-                    set factor [expr {double($h) / $height}]
-                }
-                
-                # TODO: Instead of reseting first, extend tkzinc to support an 'absolute' option like "transform"
-                $Container itemconfigure root -visible 0
-                update
-                $Container treset root
-                $Container scale root $factor $factor
-                $Container itemconfigure root -visible 1
-                update
-            }
-            default {error}
-        }
-        
-        $Container configure -scrollregion [$Container bbox all]
-        set factor [lindex [$Container tget root "scale"] 0]
-        set $Export(zoom) [expr {100 * $factor}]
-        set $Export(scale) "XXX"
-        if {$x ne ""} { cursorupdate $x $y }
-        
+    private method winupdate {} {
+        lassign [grid bbox $Win(frame)] _ _ Win(width) Win(height)
+        $Container configure -width $Win(width) -height $Win(height)
         update
-        .c.map.vbar set {*}[set [self namespace]::tempy]
-        .c.map.hbar set {*}[set [self namespace]::tempx]
-        $Container configure -yscrollcommand ".c.map.vbar set" -xscrollcommand ".c.map.hbar set"
-        
-        # Center map
-        lassign [$Container tget root "translation"] shiftX shiftY
-        lassign [$Container bbox all] x1 y1 x2 y2
-        set mapwidth [expr {$x2 - $x1}]
-        set mapheight [expr {$y2 - $y1}]
-        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
-        
-        if {$mapwidth < $winwidth} {
-            #set shiftX [expr {($winwidth - $mapwidth) / 2.0}]
-            set shiftX 0
-        }
-        if {$mapheight < $winheight} {
-            #set shiftY [expr {($winheight - $mapheight) / 2.0}]
-            set shiftY 0
-        }
-        
-        $Container translate root $shiftX $shiftY yes
-        
-        #$Container xview moveto 0
-        #$Container yview moveto 0
     }
-    
-    public method xview {cmd args} {
-        lassign [$Container bbox all] x1 y1 x2 y2
-        set mapwidth [expr {$x2 - $x1}]
-        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
-        lassign [$Container tget root "translation"] shiftX shiftY
-        
-        switch -exact -- $cmd {
-            "moveto" {
-                set val $args
-                set val2 [expr {double($winwidth) / $mapwidth}]
-                
-                if {$val < 0} {set val 0}
-                if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root [expr {$val * $mapwidth * -1}] $shiftY yes
-                
-                {*}[$Container cget -xscrollcommand] $val [expr {$val + $val2}]
-            }
-            "scroll" {
-                lassign $args val type
-                if {$type eq "pages"} {
-                    set val [expr {$val * $winwidth}]
-                }
-                
-                set max [expr {$mapwidth - $winwidth}]
-                if {$max < 0} {return} ;# Map is small enough to be displayed in whole; no need of scrolling
-                
-                set val [expr {$shiftX - $val}]
-                if {$val > 0} { set val 0} ;# On the left edge; cannot scroll further
-                
-                if {[expr {abs($val)}] > $max} {
-                    set val [expr {$max * -1}] ;# On the right edge; cannot scroll further
-                }
-                
-                # Move map
-                $Container translate root $val $shiftY yes
-                
-                # Update scrollbars
-                set val2 [expr {double(abs($val)) / $mapwidth}]
-                {*}[$Container cget -xscrollcommand] $val2 [expr {$val2 + $winwidth / $mapwidth}]
-            }
-            default {error}
-        }
+
+    public method xview {args} {
+        $Container xview {*}$args
     }
-    
-    public method yview {cmd args} {
-        lassign [$Container bbox all] x1 y1 x2 y2
-        set mapheight [expr {$y2 - $y1}]
-        lassign [grid bbox $Win(frame)] _ _ winwidth winheight
-        lassign [$Container tget root "translation"] shiftX shiftY
-        
-        switch -exact -- $cmd {
-            "moveto" {
-                set val $args
-                set val2 [expr {double($winheight) / $mapheight}]
-                
-                if {$val < 0} {set val 0}
-                if {$val > 1 - $val2} {set val [expr {1-$val2}]}
-                $Container translate root $shiftX [expr {$val * $mapheight * -1}] yes
-                
-                {*}[$Container cget -yscrollcommand] $val [expr {$val + $val2}]
-            }
-            "scroll" {
-                lassign $args val type
-                if {$type eq "pages"} {
-                    set val [expr {$val * $winheight}]
-                }
-                
-                set max [expr {$mapheight - $winheight}]
-                if {$max < 0} {return} ;# Map is small enough to be displayed in whole; no need of scrolling
-                
-                set val [expr {$shiftY - $val}]
-                if {$val > 0} { set val 0} ;# On the top edge; cannot scroll further
-                
-                if {[expr {abs($val)}] > $max} {
-                    set val [expr {$max * -1}] ;# On the bottom edge; cannot scroll further
-                }
-                
-                # Move map
-                $Container translate root $shiftX $val yes
-                
-                # Update scrollbars
-                set val2 [expr {double(abs($val)) / $mapheight}]
-                {*}[$Container cget -yscrollcommand] $val2 [expr {$val2 + $winheight / $mapheight}]
-            }
-            default {error}
-        }
+
+    public method yview {args} {
+        $Container yview {*}$args
     }
     
     public method configure {args} {
@@ -285,10 +112,18 @@ DNxjEspKndVZbc8UADs=}
                 "-yscrollcommand" {
                     $Container configure $var $val
                 }
+                "-visible" {
+                    if {$val} {
+                        grid $Container
+                    } else {
+                        grid remove $Container
+                    }
+                }
             }
         }
+        update
     }
-
+    
     public method cget {args} {
         foreach {var val} $args {
             switch -exact -- $var {
@@ -315,33 +150,158 @@ DNxjEspKndVZbc8UADs=}
                     set vector_exts [list]
                     for {set i 0} {$i < [::ogr::GetDriverCount]} {incr i} {
                         set driver [::ogr::GetDriver $i]
-                        #XXX
+                        puts stderr "No specific file extension specified by OGR for [$driver cget -name]"
+                        # TODO: OGR Doesn't provide a long name for the dirver, neither a file extension. Find a workaround.
                         lappend formats [list [$driver cget -name] *]
                     }
                     return $formats
                 }
-                default {error}
+                default {error "Internal error"}
             }
         }
     }
     
+    ### Exportation of internal info ###
+    
     public method monitor {args} {
         foreach {var val} $args {
             switch -exact -- $var {
-                "-x" { set Export(x) $val }
-                "-y" { set Export(y) $val }
-                "-projx" { set Export(projx) $val }
-                "-projy" { set Export(projy) $val }
-                "-lat" { set Export(lat) $val }
-                "-long" { set Export(long) $val }
-                "-altitude" { set Export(altitude) $val }
-                "-zoom" { set Export(zoom) $val }
-                "-scale" { set Export(scale) $val }
-                default {error}
+                "-x" -
+                "-y" -
+                "-projx" -
+                "-projy" -
+                "-lat" -
+                "-long" -
+                "-altitude" {
+                    set el [string range $var 1 end]
+                    set Export($el) $val
+                    trace var Cursor($el) wu "[self namespace]::export"
+                }
+                "-zoom" -
+                "-scale" {
+                    set el [string range $var 1 end]
+                    set Export($el) $val
+                    trace var Map($el) wu "[self namespace]::export"
+                }
+                default {error "Internal error"}
             }
         }
     }
+    
+    private method export {arr el op} {
+        set $Export($el) [set ${arr}($el)]
+    }
+    
+    ### Zoom functions ###
+    
+    public method zoomfactor {{val ""}} {
+        if {$val eq ""} { return $Map(zoomfactor) } else { set $Map(zoomfactor) $val }
+    }
+    
+    public method zoomin {{x ""} {y ""}} {
+        zoom relative [expr {1.0 + $Map(zoomfactor)}] $x $y
+    }
+    
+    public method zoomout {{x ""} {y ""}} {
+        zoom relative [expr {1.0 - $Map(zoomfactor)}] $x $y
+    }
+    
+    public method zoom {type {factor 1.0} {x ""} {y ""}} {
+        # Hard-absolute constraints.
+        if {$factor <= 0.0 || $factor >= 100.0} { return }
+        
+        # The real display size.
+        lassign [$Container bbox all] x1 y1 x2 y2
+        set width [expr {$x2 - $x1}]
+        set height [expr {$y2 - $y1}]
+        
+        # Soft-Relative constraints.
+        if {$width <= 10 && $factor < 1.0} { return }
+        if {$Map(zoom) > 100 && $factor > 1.0} { return }
+        
+        switch -exact -- $type {
+            "relative" {
+                $Container scale scaleLayer $factor $factor
+            }
+            "absolute" {
+                # Compute correction factor in order to bring it to the original size, combined with provided factor.
+                set factor [expr {$Map(width) / double($width) * $factor}]
+                
+                $Container scale scaleLayer $factor $factor
+            }
+            "best" {
+                # Compute correction factor in order to bring it to the original size.
+                set factor [expr {$Map(width) / double($width)}]
 
+                # Now combine the zoom factor needed to fill in the screen.
+                if {$Win(width) / $Map(width) < $Win(height) / $Map(height)} {
+                    set factor [expr {$factor * $Win(width) / $Map(width)}] ;# fill in screen width-wise
+                } else { ;# fill in screen height-wise
+                    set factor [expr {$factor * $Win(height) / $Map(height)}] ;# fill in screen height-wise
+                }
+                
+                $Container scale scaleLayer $factor $factor
+            }
+            default {error "Internal error"}
+        }
+
+        $Container configure -scrollregion [$Container bbox all]
+        set factor [lindex [$Container tget scaleLayer "scale"] 0]
+        set Map(zoom) $factor
+        
+        # if zooming is with the mouse wheel, then relative cursor position has changed. Update..
+        if {$x ne ""} { motion $x $y }
+    }
+    
+    ### Geo coordinate transformations ###
+    
+    public method convert_xy2proj {x y} {
+        if {$Map(projected) ne ""} {
+            if {$Map(type) eq "Raster"} {
+                lassign [lindex [$Dataset GetGeoTransform] 0] x_start x_resol x_rot y_start y_rot y_resol
+                
+                set projx [expr {$x_start + $x * $x_resol + $y * $x_rot}]
+                set projy [expr {$y_start + $x * $y_rot + $y * $y_resol}]
+                
+                # Shift to the center of the pixel
+                set projx [expr {$projx + $x_resol / 2.0}]
+                set projy [expr {$projy + $y_resol / 2.0}]
+                
+                return [list $projx $projy]
+            } elseif {$Map(type) eq "Vector"} {
+                return [$Container transform "map" [list $x $y]]
+            }
+        }
+        
+        return [list "" ""]
+    }
+
+    public method convert_proj2geo {x y} {
+        if {$Map(proj2geo) ne ""} {
+            return [lindex [$Map(proj2geo) TransformPoint $x $y] 0]
+        }
+        
+        return [list "" ""]
+    }
+    
+    public method convert_geo2proj {x y} {
+        if {$Map(geo2proj) ne ""} {
+            return [lindex [$Map(geo2proj) TransformPoint $x $y] 0]
+        }
+        
+        return [list "" ""]
+    }
+
+    method destructor {} {
+        grid remove $Container
+        set Map(loaded) false
+        $Dataset -delete
+        $Map(projected) -delete
+        $Map(geographic) -delete
+        $Map(proj2geo) -delete
+        $Map(geo2proj) -delete
+    }
+    
     public method closeMap {} {
         grid remove $Container
         set Map(loaded) false
@@ -350,18 +310,17 @@ DNxjEspKndVZbc8UADs=}
         $Map(geographic) -delete
         $Map(proj2geo) -delete
         $Map(geo2proj) -delete
-        $Container remove root
+        
+        # XXX Proper clean-up code.
     }
     
     public method openMap {filepath} {       
         if {! [file exists $filepath]} {
-            tk_messageBox -icon error -message "File does not exist"
-            return
+            error "File does not exist"
         }
 
         if {! [file readable $filepath]} {
-            tk_messageBox -icon error -message "Have no permissions to open file for reading"
-            return
+            error "Have no permissions to open file for reading"
         }
 
         if {$Map(loaded)} {
@@ -381,8 +340,12 @@ DNxjEspKndVZbc8UADs=}
         }
         
         # Neither raster nor vector
-        tk_messageBox -icon error -message "Could not recognize file format"
+        error "Unrecognized file format"
     }
+    
+    ###########################
+    ### Vector GIS Handling ###
+    ###########################
     
     public method openVector {filepath} {
         set Dataset [::ogr::Open $filepath 0] ;# 0 for readonly
@@ -400,7 +363,7 @@ DNxjEspKndVZbc8UADs=}
             } elseif {[$proj IsGeographic]} {
                 set geoProj4 [$proj ExportToProj4]
                 set projProj4 ""
-            } else {error}
+            } else {error "Internal error"}
             $proj -delete
         }
 
@@ -424,21 +387,12 @@ DNxjEspKndVZbc8UADs=}
         if {$Map(proj2geo) eq "NULL" || $Map(geo2proj) eq "NULL"} {
             catch {$Map(projected) -delete}
             catch {$Map(geographic) -delete}
-            tk_messageBox -icon error -message "Failed to establish a mapping between geographic and map projections"
-            return
+            error "Failed to establish a mapping between geographic and map projections"
         }
 
         set Map(loaded) true
         set Map(type) "Vector"
         set Map(filepath) $filepath
-
-        # XXX
-        $Container add group 1 -tags root
-        $Container add group root -tags trans1
-        $Container add group trans1 -tags trans2
-        $Container add group trans2 -tags trans3
-        $Container add group trans3 -tags map
-        grid $Container
         
         for {set l 0} {$l < [$Dataset GetLayerCount]} {incr l} {
             set layer [$Dataset GetLayerByIndex $l]
@@ -467,22 +421,21 @@ DNxjEspKndVZbc8UADs=}
                 set geotype [$geometry GetGeometryType]
                 
                 if {$geotype eq "$::ogr::wkb25Bit"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbGeometryCollection"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbGeometryCollection25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbLineString"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbLineString25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbLinearRing"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbPoint"} {
-                    
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbPoint25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbPolygon"} {
                     set data [$geometry ExportToWkb]
                     binary scan $data cuIuIu byte_order geometry_type ring_count
@@ -493,7 +446,9 @@ DNxjEspKndVZbc8UADs=}
                         binary scan $data x${shift}Q[expr {$no_of_points * 2}] points
                         incr shift [expr {$no_of_points * 16}] ;# 16 = dimention * sizeof(double) = 2 * 8
                         
-                        $Container add curve map $points -filled true -linecolor black -fillcolor gray -tags feature
+                        # XXX y coord need to * -1
+                        
+                        $Container add curve map $points -filled true -linecolor black -fillcolor gray -linewidth 1 -tags feature
                     }
                 } elseif {$geotype eq "$::ogr::wkbPolygon25D"} {
                     # TODO Not tested
@@ -510,16 +465,19 @@ DNxjEspKndVZbc8UADs=}
                         foreach {x y z} $points {
                             lappend xypoints $x $y
                         }
-                        $Container add curve map $xypoints -linecolor blue -linewidth 1 -filled true -fillcolor red -tags feature
+                        
+                        # XXX y coord need to * -1
+                        
+                        $Container add curve map $xypoints -linecolor black -fillcolor gray -linewidth 1 -filled true -tags feature
                     }
                 } elseif {$geotype eq "$::ogr::wkbMultiLineString"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbMultiLineString25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbMultiPoint"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbMultiPoint25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbMultiPolygon"} {
                     set data [$geometry ExportToWkb]
                     binary scan $data cuIuIu byte_order geometry_type geom_count
@@ -534,15 +492,17 @@ DNxjEspKndVZbc8UADs=}
                             binary scan $data x${shift}Q[expr {$no_of_points * 2}] points
                             incr shift [expr {$no_of_points * 16}] ;# 16 = dimention * sizeof(double) = 2 * 8
 
-                            $Container add curve map $points -filled true -fillcolor blue -tags feature
+                            # XXX y coord need to * -1
+                            
+                            $Container add curve map $points -filled true -linecolor black -fillcolor gray -linewidth 1 -tags feature
                         }
                     }
                 } elseif {$geotype eq "$::ogr::wkbMultiPolygon25D"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbNDR"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbXDR"} {
-                    ZZZ
+                    # XXX
                 } elseif {$geotype eq "$::ogr::wkbNone"} {
                     # no visual representation, just for attribute collection
                 } elseif {$geotype eq "$::ogr::wkbUnknown"} {
@@ -554,66 +514,22 @@ DNxjEspKndVZbc8UADs=}
             } ;# while
         } ;# for
 
-        puts orig:[$Container bbox map]
-
         lassign [$Container bbox map] x1 y1 x2 y2
-        set width [expr {$x2 - $x1}]
-        set height [expr {$y2 - $y1}]        
-        $Container translate trans2 [expr {$x1 * -1}] [expr {$y1 * -1}] yes
-        puts shift:[$Container bbox map]
-        
-        $Container scale trans2 0.001 0.001
-        puts zoom:[$Container bbox map]
-
-        $Container scale trans3 1.0 -1.0
-        puts mirror:[$Container bbox map]
-
-        lassign [$Container bbox map] x1 y1 x2 y2
-        $Container translate trans1 [expr {$x1 * -1}] [expr {$y1 * -1}] yes
-        puts shift:[$Container bbox map]
-        
-        puts [$Container transform map {0 0}]
-        
+        set Map(width) [expr {$x2 - $x1}]
+        set Map(height) [expr {$y2 - $y1}]
+        $Container translate shift [expr {$x1 * -1}] [expr {$y1 * -1}] yes
         
     } ;# method
     
-    public method GetProjectionsUI {geoProj4 projProj4} {    
-        lassign [GetProjections_ui::GetProjections_ui $geoProj4 $projProj4] geoProj4 projProj4
-        
-        set projected [::osr::new_SpatialReference]
-        if {[catch {
-            $projected ImportFromProj4 $projProj4
-        } errstr errtrace]} {
-            $projected -delete
-            tk_messageBox -icon error -message "Invalid Proj4 input for map projection"
-            error
-        }
-        if {! [$projected IsProjected]} {
-            $projected -delete
-            tk_messageBox -icon error -message "Inadequate information for map projection"
-            error                
-        }
-        set geographic [::osr::new_SpatialReference]
-        if {[catch {
-            $geographic ImportFromProj4 $geoProj4
-        } errstr errtrace]} {
-            $geographic -delete
-            tk_messageBox -icon error -message "Invalid Proj4 input for geographic projection"
-            error
-        }
-        if {! [$geographic IsGeographic]} {
-            $geographic -delete
-            set geographic [$geographic CloneGeogCS]
-        }
-        
-        return [list $geographic $projected]
-    }
-            
-    public method openRaster {filepath} {       
+    ###########################
+    ### Raster GIS Handling ###
+    ###########################
+    
+    public method openRaster {filepath} {
         set Dataset [::gdal::Open $filepath $::gdal::GA_ReadOnly]
+        
         if {$Dataset eq ""} {
-            tk_messageBox -icon error -message "Could not open file"
-            return
+            error "Could not open file"
         }
         
         set OpenGISWKT [$Dataset GetProjectionRef]
@@ -631,7 +547,7 @@ DNxjEspKndVZbc8UADs=}
             } elseif {[$proj IsGeographic]} {
                 set geoProj4 [$proj ExportToProj4]
                 set projProj4 ""
-            } else {error}
+            } else {error "Internal error"}
             $proj -delete
         }
         unset OpenGISWKT
@@ -656,17 +572,14 @@ DNxjEspKndVZbc8UADs=}
         if {$Map(proj2geo) eq "NULL" || $Map(geo2proj) eq "NULL"} {
             catch {$Map(projected) -delete}
             catch {$Map(geographic) -delete}
-            tk_messageBox -icon error -message "Failed to establish a mapping between geographic and map projections"
-            return
+            error "Failed to establish a mapping between geographic and map projections"
         }
         
         set Map(loaded) true
         set Map(type) "Raster"
         set Map(filepath) $filepath
-        
-        $Container add group 1 -tags root
-        $Container add group root -tags map
-        grid $Container
+        set Map(width) [$Dataset cget -RasterXSize]
+        set Map(height) [$Dataset cget -RasterYSize]
         
         set layer 0
         set images [list]
@@ -695,11 +608,11 @@ DNxjEspKndVZbc8UADs=}
                     incr layer
                 }
                 "Palette" {
-                    ZZZ 
+                    # XXX 
                 }
                 "Cyan" - "Magenta" - "Yellow" - "Black" -
                 "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr" {
-                    tk_messageBox -icon error -message "Could not recognize file format. \"$colorinterp\" band type not supported."
+                    puts stderr "Could not recognize file format. \"$colorinterp\" band type not supported."
                     closeMap
                     break
                 }
@@ -811,7 +724,6 @@ DNxjEspKndVZbc8UADs=}
             ::NAP::nap "u = u // u8({$chunk})"
         }
             
-        #::NAP::nap "u = magnify_interp(reshape(u, {$height $width}), $zoom)" ;# XXX zoom
         ::NAP::nap "u = reshape(u, {$height $width})"
         
         $u set count +1
