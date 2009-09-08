@@ -1,21 +1,11 @@
-spacial/transformer_lat/long
+* better GetProjections UI
+* image wrapping
+* rulers, grid, point scale, measure distances & areas
+* file -> info
+* Show/hide layers, hightlight geometries, info for each, set&save colors, etc
+* toe -> itcl
 
-OSRValidate
-OSRFixup
-OSRFixupOrdering
-
-rest_ogr_geometries palette_rendering grab
-
-always-centered-map progressbar_when_opening
-scale
-read-write toolbar
-# better GetProjections.tcl
-# wrapping/reprojection(set spacial data) loadworldfile 
-# rulers, grid
-# ReadRasterNAP, ExportToList
-file -> info
-# Show/hide layers, hightlight geometries, info for each, set&save colors, etc
-itcl
+NOTES:
 
 nap:
     MAX_NC_NAME

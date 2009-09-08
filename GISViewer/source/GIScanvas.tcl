@@ -1,11 +1,19 @@
 #
 # TODO: Search for TODO.
+#       Both: OSRValidate, OSRFixup, OSRFixupOrdering
+#       Vector: y coord need to be multiplied by -1 in all features.
+#       Vector: implementation of rest geometries
+#       Raster: pallete-type layer rendering
 #       Raster: Consider GetMaximum/GetMinimum for each band.
 #       Raster: Consider GetNoValue for each band.
 #       Raster: Understand and render band types: "Cyan" - "Magenta" - "Yellow" - "Black" - "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr"
 #       Raster: Understand and visualize bands that embody information such as height.
 #               Units value (e.g. elevation as described in GetDescription in units of GetUnitType and resolution of GetDatatype) = (raw pixel value * GetScale) + GetOffset
-#       Keep map centered on the dimentions that fit in the screen.
+#       Both: Grab image with mouse to move
+#       Both: Progress bar update when opening file etc..
+#       Both: Keep map centered on the dimentions that fit in the screen.
+#       Raster: ReadRasterNAP
+#       Vector: ExportToList
 
 package require Tcl 8.5
 package require Tk 8.5
@@ -18,9 +26,6 @@ package require ogr 1.0
 package require osr 1.0
 
 namespace import ::toe::class
-
-source [file join $VRootDir GetProjections.tcl]
-#source [file join $VRootDir progress.tcl]
 
 # Initialize GDAL/OGR
 ::gdal::AllRegister
@@ -83,7 +88,6 @@ DNxjEspKndVZbc8UADs=}
             lassign [$Container transform map [list $x $y]] Cursor(x) Cursor(y)
             lassign [convert_xy2proj $Cursor(x) $Cursor(y)] Cursor(projx) Cursor(projy)
         } else {
-            # XXX y coord need to * -1
             lassign [$Container transform root [list $x $y]] Cursor(x) Cursor(y)
             lassign [convert_xy2proj $x $y] Cursor(projx) Cursor(projy)
         }
@@ -292,6 +296,57 @@ DNxjEspKndVZbc8UADs=}
         return [list "" ""]
     }
 
+    private method GetProjections {{proj ""}} {
+        set Map(projected) ""
+        set Map(geographic) ""
+
+        if {$proj ne "" && $proj ne "NULL"} {
+            if {[$proj IsProjected]} {
+                set Map(projected) $proj
+                set Map(geographic) [$proj CloneGeogCS]
+            } elseif {[$proj IsGeographic]} {
+                set Map(geographic) $proj
+            } else {error "Internal error"}
+        }
+        
+        if {"$Map(projected)" eq ""} {
+            set p ""
+            if {! [tk_getString .valueDlg p "Map projection" "Please enter map's projection Proj4 string"]} {
+                $Dataset -delete
+                exit
+            }
+            
+            set Map(projected) [::osr::new_SpatialReference]
+            $Map(projected) ImportFromProj4 [lindex $p 0]
+        }
+        if {"$Map(geographic)" eq ""} {
+            set p ""
+            if {! [tk_getString .valueDlg p "Map geographic projection" "Please enter map's geographic projection Proj4 string"]} {
+                $Dataset -delete
+                exit
+            }
+            
+            set Map(geographic) [::osr::new_SpatialReference]
+            $Map(geographic) ImportFromProj4 [lindex $p 0]
+        }
+        
+        # There are a couple of points at which transformations can fail.
+        # First, OGRCreateCoordinateTransformation() may fail, generally
+        # because the internals recognise that no transformation between
+        # the indicated systems can be established. This might be due to
+        # use of a projection not supported by the internal PROJ.4 library,
+        # differing datums for which no relationship is known, or one of
+        # the coordinate systems being inadequately defined. If
+        # OGRCreateCoordinateTransformation() fails it will return a NULL.
+        set Map(proj2geo) [::osr::new_CoordinateTransformation $Map(projected) $Map(geographic)]
+        set Map(geo2proj) [::osr::new_CoordinateTransformation $Map(geographic) $Map(projected)]
+        if {$Map(proj2geo) eq "NULL" || $Map(geo2proj) eq "NULL"} {
+            catch {$Map(projected) -delete}
+            catch {$Map(geographic) -delete}
+            error "Failed to establish a mapping between geographic and map projections"
+        }
+    }
+
     method destructor {} {
         grid remove $Container
         set Map(loaded) false
@@ -329,14 +384,14 @@ DNxjEspKndVZbc8UADs=}
         
         # Check to see if it's raster..
         if {[::gdal::IdentifyDriver $filepath] ne "NULL"} {
-            return [openRaster $filepath]
+            return [openRaster $filepath] ;# errors propagate
         }
         
         # Check to see if it's vector..
         set ret [::ogr::Open $filepath 0]
         if {$ret ne "NULL"} {
             $ret -delete
-            return [openVector $filepath]
+            return [openVector $filepath] ;# errors propagate
         }
         
         # Neither raster nor vector
@@ -352,43 +407,10 @@ DNxjEspKndVZbc8UADs=}
         
         # NOTE: We take the projection of the first layer as the projection of the whole dataset XXX
         set proj [[$Dataset GetLayerByIndex 0] GetSpatialRef]
-        set projProj4 ""
-        set geoProj4 ""
-        if {$proj ne "NULL"} {
-            if {[$proj IsProjected]} {
-                set projProj4 [$proj ExportToProj4]
-                set temp [$proj CloneGeogCS]
-                set geoProj4 [$temp ExportToProj4]
-                $temp -delete
-            } elseif {[$proj IsGeographic]} {
-                set geoProj4 [$proj ExportToProj4]
-                set projProj4 ""
-            } else {error "Internal error"}
-            $proj -delete
-        }
-
-        if {[catch {
-            lassign [GetProjectionsUI [lindex $geoProj4 0] [lindex $projProj4 0]] Map(geographic) Map(projected)
-        }]} {
+        if {[catch {GetProjections $proj} errMsg errTrace]} {
             $Dataset -delete
-            return
-        }
-        
-        # There are a couple of points at which transformations can fail.
-        # First, OGRCreateCoordinateTransformation() may fail, generally
-        # because the internals recognise that no transformation between
-        # the indicated systems can be established. This might be due to
-        # use of a projection not supported by the internal PROJ.4 library,
-        # differing datums for which no relationship is known, or one of
-        # the coordinate systems being inadequately defined. If
-        # OGRCreateCoordinateTransformation() fails it will return a NULL.
-        set Map(proj2geo) [::osr::new_CoordinateTransformation $Map(projected) $Map(geographic)]
-        set Map(geo2proj) [::osr::new_CoordinateTransformation $Map(geographic) $Map(projected)]
-        if {$Map(proj2geo) eq "NULL" || $Map(geo2proj) eq "NULL"} {
-            catch {$Map(projected) -delete}
-            catch {$Map(geographic) -delete}
-            error "Failed to establish a mapping between geographic and map projections"
-        }
+            return -options $errTrace $errMsg
+        }            
 
         set Map(loaded) true
         set Map(type) "Vector"
@@ -398,15 +420,15 @@ DNxjEspKndVZbc8UADs=}
             set layer [$Dataset GetLayerByIndex $l]
             $layer ResetReading
             
+            set sref [$layer GetSpatialRef]
+            if {! [$sref IsSame $Map(geographic)]} {
+                puts stderr "Warning: Multiple projections present in the same dataset"
+            }
+            $sref -delete
+                
             while {[set feature [$layer GetNextFeature]] ne "NULL"} {
                 set geometry [$feature GetGeometryRef]
                 if {$geometry eq ""} { continue }
-
-                #set sref [$geometry GetSpatialReference]
-                #if {! [$sref IsSame $Map(geographic)]} {
-                #    puts stderr "XXX"
-                #}
-                #$sref -delete
                 
                 if {[catch {
                     $geometry Transform $Map(geo2proj)
@@ -414,28 +436,27 @@ DNxjEspKndVZbc8UADs=}
                     # The Transform method itself can also fail. This may be as a delayed
                     # result of one of the above problems, or as a result of an operation
                     # being numerically undefined for one or more of the passed in points.
-                    puts "Transformation failed:$errstr"
-                    #XXX
+                    puts stderr "Transformation failed: $errstr"
                 }
                 
                 set geotype [$geometry GetGeometryType]
                 
                 if {$geotype eq "$::ogr::wkb25Bit"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbGeometryCollection"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbGeometryCollection25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbLineString"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbLineString25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbLinearRing"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbPoint"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbPoint25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbPolygon"} {
                     set data [$geometry ExportToWkb]
                     binary scan $data cuIuIu byte_order geometry_type ring_count
@@ -445,8 +466,6 @@ DNxjEspKndVZbc8UADs=}
                         incr shift 4
                         binary scan $data x${shift}Q[expr {$no_of_points * 2}] points
                         incr shift [expr {$no_of_points * 16}] ;# 16 = dimention * sizeof(double) = 2 * 8
-                        
-                        # XXX y coord need to * -1
                         
                         $Container add curve map $points -filled true -linecolor black -fillcolor gray -linewidth 1 -tags feature
                     }
@@ -466,18 +485,16 @@ DNxjEspKndVZbc8UADs=}
                             lappend xypoints $x $y
                         }
                         
-                        # XXX y coord need to * -1
-                        
                         $Container add curve map $xypoints -linecolor black -fillcolor gray -linewidth 1 -filled true -tags feature
                     }
                 } elseif {$geotype eq "$::ogr::wkbMultiLineString"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbMultiLineString25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbMultiPoint"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbMultiPoint25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbMultiPolygon"} {
                     set data [$geometry ExportToWkb]
                     binary scan $data cuIuIu byte_order geometry_type geom_count
@@ -491,18 +508,16 @@ DNxjEspKndVZbc8UADs=}
                             incr shift 4
                             binary scan $data x${shift}Q[expr {$no_of_points * 2}] points
                             incr shift [expr {$no_of_points * 16}] ;# 16 = dimention * sizeof(double) = 2 * 8
-
-                            # XXX y coord need to * -1
                             
                             $Container add curve map $points -filled true -linecolor black -fillcolor gray -linewidth 1 -tags feature
                         }
                     }
                 } elseif {$geotype eq "$::ogr::wkbMultiPolygon25D"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbNDR"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbXDR"} {
-                    # XXX
+                    
                 } elseif {$geotype eq "$::ogr::wkbNone"} {
                     # no visual representation, just for attribute collection
                 } elseif {$geotype eq "$::ogr::wkbUnknown"} {
@@ -532,48 +547,12 @@ DNxjEspKndVZbc8UADs=}
             error "Could not open file"
         }
         
-        set OpenGISWKT [$Dataset GetProjectionRef]
-        set projProj4 ""
-        set geoProj4 ""
-        if {$OpenGISWKT ne ""} {
-            set proj [::osr::new_SpatialReference]
-            $proj ImportFromWkt $OpenGISWKT
-            
-            if {[$proj IsProjected]} {
-                set projProj4 [$proj ExportToProj4]
-                set temp [$proj CloneGeogCS]
-                set geoProj4 [$temp ExportToProj4]
-                $temp -delete
-            } elseif {[$proj IsGeographic]} {
-                set geoProj4 [$proj ExportToProj4]
-                set projProj4 ""
-            } else {error "Internal error"}
-            $proj -delete
-        }
-        unset OpenGISWKT
-        
-        if {[catch {
-            lassign [GetProjectionsUI [lindex $geoProj4 0] [lindex $projProj4 0]] Map(geographic) Map(projected)
-        }]} {
+        set proj [::osr::new_SpatialReference]
+        $proj ImportFromWkt [$Dataset GetProjectionRef]
+        if {[catch {GetProjections $proj} errMsg errTrace]} {
             $Dataset -delete
-            return
-        }
-        
-        # There are a couple of points at which transformations can fail.
-        # First, OGRCreateCoordinateTransformation() may fail, generally
-        # because the internals recognise that no transformation between
-        # the indicated systems can be established. This might be due to
-        # use of a projection not supported by the internal PROJ.4 library,
-        # differing datums for which no relationship is known, or one of
-        # the coordinate systems being inadequately defined. If
-        # OGRCreateCoordinateTransformation() fails it will return a NULL.
-        set Map(proj2geo) [::osr::new_CoordinateTransformation $Map(projected) $Map(geographic)]
-        set Map(geo2proj) [::osr::new_CoordinateTransformation $Map(geographic) $Map(projected)]
-        if {$Map(proj2geo) eq "NULL" || $Map(geo2proj) eq "NULL"} {
-            catch {$Map(projected) -delete}
-            catch {$Map(geographic) -delete}
-            error "Failed to establish a mapping between geographic and map projections"
-        }
+            return -options $errTrace $errMsg
+        } 
         
         set Map(loaded) true
         set Map(type) "Raster"
@@ -608,7 +587,7 @@ DNxjEspKndVZbc8UADs=}
                     incr layer
                 }
                 "Palette" {
-                    # XXX 
+                    
                 }
                 "Cyan" - "Magenta" - "Yellow" - "Black" -
                 "YCbCr_Y" - "YCbCr_Cb" - "YCbCr_Cr" {

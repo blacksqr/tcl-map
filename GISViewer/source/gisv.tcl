@@ -11,6 +11,7 @@ lappend auto_path [file join $VRootDir fsdialog]
 source [file join $VRootDir toe-1.0.tm]
 source [file join $VRootDir GIScanvas.tcl]
 source [file join $VRootDir toolbar.tcl]
+source [file join $VRootDir tk_getString.tcl]
 
 # No Tear-Off menus in Tk
 option add *tearOff 0
